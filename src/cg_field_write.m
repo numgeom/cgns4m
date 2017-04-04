@@ -1,0 +1,45 @@
+function [out_F, ierr] = cg_field_write(in_fn, in_B, in_Z, in_S, in_type, in_fieldname, in_field_ptr)
+% Gateway function for C function cg_field_write.
+%
+% [F, ierr] = cg_field_write(fn, B, Z, S, type, fieldname, field_ptr)
+%
+% Input arguments (required; type is auto-casted):
+%              fn: 32-bit integer (int32), scalar
+%               B: 32-bit integer (int32), scalar
+%               Z: 32-bit integer (int32), scalar
+%               S: 32-bit integer (int32), scalar
+%            type: 32-bit integer (int32), scalar
+%       fieldname: character string
+%       field_ptr: dynamic type based on type
+%
+% Output arguments (optional):
+%               F: 32-bit integer (int32), scalar
+%            ierr: 32-bit integer (int32), scalar
+%
+% The original C function is:
+% int cg_field_write( int fn, int B, int Z, int S, DataType_t type, char const * fieldname, void const * field_ptr, int * F);
+%
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/solution.html">online documentation</a>.
+%
+if (nargin < 7); 
+    error('Incorrect number of input or output arguments.');
+end
+
+% Perform dynamic type casting
+datatype = in_type;
+switch (datatype)
+    case 2 % Integer
+        in_field_ptr = int32(in_field_ptr);
+    case 3 % RealSingle
+        in_field_ptr = single(in_field_ptr);
+    case 4 % RealDouble
+        in_field_ptr = double(in_field_ptr);
+    case 5 % Character
+        in_field_ptr = [int8(in_field_ptr), int8(zeros(1,1))];
+    otherwise
+        error('Unknown data type %d', in_type);
+end
+
+
+% Invoke the actual MEX-function.
+[out_F, ierr] =  cgnslib_mex(int32(82), in_fn, in_B, in_Z, in_S, in_type, in_fieldname, in_field_ptr);
