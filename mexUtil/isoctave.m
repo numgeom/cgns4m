@@ -4,7 +4,7 @@ function isoct = isoctave
 persistent isoct__;
 
 if isempty(isoct__)
-    isoct__ = exist('octave_config_info', 'builtin');
+    isoct__ = exist('octave_config_info');
 end
 
 isoct = isoct__;
