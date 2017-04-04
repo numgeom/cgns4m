@@ -1,0 +1,18 @@
+The use and distribution of MexCGNS is covered under the 
+GNU Lesser General Public License (LGPL), same as the CGNS library.
+
+For details on the policy governing the distribution of the CGNS 
+standard and software see:
+
+    http://www.grc.nasa.gov/www/cgns/charter/principles.html
+
+and for the LGPL:
+
+    http://www.grc.nasa.gov/www/cgns/charter/license.html
+
+MexCGNS is developed by 
+       Xiangmin Jiao et al., jiao@ams.sunysb.edu
+       Department of Applied Mathematics and Statistics of
+       Stony Brook University
+
+       Copyright (C) 2009-2010 Stony Brook University.
