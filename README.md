@@ -1,6 +1,6 @@
 ## Introduction
 
-This is mexCGNS for CGNS v3.1.3-4. It provides MEX interfaces of the mid-level library of CGNS. It is compatible with both MATLAB and Octave. 
+This is cgns4m, formerly known as mexcgns. It provides MEX interfaces of the mid-level library of CGNS. It is compatible with both MATLAB and Octave. 
 
 ### Installation
 
