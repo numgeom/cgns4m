@@ -1,30 +1,30 @@
-% A testing tool for MATLAB based on that in Octave.
+% A testing tool for MATLAB based on the test function in Octave.
 %
-% -- Function File:  test_mcode NAME
-% -- Function File:  test_mcode NAME quiet|normal|verbose
-% -- Function File:  test_mcode ('NAME', 'quiet|normal|verbose', FID)
-% -- Function File:  test_mcode ([], 'explain', FID)
-% -- Function File: SUCCESS = test_mcode (...)
-% -- Function File: [N, MAX] = test_mcode (...)
-% -- Function File: [CODE, IDX] = test_mcode ('NAME','grabdemo')
+% -- Function File:  mtest NAME
+% -- Function File:  mtest NAME quiet|normal|verbose
+% -- Function File:  mtest ('NAME', 'quiet|normal|verbose', FID)
+% -- Function File:  mtest ([], 'explain', FID)
+% -- Function File: SUCCESS = mtest (...)
+% -- Function File: [N, MAX] = mtest (...)
+% -- Function File: [CODE, IDX] = mtest ('NAME','grabdemo')
 %    Perform tests from the first file in the loadpath matching NAME.
 %      `test' can be called as a command or as a function. Called with a
 %      single argument NAME, the tests are run interactively and stop
 %      after the first error is encountered.
-% 
+%
 %      With a second argument the tests which are performed and the
 %      amount of output is selected.
-% 
+%
 %     'quiet'
 %           Don't report all the tests as they happen, just the errors.
-% 
+%
 %     'normal'
 %           Report all tests as they happen, but don't do tests which
 %           require user interaction.
-% 
+%
 %     'verbose'
 %           Do tests which require user interaction.
-% 
+%
 %      The argument FID can be used to allow batch processing. Errors can
 %      be written to the already open file defined by FID, and hopefully
 %      when octave crashes this file will tell you what was happening
@@ -32,17 +32,17 @@
 %      they happen.  You can also give a file name rather than an FID, in
 %      which case the contents of the file will be replaced with the log
 %      from the current test.
-% 
+%
 %      Called with a single output argument SUCCESS, `test' returns true
 %      if all of the tests were successful. Called with two output
 %      arguments N and MAX, the number of successful tests and the total
 %      number of tests in the file NAME are returned.
-% 
+%
 %      If the second argument is the string 'grabdemo', the contents of
 %      the demo blocks are extracted but not executed. Code for all code
 %      blocks is concatenated and returned as CODE with IDX being a
 %      vector of positions of the ends of the demo blocks.
-% 
+%
 %      If the second argument is 'explain', then NAME is ignored and an
 %      explanation of the line markers used is written to the file FID.
 %
@@ -50,27 +50,32 @@
 % See <a
 % href="http://www.gnu.org/software/octave/doc/interpreter/Test-Functions.html">online documentation</a> of test.
 
-%% Copyright (C) 2005, 2006, 2007 Paul Kienzle
-%%
-%% This file is part of Octave.
-%%
-%% Octave is free software; you can redistribute it and/or modify it
-%% under the terms of the GNU General Public License as published by
-%% the Free Software Foundation; either version 3 of the License, or (at
-%% your option) any later version.
-%%
-%% Octave is distributed in the hope that it will be useful, but
-%% WITHOUT ANY WARRANTY; without even the implied warranty of
-%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-%% General Public License for more details.
-%%
-%% You should have received a copy of the GNU General Public License
-%% along with Octave; see the file COPYING.  If not, see
-%% <http://www.gnu.org/licenses/>.
+% Copyright (C) 2005, 2006, 2007 Paul Kienzle
+%
+% This file is part of Octave.
+%
+% Octave is free software; you can redistribute it and/or modify it
+% under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 3 of the License, or (at
+% your option) any later version.
+%
+% Octave is distributed in the hope that it will be useful, but
+% WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+% General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with Octave; see the file COPYING.  If not, see
+% <http://www.gnu.org/licenses/>.
 
-%% Adaped by Xiangmin Jiao to partially work with MATLAB.
+% Copyright (C) 2009 Xiangmin Jiao
+% Adaped by Xiangmin Jiao to work with both MATLAB and Octave.
+%
+% This function is different from the Octave test function in the following aspsects:
+% - Leading insignificant characters before %! are ignored by mtest.
+% - Only basic directives (test, xtest, shared, assert and fail) are supported.
 
-function [ret1__, ret2__, ret3__, ret4__] = test_mcode (name__, flag__, fid__)
+function [ret1__, ret2__, ret3__, ret4__] = mtest (name__, flag__, fid__)
 %% information from test will be introduced by 'key'
 persistent signal_fail__;
 persistent signal_empty__;
@@ -156,7 +161,14 @@ end
 if ~strcmp(name__(end-1:end), '.m')
     name__ = [name__ '.m'];
 end
+if exist('./test', 'dir')
+    addpath('./test');
+    path_changed = true;
+else
+    path_changed = false;
+end
 file__ = which (name__);
+if path_changed; rmpath('./test'); end
 
 if (isempty (file__))
     if (grabdemo__)
@@ -173,7 +185,6 @@ if (isempty (file__))
     end
     return;
 end
-
 %% grab the test code from the file
 body__ = extract_test_code (file__);
 
@@ -388,7 +399,7 @@ for i__ = 1:length(blockidx__)-1
 
         catch
             delete test_run_error.m;
-            
+
             err__ = trimerr (lasterr, 'error');
             warning (warnstate__.state, 'quiet');
             if (warning__)
@@ -405,8 +416,13 @@ for i__ = 1:length(blockidx__)-1
         %% TESTIF
     elseif (strcmp (type__, 'testif'))
         [e__, feat__] = regexp (code__, '^\s*([^\s]+)', 'end', 'tokens');
-        if (exist('octave_config_info','builtin') && ...
-                isempty (findstr (octave_config_info ('DEFS'), feat__{1}{1})))
+        if exist('__octave_config_info__', 'builtin')
+          % octave_config_info is depreciated in 4.2.1
+          octave_config_info = eval('@__octave_config_info__');
+        end
+
+        if (isoctave && ...
+                isempty(strfind(octave_config_info('DEFS'), feat__{1}{1})))
             xskip__ = xskip__ + 1;
             success__ = 0;
             istest__ = 0;
@@ -440,14 +456,12 @@ for i__ = 1:length(blockidx__)-1
         try
             % In MATLAB, one cannot create a function using eval, so we
             % have to create a function for the test.
-            clear test_run_temp; 
+            clear test_run_temp;
             fid_m__ = fopen('test_run_temp.m','w');
             fprintf (fid_m__, 'function %stest_run_temp(%s)\n%s\nend', shared_r__,shared__, code__);
             fclose(fid_m__); rehash;
-            eval (sprintf ('%stest_run_temp(%s);', shared_r__, shared__));
-            delete test_run_temp.m;
-        catch
-            delete test_run_temp.m;
+        catch err
+            % delete test_run_temp.m;
             if (strcmp (type__, 'xtest'))
                 msg__ = sprintf ('%sknown failure\n%s', signal_fail__, lasterr);
                 xfail__ = xfail__ + 1;
@@ -457,8 +471,12 @@ for i__ = 1:length(blockidx__)-1
             end
             if (isempty (lasterr))
                 error ('empty error text, probably Ctrl-C --- aborting');
+            else
+                rethrow( err);
             end
         end
+        eval (sprintf ('%stest_run_temp(%s);', shared_r__, shared__));
+        delete test_run_temp.m;
     end
 
     %% All done.  Remember if we were successful and print any messages
@@ -569,7 +587,7 @@ fid = fopen (nm, 'rt');
 body = [];
 if (fid >= 0)
     while (~ feof (fid))
-        ln = fgetl (fid);
+        ln = strtrim( fgetl (fid));
         if (length (ln) >= 2 && strcmp (ln(1:2), '%!'))
             body = sprintf('%s\n%s', char(body), ln(3:end));
         end
@@ -627,4 +645,3 @@ end
 % !fail ('test(1,2,3,4)','usage.*test')  % too many args, generates usage()
 %!fail ('test('test', 'bogus')','unknown flag')      % incorrect args
 %!fail ('garbage','garbage.*undefined')  % usage on nonexistent function should be
-
