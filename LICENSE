@@ -1,4 +1,4 @@
-The use and distribution of MexCGNS is covered under the 
+The use and distribution of CGNS4m is covered under the 
 GNU Lesser General Public License (LGPL), same as the CGNS library.
 
 For details on the policy governing the distribution of the CGNS 
@@ -10,9 +10,9 @@ and for the LGPL:
 
     http://www.grc.nasa.gov/www/cgns/charter/license.html
 
-MexCGNS is developed by 
+CGNS4m is developed by 
        Xiangmin Jiao et al., jiao@ams.sunysb.edu
        Department of Applied Mathematics and Statistics of
        Stony Brook University
 
-       Copyright (C) 2009-2010 Stony Brook University.
+       Copyright (C) 2009-2020 Stony Brook University.
