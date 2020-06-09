@@ -4,7 +4,7 @@ This is CGNS4m, formerly known as mexcgns. It provides MEX interfaces of the mid
 
 ### Installation
 
-CGNS4m is easy to install. Simply download the gzipped tar file [cgns4m.tgz](https://github.com/meshkit/cgns4m/archive/master.tar.gz), untar it into your work directory (e.g., using the command `tar zxvf cgns4m.tgz` on UNIX), and then run the `startup_cgns4m` script in MATLAB/Octave.
+CGNS4m is easy to install. Simply download the gzipped tar file [cgns4m-master.tar.gz](https://github.com/meshkit/cgns4m/archive/master.tar.gz), untar it into your work directory (e.g., using the command `tar zxvf cgns4m.tgz` on UNIX), and then run the `startup_cgns4m` script in MATLAB/Octave.
 
 You need to run the `startup_cgns4m` script every time you launch MATLAB/Octave. It  adds the CGNS4m directories into the path. When you run `startup_cgns4m` for the first time, the script automatically compiles the MEX functions and performs some tests to make sure CGNS4m is installed correctly.
 
