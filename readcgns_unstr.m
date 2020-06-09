@@ -56,7 +56,7 @@ function [ps, elems, typestr, var_nodes, var_cells] = ...
 %        Xiangmin Jiao (jiao@ams.sunysb.edu)
 
 if ~exist('cgnslib_mex', 'file')
-    warning('CGNS does not appear ot be compiled  properly. Try to run build_mexcgns.'); %#ok<WNTAG>
+    warning('CGNS does not appear to be compiled  properly. Try to run build_mexcgns.'); %#ok<WNTAG>
     build_mexcgns;
 end
 
@@ -235,7 +235,7 @@ end
 function nelems = number_of_elements( elems)
 % Obtain the number of elements in element connectivity
 
-if size(elems,2)>1;
+if size(elems,2)>1
     nelems = size(elems,1);
 else
     es = size(elems,1);
@@ -407,9 +407,9 @@ for ii =1:length(fieldlist)
             in_struct(index_struct).index_sol, var_orig, in_struct(index_struct).datatype, ...
             index_min, index_max,out_var_str.(var)); chk_error(ierr);
 
-    elseif ncol==3 || ncol==6
+    elseif ncol<=3 || ncol==6
         % For naming convention, see http://www.grc.nasa.gov/WWW/cgns/sids/dataname.html
-        if ncol==3  % Vector
+        if ncol<=3  % Vector
             suffix = ['X';'Y';'Z'];
         else        % Tensor
             suffix = ['XX';'XY';'XZ';'YY';'YZ';'ZZ'];
