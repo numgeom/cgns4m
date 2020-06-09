@@ -14,7 +14,7 @@ function [io_family_name, ierr] = cg_famname_read(io_family_name)
 % The original C function is:
 % int cg_famname_read( char * family_name);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/families.html">online documentation</a>.
 %
 if ( nargout < 1); 
     error('Incorrect number of input or output arguments.');
@@ -33,4 +33,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(54), io_family_name);
+[ierr, io_family_name] =  cgnslib_mex(int32(51), io_family_name);

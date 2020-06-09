@@ -22,4 +22,4 @@ if (nargin < 4);
 end
 
 % Invoke the actual MEX-function.
-[out_coord_id, ierr] =  cgnslib_mex(int32(68), in_fn, in_B, in_Z, in_C);
+[out_coord_id, ierr] =  cgnslib_mex(int32(65), in_fn, in_B, in_Z, in_C);

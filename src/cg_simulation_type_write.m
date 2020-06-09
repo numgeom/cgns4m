@@ -12,13 +12,13 @@ function ierr = cg_simulation_type_write(in_file_number, in_B, in_type)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_simulation_type_write( int file_number, int B, CG_SimulationType_t type);
+% int cg_simulation_type_write( int file_number, int B, SimulationType_t type);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/structural.html">online documentation</a>.
 %
 if (nargin < 3); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(156), in_file_number, in_B, in_type);
+ierr =  cgnslib_mex(int32(130), in_file_number, in_B, in_type);

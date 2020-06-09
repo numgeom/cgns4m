@@ -10,7 +10,7 @@ function name = cg_AngleUnitsName(in_type)
 %            name: character string
 %
 % The original C function is:
-% const char * cg_AngleUnitsName( CG_AngleUnits_t type);
+% const char * cg_AngleUnitsName( AngleUnits_t type);
 %
 % For detail, see the documentation of the original function.
 if (nargin < 1); 
@@ -18,4 +18,4 @@ if (nargin < 1);
 end
 
 % Invoke the actual MEX-function.
-name =  cgnslib_mex(int32(19), in_type);
+name =  cgnslib_mex(int32(18), in_type);

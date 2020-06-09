@@ -18,9 +18,9 @@ function [io_fieldname, out_type, ierr] = cg_field_info(in_fn, in_B, in_Z, in_S,
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_field_info( int fn, int B, int Z, int S, int F, CG_DataType_t * type, char * fieldname);
+% int cg_field_info( int fn, int B, int Z, int S, int F, DataType_t * type, char * fieldname);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/solution.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 5); 
     error('Incorrect number of input or output arguments.');
@@ -39,4 +39,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_type, ierr] =  cgnslib_mex(int32(92), in_fn, in_B, in_Z, in_S, in_F, io_fieldname);
+[out_type, ierr, io_fieldname] =  cgnslib_mex(int32(85), in_fn, in_B, in_Z, in_S, in_F, io_fieldname);

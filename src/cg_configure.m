@@ -13,7 +13,7 @@ function ierr = cg_configure(in_what, in_value)
 % The original C function is:
 % int cg_configure( int what, void * value);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/fileops.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/fileops.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');
@@ -22,20 +22,18 @@ end
 % Perform dynamic type casting
 datatype = cgns_configure_type(in_what);
 switch (datatype)
-    case 2 % CG_Integer
+    case 2 % Integer
         in_value = int32(in_value);
-    case 3 % CG_RealSingle
+    case 3 % RealSingle
         in_value = single(in_value);
-    case 4 % CG_RealDouble
+    case 4 % RealDouble
         in_value = double(in_value);
-    case 5 % CG_Character
+    case 5 % Character
         in_value = [int8(in_value), int8(zeros(1,1))];
-    case 6 % CG_LongInteger
-        in_value = int64(in_value);
     otherwise
         error('Unknown data type %d', cgns_configure_type(in_what));
 end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(10), in_what, in_value);
+ierr =  cgnslib_mex(int32(9), in_what, in_value);

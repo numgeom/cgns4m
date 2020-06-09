@@ -12,8 +12,8 @@ function [out_ndescriptors, ierr] = cg_ndescriptors()
 % The original C function is:
 % int cg_ndescriptors( int * ndescriptors);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/descriptor.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/descriptor.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.
-[out_ndescriptors, ierr] =  cgnslib_mex(int32(211));
+[out_ndescriptors, ierr] =  cgnslib_mex(int32(185));

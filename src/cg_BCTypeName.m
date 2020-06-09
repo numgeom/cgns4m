@@ -10,7 +10,7 @@ function name = cg_BCTypeName(in_type)
 %            name: character string
 %
 % The original C function is:
-% const char * cg_BCTypeName( CG_BCType_t type);
+% const char * cg_BCTypeName( BCType_t type);
 %
 % For detail, see the documentation of the original function.
 if (nargin < 1); 
@@ -18,4 +18,4 @@ if (nargin < 1);
 end
 
 % Invoke the actual MEX-function.
-name =  cgnslib_mex(int32(30), in_type);
+name =  cgnslib_mex(int32(29), in_type);

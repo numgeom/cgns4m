@@ -10,7 +10,7 @@ function name = cg_AreaTypeName(in_type)
 %            name: character string
 %
 % The original C function is:
-% const char * cg_AreaTypeName( CG_AreaType_t type);
+% const char * cg_AreaTypeName( AreaType_t type);
 %
 % For detail, see the documentation of the original function.
 if (nargin < 1); 
@@ -18,4 +18,4 @@ if (nargin < 1);
 end
 
 % Invoke the actual MEX-function.
-name =  cgnslib_mex(int32(38), in_type);
+name =  cgnslib_mex(int32(37), in_type);

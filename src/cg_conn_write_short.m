@@ -11,8 +11,8 @@ function [out_I, ierr] = cg_conn_write_short(in_file_number, in_B, in_Z, in_conn
 %        location: 32-bit integer (int32), scalar
 %            type: 32-bit integer (int32), scalar
 %      ptset_type: 32-bit integer (int32), scalar
-%           npnts: 64-bit or 32-bit integer (platform dependent), scalar
-%            pnts: 64-bit or 32-bit integer (platform dependent), array
+%           npnts: 32-bit integer (int32), scalar
+%            pnts: 32-bit integer (int32), array
 %       donorname: character string
 %
 % Output arguments (optional):
@@ -20,13 +20,13 @@ function [out_I, ierr] = cg_conn_write_short(in_file_number, in_B, in_Z, in_conn
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_conn_write_short( int file_number, int B, int Z, const char * connectname, CG_GridLocation_t location, CG_GridConnectivityType_t type, CG_PointSetType_t ptset_type, ptrdiff_t npnts, const ptrdiff_t * pnts, const char * donorname, int * I);
+% int cg_conn_write_short( int file_number, int B, int Z, char const * connectname, GridLocation_t location, GridConnectivityType_t type, PointSetType_t ptset_type, int npnts, int const * pnts, char const * donorname, int * I);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
 %
 if (nargin < 10); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_I, ierr] =  cgnslib_mex(int32(120), in_file_number, in_B, in_Z, in_connectname, in_location, in_type, in_ptset_type, in_npnts, in_pnts, in_donorname);
+[out_I, ierr] =  cgnslib_mex(int32(100), in_file_number, in_B, in_Z, in_connectname, in_location, in_type, in_ptset_type, in_npnts, in_pnts, in_donorname);

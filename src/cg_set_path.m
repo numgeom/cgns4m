@@ -12,11 +12,11 @@ function ierr = cg_set_path(in_path)
 % The original C function is:
 % int cg_set_path( const char * path);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/fileops.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/fileops.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(13), in_path);
+ierr =  cgnslib_mex(int32(12), in_path);

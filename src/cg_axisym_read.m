@@ -17,21 +17,19 @@ function [io_ref_point, io_axis, ierr] = cg_axisym_read(in_file_number, in_B, io
 % The original C function is:
 % int cg_axisym_read( int file_number, int B, float * ref_point, float * axis);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
 %
 if ( nargout < 2 || nargin < 4); 
     error('Incorrect number of input or output arguments.');
 end
-basetype='single';
-if ~isa(io_ref_point,basetype);
+if ~isa(io_ref_point,'single');
     io_ref_point=single(io_ref_point);
 elseif ~isempty(io_ref_point);
     % Write to it to avoid sharing memory with other variables
     t=io_ref_point(1); io_ref_point(1)=t;
 end
 
-basetype='single';
-if ~isa(io_axis,basetype);
+if ~isa(io_axis,'single');
     io_axis=single(io_axis);
 elseif ~isempty(io_axis);
     % Write to it to avoid sharing memory with other variables
@@ -40,4 +38,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(163), in_file_number, in_B, io_ref_point, io_axis);
+ierr =  cgnslib_mex(int32(137), in_file_number, in_B, io_ref_point, io_axis);

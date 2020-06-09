@@ -18,9 +18,9 @@ function [io_RegionName, out_AreaType, out_SurfaceArea, ierr] = cg_bc_area_read(
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_bc_area_read( int file_number, int B, int Z, int BC, CG_AreaType_t * AreaType, float * SurfaceArea, char * RegionName);
+% int cg_bc_area_read( int file_number, int B, int Z, int BC, AreaType_t * AreaType, float * SurfaceArea, char * RegionName);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 4); 
     error('Incorrect number of input or output arguments.');
@@ -39,4 +39,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_AreaType, out_SurfaceArea, ierr] =  cgnslib_mex(int32(169), in_file_number, in_B, in_Z, in_BC, io_RegionName);
+[out_AreaType, out_SurfaceArea, ierr, io_RegionName] =  cgnslib_mex(int32(143), in_file_number, in_B, in_Z, in_BC, io_RegionName);

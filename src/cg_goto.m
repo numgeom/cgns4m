@@ -20,7 +20,7 @@ function ierr = cg_goto(varargin)
 % The original C function is:
 % int cg_goto( int file_number, int B, ..., "end");
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/navigating.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/navigating.html">online documentation</a>.
 % 
 % See also cg_gopath, cg_gorel, cg_where.
 

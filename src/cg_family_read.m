@@ -19,7 +19,7 @@ function [io_family_name, out_nboco, out_ngeos, ierr] = cg_family_read(in_file_n
 % The original C function is:
 % int cg_family_read( int file_number, int B, int F, char * family_name, int * nboco, int * ngeos);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/families.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 3); 
     error('Incorrect number of input or output arguments.');
@@ -38,4 +38,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_nboco, out_ngeos, ierr] =  cgnslib_mex(int32(52), in_file_number, in_B, in_F, io_family_name);
+[out_nboco, out_ngeos, ierr, io_family_name] =  cgnslib_mex(int32(49), in_file_number, in_B, in_F, io_family_name);

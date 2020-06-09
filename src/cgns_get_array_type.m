@@ -14,4 +14,4 @@ io_ArrayName=char(zeros(1,32));
 io_DimensionVector=int32(zeros(9,1)); 
 
 % Invoke the actual MEX-function.
-out_DataType =  cgnslib_mex(int32(199), in_A, io_ArrayName, io_DimensionVector);
+out_DataType =  cgnslib_mex(int32(173), in_A, io_ArrayName, io_DimensionVector);

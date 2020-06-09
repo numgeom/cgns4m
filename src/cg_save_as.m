@@ -15,7 +15,7 @@ function ierr = cg_save_as(in_fn, in_filename, in_file_type, in_follow_links)
 % The original C function is:
 % int cg_save_as( int fn, const char * filename, int file_type, int follow_links);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/fileops.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/fileops.html">online documentation</a>.
 %
 if (nargin < 4); 
     error('Incorrect number of input or output arguments.');

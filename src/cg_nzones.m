@@ -14,11 +14,11 @@ function [out_nzones, ierr] = cg_nzones(in_fn, in_B)
 % The original C function is:
 % int cg_nzones( int fn, int B, int * nzones);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/structural.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_nzones, ierr] =  cgnslib_mex(int32(45), in_fn, in_B);
+[out_nzones, ierr] =  cgnslib_mex(int32(43), in_fn, in_B);

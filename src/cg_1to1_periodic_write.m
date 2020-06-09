@@ -18,11 +18,11 @@ function ierr = cg_1to1_periodic_write(in_file_number, in_B, in_Z, in_I, in_Rota
 % The original C function is:
 % int cg_1to1_periodic_write( int file_number, int B, int Z, int I, float const * RotationCenter, float const * RotationAngle, float const * Translation);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
 %
 if (nargin < 7); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(173), in_file_number, in_B, in_Z, in_I, in_RotationCenter, in_RotationAngle, in_Translation);
+ierr =  cgnslib_mex(int32(147), in_file_number, in_B, in_Z, in_I, in_RotationCenter, in_RotationAngle, in_Translation);

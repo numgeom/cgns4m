@@ -10,8 +10,8 @@ function cg_error_print()
 % The original C function is:
 % void cg_error_print( );
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/error.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/error.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.
- cgnslib_mex(int32(243));
+ cgnslib_mex(int32(217));

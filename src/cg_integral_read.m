@@ -15,7 +15,7 @@ function [io_IntegralDataName, ierr] = cg_integral_read(in_IntegralDataIndex, io
 % The original C function is:
 % int cg_integral_read( int IntegralDataIndex, char * IntegralDataName);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/auxiliary.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/auxiliary.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 1); 
     error('Incorrect number of input or output arguments.');
@@ -34,4 +34,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(207), in_IntegralDataIndex, io_IntegralDataName);
+[ierr, io_IntegralDataName] =  cgnslib_mex(int32(181), in_IntegralDataIndex, io_IntegralDataName);

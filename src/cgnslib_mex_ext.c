@@ -1,12 +1,12 @@
 /*
  * This file was created manually for MATLAB & Octave from 
- * cgnslib_3.1/cgnslib.h by Xiangmin Jiao. 
+ * cgnslib_3.0/cgnslib.h by Xiangmin Jiao. 
  * For bug reports, email jiao@ams.sunysb.edu.
  */
 
 #include "c2mex.h"   /* This includes "mex.h". */
 
-#include "cgnslib_3.1/cgnslib.h"
+#include "cgnslib_3.0/cgnslib.h"
 #include <string.h>
 #include <assert.h>
 
@@ -32,8 +32,7 @@ EXTERN_C void cg_1to1_read_global_MeX(int nlhs, mxArray *plhs[],
     int in_fn;
     int in_B;
     char *buf_char, **ptr_connectname, **ptr_zonename, **ptr_donorname;
-    int *buf_int, **ptr_transform;
-    cgsize_t *buf_cgsize, **ptr_range, **ptr_donor_range;
+    int *buf_int, **ptr_range, **ptr_donor_range, **ptr_transform;
     int ierr, i, n1to1;
 
     /******** Check number of input and output arguments. ********/ 
@@ -55,14 +54,13 @@ EXTERN_C void cg_1to1_read_global_MeX(int nlhs, mxArray *plhs[],
     }
 
     buf_char = (char*)mxCalloc( 3*n1to1*33, sizeof(char));
-    buf_cgsize = (cgsize_t*)mxCalloc( 2*n1to1*6, sizeof(cgsize_t));
-    buf_int = (int*)mxCalloc( n1to1*6, sizeof(int));
+    buf_int = (int*)mxCalloc( 3*n1to1*6, sizeof(int));
 
     ptr_connectname = (char**)mxCalloc( 6*n1to1, sizeof(void *));
     ptr_zonename    = ptr_connectname + n1to1;
     ptr_donorname   = ptr_connectname + 2*n1to1;
-    ptr_range       = (cgsize_t**)ptr_connectname + 3*n1to1;
-    ptr_donor_range = (cgsize_t**)ptr_connectname + 4*n1to1;
+    ptr_range       = (int**)ptr_connectname + 3*n1to1;
+    ptr_donor_range = (int**)ptr_connectname + 4*n1to1;
     ptr_transform   = (int**)ptr_connectname + 5*n1to1;
 
     for (i=0; i<n1to1; ++i) {
@@ -70,9 +68,9 @@ EXTERN_C void cg_1to1_read_global_MeX(int nlhs, mxArray *plhs[],
         ptr_zonename[i]    = buf_char + (i+n1to1)*33;
         ptr_donorname[i]   = buf_char + (i+2*n1to1)*33;
 
-        ptr_transform[i]   = buf_int + i*6;
-        ptr_range[i]       = buf_cgsize + i*6;
-        ptr_donor_range[i] = buf_cgsize + (i+n1to1)*6;
+        ptr_range[i]       = buf_int + i*6;
+        ptr_donor_range[i] = buf_int + (i+n1to1)*6;
+        ptr_transform[i]   = buf_int + (i+2*n1to1)*6;    
     }
 
     /******** Invoke computational function ********/
@@ -106,16 +104,16 @@ EXTERN_C void cg_1to1_read_global_MeX(int nlhs, mxArray *plhs[],
         for( i=0; i<n1to1; i++) {
             mxArray *arr = mxCreateNumericMatrix( 6,1, mxINT32_CLASS, mxREAL);
             mxSetCell(plhs[3],i,arr);
-            memcpy( (cgsize_t*)mxGetData(arr), ptr_range[i], 6*sizeof(cgsize_t));
+            memcpy( (int*)mxGetData(arr), ptr_range[i], 6*sizeof(int));
         }
     }
     if (nlhs > 4) {
         plhs[4] = mxCreateCellMatrix(n1to1,1);
 
         for( i=0; i<n1to1; i++) {
-            mxArray *arr = mxCreateNumericMatrix( 6,1, sizeof(cgsize_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);
+            mxArray *arr = mxCreateNumericMatrix( 6,1, mxINT32_CLASS, mxREAL);
             mxSetCell(plhs[4],i,arr);
-            memcpy( (cgsize_t*)mxGetData(arr), ptr_donor_range[i], 6*sizeof(cgsize_t));
+            memcpy( (int*)mxGetData(arr), ptr_donor_range[i], 6*sizeof(int));
         }
     }
     if (nlhs > 5) {
@@ -136,8 +134,7 @@ EXTERN_C void cg_1to1_read_global_MeX(int nlhs, mxArray *plhs[],
     /******** Deallocate buffer space. ********/
     mxFree( buf_char);
     mxFree( buf_int);
-    mxFree( buf_cgsize);
-    mxFree( ptr_donor_range);
+    mxFree( ptr_connectname);
 }
 
 /* Gateway function 

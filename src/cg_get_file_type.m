@@ -15,13 +15,12 @@ function [io_file_type, ierr] = cg_get_file_type(in_fn, io_file_type)
 % The original C function is:
 % int cg_get_file_type( int fn, int * file_type);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/fileops.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/fileops.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 2); 
     error('Incorrect number of input or output arguments.');
 end
-basetype='int32';
-if ~isa(io_file_type,basetype);
+if ~isa(io_file_type,'int32');
     io_file_type=int32(io_file_type);
 elseif ~isempty(io_file_type);
     % Write to it to avoid sharing memory with other variables

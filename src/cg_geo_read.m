@@ -21,7 +21,7 @@ function [io_geo_name, io_CAD_name, out_geo_file, out_npart, ierr] = cg_geo_read
 % The original C function is:
 % int cg_geo_read( int file_number, int B, int F, int G, char * geo_name, char ** geo_file, char * CAD_name, int * npart);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/families.html">online documentation</a>.
 %
 
 % NOTE: Some buffer space for out char(s) was allocated by C function
@@ -56,4 +56,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_geo_file, out_npart, ierr] =  cgnslib_mex(int32(58), in_file_number, in_B, in_F, in_G, io_geo_name, io_CAD_name);
+[out_geo_file, out_npart, ierr, io_geo_name, io_CAD_name] =  cgnslib_mex(int32(55), in_file_number, in_B, in_F, in_G, io_geo_name, io_CAD_name);

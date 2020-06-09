@@ -12,11 +12,11 @@ function ierr = cg_ordinal_write(in_Ordinal)
 % The original C function is:
 % int cg_ordinal_write( int Ordinal);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/descriptor.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/descriptor.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(233), in_Ordinal);
+ierr =  cgnslib_mex(int32(207), in_Ordinal);

@@ -15,13 +15,13 @@ function [out_R, ierr] = cg_rigid_motion_write(in_file_number, in_B, in_Z, in_na
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_rigid_motion_write( int file_number, int B, int Z, const char * name, CG_RigidGridMotionType_t type, int * R);
+% int cg_rigid_motion_write( int file_number, int B, int Z, char const * name, RigidGridMotionType_t type, int * R);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/timedep.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/timedep.html">online documentation</a>.
 %
 if (nargin < 5); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_R, ierr] =  cgnslib_mex(int32(151), in_file_number, in_B, in_Z, in_name, in_type);
+[out_R, ierr] =  cgnslib_mex(int32(125), in_file_number, in_B, in_Z, in_name, in_type);

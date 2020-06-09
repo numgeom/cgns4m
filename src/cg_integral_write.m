@@ -10,13 +10,13 @@ function ierr = cg_integral_write(in_IntegralDataName)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_integral_write( const char * IntegralDataName);
+% int cg_integral_write( char const * IntegralDataName);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/auxiliary.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/auxiliary.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(208), in_IntegralDataName);
+ierr =  cgnslib_mex(int32(182), in_IntegralDataName);

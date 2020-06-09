@@ -10,10 +10,10 @@ function [out_DataType, ierr] = cg_exponents_info()
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_exponents_info( CG_DataType_t * DataType);
+% int cg_exponents_info( DataType_t * DataType);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.
-[out_DataType, ierr] =  cgnslib_mex(int32(219));
+[out_DataType, ierr] =  cgnslib_mex(int32(193));

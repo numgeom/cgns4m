@@ -13,13 +13,13 @@ function [out_F, ierr] = cg_family_write(in_file_number, in_B, in_family_name)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_family_write( int file_number, int B, const char * family_name, int * F);
+% int cg_family_write( int file_number, int B, char const * family_name, int * F);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/families.html">online documentation</a>.
 %
 if (nargin < 3); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_F, ierr] =  cgnslib_mex(int32(53), in_file_number, in_B, in_family_name);
+[out_F, ierr] =  cgnslib_mex(int32(50), in_file_number, in_B, in_family_name);

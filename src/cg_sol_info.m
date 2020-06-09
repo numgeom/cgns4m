@@ -17,9 +17,9 @@ function [io_solname, out_location, ierr] = cg_sol_info(in_fn, in_B, in_Z, in_S,
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_sol_info( int fn, int B, int Z, int S, char * solname, CG_GridLocation_t * location);
+% int cg_sol_info( int fn, int B, int Z, int S, char * solname, GridLocation_t * location);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/solution.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 4); 
     error('Incorrect number of input or output arguments.');
@@ -38,4 +38,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_location, ierr] =  cgnslib_mex(int32(84), in_fn, in_B, in_Z, in_S, io_solname);
+[out_location, ierr, io_solname] =  cgnslib_mex(int32(81), in_fn, in_B, in_Z, in_S, io_solname);

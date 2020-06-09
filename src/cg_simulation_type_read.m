@@ -12,13 +12,13 @@ function [out_type, ierr] = cg_simulation_type_read(in_file_number, in_B)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_simulation_type_read( int file_number, int B, CG_SimulationType_t * type);
+% int cg_simulation_type_read( int file_number, int B, SimulationType_t * type);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/structural.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_type, ierr] =  cgnslib_mex(int32(155), in_file_number, in_B);
+[out_type, ierr] =  cgnslib_mex(int32(129), in_file_number, in_B);

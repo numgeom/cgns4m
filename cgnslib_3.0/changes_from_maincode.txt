@@ -1,0 +1,11 @@
+This version of CGNS was modified from cgns3.0.8 with the following changes:
+
+- The ADF files produced are labled as version 2.54 instead of 3.0, so that 
+  software that supports CGNS v2.x can still visualize the files correctly.
+  The main changes are in cgnslib.[hc] and cgnsKeyworkds.h.
+
+- The ADFH was made compatible with HDF5 v1.6. The only things that is not 
+  supported by v1.6 is the links, which most files do not use. The main
+  changes are in adfh/ADFH.h.
+
+- Some bug fixes in cgnslib.[hc].

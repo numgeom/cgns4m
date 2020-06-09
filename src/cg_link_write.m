@@ -12,7 +12,7 @@ function ierr = cg_link_write(in_nodename, in_filename, in_name_in_file)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_link_write( const char * nodename, const char * filename, const char * name_in_file);
+% int cg_link_write( char const * nodename, char const * filename, char const * name_in_file);
 %
 % For detail, see the documentation of the original function.
 if (nargin < 3); 
@@ -20,4 +20,4 @@ if (nargin < 3);
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(239), in_nodename, in_filename, in_name_in_file);
+ierr =  cgnslib_mex(int32(213), in_nodename, in_filename, in_name_in_file);

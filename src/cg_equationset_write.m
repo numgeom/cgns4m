@@ -12,11 +12,11 @@ function ierr = cg_equationset_write(in_EquationDimension)
 % The original C function is:
 % int cg_equationset_write( int EquationDimension);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/equation.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(191), in_EquationDimension);
+ierr =  cgnslib_mex(int32(165), in_EquationDimension);

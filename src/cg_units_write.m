@@ -14,13 +14,13 @@ function ierr = cg_units_write(in_mass, in_length, in_time, in_temperature, in_a
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_units_write( CG_MassUnits_t mass, CG_LengthUnits_t length, CG_TimeUnits_t time, CG_TemperatureUnits_t temperature, CG_AngleUnits_t angle);
+% int cg_units_write( MassUnits_t mass, LengthUnits_t length, TimeUnits_t time, TemperatureUnits_t temperature, AngleUnits_t angle);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
 %
 if (nargin < 5); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(216), in_mass, in_length, in_time, in_temperature, in_angle);
+ierr =  cgnslib_mex(int32(190), in_mass, in_length, in_time, in_temperature, in_angle);

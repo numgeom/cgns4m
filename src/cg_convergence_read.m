@@ -15,7 +15,7 @@ function [io_iterations, out_NormDefinitions, ierr] = cg_convergence_read(io_ite
 % The original C function is:
 % int cg_convergence_read( int * iterations, char ** NormDefinitions);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/auxiliary.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/auxiliary.html">online documentation</a>.
 %
 
 % NOTE: Some buffer space for out char(s) was allocated by C function
@@ -24,8 +24,7 @@ function [io_iterations, out_NormDefinitions, ierr] = cg_convergence_read(io_ite
 if ( nargout < 1 || nargin < 1); 
     error('Incorrect number of input or output arguments.');
 end
-basetype='int32';
-if ~isa(io_iterations,basetype);
+if ~isa(io_iterations,'int32');
     io_iterations=int32(io_iterations);
 elseif ~isempty(io_iterations);
     % Write to it to avoid sharing memory with other variables
@@ -34,4 +33,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_NormDefinitions, ierr] =  cgnslib_mex(int32(184), io_iterations);
+[out_NormDefinitions, ierr] =  cgnslib_mex(int32(158), io_iterations);

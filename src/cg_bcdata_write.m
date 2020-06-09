@@ -15,13 +15,13 @@ function ierr = cg_bcdata_write(in_file_number, in_B, in_Z, in_BC, in_Dset, in_B
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_bcdata_write( int file_number, int B, int Z, int BC, int Dset, CG_BCDataType_t BCDataType);
+% int cg_bcdata_write( int file_number, int B, int Z, int BC, int Dset, BCDataType_t BCDataType);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
 %
 if (nargin < 6); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(141), in_file_number, in_B, in_Z, in_BC, in_Dset, in_BCDataType);
+ierr =  cgnslib_mex(int32(119), in_file_number, in_B, in_Z, in_BC, in_Dset, in_BCDataType);

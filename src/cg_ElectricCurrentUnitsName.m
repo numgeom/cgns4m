@@ -10,7 +10,7 @@ function name = cg_ElectricCurrentUnitsName(in_type)
 %            name: character string
 %
 % The original C function is:
-% const char * cg_ElectricCurrentUnitsName( CG_ElectricCurrentUnits_t type);
+% const char * cg_ElectricCurrentUnitsName( ElectricCurrentUnits_t type);
 %
 % For detail, see the documentation of the original function.
 if (nargin < 1); 
@@ -18,4 +18,4 @@ if (nargin < 1);
 end
 
 % Invoke the actual MEX-function.
-name =  cgnslib_mex(int32(20), in_type);
+name =  cgnslib_mex(int32(19), in_type);

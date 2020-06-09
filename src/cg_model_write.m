@@ -11,13 +11,13 @@ function ierr = cg_model_write(in_ModelLabel, in_ModelType)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_model_write( const char * ModelLabel, CG_ModelType_t ModelType);
+% int cg_model_write( char const * ModelLabel, ModelType_t ModelType);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/equation.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(197), in_ModelLabel, in_ModelType);
+ierr =  cgnslib_mex(int32(171), in_ModelLabel, in_ModelType);

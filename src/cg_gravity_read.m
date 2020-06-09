@@ -16,13 +16,12 @@ function [io_gravity_vector, ierr] = cg_gravity_read(in_file_number, in_B, io_gr
 % The original C function is:
 % int cg_gravity_read( int file_number, int B, float * gravity_vector);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/auxiliary.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/auxiliary.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 3); 
     error('Incorrect number of input or output arguments.');
 end
-basetype='single';
-if ~isa(io_gravity_vector,basetype);
+if ~isa(io_gravity_vector,'single');
     io_gravity_vector=single(io_gravity_vector);
 elseif ~isempty(io_gravity_vector);
     % Write to it to avoid sharing memory with other variables
@@ -31,4 +30,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(161), in_file_number, in_B, io_gravity_vector);
+ierr =  cgnslib_mex(int32(135), in_file_number, in_B, io_gravity_vector);

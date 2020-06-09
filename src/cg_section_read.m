@@ -14,16 +14,16 @@ function [io_SectionName, out_type, out_start, out_end, out_nbndry, out_parent_f
 %
 % Output arguments (optional):
 %            type: 32-bit integer (int32), scalar
-%           start: 64-bit or 32-bit integer (platform dependent), scalar
-%             end: 64-bit or 32-bit integer (platform dependent), scalar
+%           start: 32-bit integer (int32), scalar
+%             end: 32-bit integer (int32), scalar
 %          nbndry: 32-bit integer (int32), scalar
 %     parent_flag: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_section_read( int file_number, int B, int Z, int S, char * SectionName, CG_ElementType_t * type, ptrdiff_t * start, ptrdiff_t * end, int * nbndry, int * parent_flag);
+% int cg_section_read( int file_number, int B, int Z, int S, char * SectionName, ElementType_t * type, int * start, int * end, int * nbndry, int * parent_flag);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 4); 
     error('Incorrect number of input or output arguments.');
@@ -42,4 +42,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_type, out_start, out_end, out_nbndry, out_parent_flag, ierr] =  cgnslib_mex(int32(72), in_file_number, in_B, in_Z, in_S, io_SectionName);
+[out_type, out_start, out_end, out_nbndry, out_parent_flag, ierr, io_SectionName] =  cgnslib_mex(int32(69), in_file_number, in_B, in_Z, in_S, io_SectionName);

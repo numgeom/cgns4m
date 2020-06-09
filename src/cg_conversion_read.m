@@ -14,7 +14,7 @@ function [io_ConversionFactors, ierr] = cg_conversion_read(io_ConversionFactors)
 % The original C function is:
 % int cg_conversion_read( void * ConversionFactors);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 1); 
     error('Incorrect number of input or output arguments.');
@@ -23,25 +23,23 @@ end
 % Perform dynamic type casting
 datatype = cg_conversion_info();
 switch (datatype)
-    case 2 % CG_Integer
+    case 2 % Integer
         io_ConversionFactors = int32(io_ConversionFactors);
-    case 3 % CG_RealSingle
+    case 3 % RealSingle
         io_ConversionFactors = single(io_ConversionFactors);
-    case 4 % CG_RealDouble
+    case 4 % RealDouble
         io_ConversionFactors = double(io_ConversionFactors);
-    case 5 % CG_Character
+    case 5 % Character
         io_ConversionFactors = [int8(io_ConversionFactors), int8(zeros(1,1))];
-    case 6 % CG_LongInteger
-        io_ConversionFactors = int64(io_ConversionFactors);
     otherwise
         error('Unknown data type %d', cg_conversion_info());
 end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(226), io_ConversionFactors);
+ierr =  cgnslib_mex(int32(200), io_ConversionFactors);
 
 % Perform dynamic type casting
-if datatype==5 % CG_Character
+if datatype==5 % Character
     io_ConversionFactors = char(io_ConversionFactors(1:end-1));
 end

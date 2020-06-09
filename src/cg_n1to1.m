@@ -15,11 +15,11 @@ function [out_n1to1, ierr] = cg_n1to1(in_fn, in_B, in_Z)
 % The original C function is:
 % int cg_n1to1( int fn, int B, int Z, int * n1to1);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
 %
 if (nargin < 3); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_n1to1, ierr] =  cgnslib_mex(int32(122), in_fn, in_B, in_Z);
+[out_n1to1, ierr] =  cgnslib_mex(int32(102), in_fn, in_B, in_Z);

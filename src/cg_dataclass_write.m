@@ -10,13 +10,13 @@ function ierr = cg_dataclass_write(in_dataclass)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_dataclass_write( CG_DataClass_t dataclass);
+% int cg_dataclass_write( DataClass_t dataclass);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(229), in_dataclass);
+ierr =  cgnslib_mex(int32(203), in_dataclass);

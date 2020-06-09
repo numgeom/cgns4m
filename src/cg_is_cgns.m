@@ -13,7 +13,7 @@ function [out_file_type, ierr] = cg_is_cgns(in_filename)
 % The original C function is:
 % int cg_is_cgns( const char * filename, int * file_type);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/fileops.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/fileops.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');

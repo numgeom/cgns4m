@@ -1,12 +1,12 @@
 /*
  * This file was automatically generated for MATLAB & Octave from 
- * cgnslib_3.1/cgnslib.h using Xiangmin Jiao's c2mex. 
+ * cgnslib_3.0/cgnslib.h using Xiangmin Jiao's c2mex. 
  * For bug reports of c2mex, email jiao@ams.sunysb.edu.
  */
 
 #include "c2mex.h"   /* This includes "mex.h". */
 
-#include "cgnslib_3.1/cgnslib.h"
+#include "cgnslib_3.0/cgnslib.h"
 
 
 #ifdef EXTERN_C
@@ -70,7 +70,7 @@ EXTERN_C void cg_is_cgns_MeX(int nlhs, mxArray *plhs[],
  * [out_fn, ierr] = cg_open(in_filename, in_mode) 
  *
  * The original C interface is 
- * int cg_open( const char * filename, int mode, int * fn);
+ * int cg_open( char const * filename, int mode, int * fn);
  */
 EXTERN_C void cg_open_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -334,42 +334,6 @@ EXTERN_C void cg_root_id_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function 
- * [out_cgio_num, ierr] = cg_get_cgio(in_fn) 
- *
- * The original C interface is 
- * int cg_get_cgio( int fn, int * cgio_num);
- */
-EXTERN_C void cg_get_cgio_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int out_cgio_num;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 1)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_get_cgio(in_fn, &out_cgio_num);
-
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_cgio_num;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
-    }
-}
-
-/* Gateway function 
  * ierr = cg_configure(in_what, in_value) 
  *
  * The original C interface is 
@@ -531,12 +495,12 @@ EXTERN_C void cg_add_path_MeX(int nlhs, mxArray *plhs[],
  * name = cg_MassUnitsName(in_type) 
  *
  * The original C interface is 
- * const char * cg_MassUnitsName( CG_MassUnits_t type);
+ * const char * cg_MassUnitsName( MassUnits_t type);
  */
 EXTERN_C void cg_MassUnitsName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_MassUnits_t in_type;
+    MassUnits_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -561,12 +525,12 @@ EXTERN_C void cg_MassUnitsName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_LengthUnitsName(in_type) 
  *
  * The original C interface is 
- * const char * cg_LengthUnitsName( CG_LengthUnits_t type);
+ * const char * cg_LengthUnitsName( LengthUnits_t type);
  */
 EXTERN_C void cg_LengthUnitsName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_LengthUnits_t in_type;
+    LengthUnits_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -591,12 +555,12 @@ EXTERN_C void cg_LengthUnitsName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_TimeUnitsName(in_type) 
  *
  * The original C interface is 
- * const char * cg_TimeUnitsName( CG_TimeUnits_t type);
+ * const char * cg_TimeUnitsName( TimeUnits_t type);
  */
 EXTERN_C void cg_TimeUnitsName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_TimeUnits_t in_type;
+    TimeUnits_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -621,12 +585,12 @@ EXTERN_C void cg_TimeUnitsName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_TemperatureUnitsName(in_type) 
  *
  * The original C interface is 
- * const char * cg_TemperatureUnitsName( CG_TemperatureUnits_t type);
+ * const char * cg_TemperatureUnitsName( TemperatureUnits_t type);
  */
 EXTERN_C void cg_TemperatureUnitsName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_TemperatureUnits_t in_type;
+    TemperatureUnits_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -651,12 +615,12 @@ EXTERN_C void cg_TemperatureUnitsName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_AngleUnitsName(in_type) 
  *
  * The original C interface is 
- * const char * cg_AngleUnitsName( CG_AngleUnits_t type);
+ * const char * cg_AngleUnitsName( AngleUnits_t type);
  */
 EXTERN_C void cg_AngleUnitsName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_AngleUnits_t in_type;
+    AngleUnits_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -681,12 +645,12 @@ EXTERN_C void cg_AngleUnitsName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_ElectricCurrentUnitsName(in_type) 
  *
  * The original C interface is 
- * const char * cg_ElectricCurrentUnitsName( CG_ElectricCurrentUnits_t type);
+ * const char * cg_ElectricCurrentUnitsName( ElectricCurrentUnits_t type);
  */
 EXTERN_C void cg_ElectricCurrentUnitsName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_ElectricCurrentUnits_t in_type;
+    ElectricCurrentUnits_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -711,12 +675,12 @@ EXTERN_C void cg_ElectricCurrentUnitsName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_SubstanceAmountUnitsName(in_type) 
  *
  * The original C interface is 
- * const char * cg_SubstanceAmountUnitsName( CG_SubstanceAmountUnits_t type);
+ * const char * cg_SubstanceAmountUnitsName( SubstanceAmountUnits_t type);
  */
 EXTERN_C void cg_SubstanceAmountUnitsName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_SubstanceAmountUnits_t in_type;
+    SubstanceAmountUnits_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -741,12 +705,12 @@ EXTERN_C void cg_SubstanceAmountUnitsName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_LuminousIntensityUnitsName(in_type) 
  *
  * The original C interface is 
- * const char * cg_LuminousIntensityUnitsName( CG_LuminousIntensityUnits_t type);
+ * const char * cg_LuminousIntensityUnitsName( LuminousIntensityUnits_t type);
  */
 EXTERN_C void cg_LuminousIntensityUnitsName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_LuminousIntensityUnits_t in_type;
+    LuminousIntensityUnits_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -771,12 +735,12 @@ EXTERN_C void cg_LuminousIntensityUnitsName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_DataClassName(in_type) 
  *
  * The original C interface is 
- * const char * cg_DataClassName( CG_DataClass_t type);
+ * const char * cg_DataClassName( DataClass_t type);
  */
 EXTERN_C void cg_DataClassName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_DataClass_t in_type;
+    DataClass_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -801,12 +765,12 @@ EXTERN_C void cg_DataClassName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_GridLocationName(in_type) 
  *
  * The original C interface is 
- * const char * cg_GridLocationName( CG_GridLocation_t type);
+ * const char * cg_GridLocationName( GridLocation_t type);
  */
 EXTERN_C void cg_GridLocationName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_GridLocation_t in_type;
+    GridLocation_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -831,12 +795,12 @@ EXTERN_C void cg_GridLocationName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_BCDataTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_BCDataTypeName( CG_BCDataType_t type);
+ * const char * cg_BCDataTypeName( BCDataType_t type);
  */
 EXTERN_C void cg_BCDataTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_BCDataType_t in_type;
+    BCDataType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -861,12 +825,12 @@ EXTERN_C void cg_BCDataTypeName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_GridConnectivityTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_GridConnectivityTypeName( CG_GridConnectivityType_t type);
+ * const char * cg_GridConnectivityTypeName( GridConnectivityType_t type);
  */
 EXTERN_C void cg_GridConnectivityTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_GridConnectivityType_t in_type;
+    GridConnectivityType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -891,12 +855,12 @@ EXTERN_C void cg_GridConnectivityTypeName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_PointSetTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_PointSetTypeName( CG_PointSetType_t type);
+ * const char * cg_PointSetTypeName( PointSetType_t type);
  */
 EXTERN_C void cg_PointSetTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_PointSetType_t in_type;
+    PointSetType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -921,12 +885,12 @@ EXTERN_C void cg_PointSetTypeName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_GoverningEquationsTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_GoverningEquationsTypeName( CG_GoverningEquationsType_t type);
+ * const char * cg_GoverningEquationsTypeName( GoverningEquationsType_t type);
  */
 EXTERN_C void cg_GoverningEquationsTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_GoverningEquationsType_t in_type;
+    GoverningEquationsType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -951,12 +915,12 @@ EXTERN_C void cg_GoverningEquationsTypeName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_ModelTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_ModelTypeName( CG_ModelType_t type);
+ * const char * cg_ModelTypeName( ModelType_t type);
  */
 EXTERN_C void cg_ModelTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_ModelType_t in_type;
+    ModelType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -981,12 +945,12 @@ EXTERN_C void cg_ModelTypeName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_BCTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_BCTypeName( CG_BCType_t type);
+ * const char * cg_BCTypeName( BCType_t type);
  */
 EXTERN_C void cg_BCTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_BCType_t in_type;
+    BCType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -1011,12 +975,12 @@ EXTERN_C void cg_BCTypeName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_DataTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_DataTypeName( CG_DataType_t type);
+ * const char * cg_DataTypeName( DataType_t type);
  */
 EXTERN_C void cg_DataTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_DataType_t in_type;
+    DataType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -1041,12 +1005,12 @@ EXTERN_C void cg_DataTypeName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_ElementTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_ElementTypeName( CG_ElementType_t type);
+ * const char * cg_ElementTypeName( ElementType_t type);
  */
 EXTERN_C void cg_ElementTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_ElementType_t in_type;
+    ElementType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -1071,12 +1035,12 @@ EXTERN_C void cg_ElementTypeName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_ZoneTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_ZoneTypeName( CG_ZoneType_t type);
+ * const char * cg_ZoneTypeName( ZoneType_t type);
  */
 EXTERN_C void cg_ZoneTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_ZoneType_t in_type;
+    ZoneType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -1101,12 +1065,12 @@ EXTERN_C void cg_ZoneTypeName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_RigidGridMotionTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_RigidGridMotionTypeName( CG_RigidGridMotionType_t type);
+ * const char * cg_RigidGridMotionTypeName( RigidGridMotionType_t type);
  */
 EXTERN_C void cg_RigidGridMotionTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_RigidGridMotionType_t in_type;
+    RigidGridMotionType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -1131,12 +1095,12 @@ EXTERN_C void cg_RigidGridMotionTypeName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_ArbitraryGridMotionTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_ArbitraryGridMotionTypeName( CG_ArbitraryGridMotionType_t type);
+ * const char * cg_ArbitraryGridMotionTypeName( ArbitraryGridMotionType_t type);
  */
 EXTERN_C void cg_ArbitraryGridMotionTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_ArbitraryGridMotionType_t in_type;
+    ArbitraryGridMotionType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -1161,12 +1125,12 @@ EXTERN_C void cg_ArbitraryGridMotionTypeName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_SimulationTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_SimulationTypeName( CG_SimulationType_t type);
+ * const char * cg_SimulationTypeName( SimulationType_t type);
  */
 EXTERN_C void cg_SimulationTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_SimulationType_t in_type;
+    SimulationType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -1191,12 +1155,12 @@ EXTERN_C void cg_SimulationTypeName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_WallFunctionTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_WallFunctionTypeName( CG_WallFunctionType_t type);
+ * const char * cg_WallFunctionTypeName( WallFunctionType_t type);
  */
 EXTERN_C void cg_WallFunctionTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_WallFunctionType_t in_type;
+    WallFunctionType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -1221,12 +1185,12 @@ EXTERN_C void cg_WallFunctionTypeName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_AreaTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_AreaTypeName( CG_AreaType_t type);
+ * const char * cg_AreaTypeName( AreaType_t type);
  */
 EXTERN_C void cg_AreaTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_AreaType_t in_type;
+    AreaType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -1251,12 +1215,12 @@ EXTERN_C void cg_AreaTypeName_MeX(int nlhs, mxArray *plhs[],
  * name = cg_AverageInterfaceTypeName(in_type) 
  *
  * The original C interface is 
- * const char * cg_AverageInterfaceTypeName( CG_AverageInterfaceType_t type);
+ * const char * cg_AverageInterfaceTypeName( AverageInterfaceType_t type);
  */
 EXTERN_C void cg_AverageInterfaceTypeName_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_AverageInterfaceType_t in_type;
+    AverageInterfaceType_t in_type;
     const char * name;
 
     /******** Check number of input and output arguments. ********/ 
@@ -1338,7 +1302,7 @@ EXTERN_C void cg_base_read_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 3 || nrhs != 3)
+    if (nlhs > 4 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -1358,7 +1322,7 @@ EXTERN_C void cg_base_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_basename, (mxArray*)prhs[2]);
+    /* _mxPutString(io_basename, (mxArray*)prhs[2]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -1370,6 +1334,9 @@ EXTERN_C void cg_base_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = ierr;
+    }
+    if (nlhs > 3) {
+        plhs[3] = mxCreateString(io_basename);
     }
 }
 
@@ -1418,7 +1385,7 @@ EXTERN_C void cg_base_id_MeX(int nlhs, mxArray *plhs[],
  * [out_B, ierr] = cg_base_write(in_file_number, in_basename, in_cell_dim, in_phys_dim) 
  *
  * The original C interface is 
- * int cg_base_write( int file_number, const char * basename, int cell_dim, int phys_dim, int * B);
+ * int cg_base_write( int file_number, char const * basename, int cell_dim, int phys_dim, int * B);
  */
 EXTERN_C void cg_base_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -1460,47 +1427,6 @@ EXTERN_C void cg_base_write_MeX(int nlhs, mxArray *plhs[],
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_B;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
-    }
-}
-
-/* Gateway function 
- * [out_cell_dim, ierr] = cg_cell_dim(in_fn, in_B) 
- *
- * The original C interface is 
- * int cg_cell_dim( int fn, int B, int * cell_dim);
- */
-EXTERN_C void cg_cell_dim_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int out_cell_dim;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 2)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_cell_dim(in_fn, in_B, &out_cell_dim);
-
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_cell_dim;
     if (nlhs > 1) {
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
@@ -1552,7 +1478,7 @@ EXTERN_C void cg_nzones_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_zone_read(in_fn, in_B, in_Z, io_zonename, io_size) 
  *
  * The original C interface is 
- * int cg_zone_read( int fn, int B, int Z, char * zonename, ptrdiff_t * size);
+ * int cg_zone_read( int fn, int B, int Z, char * zonename, int * size);
  */
 EXTERN_C void cg_zone_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -1561,11 +1487,11 @@ EXTERN_C void cg_zone_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     char * io_zonename;
-    ptrdiff_t * io_size;
+    int * io_size;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 5)
+    if (nlhs > 2 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -1585,23 +1511,12 @@ EXTERN_C void cg_zone_read_MeX(int nlhs, mxArray *plhs[],
 
     if (mxGetNumberOfElements(prhs[4]) < (int) (9) || _n_dims(prhs[4]) > 1)
         mexErrMsgTxt("Error in dimension of argument size");
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-            io_size = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_size = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[4], (int64*)io_size))
-                mexErrMsgTxt("Expecting numeric matrix for argument size");
-        }
-    }
+    if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
+        io_size = (int*)mxGetData(prhs[4]);
     else {
-        if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
-            io_size = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_size = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[4], (int32*)io_size))
-                mexErrMsgTxt("Expecting numeric matrix for argument size");
-        }
+        io_size = (int*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[4], io_size))
+            mexErrMsgTxt("Expecting numeric matrix for argument size");
     }
 
 
@@ -1610,25 +1525,23 @@ EXTERN_C void cg_zone_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_zonename, (mxArray*)prhs[3]);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[4]) && !mxIsUint64(prhs[4]))
-            mxFree(io_size);
-    } else {
-        if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
-            mxFree(io_size);
-    }
+    /* _mxPutString(io_zonename, (mxArray*)prhs[3]); */
+    if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
+        mxFree(io_size);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
+    if (nlhs > 1) {
+        plhs[1] = mxCreateString(io_zonename);
+    }
 }
 
 /* Gateway function 
  * [out_type, ierr] = cg_zone_type(in_file_number, in_B, in_Z) 
  *
  * The original C interface is 
- * int cg_zone_type( int file_number, int B, int Z, CG_ZoneType_t * type);
+ * int cg_zone_type( int file_number, int B, int Z, ZoneType_t * type);
  */
 EXTERN_C void cg_zone_type_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -1636,7 +1549,7 @@ EXTERN_C void cg_zone_type_MeX(int nlhs, mxArray *plhs[],
     int in_file_number;
     int in_B;
     int in_Z;
-    CG_ZoneType_t out_type;
+    ZoneType_t out_type;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -1720,7 +1633,7 @@ EXTERN_C void cg_zone_id_MeX(int nlhs, mxArray *plhs[],
  * [out_Z, ierr] = cg_zone_write(in_fn, in_B, in_zonename, in_size, in_type) 
  *
  * The original C interface is 
- * int cg_zone_write( int fn, int B, const char * zonename, const ptrdiff_t * size, CG_ZoneType_t type, int * Z);
+ * int cg_zone_write( int fn, int B, char const * zonename, int const * size, ZoneType_t type, int * Z);
  */
 EXTERN_C void cg_zone_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -1728,8 +1641,8 @@ EXTERN_C void cg_zone_write_MeX(int nlhs, mxArray *plhs[],
     int in_fn;
     int in_B;
     char * in_zonename;
-    ptrdiff_t * in_size;
-    CG_ZoneType_t in_type;
+    int * in_size;
+    ZoneType_t in_type;
     int out_Z;
     int ierr;
 
@@ -1750,23 +1663,12 @@ EXTERN_C void cg_zone_write_MeX(int nlhs, mxArray *plhs[],
 
     if (mxGetNumberOfElements(prhs[3]) < (int) (9) || _n_dims(prhs[3]) > 1)
         mexErrMsgTxt("Error in dimension of argument size");
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[3]) || mxIsUint64(prhs[3]))
-            in_size = (ptrdiff_t*)mxGetData(prhs[3]);
-        else {
-            in_size = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[3]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[3], (int64*)in_size))
-                mexErrMsgTxt("Expecting numeric matrix for argument size");
-        }
-    }
+    if (mxIsInt32(prhs[3]) || mxIsUint32(prhs[3]))
+        in_size = (int*)mxGetData(prhs[3]);
     else {
-        if (mxIsInt32(prhs[3]) || mxIsUint32(prhs[3]))
-            in_size = (ptrdiff_t*)mxGetData(prhs[3]);
-        else {
-            in_size = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[3]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[3], (int32*)in_size))
-                mexErrMsgTxt("Expecting numeric matrix for argument size");
-        }
+        in_size = (int*)mxCalloc(mxGetNumberOfElements(prhs[3]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[3], in_size))
+            mexErrMsgTxt("Expecting numeric matrix for argument size");
     }
 
     if (_n_dims(prhs[4]) > 0)
@@ -1780,13 +1682,8 @@ EXTERN_C void cg_zone_write_MeX(int nlhs, mxArray *plhs[],
 
     /******** Free up input buffers. ********/
     _mxFreeString(in_zonename);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[3]) && !mxIsUint64(prhs[3]))
-            mxFree(in_size);
-    } else {
-        if (!mxIsInt32(prhs[3]) && !mxIsUint32(prhs[3]))
-            mxFree(in_size);
-    }
+    if (!mxIsInt32(prhs[3]) && !mxIsUint32(prhs[3]))
+        mxFree(in_size);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -1795,62 +1692,6 @@ EXTERN_C void cg_zone_write_MeX(int nlhs, mxArray *plhs[],
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
     }
-}
-
-/* Gateway function 
- * ierr = cg_index_dim(in_fn, in_B, in_Z, io_index_dim) 
- *
- * The original C interface is 
- * int cg_index_dim( int fn, int B, int Z, int * index_dim);
- */
-EXTERN_C void cg_index_dim_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int * io_index_dim;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 4)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (mxGetNumberOfElements(prhs[3]) < (int) (3) || _n_dims(prhs[3]) > 1)
-        mexErrMsgTxt("Error in dimension of argument index_dim");
-    if (mxIsInt32(prhs[3]) || mxIsUint32(prhs[3]))
-        io_index_dim = (int*)mxGetData(prhs[3]);
-    else {
-        io_index_dim = (int*)mxCalloc(mxGetNumberOfElements(prhs[3]), sizeof (int));
-        if (!_get_numeric_array_int32(prhs[3], io_index_dim))
-            mexErrMsgTxt("Expecting numeric matrix for argument index_dim");
-    }
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_index_dim(in_fn, in_B, in_Z, io_index_dim);
-
-
-    /******** Process inout argument. ********/
-    if (!mxIsInt32(prhs[3]) && !mxIsUint32(prhs[3]))
-        mxFree(io_index_dim);
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = ierr;
 }
 
 /* Gateway function 
@@ -1912,7 +1753,7 @@ EXTERN_C void cg_family_read_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 3 || nrhs != 4)
+    if (nlhs > 4 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -1936,7 +1777,7 @@ EXTERN_C void cg_family_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_family_name, (mxArray*)prhs[3]);
+    /* _mxPutString(io_family_name, (mxArray*)prhs[3]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -1949,13 +1790,16 @@ EXTERN_C void cg_family_read_MeX(int nlhs, mxArray *plhs[],
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = ierr;
     }
+    if (nlhs > 3) {
+        plhs[3] = mxCreateString(io_family_name);
+    }
 }
 
 /* Gateway function 
  * [out_F, ierr] = cg_family_write(in_file_number, in_B, in_family_name) 
  *
  * The original C interface is 
- * int cg_family_write( int file_number, int B, const char * family_name, int * F);
+ * int cg_family_write( int file_number, int B, char const * family_name, int * F);
  */
 EXTERN_C void cg_family_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -2011,7 +1855,7 @@ EXTERN_C void cg_famname_read_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 1)
+    if (nlhs > 2 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -2023,18 +1867,22 @@ EXTERN_C void cg_famname_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_family_name, (mxArray*)prhs[0]);
+    /* _mxPutString(io_family_name, (mxArray*)prhs[0]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
+
+    if (nlhs > 1) {
+        plhs[1] = mxCreateString(io_family_name);
+    }
 }
 
 /* Gateway function 
  * ierr = cg_famname_write(in_family_name) 
  *
  * The original C interface is 
- * int cg_famname_write( const char * family_name);
+ * int cg_famname_write( char const * family_name);
  */
 EXTERN_C void cg_famname_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -2066,7 +1914,7 @@ EXTERN_C void cg_famname_write_MeX(int nlhs, mxArray *plhs[],
  * [out_bocotype, ierr] = cg_fambc_read(in_file_number, in_B, in_F, in_BC, io_fambc_name) 
  *
  * The original C interface is 
- * int cg_fambc_read( int file_number, int B, int F, int BC, char * fambc_name, CG_BCType_t * bocotype);
+ * int cg_fambc_read( int file_number, int B, int F, int BC, char * fambc_name, BCType_t * bocotype);
  */
 EXTERN_C void cg_fambc_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -2076,11 +1924,11 @@ EXTERN_C void cg_fambc_read_MeX(int nlhs, mxArray *plhs[],
     int in_F;
     int in_BC;
     char * io_fambc_name;
-    CG_BCType_t out_bocotype;
+    BCType_t out_bocotype;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 5)
+    if (nlhs > 3 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -2108,7 +1956,7 @@ EXTERN_C void cg_fambc_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_fambc_name, (mxArray*)prhs[4]);
+    /* _mxPutString(io_fambc_name, (mxArray*)prhs[4]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -2117,13 +1965,16 @@ EXTERN_C void cg_fambc_read_MeX(int nlhs, mxArray *plhs[],
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
     }
+    if (nlhs > 2) {
+        plhs[2] = mxCreateString(io_fambc_name);
+    }
 }
 
 /* Gateway function 
  * [out_BC, ierr] = cg_fambc_write(in_file_number, in_B, in_F, in_fambc_name, in_bocotype) 
  *
  * The original C interface is 
- * int cg_fambc_write( int file_number, int B, int F, const char * fambc_name, CG_BCType_t bocotype, int * BC);
+ * int cg_fambc_write( int file_number, int B, int F, char const * fambc_name, BCType_t bocotype, int * BC);
  */
 EXTERN_C void cg_fambc_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -2132,7 +1983,7 @@ EXTERN_C void cg_fambc_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_F;
     char * in_fambc_name;
-    CG_BCType_t in_bocotype;
+    BCType_t in_bocotype;
     int out_BC;
     int ierr;
 
@@ -2196,7 +2047,7 @@ EXTERN_C void cg_geo_read_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 3 || nrhs != 6)
+    if (nlhs > 5 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -2226,8 +2077,8 @@ EXTERN_C void cg_geo_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_geo_name, (mxArray*)prhs[4]);
-    _mxPutString(io_CAD_name, (mxArray*)prhs[5]);
+    /* _mxPutString(io_geo_name, (mxArray*)prhs[4]); */
+    /* _mxPutString(io_CAD_name, (mxArray*)prhs[5]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateString(out_geo_file);
@@ -2241,13 +2092,19 @@ EXTERN_C void cg_geo_read_MeX(int nlhs, mxArray *plhs[],
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = ierr;
     }
+    if (nlhs > 3) {
+        plhs[3] = mxCreateString(io_geo_name);
+    }
+    if (nlhs > 4) {
+        plhs[4] = mxCreateString(io_CAD_name);
+    }
 }
 
 /* Gateway function 
  * [out_G, ierr] = cg_geo_write(in_file_number, in_B, in_F, in_geo_name, in_filename, in_CADname) 
  *
  * The original C interface is 
- * int cg_geo_write( int file_number, int B, int F, const char * geo_name, const char * filename, const char * CADname, int * G);
+ * int cg_geo_write( int file_number, int B, int F, char const * geo_name, char const * filename, char const * CADname, int * G);
  */
 EXTERN_C void cg_geo_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -2321,7 +2178,7 @@ EXTERN_C void cg_part_read_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 6)
+    if (nlhs > 2 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -2353,18 +2210,21 @@ EXTERN_C void cg_part_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_part_name, (mxArray*)prhs[5]);
+    /* _mxPutString(io_part_name, (mxArray*)prhs[5]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
+    if (nlhs > 1) {
+        plhs[1] = mxCreateString(io_part_name);
+    }
 }
 
 /* Gateway function 
  * [out_P, ierr] = cg_part_write(in_file_number, in_B, in_F, in_G, in_part_name) 
  *
  * The original C interface is 
- * int cg_part_write( int file_number, int B, int F, int G, const char * part_name, int * P);
+ * int cg_part_write( int file_number, int B, int F, int G, char const * part_name, int * P);
  */
 EXTERN_C void cg_part_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -2480,7 +2340,7 @@ EXTERN_C void cg_grid_read_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 5)
+    if (nlhs > 2 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -2508,18 +2368,21 @@ EXTERN_C void cg_grid_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_gridname, (mxArray*)prhs[4]);
+    /* _mxPutString(io_gridname, (mxArray*)prhs[4]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
+    if (nlhs > 1) {
+        plhs[1] = mxCreateString(io_gridname);
+    }
 }
 
 /* Gateway function 
  * [out_G, ierr] = cg_grid_write(in_file_number, in_B, in_Z, in_zcoorname) 
  *
  * The original C interface is 
- * int cg_grid_write( int file_number, int B, int Z, const char * zcoorname, int * G);
+ * int cg_grid_write( int file_number, int B, int Z, char const * zcoorname, int * G);
  */
 EXTERN_C void cg_grid_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -2617,7 +2480,7 @@ EXTERN_C void cg_ncoords_MeX(int nlhs, mxArray *plhs[],
  * [out_type, ierr] = cg_coord_info(in_fn, in_B, in_Z, in_C, io_coordname) 
  *
  * The original C interface is 
- * int cg_coord_info( int fn, int B, int Z, int C, CG_DataType_t * type, char * coordname);
+ * int cg_coord_info( int fn, int B, int Z, int C, DataType_t * type, char * coordname);
  */
 EXTERN_C void cg_coord_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -2626,12 +2489,12 @@ EXTERN_C void cg_coord_info_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_C;
-    CG_DataType_t out_type;
+    DataType_t out_type;
     char * io_coordname;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 5)
+    if (nlhs > 3 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -2659,7 +2522,7 @@ EXTERN_C void cg_coord_info_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_coordname, (mxArray*)prhs[4]);
+    /* _mxPutString(io_coordname, (mxArray*)prhs[4]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -2668,13 +2531,16 @@ EXTERN_C void cg_coord_info_MeX(int nlhs, mxArray *plhs[],
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
     }
+    if (nlhs > 2) {
+        plhs[2] = mxCreateString(io_coordname);
+    }
 }
 
 /* Gateway function 
  * ierr = cg_coord_read(in_fn, in_B, in_Z, in_coordname, in_type, in_rmin, in_rmax, io_coord) 
  *
  * The original C interface is 
- * int cg_coord_read( int fn, int B, int Z, const char * coordname, CG_DataType_t type, const ptrdiff_t * rmin, const ptrdiff_t * rmax, void * coord);
+ * int cg_coord_read( int fn, int B, int Z, char const * coordname, DataType_t type, int const * rmin, int const * rmax, void * coord);
  */
 EXTERN_C void cg_coord_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -2683,9 +2549,9 @@ EXTERN_C void cg_coord_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     char * in_coordname;
-    CG_DataType_t in_type;
-    ptrdiff_t * in_rmin;
-    ptrdiff_t * in_rmax;
+    DataType_t in_type;
+    int * in_rmin;
+    int * in_rmax;
     void * io_coord;
     int ierr;
 
@@ -2712,42 +2578,20 @@ EXTERN_C void cg_coord_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[4]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-            in_rmin = (ptrdiff_t*)mxGetData(prhs[5]);
-        else {
-            in_rmin = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[5], (int64*)in_rmin))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmin");
-        }
-    }
+    if (mxIsInt32(prhs[5]) || mxIsUint32(prhs[5]))
+        in_rmin = (int*)mxGetData(prhs[5]);
     else {
-        if (mxIsInt32(prhs[5]) || mxIsUint32(prhs[5]))
-            in_rmin = (ptrdiff_t*)mxGetData(prhs[5]);
-        else {
-            in_rmin = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[5], (int32*)in_rmin))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmin");
-        }
+        in_rmin = (int*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[5], in_rmin))
+            mexErrMsgTxt("Expecting numeric matrix for argument rmin");
     }
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-            in_rmax = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            in_rmax = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[6], (int64*)in_rmax))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmax");
-        }
-    }
+    if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
+        in_rmax = (int*)mxGetData(prhs[6]);
     else {
-        if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
-            in_rmax = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            in_rmax = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[6], (int32*)in_rmax))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmax");
-        }
+        in_rmax = (int*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[6], in_rmax))
+            mexErrMsgTxt("Expecting numeric matrix for argument rmax");
     }
 
     io_coord = mxGetData( prhs[7]);
@@ -2758,20 +2602,10 @@ EXTERN_C void cg_coord_read_MeX(int nlhs, mxArray *plhs[],
 
     /******** Free up input buffers. ********/
     _mxFreeString(in_coordname);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[5]) && !mxIsUint64(prhs[5]))
-            mxFree(in_rmin);
-    } else {
-        if (!mxIsInt32(prhs[5]) && !mxIsUint32(prhs[5]))
-            mxFree(in_rmin);
-    }
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[6]) && !mxIsUint64(prhs[6]))
-            mxFree(in_rmax);
-    } else {
-        if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
-            mxFree(in_rmax);
-    }
+    if (!mxIsInt32(prhs[5]) && !mxIsUint32(prhs[5]))
+        mxFree(in_rmin);
+    if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
+        mxFree(in_rmax);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -2833,7 +2667,7 @@ EXTERN_C void cg_coord_id_MeX(int nlhs, mxArray *plhs[],
  * [out_C, ierr] = cg_coord_write(in_fn, in_B, in_Z, in_type, in_coordname, in_coord_ptr) 
  *
  * The original C interface is 
- * int cg_coord_write( int fn, int B, int Z, CG_DataType_t type, const char * coordname, const void * coord_ptr, int * C);
+ * int cg_coord_write( int fn, int B, int Z, DataType_t type, char const * coordname, void const * coord_ptr, int * C);
  */
 EXTERN_C void cg_coord_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -2841,9 +2675,9 @@ EXTERN_C void cg_coord_write_MeX(int nlhs, mxArray *plhs[],
     int in_fn;
     int in_B;
     int in_Z;
-    CG_DataType_t in_type;
+    DataType_t in_type;
     char * in_coordname;
-    const void * in_coord_ptr;
+    void const * in_coord_ptr;
     int out_C;
     int ierr;
 
@@ -2892,7 +2726,7 @@ EXTERN_C void cg_coord_write_MeX(int nlhs, mxArray *plhs[],
  * [out_C, ierr] = cg_coord_partial_write(in_fn, in_B, in_Z, in_type, in_coordname, in_rmin, in_rmax, in_coord_ptr) 
  *
  * The original C interface is 
- * int cg_coord_partial_write( int fn, int B, int Z, CG_DataType_t type, const char * coordname, const ptrdiff_t * rmin, const ptrdiff_t * rmax, const void * coord_ptr, int * C);
+ * int cg_coord_partial_write( int fn, int B, int Z, DataType_t type, char const * coordname, int * rmin, int * rmax, void const * coord_ptr, int * C);
  */
 EXTERN_C void cg_coord_partial_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -2900,11 +2734,11 @@ EXTERN_C void cg_coord_partial_write_MeX(int nlhs, mxArray *plhs[],
     int in_fn;
     int in_B;
     int in_Z;
-    CG_DataType_t in_type;
+    DataType_t in_type;
     char * in_coordname;
-    ptrdiff_t * in_rmin;
-    ptrdiff_t * in_rmax;
-    const void * in_coord_ptr;
+    int * in_rmin;
+    int * in_rmax;
+    void const * in_coord_ptr;
     int out_C;
     int ierr;
 
@@ -2931,42 +2765,20 @@ EXTERN_C void cg_coord_partial_write_MeX(int nlhs, mxArray *plhs[],
 
     in_coordname = _mxGetString(prhs[4], NULL);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-            in_rmin = (ptrdiff_t*)mxGetData(prhs[5]);
-        else {
-            in_rmin = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[5], (int64*)in_rmin))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmin");
-        }
-    }
+    if (mxIsInt32(prhs[5]) || mxIsUint32(prhs[5]))
+        in_rmin = (int*)mxGetData(prhs[5]);
     else {
-        if (mxIsInt32(prhs[5]) || mxIsUint32(prhs[5]))
-            in_rmin = (ptrdiff_t*)mxGetData(prhs[5]);
-        else {
-            in_rmin = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[5], (int32*)in_rmin))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmin");
-        }
+        in_rmin = (int*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[5], in_rmin))
+            mexErrMsgTxt("Expecting numeric matrix for argument rmin");
     }
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-            in_rmax = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            in_rmax = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[6], (int64*)in_rmax))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmax");
-        }
-    }
+    if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
+        in_rmax = (int*)mxGetData(prhs[6]);
     else {
-        if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
-            in_rmax = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            in_rmax = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[6], (int32*)in_rmax))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmax");
-        }
+        in_rmax = (int*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[6], in_rmax))
+            mexErrMsgTxt("Expecting numeric matrix for argument rmax");
     }
 
     in_coord_ptr = mxGetData( prhs[7]);
@@ -2977,20 +2789,10 @@ EXTERN_C void cg_coord_partial_write_MeX(int nlhs, mxArray *plhs[],
 
     /******** Free up input buffers. ********/
     _mxFreeString(in_coordname);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[5]) && !mxIsUint64(prhs[5]))
-            mxFree(in_rmin);
-    } else {
-        if (!mxIsInt32(prhs[5]) && !mxIsUint32(prhs[5]))
-            mxFree(in_rmin);
-    }
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[6]) && !mxIsUint64(prhs[6]))
-            mxFree(in_rmax);
-    } else {
-        if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
-            mxFree(in_rmax);
-    }
+    if (!mxIsInt32(prhs[5]) && !mxIsUint32(prhs[5]))
+        mxFree(in_rmin);
+    if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
+        mxFree(in_rmax);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -3051,7 +2853,7 @@ EXTERN_C void cg_nsections_MeX(int nlhs, mxArray *plhs[],
  * [out_type, out_start, out_end, out_nbndry, out_parent_flag, ierr] = cg_section_read(in_file_number, in_B, in_Z, in_S, io_SectionName) 
  *
  * The original C interface is 
- * int cg_section_read( int file_number, int B, int Z, int S, char * SectionName, CG_ElementType_t * type, ptrdiff_t * start, ptrdiff_t * end, int * nbndry, int * parent_flag);
+ * int cg_section_read( int file_number, int B, int Z, int S, char * SectionName, ElementType_t * type, int * start, int * end, int * nbndry, int * parent_flag);
  */
 EXTERN_C void cg_section_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -3061,15 +2863,15 @@ EXTERN_C void cg_section_read_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_S;
     char * io_SectionName;
-    CG_ElementType_t out_type;
-    ptrdiff_t out_start;
-    ptrdiff_t out_end;
+    ElementType_t out_type;
+    int out_start;
+    int out_end;
     int out_nbndry;
     int out_parent_flag;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 6 || nrhs != 5)
+    if (nlhs > 7 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -3097,18 +2899,18 @@ EXTERN_C void cg_section_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_SectionName, (mxArray*)prhs[4]);
+    /* _mxPutString(io_SectionName, (mxArray*)prhs[4]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_type;
     if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);
-        *(ptrdiff_t*)mxGetData(plhs[1]) = out_start;
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_start;
     }
     if (nlhs > 2) {
-        plhs[2] = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);
-        *(ptrdiff_t*)mxGetData(plhs[2]) = out_end;
+        plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[2]) = out_end;
     }
     if (nlhs > 3) {
         plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -3122,13 +2924,16 @@ EXTERN_C void cg_section_read_MeX(int nlhs, mxArray *plhs[],
         plhs[5] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[5]) = ierr;
     }
+    if (nlhs > 6) {
+        plhs[6] = mxCreateString(io_SectionName);
+    }
 }
 
 /* Gateway function 
  * ierr = cg_elements_read(in_file_number, in_B, in_Z, in_S, io_elements, io_parent_data) 
  *
  * The original C interface is 
- * int cg_elements_read( int file_number, int B, int Z, int S, ptrdiff_t * elements, ptrdiff_t * parent_data);
+ * int cg_elements_read( int file_number, int B, int Z, int S, int * elements, int * parent_data);
  */
 EXTERN_C void cg_elements_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -3137,8 +2942,8 @@ EXTERN_C void cg_elements_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    ptrdiff_t * io_elements;
-    ptrdiff_t * io_parent_data;
+    int * io_elements;
+    int * io_parent_data;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -3162,42 +2967,20 @@ EXTERN_C void cg_elements_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument S");
     in_S = _get_numeric_scalar_int32(prhs[3]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-            io_elements = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_elements = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[4], (int64*)io_elements))
-                mexErrMsgTxt("Expecting numeric matrix for argument elements");
-        }
-    }
+    if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
+        io_elements = (int*)mxGetData(prhs[4]);
     else {
-        if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
-            io_elements = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_elements = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[4], (int32*)io_elements))
-                mexErrMsgTxt("Expecting numeric matrix for argument elements");
-        }
+        io_elements = (int*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[4], io_elements))
+            mexErrMsgTxt("Expecting numeric matrix for argument elements");
     }
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-            io_parent_data = (ptrdiff_t*)mxGetData(prhs[5]);
-        else {
-            io_parent_data = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[5], (int64*)io_parent_data))
-                mexErrMsgTxt("Expecting numeric matrix for argument parent_data");
-        }
-    }
+    if (mxIsInt32(prhs[5]) || mxIsUint32(prhs[5]))
+        io_parent_data = (int*)mxGetData(prhs[5]);
     else {
-        if (mxIsInt32(prhs[5]) || mxIsUint32(prhs[5]))
-            io_parent_data = (ptrdiff_t*)mxGetData(prhs[5]);
-        else {
-            io_parent_data = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[5], (int32*)io_parent_data))
-                mexErrMsgTxt("Expecting numeric matrix for argument parent_data");
-        }
+        io_parent_data = (int*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[5], io_parent_data))
+            mexErrMsgTxt("Expecting numeric matrix for argument parent_data");
     }
 
 
@@ -3206,20 +2989,10 @@ EXTERN_C void cg_elements_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[4]) && !mxIsUint64(prhs[4]))
-            mxFree(io_elements);
-    } else {
-        if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
-            mxFree(io_elements);
-    }
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[5]) && !mxIsUint64(prhs[5]))
-            mxFree(io_parent_data);
-    } else {
-        if (!mxIsInt32(prhs[5]) && !mxIsUint32(prhs[5]))
-            mxFree(io_parent_data);
-    }
+    if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
+        mxFree(io_elements);
+    if (!mxIsInt32(prhs[5]) && !mxIsUint32(prhs[5]))
+        mxFree(io_parent_data);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -3230,7 +3003,7 @@ EXTERN_C void cg_elements_read_MeX(int nlhs, mxArray *plhs[],
  * [out_S, ierr] = cg_section_write(in_file_number, in_B, in_Z, in_SectionName, in_type, in_start, in_end, in_nbndry, in_elements) 
  *
  * The original C interface is 
- * int cg_section_write( int file_number, int B, int Z, const char * SectionName, CG_ElementType_t type, ptrdiff_t start, ptrdiff_t end, int nbndry, const ptrdiff_t * elements, int * S);
+ * int cg_section_write( int file_number, int B, int Z, char const * SectionName, ElementType_t type, int start, int end, int nbndry, int const * elements, int * S);
  */
 EXTERN_C void cg_section_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -3239,11 +3012,11 @@ EXTERN_C void cg_section_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     char * in_SectionName;
-    CG_ElementType_t in_type;
-    ptrdiff_t in_start;
-    ptrdiff_t in_end;
+    ElementType_t in_type;
+    int in_start;
+    int in_end;
     int in_nbndry;
-    ptrdiff_t * in_elements;
+    int * in_elements;
     int out_S;
     int ierr;
 
@@ -3272,39 +3045,22 @@ EXTERN_C void cg_section_write_MeX(int nlhs, mxArray *plhs[],
 
     if (_n_dims(prhs[5]) > 0)
         mexErrMsgTxt("Error in dimension of argument start");
-    if (sizeof(ptrdiff_t)==8) 
-        in_start = _get_numeric_scalar_int64(prhs[5]);
-    else
-        in_start = _get_numeric_scalar_int32(prhs[5]);
+    in_start = _get_numeric_scalar_int32(prhs[5]);
 
     if (_n_dims(prhs[6]) > 0)
         mexErrMsgTxt("Error in dimension of argument end");
-    if (sizeof(ptrdiff_t)==8) 
-        in_end = _get_numeric_scalar_int64(prhs[6]);
-    else
-        in_end = _get_numeric_scalar_int32(prhs[6]);
+    in_end = _get_numeric_scalar_int32(prhs[6]);
 
     if (_n_dims(prhs[7]) > 0)
         mexErrMsgTxt("Error in dimension of argument nbndry");
     in_nbndry = _get_numeric_scalar_int32(prhs[7]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[8]) || mxIsUint64(prhs[8]))
-            in_elements = (ptrdiff_t*)mxGetData(prhs[8]);
-        else {
-            in_elements = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[8]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[8], (int64*)in_elements))
-                mexErrMsgTxt("Expecting numeric matrix for argument elements");
-        }
-    }
+    if (mxIsInt32(prhs[8]) || mxIsUint32(prhs[8]))
+        in_elements = (int*)mxGetData(prhs[8]);
     else {
-        if (mxIsInt32(prhs[8]) || mxIsUint32(prhs[8]))
-            in_elements = (ptrdiff_t*)mxGetData(prhs[8]);
-        else {
-            in_elements = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[8]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[8], (int32*)in_elements))
-                mexErrMsgTxt("Expecting numeric matrix for argument elements");
-        }
+        in_elements = (int*)mxCalloc(mxGetNumberOfElements(prhs[8]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[8], in_elements))
+            mexErrMsgTxt("Expecting numeric matrix for argument elements");
     }
 
 
@@ -3314,13 +3070,8 @@ EXTERN_C void cg_section_write_MeX(int nlhs, mxArray *plhs[],
 
     /******** Free up input buffers. ********/
     _mxFreeString(in_SectionName);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[8]) && !mxIsUint64(prhs[8]))
-            mxFree(in_elements);
-    } else {
-        if (!mxIsInt32(prhs[8]) && !mxIsUint32(prhs[8]))
-            mxFree(in_elements);
-    }
+    if (!mxIsInt32(prhs[8]) && !mxIsUint32(prhs[8]))
+        mxFree(in_elements);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -3335,7 +3086,7 @@ EXTERN_C void cg_section_write_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_parent_data_write(in_file_number, in_B, in_Z, in_S, in_parent_data) 
  *
  * The original C interface is 
- * int cg_parent_data_write( int file_number, int B, int Z, int S, const ptrdiff_t * parent_data);
+ * int cg_parent_data_write( int file_number, int B, int Z, int S, int const * parent_data);
  */
 EXTERN_C void cg_parent_data_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -3344,7 +3095,7 @@ EXTERN_C void cg_parent_data_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    ptrdiff_t * in_parent_data;
+    int * in_parent_data;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -3368,23 +3119,12 @@ EXTERN_C void cg_parent_data_write_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument S");
     in_S = _get_numeric_scalar_int32(prhs[3]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-            in_parent_data = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            in_parent_data = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[4], (int64*)in_parent_data))
-                mexErrMsgTxt("Expecting numeric matrix for argument parent_data");
-        }
-    }
+    if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
+        in_parent_data = (int*)mxGetData(prhs[4]);
     else {
-        if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
-            in_parent_data = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            in_parent_data = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[4], (int32*)in_parent_data))
-                mexErrMsgTxt("Expecting numeric matrix for argument parent_data");
-        }
+        in_parent_data = (int*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[4], in_parent_data))
+            mexErrMsgTxt("Expecting numeric matrix for argument parent_data");
     }
 
 
@@ -3393,13 +3133,8 @@ EXTERN_C void cg_parent_data_write_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Free up input buffers. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[4]) && !mxIsUint64(prhs[4]))
-            mxFree(in_parent_data);
-    } else {
-        if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
-            mxFree(in_parent_data);
-    }
+    if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
+        mxFree(in_parent_data);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -3410,12 +3145,12 @@ EXTERN_C void cg_parent_data_write_MeX(int nlhs, mxArray *plhs[],
  * [out_npe, ierr] = cg_npe(in_type) 
  *
  * The original C interface is 
- * int cg_npe( CG_ElementType_t type, int * npe);
+ * int cg_npe( ElementType_t type, int * npe);
  */
 EXTERN_C void cg_npe_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_ElementType_t in_type;
+    ElementType_t in_type;
     int out_npe;
     int ierr;
 
@@ -3446,7 +3181,7 @@ EXTERN_C void cg_npe_MeX(int nlhs, mxArray *plhs[],
  * [out_ElementDataSize, ierr] = cg_ElementDataSize(in_file_number, in_B, in_Z, in_S) 
  *
  * The original C interface is 
- * int cg_ElementDataSize( int file_number, int B, int Z, int S, ptrdiff_t * ElementDataSize);
+ * int cg_ElementDataSize( int file_number, int B, int Z, int S, int * ElementDataSize);
  */
 EXTERN_C void cg_ElementDataSize_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -3455,7 +3190,7 @@ EXTERN_C void cg_ElementDataSize_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    ptrdiff_t out_ElementDataSize;
+    int out_ElementDataSize;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -3485,8 +3220,8 @@ EXTERN_C void cg_ElementDataSize_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);
-    *(ptrdiff_t*)mxGetData(plhs[0]) = out_ElementDataSize;
+    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[0]) = out_ElementDataSize;
     if (nlhs > 1) {
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
@@ -3497,7 +3232,7 @@ EXTERN_C void cg_ElementDataSize_MeX(int nlhs, mxArray *plhs[],
  * [out_S, ierr] = cg_section_partial_write(in_file_number, in_B, in_Z, in_SectionName, in_type, in_start, in_end, in_nbndry) 
  *
  * The original C interface is 
- * int cg_section_partial_write( int file_number, int B, int Z, const char * SectionName, CG_ElementType_t type, ptrdiff_t start, ptrdiff_t end, int nbndry, int * S);
+ * int cg_section_partial_write( int file_number, int B, int Z, char const * SectionName, ElementType_t type, int start, int end, int nbndry, int * S);
  */
 EXTERN_C void cg_section_partial_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -3506,9 +3241,9 @@ EXTERN_C void cg_section_partial_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     char * in_SectionName;
-    CG_ElementType_t in_type;
-    ptrdiff_t in_start;
-    ptrdiff_t in_end;
+    ElementType_t in_type;
+    int in_start;
+    int in_end;
     int in_nbndry;
     int out_S;
     int ierr;
@@ -3538,17 +3273,11 @@ EXTERN_C void cg_section_partial_write_MeX(int nlhs, mxArray *plhs[],
 
     if (_n_dims(prhs[5]) > 0)
         mexErrMsgTxt("Error in dimension of argument start");
-    if (sizeof(ptrdiff_t)==8) 
-        in_start = _get_numeric_scalar_int64(prhs[5]);
-    else
-        in_start = _get_numeric_scalar_int32(prhs[5]);
+    in_start = _get_numeric_scalar_int32(prhs[5]);
 
     if (_n_dims(prhs[6]) > 0)
         mexErrMsgTxt("Error in dimension of argument end");
-    if (sizeof(ptrdiff_t)==8) 
-        in_end = _get_numeric_scalar_int64(prhs[6]);
-    else
-        in_end = _get_numeric_scalar_int32(prhs[6]);
+    in_end = _get_numeric_scalar_int32(prhs[6]);
 
     if (_n_dims(prhs[7]) > 0)
         mexErrMsgTxt("Error in dimension of argument nbndry");
@@ -3575,7 +3304,7 @@ EXTERN_C void cg_section_partial_write_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_elements_partial_write(in_fn, in_B, in_Z, in_S, in_start, in_end, in_elements) 
  *
  * The original C interface is 
- * int cg_elements_partial_write( int fn, int B, int Z, int S, ptrdiff_t start, ptrdiff_t end, const ptrdiff_t * elements);
+ * int cg_elements_partial_write( int fn, int B, int Z, int S, int start, int end, int const * elements);
  */
 EXTERN_C void cg_elements_partial_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -3584,9 +3313,9 @@ EXTERN_C void cg_elements_partial_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    ptrdiff_t in_start;
-    ptrdiff_t in_end;
-    ptrdiff_t * in_elements;
+    int in_start;
+    int in_end;
+    int * in_elements;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -3612,35 +3341,18 @@ EXTERN_C void cg_elements_partial_write_MeX(int nlhs, mxArray *plhs[],
 
     if (_n_dims(prhs[4]) > 0)
         mexErrMsgTxt("Error in dimension of argument start");
-    if (sizeof(ptrdiff_t)==8) 
-        in_start = _get_numeric_scalar_int64(prhs[4]);
-    else
-        in_start = _get_numeric_scalar_int32(prhs[4]);
+    in_start = _get_numeric_scalar_int32(prhs[4]);
 
     if (_n_dims(prhs[5]) > 0)
         mexErrMsgTxt("Error in dimension of argument end");
-    if (sizeof(ptrdiff_t)==8) 
-        in_end = _get_numeric_scalar_int64(prhs[5]);
-    else
-        in_end = _get_numeric_scalar_int32(prhs[5]);
+    in_end = _get_numeric_scalar_int32(prhs[5]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-            in_elements = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            in_elements = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[6], (int64*)in_elements))
-                mexErrMsgTxt("Expecting numeric matrix for argument elements");
-        }
-    }
+    if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
+        in_elements = (int*)mxGetData(prhs[6]);
     else {
-        if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
-            in_elements = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            in_elements = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[6], (int32*)in_elements))
-                mexErrMsgTxt("Expecting numeric matrix for argument elements");
-        }
+        in_elements = (int*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[6], in_elements))
+            mexErrMsgTxt("Expecting numeric matrix for argument elements");
     }
 
 
@@ -3649,13 +3361,8 @@ EXTERN_C void cg_elements_partial_write_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Free up input buffers. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[6]) && !mxIsUint64(prhs[6]))
-            mxFree(in_elements);
-    } else {
-        if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
-            mxFree(in_elements);
-    }
+    if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
+        mxFree(in_elements);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -3666,7 +3373,7 @@ EXTERN_C void cg_elements_partial_write_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_parent_data_partial_write(in_fn, in_B, in_Z, in_S, in_start, in_end, in_ParentData) 
  *
  * The original C interface is 
- * int cg_parent_data_partial_write( int fn, int B, int Z, int S, ptrdiff_t start, ptrdiff_t end, const ptrdiff_t * ParentData);
+ * int cg_parent_data_partial_write( int fn, int B, int Z, int S, int start, int end, int const * ParentData);
  */
 EXTERN_C void cg_parent_data_partial_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -3675,9 +3382,9 @@ EXTERN_C void cg_parent_data_partial_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    ptrdiff_t in_start;
-    ptrdiff_t in_end;
-    ptrdiff_t * in_ParentData;
+    int in_start;
+    int in_end;
+    int * in_ParentData;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -3703,35 +3410,18 @@ EXTERN_C void cg_parent_data_partial_write_MeX(int nlhs, mxArray *plhs[],
 
     if (_n_dims(prhs[4]) > 0)
         mexErrMsgTxt("Error in dimension of argument start");
-    if (sizeof(ptrdiff_t)==8) 
-        in_start = _get_numeric_scalar_int64(prhs[4]);
-    else
-        in_start = _get_numeric_scalar_int32(prhs[4]);
+    in_start = _get_numeric_scalar_int32(prhs[4]);
 
     if (_n_dims(prhs[5]) > 0)
         mexErrMsgTxt("Error in dimension of argument end");
-    if (sizeof(ptrdiff_t)==8) 
-        in_end = _get_numeric_scalar_int64(prhs[5]);
-    else
-        in_end = _get_numeric_scalar_int32(prhs[5]);
+    in_end = _get_numeric_scalar_int32(prhs[5]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-            in_ParentData = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            in_ParentData = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[6], (int64*)in_ParentData))
-                mexErrMsgTxt("Expecting numeric matrix for argument ParentData");
-        }
-    }
+    if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
+        in_ParentData = (int*)mxGetData(prhs[6]);
     else {
-        if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
-            in_ParentData = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            in_ParentData = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[6], (int32*)in_ParentData))
-                mexErrMsgTxt("Expecting numeric matrix for argument ParentData");
-        }
+        in_ParentData = (int*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[6], in_ParentData))
+            mexErrMsgTxt("Expecting numeric matrix for argument ParentData");
     }
 
 
@@ -3740,13 +3430,8 @@ EXTERN_C void cg_parent_data_partial_write_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Free up input buffers. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[6]) && !mxIsUint64(prhs[6]))
-            mxFree(in_ParentData);
-    } else {
-        if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
-            mxFree(in_ParentData);
-    }
+    if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
+        mxFree(in_ParentData);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -3757,7 +3442,7 @@ EXTERN_C void cg_parent_data_partial_write_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_elements_partial_read(in_file_number, in_B, in_Z, in_S, in_start, in_end, io_elements, io_parent_data) 
  *
  * The original C interface is 
- * int cg_elements_partial_read( int file_number, int B, int Z, int S, ptrdiff_t start, ptrdiff_t end, ptrdiff_t * elements, ptrdiff_t * parent_data);
+ * int cg_elements_partial_read( int file_number, int B, int Z, int S, int start, int end, int * elements, int * parent_data);
  */
 EXTERN_C void cg_elements_partial_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -3766,10 +3451,10 @@ EXTERN_C void cg_elements_partial_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    ptrdiff_t in_start;
-    ptrdiff_t in_end;
-    ptrdiff_t * io_elements;
-    ptrdiff_t * io_parent_data;
+    int in_start;
+    int in_end;
+    int * io_elements;
+    int * io_parent_data;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -3795,54 +3480,26 @@ EXTERN_C void cg_elements_partial_read_MeX(int nlhs, mxArray *plhs[],
 
     if (_n_dims(prhs[4]) > 0)
         mexErrMsgTxt("Error in dimension of argument start");
-    if (sizeof(ptrdiff_t)==8) 
-        in_start = _get_numeric_scalar_int64(prhs[4]);
-    else
-        in_start = _get_numeric_scalar_int32(prhs[4]);
+    in_start = _get_numeric_scalar_int32(prhs[4]);
 
     if (_n_dims(prhs[5]) > 0)
         mexErrMsgTxt("Error in dimension of argument end");
-    if (sizeof(ptrdiff_t)==8) 
-        in_end = _get_numeric_scalar_int64(prhs[5]);
-    else
-        in_end = _get_numeric_scalar_int32(prhs[5]);
+    in_end = _get_numeric_scalar_int32(prhs[5]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-            io_elements = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            io_elements = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[6], (int64*)io_elements))
-                mexErrMsgTxt("Expecting numeric matrix for argument elements");
-        }
-    }
+    if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
+        io_elements = (int*)mxGetData(prhs[6]);
     else {
-        if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
-            io_elements = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            io_elements = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[6], (int32*)io_elements))
-                mexErrMsgTxt("Expecting numeric matrix for argument elements");
-        }
+        io_elements = (int*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[6], io_elements))
+            mexErrMsgTxt("Expecting numeric matrix for argument elements");
     }
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-            io_parent_data = (ptrdiff_t*)mxGetData(prhs[7]);
-        else {
-            io_parent_data = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[7], (int64*)io_parent_data))
-                mexErrMsgTxt("Expecting numeric matrix for argument parent_data");
-        }
-    }
+    if (mxIsInt32(prhs[7]) || mxIsUint32(prhs[7]))
+        io_parent_data = (int*)mxGetData(prhs[7]);
     else {
-        if (mxIsInt32(prhs[7]) || mxIsUint32(prhs[7]))
-            io_parent_data = (ptrdiff_t*)mxGetData(prhs[7]);
-        else {
-            io_parent_data = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[7], (int32*)io_parent_data))
-                mexErrMsgTxt("Expecting numeric matrix for argument parent_data");
-        }
+        io_parent_data = (int*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[7], io_parent_data))
+            mexErrMsgTxt("Expecting numeric matrix for argument parent_data");
     }
 
 
@@ -3851,20 +3508,10 @@ EXTERN_C void cg_elements_partial_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[6]) && !mxIsUint64(prhs[6]))
-            mxFree(io_elements);
-    } else {
-        if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
-            mxFree(io_elements);
-    }
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[7]) && !mxIsUint64(prhs[7]))
-            mxFree(io_parent_data);
-    } else {
-        if (!mxIsInt32(prhs[7]) && !mxIsUint32(prhs[7]))
-            mxFree(io_parent_data);
-    }
+    if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
+        mxFree(io_elements);
+    if (!mxIsInt32(prhs[7]) && !mxIsUint32(prhs[7]))
+        mxFree(io_parent_data);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -3875,7 +3522,7 @@ EXTERN_C void cg_elements_partial_read_MeX(int nlhs, mxArray *plhs[],
  * [out_ElementDataSize, ierr] = cg_ElementPartialSize(in_file_number, in_B, in_Z, in_S, in_start, in_end) 
  *
  * The original C interface is 
- * int cg_ElementPartialSize( int file_number, int B, int Z, int S, ptrdiff_t start, ptrdiff_t end, ptrdiff_t * ElementDataSize);
+ * int cg_ElementPartialSize( int file_number, int B, int Z, int S, int start, int end, int * ElementDataSize);
  */
 EXTERN_C void cg_ElementPartialSize_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -3884,9 +3531,9 @@ EXTERN_C void cg_ElementPartialSize_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    ptrdiff_t in_start;
-    ptrdiff_t in_end;
-    ptrdiff_t out_ElementDataSize;
+    int in_start;
+    int in_end;
+    int out_ElementDataSize;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -3912,17 +3559,11 @@ EXTERN_C void cg_ElementPartialSize_MeX(int nlhs, mxArray *plhs[],
 
     if (_n_dims(prhs[4]) > 0)
         mexErrMsgTxt("Error in dimension of argument start");
-    if (sizeof(ptrdiff_t)==8) 
-        in_start = _get_numeric_scalar_int64(prhs[4]);
-    else
-        in_start = _get_numeric_scalar_int32(prhs[4]);
+    in_start = _get_numeric_scalar_int32(prhs[4]);
 
     if (_n_dims(prhs[5]) > 0)
         mexErrMsgTxt("Error in dimension of argument end");
-    if (sizeof(ptrdiff_t)==8) 
-        in_end = _get_numeric_scalar_int64(prhs[5]);
-    else
-        in_end = _get_numeric_scalar_int32(prhs[5]);
+    in_end = _get_numeric_scalar_int32(prhs[5]);
 
 
     /******** Invoke computational function ********/
@@ -3930,8 +3571,8 @@ EXTERN_C void cg_ElementPartialSize_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);
-    *(ptrdiff_t*)mxGetData(plhs[0]) = out_ElementDataSize;
+    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[0]) = out_ElementDataSize;
     if (nlhs > 1) {
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
@@ -3988,7 +3629,7 @@ EXTERN_C void cg_nsols_MeX(int nlhs, mxArray *plhs[],
  * [out_location, ierr] = cg_sol_info(in_fn, in_B, in_Z, in_S, io_solname) 
  *
  * The original C interface is 
- * int cg_sol_info( int fn, int B, int Z, int S, char * solname, CG_GridLocation_t * location);
+ * int cg_sol_info( int fn, int B, int Z, int S, char * solname, GridLocation_t * location);
  */
 EXTERN_C void cg_sol_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -3998,11 +3639,11 @@ EXTERN_C void cg_sol_info_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_S;
     char * io_solname;
-    CG_GridLocation_t out_location;
+    GridLocation_t out_location;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 5)
+    if (nlhs > 3 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -4030,7 +3671,7 @@ EXTERN_C void cg_sol_info_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_solname, (mxArray*)prhs[4]);
+    /* _mxPutString(io_solname, (mxArray*)prhs[4]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -4038,6 +3679,9 @@ EXTERN_C void cg_sol_info_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1) {
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
+    }
+    if (nlhs > 2) {
+        plhs[2] = mxCreateString(io_solname);
     }
 }
 
@@ -4096,7 +3740,7 @@ EXTERN_C void cg_sol_id_MeX(int nlhs, mxArray *plhs[],
  * [out_S, ierr] = cg_sol_write(in_fn, in_B, in_Z, in_solname, in_location) 
  *
  * The original C interface is 
- * int cg_sol_write( int fn, int B, int Z, const char * solname, CG_GridLocation_t location, int * S);
+ * int cg_sol_write( int fn, int B, int Z, char const * solname, GridLocation_t location, int * S);
  */
 EXTERN_C void cg_sol_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -4105,7 +3749,7 @@ EXTERN_C void cg_sol_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     char * in_solname;
-    CG_GridLocation_t in_location;
+    GridLocation_t in_location;
     int out_S;
     int ierr;
 
@@ -4139,314 +3783,6 @@ EXTERN_C void cg_sol_write_MeX(int nlhs, mxArray *plhs[],
 
     /******** Free up input buffers. ********/
     _mxFreeString(in_solname);
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_S;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
-    }
-}
-
-/* Gateway function 
- * [out_data_dim, ierr] = cg_sol_size(in_fn, in_B, in_Z, in_S, io_dim_vals) 
- *
- * The original C interface is 
- * int cg_sol_size( int fn, int B, int Z, int S, int * data_dim, ptrdiff_t * dim_vals);
- */
-EXTERN_C void cg_sol_size_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int in_S;
-    int out_data_dim;
-    ptrdiff_t * io_dim_vals;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 5)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument S");
-    in_S = _get_numeric_scalar_int32(prhs[3]);
-
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-            io_dim_vals = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_dim_vals = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[4], (int64*)io_dim_vals))
-                mexErrMsgTxt("Expecting numeric matrix for argument dim_vals");
-        }
-    }
-    else {
-        if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
-            io_dim_vals = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_dim_vals = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[4], (int32*)io_dim_vals))
-                mexErrMsgTxt("Expecting numeric matrix for argument dim_vals");
-        }
-    }
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_sol_size(in_fn, in_B, in_Z, in_S, &out_data_dim, io_dim_vals);
-
-
-    /******** Process inout argument. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[4]) && !mxIsUint64(prhs[4]))
-            mxFree(io_dim_vals);
-    } else {
-        if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
-            mxFree(io_dim_vals);
-    }
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_data_dim;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
-    }
-}
-
-/* Gateway function 
- * [out_ptset_type, out_npnts, ierr] = cg_sol_ptset_info(in_fn, in_B, in_Z, in_S) 
- *
- * The original C interface is 
- * int cg_sol_ptset_info( int fn, int B, int Z, int S, CG_PointSetType_t * ptset_type, ptrdiff_t * npnts);
- */
-EXTERN_C void cg_sol_ptset_info_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int in_S;
-    CG_PointSetType_t out_ptset_type;
-    ptrdiff_t out_npnts;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 3 || nrhs != 4)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument S");
-    in_S = _get_numeric_scalar_int32(prhs[3]);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_sol_ptset_info(in_fn, in_B, in_Z, in_S, &out_ptset_type, &out_npnts);
-
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_ptset_type;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);
-        *(ptrdiff_t*)mxGetData(plhs[1]) = out_npnts;
-    }
-    if (nlhs > 2) {
-        plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[2]) = ierr;
-    }
-}
-
-/* Gateway function 
- * ierr = cg_sol_ptset_read(in_fn, in_B, in_Z, in_S, io_pnts) 
- *
- * The original C interface is 
- * int cg_sol_ptset_read( int fn, int B, int Z, int S, ptrdiff_t * pnts);
- */
-EXTERN_C void cg_sol_ptset_read_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int in_S;
-    ptrdiff_t * io_pnts;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 5)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument S");
-    in_S = _get_numeric_scalar_int32(prhs[3]);
-
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[4], (int64*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
-    else {
-        if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[4], (int32*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_sol_ptset_read(in_fn, in_B, in_Z, in_S, io_pnts);
-
-
-    /******** Process inout argument. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[4]) && !mxIsUint64(prhs[4]))
-            mxFree(io_pnts);
-    } else {
-        if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
-            mxFree(io_pnts);
-    }
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = ierr;
-}
-
-/* Gateway function 
- * [out_S, ierr] = cg_sol_ptset_write(in_fn, in_B, in_Z, in_solname, in_location, in_ptset_type, in_npnts, in_pnts) 
- *
- * The original C interface is 
- * int cg_sol_ptset_write( int fn, int B, int Z, const char * solname, CG_GridLocation_t location, CG_PointSetType_t ptset_type, ptrdiff_t npnts, const ptrdiff_t * pnts, int * S);
- */
-EXTERN_C void cg_sol_ptset_write_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    char * in_solname;
-    CG_GridLocation_t in_location;
-    CG_PointSetType_t in_ptset_type;
-    ptrdiff_t in_npnts;
-    ptrdiff_t * in_pnts;
-    int out_S;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 8)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    in_solname = _mxGetString(prhs[3], NULL);
-
-    if (_n_dims(prhs[4]) > 0)
-        mexErrMsgTxt("Error in dimension of argument location");
-    in_location = _get_numeric_scalar_int32(prhs[4]);
-
-    if (_n_dims(prhs[5]) > 0)
-        mexErrMsgTxt("Error in dimension of argument ptset_type");
-    in_ptset_type = _get_numeric_scalar_int32(prhs[5]);
-
-    if (_n_dims(prhs[6]) > 0)
-        mexErrMsgTxt("Error in dimension of argument npnts");
-    if (sizeof(ptrdiff_t)==8) 
-        in_npnts = _get_numeric_scalar_int64(prhs[6]);
-    else
-        in_npnts = _get_numeric_scalar_int32(prhs[6]);
-
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[7]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[7], (int64*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
-    else {
-        if (mxIsInt32(prhs[7]) || mxIsUint32(prhs[7]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[7]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[7], (int32*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_sol_ptset_write(in_fn, in_B, in_Z, in_solname, in_location, in_ptset_type, in_npnts, in_pnts, &out_S);
-
-
-    /******** Free up input buffers. ********/
-    _mxFreeString(in_solname);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[7]) && !mxIsUint64(prhs[7]))
-            mxFree(in_pnts);
-    } else {
-        if (!mxIsInt32(prhs[7]) && !mxIsUint32(prhs[7]))
-            mxFree(in_pnts);
-    }
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -4512,7 +3848,7 @@ EXTERN_C void cg_nfields_MeX(int nlhs, mxArray *plhs[],
  * [out_type, ierr] = cg_field_info(in_fn, in_B, in_Z, in_S, in_F, io_fieldname) 
  *
  * The original C interface is 
- * int cg_field_info( int fn, int B, int Z, int S, int F, CG_DataType_t * type, char * fieldname);
+ * int cg_field_info( int fn, int B, int Z, int S, int F, DataType_t * type, char * fieldname);
  */
 EXTERN_C void cg_field_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -4522,12 +3858,12 @@ EXTERN_C void cg_field_info_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_S;
     int in_F;
-    CG_DataType_t out_type;
+    DataType_t out_type;
     char * io_fieldname;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 6)
+    if (nlhs > 3 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -4559,7 +3895,7 @@ EXTERN_C void cg_field_info_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_fieldname, (mxArray*)prhs[5]);
+    /* _mxPutString(io_fieldname, (mxArray*)prhs[5]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -4568,13 +3904,16 @@ EXTERN_C void cg_field_info_MeX(int nlhs, mxArray *plhs[],
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
     }
+    if (nlhs > 2) {
+        plhs[2] = mxCreateString(io_fieldname);
+    }
 }
 
 /* Gateway function 
  * ierr = cg_field_read(in_fn, in_B, in_Z, in_S, in_fieldname, in_type, in_rmin, in_rmax, io_field_ptr) 
  *
  * The original C interface is 
- * int cg_field_read( int fn, int B, int Z, int S, const char * fieldname, CG_DataType_t type, const ptrdiff_t * rmin, const ptrdiff_t * rmax, void * field_ptr);
+ * int cg_field_read( int fn, int B, int Z, int S, char const * fieldname, DataType_t type, int * rmin, int * rmax, void * field_ptr);
  */
 EXTERN_C void cg_field_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -4584,9 +3923,9 @@ EXTERN_C void cg_field_read_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_S;
     char * in_fieldname;
-    CG_DataType_t in_type;
-    ptrdiff_t * in_rmin;
-    ptrdiff_t * in_rmax;
+    DataType_t in_type;
+    int * in_rmin;
+    int * in_rmax;
     void * io_field_ptr;
     int ierr;
 
@@ -4617,42 +3956,20 @@ EXTERN_C void cg_field_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[5]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-            in_rmin = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            in_rmin = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[6], (int64*)in_rmin))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmin");
-        }
-    }
+    if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
+        in_rmin = (int*)mxGetData(prhs[6]);
     else {
-        if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
-            in_rmin = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            in_rmin = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[6], (int32*)in_rmin))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmin");
-        }
+        in_rmin = (int*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[6], in_rmin))
+            mexErrMsgTxt("Expecting numeric matrix for argument rmin");
     }
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-            in_rmax = (ptrdiff_t*)mxGetData(prhs[7]);
-        else {
-            in_rmax = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[7], (int64*)in_rmax))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmax");
-        }
-    }
+    if (mxIsInt32(prhs[7]) || mxIsUint32(prhs[7]))
+        in_rmax = (int*)mxGetData(prhs[7]);
     else {
-        if (mxIsInt32(prhs[7]) || mxIsUint32(prhs[7]))
-            in_rmax = (ptrdiff_t*)mxGetData(prhs[7]);
-        else {
-            in_rmax = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[7], (int32*)in_rmax))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmax");
-        }
+        in_rmax = (int*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[7], in_rmax))
+            mexErrMsgTxt("Expecting numeric matrix for argument rmax");
     }
 
     io_field_ptr = mxGetData( prhs[8]);
@@ -4663,20 +3980,10 @@ EXTERN_C void cg_field_read_MeX(int nlhs, mxArray *plhs[],
 
     /******** Free up input buffers. ********/
     _mxFreeString(in_fieldname);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[6]) && !mxIsUint64(prhs[6]))
-            mxFree(in_rmin);
-    } else {
-        if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
-            mxFree(in_rmin);
-    }
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[7]) && !mxIsUint64(prhs[7]))
-            mxFree(in_rmax);
-    } else {
-        if (!mxIsInt32(prhs[7]) && !mxIsUint32(prhs[7]))
-            mxFree(in_rmax);
-    }
+    if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
+        mxFree(in_rmin);
+    if (!mxIsInt32(prhs[7]) && !mxIsUint32(prhs[7]))
+        mxFree(in_rmax);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -4743,7 +4050,7 @@ EXTERN_C void cg_field_id_MeX(int nlhs, mxArray *plhs[],
  * [out_F, ierr] = cg_field_write(in_fn, in_B, in_Z, in_S, in_type, in_fieldname, in_field_ptr) 
  *
  * The original C interface is 
- * int cg_field_write( int fn, int B, int Z, int S, CG_DataType_t type, const char * fieldname, const void * field_ptr, int * F);
+ * int cg_field_write( int fn, int B, int Z, int S, DataType_t type, char const * fieldname, void const * field_ptr, int * F);
  */
 EXTERN_C void cg_field_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -4752,9 +4059,9 @@ EXTERN_C void cg_field_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    CG_DataType_t in_type;
+    DataType_t in_type;
     char * in_fieldname;
-    const void * in_field_ptr;
+    void const * in_field_ptr;
     int out_F;
     int ierr;
 
@@ -4807,7 +4114,7 @@ EXTERN_C void cg_field_write_MeX(int nlhs, mxArray *plhs[],
  * [out_F, ierr] = cg_field_partial_write(in_fn, in_B, in_Z, in_S, in_type, in_fieldname, in_rmin, in_rmax, in_field_ptr) 
  *
  * The original C interface is 
- * int cg_field_partial_write( int fn, int B, int Z, int S, CG_DataType_t type, const char * fieldname, const ptrdiff_t * rmin, const ptrdiff_t * rmax, const void * field_ptr, int * F);
+ * int cg_field_partial_write( int fn, int B, int Z, int S, DataType_t type, char const * fieldname, int * rmin, int * rmax, void const * field_ptr, int * F);
  */
 EXTERN_C void cg_field_partial_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -4816,11 +4123,11 @@ EXTERN_C void cg_field_partial_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    CG_DataType_t in_type;
+    DataType_t in_type;
     char * in_fieldname;
-    ptrdiff_t * in_rmin;
-    ptrdiff_t * in_rmax;
-    const void * in_field_ptr;
+    int * in_rmin;
+    int * in_rmax;
+    void const * in_field_ptr;
     int out_F;
     int ierr;
 
@@ -4851,42 +4158,20 @@ EXTERN_C void cg_field_partial_write_MeX(int nlhs, mxArray *plhs[],
 
     in_fieldname = _mxGetString(prhs[5], NULL);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-            in_rmin = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            in_rmin = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[6], (int64*)in_rmin))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmin");
-        }
-    }
+    if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
+        in_rmin = (int*)mxGetData(prhs[6]);
     else {
-        if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
-            in_rmin = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            in_rmin = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[6], (int32*)in_rmin))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmin");
-        }
+        in_rmin = (int*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[6], in_rmin))
+            mexErrMsgTxt("Expecting numeric matrix for argument rmin");
     }
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-            in_rmax = (ptrdiff_t*)mxGetData(prhs[7]);
-        else {
-            in_rmax = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[7], (int64*)in_rmax))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmax");
-        }
-    }
+    if (mxIsInt32(prhs[7]) || mxIsUint32(prhs[7]))
+        in_rmax = (int*)mxGetData(prhs[7]);
     else {
-        if (mxIsInt32(prhs[7]) || mxIsUint32(prhs[7]))
-            in_rmax = (ptrdiff_t*)mxGetData(prhs[7]);
-        else {
-            in_rmax = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[7], (int32*)in_rmax))
-                mexErrMsgTxt("Expecting numeric matrix for argument rmax");
-        }
+        in_rmax = (int*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[7], in_rmax))
+            mexErrMsgTxt("Expecting numeric matrix for argument rmax");
     }
 
     in_field_ptr = mxGetData( prhs[8]);
@@ -4897,20 +4182,10 @@ EXTERN_C void cg_field_partial_write_MeX(int nlhs, mxArray *plhs[],
 
     /******** Free up input buffers. ********/
     _mxFreeString(in_fieldname);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[6]) && !mxIsUint64(prhs[6]))
-            mxFree(in_rmin);
-    } else {
-        if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
-            mxFree(in_rmin);
-    }
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[7]) && !mxIsUint64(prhs[7]))
-            mxFree(in_rmax);
-    } else {
-        if (!mxIsInt32(prhs[7]) && !mxIsUint32(prhs[7]))
-            mxFree(in_rmax);
-    }
+    if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
+        mxFree(in_rmin);
+    if (!mxIsInt32(prhs[7]) && !mxIsUint32(prhs[7]))
+        mxFree(in_rmax);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -4919,779 +4194,6 @@ EXTERN_C void cg_field_partial_write_MeX(int nlhs, mxArray *plhs[],
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
     }
-}
-
-/* Gateway function 
- * [out_nsubreg, ierr] = cg_nsubregs(in_fn, in_B, in_Z) 
- *
- * The original C interface is 
- * int cg_nsubregs( int fn, int B, int Z, int * nsubreg);
- */
-EXTERN_C void cg_nsubregs_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int out_nsubreg;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 3)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_nsubregs(in_fn, in_B, in_Z, &out_nsubreg);
-
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_nsubreg;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
-    }
-}
-
-/* Gateway function 
- * [out_dimension, out_location, out_ptset_type, out_npnts, out_bcname_len, out_gcname_len, ierr] = cg_subreg_info(in_fn, in_B, in_Z, in_S, io_regname) 
- *
- * The original C interface is 
- * int cg_subreg_info( int fn, int B, int Z, int S, char * regname, int * dimension, CG_GridLocation_t * location, CG_PointSetType_t * ptset_type, ptrdiff_t * npnts, int * bcname_len, int * gcname_len);
- */
-EXTERN_C void cg_subreg_info_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int in_S;
-    char * io_regname;
-    int out_dimension;
-    CG_GridLocation_t out_location;
-    CG_PointSetType_t out_ptset_type;
-    ptrdiff_t out_npnts;
-    int out_bcname_len;
-    int out_gcname_len;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 7 || nrhs != 5)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument S");
-    in_S = _get_numeric_scalar_int32(prhs[3]);
-
-    io_regname = _mxGetString(prhs[4], NULL);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_subreg_info(in_fn, in_B, in_Z, in_S, io_regname, &out_dimension, &out_location, &out_ptset_type, &out_npnts, &out_bcname_len, &out_gcname_len);
-
-
-    /******** Process inout argument. ********/
-    _mxPutString(io_regname, (mxArray*)prhs[4]);
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_dimension;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = out_location;
-    }
-    if (nlhs > 2) {
-        plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[2]) = out_ptset_type;
-    }
-    if (nlhs > 3) {
-        plhs[3] = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);
-        *(ptrdiff_t*)mxGetData(plhs[3]) = out_npnts;
-    }
-    if (nlhs > 4) {
-        plhs[4] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[4]) = out_bcname_len;
-    }
-    if (nlhs > 5) {
-        plhs[5] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[5]) = out_gcname_len;
-    }
-    if (nlhs > 6) {
-        plhs[6] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[6]) = ierr;
-    }
-}
-
-/* Gateway function 
- * ierr = cg_subreg_ptset_read(in_fn, in_B, in_Z, in_S, io_pnts) 
- *
- * The original C interface is 
- * int cg_subreg_ptset_read( int fn, int B, int Z, int S, ptrdiff_t * pnts);
- */
-EXTERN_C void cg_subreg_ptset_read_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int in_S;
-    ptrdiff_t * io_pnts;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 5)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument S");
-    in_S = _get_numeric_scalar_int32(prhs[3]);
-
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[4], (int64*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
-    else {
-        if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[4], (int32*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_subreg_ptset_read(in_fn, in_B, in_Z, in_S, io_pnts);
-
-
-    /******** Process inout argument. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[4]) && !mxIsUint64(prhs[4]))
-            mxFree(io_pnts);
-    } else {
-        if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
-            mxFree(io_pnts);
-    }
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = ierr;
-}
-
-/* Gateway function 
- * ierr = cg_subreg_bcname_read(in_fn, in_B, in_Z, in_S, io_bcname) 
- *
- * The original C interface is 
- * int cg_subreg_bcname_read( int fn, int B, int Z, int S, char * bcname);
- */
-EXTERN_C void cg_subreg_bcname_read_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int in_S;
-    char * io_bcname;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 5)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument S");
-    in_S = _get_numeric_scalar_int32(prhs[3]);
-
-    io_bcname = _mxGetString(prhs[4], NULL);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_subreg_bcname_read(in_fn, in_B, in_Z, in_S, io_bcname);
-
-
-    /******** Process inout argument. ********/
-    _mxPutString(io_bcname, (mxArray*)prhs[4]);
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = ierr;
-}
-
-/* Gateway function 
- * ierr = cg_subreg_gcname_read(in_fn, in_B, in_Z, in_S, io_gcname) 
- *
- * The original C interface is 
- * int cg_subreg_gcname_read( int fn, int B, int Z, int S, char * gcname);
- */
-EXTERN_C void cg_subreg_gcname_read_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int in_S;
-    char * io_gcname;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 5)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument S");
-    in_S = _get_numeric_scalar_int32(prhs[3]);
-
-    io_gcname = _mxGetString(prhs[4], NULL);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_subreg_gcname_read(in_fn, in_B, in_Z, in_S, io_gcname);
-
-
-    /******** Process inout argument. ********/
-    _mxPutString(io_gcname, (mxArray*)prhs[4]);
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = ierr;
-}
-
-/* Gateway function 
- * [out_S, ierr] = cg_subreg_ptset_write(in_fn, in_B, in_Z, in_regname, in_dimension, in_location, in_ptset_type, in_npnts, in_pnts) 
- *
- * The original C interface is 
- * int cg_subreg_ptset_write( int fn, int B, int Z, const char * regname, int dimension, CG_GridLocation_t location, CG_PointSetType_t ptset_type, ptrdiff_t npnts, const ptrdiff_t * pnts, int * S);
- */
-EXTERN_C void cg_subreg_ptset_write_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    char * in_regname;
-    int in_dimension;
-    CG_GridLocation_t in_location;
-    CG_PointSetType_t in_ptset_type;
-    ptrdiff_t in_npnts;
-    ptrdiff_t * in_pnts;
-    int out_S;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 9)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    in_regname = _mxGetString(prhs[3], NULL);
-
-    if (_n_dims(prhs[4]) > 0)
-        mexErrMsgTxt("Error in dimension of argument dimension");
-    in_dimension = _get_numeric_scalar_int32(prhs[4]);
-
-    if (_n_dims(prhs[5]) > 0)
-        mexErrMsgTxt("Error in dimension of argument location");
-    in_location = _get_numeric_scalar_int32(prhs[5]);
-
-    if (_n_dims(prhs[6]) > 0)
-        mexErrMsgTxt("Error in dimension of argument ptset_type");
-    in_ptset_type = _get_numeric_scalar_int32(prhs[6]);
-
-    if (_n_dims(prhs[7]) > 0)
-        mexErrMsgTxt("Error in dimension of argument npnts");
-    if (sizeof(ptrdiff_t)==8) 
-        in_npnts = _get_numeric_scalar_int64(prhs[7]);
-    else
-        in_npnts = _get_numeric_scalar_int32(prhs[7]);
-
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[8]) || mxIsUint64(prhs[8]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[8]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[8]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[8], (int64*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
-    else {
-        if (mxIsInt32(prhs[8]) || mxIsUint32(prhs[8]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[8]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[8]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[8], (int32*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_subreg_ptset_write(in_fn, in_B, in_Z, in_regname, in_dimension, in_location, in_ptset_type, in_npnts, in_pnts, &out_S);
-
-
-    /******** Free up input buffers. ********/
-    _mxFreeString(in_regname);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[8]) && !mxIsUint64(prhs[8]))
-            mxFree(in_pnts);
-    } else {
-        if (!mxIsInt32(prhs[8]) && !mxIsUint32(prhs[8]))
-            mxFree(in_pnts);
-    }
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_S;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
-    }
-}
-
-/* Gateway function 
- * [out_S, ierr] = cg_subreg_bcname_write(in_fn, in_B, in_Z, in_regname, in_dimension, in_bcname) 
- *
- * The original C interface is 
- * int cg_subreg_bcname_write( int fn, int B, int Z, const char * regname, int dimension, const char * bcname, int * S);
- */
-EXTERN_C void cg_subreg_bcname_write_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    char * in_regname;
-    int in_dimension;
-    char * in_bcname;
-    int out_S;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 6)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    in_regname = _mxGetString(prhs[3], NULL);
-
-    if (_n_dims(prhs[4]) > 0)
-        mexErrMsgTxt("Error in dimension of argument dimension");
-    in_dimension = _get_numeric_scalar_int32(prhs[4]);
-
-    in_bcname = _mxGetString(prhs[5], NULL);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_subreg_bcname_write(in_fn, in_B, in_Z, in_regname, in_dimension, in_bcname, &out_S);
-
-
-    /******** Free up input buffers. ********/
-    _mxFreeString(in_regname);
-    _mxFreeString(in_bcname);
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_S;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
-    }
-}
-
-/* Gateway function 
- * [out_S, ierr] = cg_subreg_gcname_write(in_fn, in_B, in_Z, in_regname, in_dimension, in_gcname) 
- *
- * The original C interface is 
- * int cg_subreg_gcname_write( int fn, int B, int Z, const char * regname, int dimension, const char * gcname, int * S);
- */
-EXTERN_C void cg_subreg_gcname_write_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    char * in_regname;
-    int in_dimension;
-    char * in_gcname;
-    int out_S;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 6)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    in_regname = _mxGetString(prhs[3], NULL);
-
-    if (_n_dims(prhs[4]) > 0)
-        mexErrMsgTxt("Error in dimension of argument dimension");
-    in_dimension = _get_numeric_scalar_int32(prhs[4]);
-
-    in_gcname = _mxGetString(prhs[5], NULL);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_subreg_gcname_write(in_fn, in_B, in_Z, in_regname, in_dimension, in_gcname, &out_S);
-
-
-    /******** Free up input buffers. ********/
-    _mxFreeString(in_regname);
-    _mxFreeString(in_gcname);
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_S;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
-    }
-}
-
-/* Gateway function 
- * [out_nzconns, ierr] = cg_nzconns(in_fn, in_B, in_Z) 
- *
- * The original C interface is 
- * int cg_nzconns( int fn, int B, int Z, int * nzconns);
- */
-EXTERN_C void cg_nzconns_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int out_nzconns;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 3)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_nzconns(in_fn, in_B, in_Z, &out_nzconns);
-
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_nzconns;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
-    }
-}
-
-/* Gateway function 
- * ierr = cg_zconn_read(in_fn, in_B, in_Z, in_C, io_name) 
- *
- * The original C interface is 
- * int cg_zconn_read( int fn, int B, int Z, int C, char * name);
- */
-EXTERN_C void cg_zconn_read_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int in_C;
-    char * io_name;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 5)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument C");
-    in_C = _get_numeric_scalar_int32(prhs[3]);
-
-    io_name = _mxGetString(prhs[4], NULL);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_zconn_read(in_fn, in_B, in_Z, in_C, io_name);
-
-
-    /******** Process inout argument. ********/
-    _mxPutString(io_name, (mxArray*)prhs[4]);
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = ierr;
-}
-
-/* Gateway function 
- * [out_C, ierr] = cg_zconn_write(in_fn, in_B, in_Z, in_name) 
- *
- * The original C interface is 
- * int cg_zconn_write( int fn, int B, int Z, const char * name, int * C);
- */
-EXTERN_C void cg_zconn_write_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    char * in_name;
-    int out_C;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 4)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    in_name = _mxGetString(prhs[3], NULL);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_zconn_write(in_fn, in_B, in_Z, in_name, &out_C);
-
-
-    /******** Free up input buffers. ********/
-    _mxFreeString(in_name);
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_C;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
-    }
-}
-
-/* Gateway function 
- * [out_C, ierr] = cg_zconn_get(in_fn, in_B, in_Z) 
- *
- * The original C interface is 
- * int cg_zconn_get( int fn, int B, int Z, int * C);
- */
-EXTERN_C void cg_zconn_get_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int out_C;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 3)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_zconn_get(in_fn, in_B, in_Z, &out_C);
-
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_C;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
-    }
-}
-
-/* Gateway function 
- * ierr = cg_zconn_set(in_fn, in_B, in_Z, in_C) 
- *
- * The original C interface is 
- * int cg_zconn_set( int fn, int B, int Z, int C);
- */
-EXTERN_C void cg_zconn_set_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int in_C;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 4)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument C");
-    in_C = _get_numeric_scalar_int32(prhs[3]);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_zconn_set(in_fn, in_B, in_Z, in_C);
-
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = ierr;
 }
 
 /* Gateway function 
@@ -5744,7 +4246,7 @@ EXTERN_C void cg_nholes_MeX(int nlhs, mxArray *plhs[],
  * [out_location, out_ptset_type, out_nptsets, out_npnts, ierr] = cg_hole_info(in_fn, in_B, in_Z, in_I, io_holename) 
  *
  * The original C interface is 
- * int cg_hole_info( int fn, int B, int Z, int I, char * holename, CG_GridLocation_t * location, CG_PointSetType_t * ptset_type, int * nptsets, ptrdiff_t * npnts);
+ * int cg_hole_info( int fn, int B, int Z, int I, char * holename, GridLocation_t * location, PointSetType_t * ptset_type, int * nptsets, int * npnts);
  */
 EXTERN_C void cg_hole_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -5754,14 +4256,14 @@ EXTERN_C void cg_hole_info_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_I;
     char * io_holename;
-    CG_GridLocation_t out_location;
-    CG_PointSetType_t out_ptset_type;
+    GridLocation_t out_location;
+    PointSetType_t out_ptset_type;
     int out_nptsets;
-    ptrdiff_t out_npnts;
+    int out_npnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 5 || nrhs != 5)
+    if (nlhs > 6 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -5789,7 +4291,7 @@ EXTERN_C void cg_hole_info_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_holename, (mxArray*)prhs[4]);
+    /* _mxPutString(io_holename, (mxArray*)prhs[4]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -5803,12 +4305,15 @@ EXTERN_C void cg_hole_info_MeX(int nlhs, mxArray *plhs[],
         *(int*)mxGetData(plhs[2]) = out_nptsets;
     }
     if (nlhs > 3) {
-        plhs[3] = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);
-        *(ptrdiff_t*)mxGetData(plhs[3]) = out_npnts;
+        plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[3]) = out_npnts;
     }
     if (nlhs > 4) {
         plhs[4] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[4]) = ierr;
+    }
+    if (nlhs > 5) {
+        plhs[5] = mxCreateString(io_holename);
     }
 }
 
@@ -5816,7 +4321,7 @@ EXTERN_C void cg_hole_info_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_hole_read(in_fn, in_B, in_Z, in_I, io_pnts) 
  *
  * The original C interface is 
- * int cg_hole_read( int fn, int B, int Z, int I, ptrdiff_t * pnts);
+ * int cg_hole_read( int fn, int B, int Z, int I, int * pnts);
  */
 EXTERN_C void cg_hole_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -5825,7 +4330,7 @@ EXTERN_C void cg_hole_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_I;
-    ptrdiff_t * io_pnts;
+    int * io_pnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -5849,23 +4354,12 @@ EXTERN_C void cg_hole_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument I");
     in_I = _get_numeric_scalar_int32(prhs[3]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[4], (int64*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
+    if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
+        io_pnts = (int*)mxGetData(prhs[4]);
     else {
-        if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[4], (int32*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
+        io_pnts = (int*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[4], io_pnts))
+            mexErrMsgTxt("Expecting numeric matrix for argument pnts");
     }
 
 
@@ -5874,13 +4368,8 @@ EXTERN_C void cg_hole_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[4]) && !mxIsUint64(prhs[4]))
-            mxFree(io_pnts);
-    } else {
-        if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
-            mxFree(io_pnts);
-    }
+    if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
+        mxFree(io_pnts);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -5942,7 +4431,7 @@ EXTERN_C void cg_hole_id_MeX(int nlhs, mxArray *plhs[],
  * [out_I, ierr] = cg_hole_write(in_fn, in_B, in_Z, in_holename, in_location, in_ptset_type, in_nptsets, in_npnts, in_pnts) 
  *
  * The original C interface is 
- * int cg_hole_write( int fn, int B, int Z, const char * holename, CG_GridLocation_t location, CG_PointSetType_t ptset_type, int nptsets, ptrdiff_t npnts, const ptrdiff_t * pnts, int * I);
+ * int cg_hole_write( int fn, int B, int Z, char const * holename, GridLocation_t location, PointSetType_t ptset_type, int nptsets, int npnts, int const * pnts, int * I);
  */
 EXTERN_C void cg_hole_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -5951,11 +4440,11 @@ EXTERN_C void cg_hole_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     char * in_holename;
-    CG_GridLocation_t in_location;
-    CG_PointSetType_t in_ptset_type;
+    GridLocation_t in_location;
+    PointSetType_t in_ptset_type;
     int in_nptsets;
-    ptrdiff_t in_npnts;
-    ptrdiff_t * in_pnts;
+    int in_npnts;
+    int * in_pnts;
     int out_I;
     int ierr;
 
@@ -5992,28 +4481,14 @@ EXTERN_C void cg_hole_write_MeX(int nlhs, mxArray *plhs[],
 
     if (_n_dims(prhs[7]) > 0)
         mexErrMsgTxt("Error in dimension of argument npnts");
-    if (sizeof(ptrdiff_t)==8) 
-        in_npnts = _get_numeric_scalar_int64(prhs[7]);
-    else
-        in_npnts = _get_numeric_scalar_int32(prhs[7]);
+    in_npnts = _get_numeric_scalar_int32(prhs[7]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[8]) || mxIsUint64(prhs[8]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[8]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[8]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[8], (int64*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
+    if (mxIsInt32(prhs[8]) || mxIsUint32(prhs[8]))
+        in_pnts = (int*)mxGetData(prhs[8]);
     else {
-        if (mxIsInt32(prhs[8]) || mxIsUint32(prhs[8]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[8]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[8]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[8], (int32*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
+        in_pnts = (int*)mxCalloc(mxGetNumberOfElements(prhs[8]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[8], in_pnts))
+            mexErrMsgTxt("Expecting numeric matrix for argument pnts");
     }
 
 
@@ -6023,13 +4498,8 @@ EXTERN_C void cg_hole_write_MeX(int nlhs, mxArray *plhs[],
 
     /******** Free up input buffers. ********/
     _mxFreeString(in_holename);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[8]) && !mxIsUint64(prhs[8]))
-            mxFree(in_pnts);
-    } else {
-        if (!mxIsInt32(prhs[8]) && !mxIsUint32(prhs[8]))
-            mxFree(in_pnts);
-    }
+    if (!mxIsInt32(prhs[8]) && !mxIsUint32(prhs[8]))
+        mxFree(in_pnts);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -6090,7 +4560,7 @@ EXTERN_C void cg_nconns_MeX(int nlhs, mxArray *plhs[],
  * [out_location, out_type, out_ptset_type, out_npnts, out_donor_zonetype, out_donor_ptset_type, out_donor_datatype, out_ndata_donor, ierr] = cg_conn_info(in_file_number, in_B, in_Z, in_I, io_connectname, io_donorname) 
  *
  * The original C interface is 
- * int cg_conn_info( int file_number, int B, int Z, int I, char * connectname, CG_GridLocation_t * location, CG_GridConnectivityType_t * type, CG_PointSetType_t * ptset_type, ptrdiff_t * npnts, char * donorname, CG_ZoneType_t * donor_zonetype, CG_PointSetType_t * donor_ptset_type, CG_DataType_t * donor_datatype, ptrdiff_t * ndata_donor);
+ * int cg_conn_info( int file_number, int B, int Z, int I, char * connectname, GridLocation_t * location, GridConnectivityType_t * type, PointSetType_t * ptset_type, int * npnts, char * donorname, ZoneType_t * donor_zonetype, PointSetType_t * donor_ptset_type, DataType_t * donor_datatype, int * ndata_donor);
  */
 EXTERN_C void cg_conn_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -6100,19 +4570,19 @@ EXTERN_C void cg_conn_info_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_I;
     char * io_connectname;
-    CG_GridLocation_t out_location;
-    CG_GridConnectivityType_t out_type;
-    CG_PointSetType_t out_ptset_type;
-    ptrdiff_t out_npnts;
+    GridLocation_t out_location;
+    GridConnectivityType_t out_type;
+    PointSetType_t out_ptset_type;
+    int out_npnts;
     char * io_donorname;
-    CG_ZoneType_t out_donor_zonetype;
-    CG_PointSetType_t out_donor_ptset_type;
-    CG_DataType_t out_donor_datatype;
-    ptrdiff_t out_ndata_donor;
+    ZoneType_t out_donor_zonetype;
+    PointSetType_t out_donor_ptset_type;
+    DataType_t out_donor_datatype;
+    int out_ndata_donor;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 9 || nrhs != 6)
+    if (nlhs > 11 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -6142,8 +4612,8 @@ EXTERN_C void cg_conn_info_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_connectname, (mxArray*)prhs[4]);
-    _mxPutString(io_donorname, (mxArray*)prhs[5]);
+    /* _mxPutString(io_connectname, (mxArray*)prhs[4]); */
+    /* _mxPutString(io_donorname, (mxArray*)prhs[5]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -6157,8 +4627,8 @@ EXTERN_C void cg_conn_info_MeX(int nlhs, mxArray *plhs[],
         *(int*)mxGetData(plhs[2]) = out_ptset_type;
     }
     if (nlhs > 3) {
-        plhs[3] = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);
-        *(ptrdiff_t*)mxGetData(plhs[3]) = out_npnts;
+        plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[3]) = out_npnts;
     }
     if (nlhs > 4) {
         plhs[4] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -6173,12 +4643,18 @@ EXTERN_C void cg_conn_info_MeX(int nlhs, mxArray *plhs[],
         *(int*)mxGetData(plhs[6]) = out_donor_datatype;
     }
     if (nlhs > 7) {
-        plhs[7] = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);
-        *(ptrdiff_t*)mxGetData(plhs[7]) = out_ndata_donor;
+        plhs[7] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[7]) = out_ndata_donor;
     }
     if (nlhs > 8) {
         plhs[8] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[8]) = ierr;
+    }
+    if (nlhs > 9) {
+        plhs[9] = mxCreateString(io_connectname);
+    }
+    if (nlhs > 10) {
+        plhs[10] = mxCreateString(io_donorname);
     }
 }
 
@@ -6186,7 +4662,7 @@ EXTERN_C void cg_conn_info_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_conn_read(in_file_number, in_B, in_Z, in_I, in_donor_datatype, io_pnts, io_donor_data) 
  *
  * The original C interface is 
- * int cg_conn_read( int file_number, int B, int Z, int I, ptrdiff_t * pnts, CG_DataType_t donor_datatype, ptrdiff_t * donor_data);
+ * int cg_conn_read( int file_number, int B, int Z, int I, int * pnts, DataType_t donor_datatype, void * donor_data);
  */
 EXTERN_C void cg_conn_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -6195,9 +4671,9 @@ EXTERN_C void cg_conn_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_I;
-    ptrdiff_t * io_pnts;
-    CG_DataType_t in_donor_datatype;
-    ptrdiff_t * io_donor_data;
+    int * io_pnts;
+    DataType_t in_donor_datatype;
+    void * io_donor_data;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -6225,64 +4701,23 @@ EXTERN_C void cg_conn_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument donor_datatype");
     in_donor_datatype = _get_numeric_scalar_int32(prhs[4]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[5]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[5], (int64*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
+    if (mxIsInt32(prhs[5]) || mxIsUint32(prhs[5]))
+        io_pnts = (int*)mxGetData(prhs[5]);
     else {
-        if (mxIsInt32(prhs[5]) || mxIsUint32(prhs[5]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[5]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[5], (int32*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
+        io_pnts = (int*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[5], io_pnts))
+            mexErrMsgTxt("Expecting numeric matrix for argument pnts");
     }
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-            io_donor_data = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            io_donor_data = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[6], (int64*)io_donor_data))
-                mexErrMsgTxt("Expecting numeric matrix for argument donor_data");
-        }
-    }
-    else {
-        if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
-            io_donor_data = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            io_donor_data = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[6], (int32*)io_donor_data))
-                mexErrMsgTxt("Expecting numeric matrix for argument donor_data");
-        }
-    }
-
+    io_donor_data = mxGetData( prhs[6]);
 
     /******** Invoke computational function ********/
     ierr = cg_conn_read(in_file_number, in_B, in_Z, in_I, io_pnts, in_donor_datatype, io_donor_data);
 
 
     /******** Process inout argument. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[5]) && !mxIsUint64(prhs[5]))
-            mxFree(io_pnts);
-    } else {
-        if (!mxIsInt32(prhs[5]) && !mxIsUint32(prhs[5]))
-            mxFree(io_pnts);
-    }
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[6]) && !mxIsUint64(prhs[6]))
-            mxFree(io_donor_data);
-    } else {
-        if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
-            mxFree(io_donor_data);
-    }
+    if (!mxIsInt32(prhs[5]) && !mxIsUint32(prhs[5]))
+        mxFree(io_pnts);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -6344,7 +4779,7 @@ EXTERN_C void cg_conn_id_MeX(int nlhs, mxArray *plhs[],
  * [out_I, ierr] = cg_conn_write(in_file_number, in_B, in_Z, in_connectname, in_location, in_type, in_ptset_type, in_npnts, in_pnts, in_donorname, in_donor_zonetype, in_donor_ptset_type, in_donor_datatype, in_ndata_donor, in_donor_data) 
  *
  * The original C interface is 
- * int cg_conn_write( int file_number, int B, int Z, const char * connectname, CG_GridLocation_t location, CG_GridConnectivityType_t type, CG_PointSetType_t ptset_type, ptrdiff_t npnts, const ptrdiff_t * pnts, const char * donorname, CG_ZoneType_t donor_zonetype, CG_PointSetType_t donor_ptset_type, CG_DataType_t donor_datatype, ptrdiff_t ndata_donor, const ptrdiff_t * donor_data, int * I);
+ * int cg_conn_write( int file_number, int B, int Z, char const * connectname, GridLocation_t location, GridConnectivityType_t type, PointSetType_t ptset_type, int npnts, int const * pnts, char const * donorname, ZoneType_t donor_zonetype, PointSetType_t donor_ptset_type, DataType_t donor_datatype, int ndata_donor, void const * donor_data, int * I);
  */
 EXTERN_C void cg_conn_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -6353,17 +4788,17 @@ EXTERN_C void cg_conn_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     char * in_connectname;
-    CG_GridLocation_t in_location;
-    CG_GridConnectivityType_t in_type;
-    CG_PointSetType_t in_ptset_type;
-    ptrdiff_t in_npnts;
-    ptrdiff_t * in_pnts;
+    GridLocation_t in_location;
+    GridConnectivityType_t in_type;
+    PointSetType_t in_ptset_type;
+    int in_npnts;
+    int * in_pnts;
     char * in_donorname;
-    CG_ZoneType_t in_donor_zonetype;
-    CG_PointSetType_t in_donor_ptset_type;
-    CG_DataType_t in_donor_datatype;
-    ptrdiff_t in_ndata_donor;
-    ptrdiff_t * in_donor_data;
+    ZoneType_t in_donor_zonetype;
+    PointSetType_t in_donor_ptset_type;
+    DataType_t in_donor_datatype;
+    int in_ndata_donor;
+    void const * in_donor_data;
     int out_I;
     int ierr;
 
@@ -6400,28 +4835,14 @@ EXTERN_C void cg_conn_write_MeX(int nlhs, mxArray *plhs[],
 
     if (_n_dims(prhs[7]) > 0)
         mexErrMsgTxt("Error in dimension of argument npnts");
-    if (sizeof(ptrdiff_t)==8) 
-        in_npnts = _get_numeric_scalar_int64(prhs[7]);
-    else
-        in_npnts = _get_numeric_scalar_int32(prhs[7]);
+    in_npnts = _get_numeric_scalar_int32(prhs[7]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[8]) || mxIsUint64(prhs[8]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[8]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[8]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[8], (int64*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
+    if (mxIsInt32(prhs[8]) || mxIsUint32(prhs[8]))
+        in_pnts = (int*)mxGetData(prhs[8]);
     else {
-        if (mxIsInt32(prhs[8]) || mxIsUint32(prhs[8]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[8]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[8]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[8], (int32*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
+        in_pnts = (int*)mxCalloc(mxGetNumberOfElements(prhs[8]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[8], in_pnts))
+            mexErrMsgTxt("Expecting numeric matrix for argument pnts");
     }
 
     in_donorname = _mxGetString(prhs[9], NULL);
@@ -6440,30 +4861,9 @@ EXTERN_C void cg_conn_write_MeX(int nlhs, mxArray *plhs[],
 
     if (_n_dims(prhs[13]) > 0)
         mexErrMsgTxt("Error in dimension of argument ndata_donor");
-    if (sizeof(ptrdiff_t)==8) 
-        in_ndata_donor = _get_numeric_scalar_int64(prhs[13]);
-    else
-        in_ndata_donor = _get_numeric_scalar_int32(prhs[13]);
+    in_ndata_donor = _get_numeric_scalar_int32(prhs[13]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[14]) || mxIsUint64(prhs[14]))
-            in_donor_data = (ptrdiff_t*)mxGetData(prhs[14]);
-        else {
-            in_donor_data = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[14]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[14], (int64*)in_donor_data))
-                mexErrMsgTxt("Expecting numeric matrix for argument donor_data");
-        }
-    }
-    else {
-        if (mxIsInt32(prhs[14]) || mxIsUint32(prhs[14]))
-            in_donor_data = (ptrdiff_t*)mxGetData(prhs[14]);
-        else {
-            in_donor_data = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[14]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[14], (int32*)in_donor_data))
-                mexErrMsgTxt("Expecting numeric matrix for argument donor_data");
-        }
-    }
-
+    in_donor_data = mxGetData( prhs[14]);
 
     /******** Invoke computational function ********/
     ierr = cg_conn_write(in_file_number, in_B, in_Z, in_connectname, in_location, in_type, in_ptset_type, in_npnts, in_pnts, in_donorname, in_donor_zonetype, in_donor_ptset_type, in_donor_datatype, in_ndata_donor, in_donor_data, &out_I);
@@ -6471,21 +4871,9 @@ EXTERN_C void cg_conn_write_MeX(int nlhs, mxArray *plhs[],
 
     /******** Free up input buffers. ********/
     _mxFreeString(in_connectname);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[8]) && !mxIsUint64(prhs[8]))
-            mxFree(in_pnts);
-    } else {
-        if (!mxIsInt32(prhs[8]) && !mxIsUint32(prhs[8]))
-            mxFree(in_pnts);
-    }
+    if (!mxIsInt32(prhs[8]) && !mxIsUint32(prhs[8]))
+        mxFree(in_pnts);
     _mxFreeString(in_donorname);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[14]) && !mxIsUint64(prhs[14]))
-            mxFree(in_donor_data);
-    } else {
-        if (!mxIsInt32(prhs[14]) && !mxIsUint32(prhs[14]))
-            mxFree(in_donor_data);
-    }
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -6500,7 +4888,7 @@ EXTERN_C void cg_conn_write_MeX(int nlhs, mxArray *plhs[],
  * [out_I, ierr] = cg_conn_write_short(in_file_number, in_B, in_Z, in_connectname, in_location, in_type, in_ptset_type, in_npnts, in_pnts, in_donorname) 
  *
  * The original C interface is 
- * int cg_conn_write_short( int file_number, int B, int Z, const char * connectname, CG_GridLocation_t location, CG_GridConnectivityType_t type, CG_PointSetType_t ptset_type, ptrdiff_t npnts, const ptrdiff_t * pnts, const char * donorname, int * I);
+ * int cg_conn_write_short( int file_number, int B, int Z, char const * connectname, GridLocation_t location, GridConnectivityType_t type, PointSetType_t ptset_type, int npnts, int const * pnts, char const * donorname, int * I);
  */
 EXTERN_C void cg_conn_write_short_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -6509,11 +4897,11 @@ EXTERN_C void cg_conn_write_short_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     char * in_connectname;
-    CG_GridLocation_t in_location;
-    CG_GridConnectivityType_t in_type;
-    CG_PointSetType_t in_ptset_type;
-    ptrdiff_t in_npnts;
-    ptrdiff_t * in_pnts;
+    GridLocation_t in_location;
+    GridConnectivityType_t in_type;
+    PointSetType_t in_ptset_type;
+    int in_npnts;
+    int * in_pnts;
     char * in_donorname;
     int out_I;
     int ierr;
@@ -6551,28 +4939,14 @@ EXTERN_C void cg_conn_write_short_MeX(int nlhs, mxArray *plhs[],
 
     if (_n_dims(prhs[7]) > 0)
         mexErrMsgTxt("Error in dimension of argument npnts");
-    if (sizeof(ptrdiff_t)==8) 
-        in_npnts = _get_numeric_scalar_int64(prhs[7]);
-    else
-        in_npnts = _get_numeric_scalar_int32(prhs[7]);
+    in_npnts = _get_numeric_scalar_int32(prhs[7]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[8]) || mxIsUint64(prhs[8]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[8]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[8]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[8], (int64*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
+    if (mxIsInt32(prhs[8]) || mxIsUint32(prhs[8]))
+        in_pnts = (int*)mxGetData(prhs[8]);
     else {
-        if (mxIsInt32(prhs[8]) || mxIsUint32(prhs[8]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[8]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[8]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[8], (int32*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
+        in_pnts = (int*)mxCalloc(mxGetNumberOfElements(prhs[8]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[8], in_pnts))
+            mexErrMsgTxt("Expecting numeric matrix for argument pnts");
     }
 
     in_donorname = _mxGetString(prhs[9], NULL);
@@ -6584,13 +4958,8 @@ EXTERN_C void cg_conn_write_short_MeX(int nlhs, mxArray *plhs[],
 
     /******** Free up input buffers. ********/
     _mxFreeString(in_connectname);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[8]) && !mxIsUint64(prhs[8]))
-            mxFree(in_pnts);
-    } else {
-        if (!mxIsInt32(prhs[8]) && !mxIsUint32(prhs[8]))
-            mxFree(in_pnts);
-    }
+    if (!mxIsInt32(prhs[8]) && !mxIsUint32(prhs[8]))
+        mxFree(in_pnts);
     _mxFreeString(in_donorname);
 
     /******** Process output arguments ********/
@@ -6606,7 +4975,7 @@ EXTERN_C void cg_conn_write_short_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_conn_read_short(in_file_number, in_B, in_Z, in_I, io_pnts) 
  *
  * The original C interface is 
- * int cg_conn_read_short( int file_number, int B, int Z, int I, ptrdiff_t * pnts);
+ * int cg_conn_read_short( int file_number, int B, int Z, int I, int * pnts);
  */
 EXTERN_C void cg_conn_read_short_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -6615,7 +4984,7 @@ EXTERN_C void cg_conn_read_short_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_I;
-    ptrdiff_t * io_pnts;
+    int * io_pnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -6639,23 +5008,12 @@ EXTERN_C void cg_conn_read_short_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument I");
     in_I = _get_numeric_scalar_int32(prhs[3]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[4], (int64*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
+    if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
+        io_pnts = (int*)mxGetData(prhs[4]);
     else {
-        if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[4], (int32*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
+        io_pnts = (int*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[4], io_pnts))
+            mexErrMsgTxt("Expecting numeric matrix for argument pnts");
     }
 
 
@@ -6664,13 +5022,8 @@ EXTERN_C void cg_conn_read_short_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[4]) && !mxIsUint64(prhs[4]))
-            mxFree(io_pnts);
-    } else {
-        if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
-            mxFree(io_pnts);
-    }
+    if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
+        mxFree(io_pnts);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -6727,7 +5080,7 @@ EXTERN_C void cg_n1to1_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_1to1_read(in_fn, in_B, in_Z, in_I, io_connectname, io_donorname, io_range, io_donor_range, io_transform) 
  *
  * The original C interface is 
- * int cg_1to1_read( int fn, int B, int Z, int I, char * connectname, char * donorname, ptrdiff_t * range, ptrdiff_t * donor_range, int * transform);
+ * int cg_1to1_read( int fn, int B, int Z, int I, char * connectname, char * donorname, int * range, int * donor_range, int * transform);
  */
 EXTERN_C void cg_1to1_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -6738,13 +5091,13 @@ EXTERN_C void cg_1to1_read_MeX(int nlhs, mxArray *plhs[],
     int in_I;
     char * io_connectname;
     char * io_donorname;
-    ptrdiff_t * io_range;
-    ptrdiff_t * io_donor_range;
+    int * io_range;
+    int * io_donor_range;
     int * io_transform;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 9)
+    if (nlhs > 3 || nrhs != 9)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -6770,44 +5123,22 @@ EXTERN_C void cg_1to1_read_MeX(int nlhs, mxArray *plhs[],
 
     if (mxGetNumberOfElements(prhs[6]) < (int) (6) || _n_dims(prhs[6]) > 1)
         mexErrMsgTxt("Error in dimension of argument range");
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-            io_range = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            io_range = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[6], (int64*)io_range))
-                mexErrMsgTxt("Expecting numeric matrix for argument range");
-        }
-    }
+    if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
+        io_range = (int*)mxGetData(prhs[6]);
     else {
-        if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
-            io_range = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            io_range = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[6], (int32*)io_range))
-                mexErrMsgTxt("Expecting numeric matrix for argument range");
-        }
+        io_range = (int*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[6], io_range))
+            mexErrMsgTxt("Expecting numeric matrix for argument range");
     }
 
     if (mxGetNumberOfElements(prhs[7]) < (int) (6) || _n_dims(prhs[7]) > 1)
         mexErrMsgTxt("Error in dimension of argument donor_range");
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-            io_donor_range = (ptrdiff_t*)mxGetData(prhs[7]);
-        else {
-            io_donor_range = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[7], (int64*)io_donor_range))
-                mexErrMsgTxt("Expecting numeric matrix for argument donor_range");
-        }
-    }
+    if (mxIsInt32(prhs[7]) || mxIsUint32(prhs[7]))
+        io_donor_range = (int*)mxGetData(prhs[7]);
     else {
-        if (mxIsInt32(prhs[7]) || mxIsUint32(prhs[7]))
-            io_donor_range = (ptrdiff_t*)mxGetData(prhs[7]);
-        else {
-            io_donor_range = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[7], (int32*)io_donor_range))
-                mexErrMsgTxt("Expecting numeric matrix for argument donor_range");
-        }
+        io_donor_range = (int*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[7], io_donor_range))
+            mexErrMsgTxt("Expecting numeric matrix for argument donor_range");
     }
 
     if (mxGetNumberOfElements(prhs[8]) < (int) (3) || _n_dims(prhs[8]) > 1)
@@ -6826,28 +5157,24 @@ EXTERN_C void cg_1to1_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_connectname, (mxArray*)prhs[4]);
-    _mxPutString(io_donorname, (mxArray*)prhs[5]);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[6]) && !mxIsUint64(prhs[6]))
-            mxFree(io_range);
-    } else {
-        if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
-            mxFree(io_range);
-    }
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[7]) && !mxIsUint64(prhs[7]))
-            mxFree(io_donor_range);
-    } else {
-        if (!mxIsInt32(prhs[7]) && !mxIsUint32(prhs[7]))
-            mxFree(io_donor_range);
-    }
+    /* _mxPutString(io_connectname, (mxArray*)prhs[4]); */
+    /* _mxPutString(io_donorname, (mxArray*)prhs[5]); */
+    if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
+        mxFree(io_range);
+    if (!mxIsInt32(prhs[7]) && !mxIsUint32(prhs[7]))
+        mxFree(io_donor_range);
     if (!mxIsInt32(prhs[8]) && !mxIsUint32(prhs[8]))
         mxFree(io_transform);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
+    if (nlhs > 1) {
+        plhs[1] = mxCreateString(io_connectname);
+    }
+    if (nlhs > 2) {
+        plhs[2] = mxCreateString(io_donorname);
+    }
 }
 
 /* Gateway function 
@@ -6905,7 +5232,7 @@ EXTERN_C void cg_1to1_id_MeX(int nlhs, mxArray *plhs[],
  * [out_I, ierr] = cg_1to1_write(in_fn, in_B, in_Z, in_connectname, in_donorname, in_range, in_donor_range, in_transform) 
  *
  * The original C interface is 
- * int cg_1to1_write( int fn, int B, int Z, const char * connectname, const char * donorname, const ptrdiff_t * range, const ptrdiff_t * donor_range, const int * transform, int * I);
+ * int cg_1to1_write( int fn, int B, int Z, char const * connectname, char const * donorname, int const * range, int const * donor_range, int const * transform, int * I);
  */
 EXTERN_C void cg_1to1_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -6915,8 +5242,8 @@ EXTERN_C void cg_1to1_write_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     char * in_connectname;
     char * in_donorname;
-    ptrdiff_t * in_range;
-    ptrdiff_t * in_donor_range;
+    int * in_range;
+    int * in_donor_range;
     int * in_transform;
     int out_I;
     int ierr;
@@ -6942,42 +5269,20 @@ EXTERN_C void cg_1to1_write_MeX(int nlhs, mxArray *plhs[],
 
     in_donorname = _mxGetString(prhs[4], NULL);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-            in_range = (ptrdiff_t*)mxGetData(prhs[5]);
-        else {
-            in_range = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[5], (int64*)in_range))
-                mexErrMsgTxt("Expecting numeric matrix for argument range");
-        }
-    }
+    if (mxIsInt32(prhs[5]) || mxIsUint32(prhs[5]))
+        in_range = (int*)mxGetData(prhs[5]);
     else {
-        if (mxIsInt32(prhs[5]) || mxIsUint32(prhs[5]))
-            in_range = (ptrdiff_t*)mxGetData(prhs[5]);
-        else {
-            in_range = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[5], (int32*)in_range))
-                mexErrMsgTxt("Expecting numeric matrix for argument range");
-        }
+        in_range = (int*)mxCalloc(mxGetNumberOfElements(prhs[5]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[5], in_range))
+            mexErrMsgTxt("Expecting numeric matrix for argument range");
     }
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-            in_donor_range = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            in_donor_range = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[6], (int64*)in_donor_range))
-                mexErrMsgTxt("Expecting numeric matrix for argument donor_range");
-        }
-    }
+    if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
+        in_donor_range = (int*)mxGetData(prhs[6]);
     else {
-        if (mxIsInt32(prhs[6]) || mxIsUint32(prhs[6]))
-            in_donor_range = (ptrdiff_t*)mxGetData(prhs[6]);
-        else {
-            in_donor_range = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[6], (int32*)in_donor_range))
-                mexErrMsgTxt("Expecting numeric matrix for argument donor_range");
-        }
+        in_donor_range = (int*)mxCalloc(mxGetNumberOfElements(prhs[6]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[6], in_donor_range))
+            mexErrMsgTxt("Expecting numeric matrix for argument donor_range");
     }
 
     if (mxIsInt32(prhs[7]) || mxIsUint32(prhs[7]))
@@ -6996,20 +5301,10 @@ EXTERN_C void cg_1to1_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_connectname);
     _mxFreeString(in_donorname);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[5]) && !mxIsUint64(prhs[5]))
-            mxFree(in_range);
-    } else {
-        if (!mxIsInt32(prhs[5]) && !mxIsUint32(prhs[5]))
-            mxFree(in_range);
-    }
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[6]) && !mxIsUint64(prhs[6]))
-            mxFree(in_donor_range);
-    } else {
-        if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
-            mxFree(in_donor_range);
-    }
+    if (!mxIsInt32(prhs[5]) && !mxIsUint32(prhs[5]))
+        mxFree(in_range);
+    if (!mxIsInt32(prhs[6]) && !mxIsUint32(prhs[6]))
+        mxFree(in_donor_range);
     if (!mxIsInt32(prhs[7]) && !mxIsUint32(prhs[7]))
         mxFree(in_transform);
 
@@ -7114,10 +5409,10 @@ EXTERN_C void cg_nbocos_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function 
- * [out_bocotype, out_ptset_type, out_npnts, out_NormalListSize, out_NormalDataType, out_ndataset, ierr] = cg_boco_info(in_fn, in_B, in_Z, in_BC, io_boconame, io_NormalIndex) 
+ * [out_bocotype, out_ptset_type, out_npnts, out_NormalListFlag, out_NormalDataType, out_ndataset, ierr] = cg_boco_info(in_fn, in_B, in_Z, in_BC, io_boconame, io_NormalIndex) 
  *
  * The original C interface is 
- * int cg_boco_info( int fn, int B, int Z, int BC, char * boconame, CG_BCType_t * bocotype, CG_PointSetType_t * ptset_type, ptrdiff_t * npnts, int * NormalIndex, ptrdiff_t * NormalListSize, CG_DataType_t * NormalDataType, int * ndataset);
+ * int cg_boco_info( int fn, int B, int Z, int BC, char * boconame, BCType_t * bocotype, PointSetType_t * ptset_type, int * npnts, int * NormalIndex, int * NormalListFlag, DataType_t * NormalDataType, int * ndataset);
  */
 EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -7127,17 +5422,17 @@ EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_BC;
     char * io_boconame;
-    CG_BCType_t out_bocotype;
-    CG_PointSetType_t out_ptset_type;
-    ptrdiff_t out_npnts;
+    BCType_t out_bocotype;
+    PointSetType_t out_ptset_type;
+    int out_npnts;
     int * io_NormalIndex;
-    ptrdiff_t out_NormalListSize;
-    CG_DataType_t out_NormalDataType;
+    int out_NormalListFlag;
+    DataType_t out_NormalDataType;
     int out_ndataset;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 7 || nrhs != 6)
+    if (nlhs > 8 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -7169,11 +5464,11 @@ EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Invoke computational function ********/
-    ierr = cg_boco_info(in_fn, in_B, in_Z, in_BC, io_boconame, &out_bocotype, &out_ptset_type, &out_npnts, io_NormalIndex, &out_NormalListSize, &out_NormalDataType, &out_ndataset);
+    ierr = cg_boco_info(in_fn, in_B, in_Z, in_BC, io_boconame, &out_bocotype, &out_ptset_type, &out_npnts, io_NormalIndex, &out_NormalListFlag, &out_NormalDataType, &out_ndataset);
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_boconame, (mxArray*)prhs[4]);
+    /* _mxPutString(io_boconame, (mxArray*)prhs[4]); */
     if (!mxIsInt32(prhs[5]) && !mxIsUint32(prhs[5]))
         mxFree(io_NormalIndex);
 
@@ -7185,12 +5480,12 @@ EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
         *(int*)mxGetData(plhs[1]) = out_ptset_type;
     }
     if (nlhs > 2) {
-        plhs[2] = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);
-        *(ptrdiff_t*)mxGetData(plhs[2]) = out_npnts;
+        plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[2]) = out_npnts;
     }
     if (nlhs > 3) {
-        plhs[3] = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);
-        *(ptrdiff_t*)mxGetData(plhs[3]) = out_NormalListSize;
+        plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[3]) = out_NormalListFlag;
     }
     if (nlhs > 4) {
         plhs[4] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -7204,13 +5499,16 @@ EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
         plhs[6] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[6]) = ierr;
     }
+    if (nlhs > 7) {
+        plhs[7] = mxCreateString(io_boconame);
+    }
 }
 
 /* Gateway function 
  * ierr = cg_boco_read(in_fn, in_B, in_Z, in_BC, io_pnts, io_NormalList) 
  *
  * The original C interface is 
- * int cg_boco_read( int fn, int B, int Z, int BC, ptrdiff_t * pnts, void * NormalList);
+ * int cg_boco_read( int fn, int B, int Z, int BC, int * pnts, void * NormalList);
  */
 EXTERN_C void cg_boco_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -7219,7 +5517,7 @@ EXTERN_C void cg_boco_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_BC;
-    ptrdiff_t * io_pnts;
+    int * io_pnts;
     void * io_NormalList;
     int ierr;
 
@@ -7244,23 +5542,12 @@ EXTERN_C void cg_boco_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument BC");
     in_BC = _get_numeric_scalar_int32(prhs[3]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[4], (int64*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
+    if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
+        io_pnts = (int*)mxGetData(prhs[4]);
     else {
-        if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[4], (int32*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
+        io_pnts = (int*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[4], io_pnts))
+            mexErrMsgTxt("Expecting numeric matrix for argument pnts");
     }
 
     io_NormalList = mxGetData( prhs[5]);
@@ -7270,13 +5557,8 @@ EXTERN_C void cg_boco_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[4]) && !mxIsUint64(prhs[4]))
-            mxFree(io_pnts);
-    } else {
-        if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
-            mxFree(io_pnts);
-    }
+    if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
+        mxFree(io_pnts);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -7338,7 +5620,7 @@ EXTERN_C void cg_boco_id_MeX(int nlhs, mxArray *plhs[],
  * [out_BC, ierr] = cg_boco_write(in_file_number, in_B, in_Z, in_boconame, in_bocotype, in_ptset_type, in_npnts, in_pnts) 
  *
  * The original C interface is 
- * int cg_boco_write( int file_number, int B, int Z, const char * boconame, CG_BCType_t bocotype, CG_PointSetType_t ptset_type, ptrdiff_t npnts, const ptrdiff_t * pnts, int * BC);
+ * int cg_boco_write( int file_number, int B, int Z, char const * boconame, BCType_t bocotype, PointSetType_t ptset_type, int npnts, int const * pnts, int * BC);
  */
 EXTERN_C void cg_boco_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -7347,10 +5629,10 @@ EXTERN_C void cg_boco_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     char * in_boconame;
-    CG_BCType_t in_bocotype;
-    CG_PointSetType_t in_ptset_type;
-    ptrdiff_t in_npnts;
-    ptrdiff_t * in_pnts;
+    BCType_t in_bocotype;
+    PointSetType_t in_ptset_type;
+    int in_npnts;
+    int * in_pnts;
     int out_BC;
     int ierr;
 
@@ -7383,28 +5665,14 @@ EXTERN_C void cg_boco_write_MeX(int nlhs, mxArray *plhs[],
 
     if (_n_dims(prhs[6]) > 0)
         mexErrMsgTxt("Error in dimension of argument npnts");
-    if (sizeof(ptrdiff_t)==8) 
-        in_npnts = _get_numeric_scalar_int64(prhs[6]);
-    else
-        in_npnts = _get_numeric_scalar_int32(prhs[6]);
+    in_npnts = _get_numeric_scalar_int32(prhs[6]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[7]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[7], (int64*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
+    if (mxIsInt32(prhs[7]) || mxIsUint32(prhs[7]))
+        in_pnts = (int*)mxGetData(prhs[7]);
     else {
-        if (mxIsInt32(prhs[7]) || mxIsUint32(prhs[7]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[7]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[7], (int32*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
+        in_pnts = (int*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[7], in_pnts))
+            mexErrMsgTxt("Expecting numeric matrix for argument pnts");
     }
 
 
@@ -7414,13 +5682,8 @@ EXTERN_C void cg_boco_write_MeX(int nlhs, mxArray *plhs[],
 
     /******** Free up input buffers. ********/
     _mxFreeString(in_boconame);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[7]) && !mxIsUint64(prhs[7]))
-            mxFree(in_pnts);
-    } else {
-        if (!mxIsInt32(prhs[7]) && !mxIsUint32(prhs[7]))
-            mxFree(in_pnts);
-    }
+    if (!mxIsInt32(prhs[7]) && !mxIsUint32(prhs[7]))
+        mxFree(in_pnts);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -7435,7 +5698,7 @@ EXTERN_C void cg_boco_write_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_boco_normal_write(in_file_number, in_B, in_Z, in_BC, in_NormalIndex, in_NormalListFlag, in_NormalDataType, in_NormalList) 
  *
  * The original C interface is 
- * int cg_boco_normal_write( int file_number, int B, int Z, int BC, const int * NormalIndex, int NormalListFlag, CG_DataType_t NormalDataType, const void * NormalList);
+ * int cg_boco_normal_write( int file_number, int B, int Z, int BC, int const * NormalIndex, int NormalListFlag, DataType_t NormalDataType, void const * NormalList);
  */
 EXTERN_C void cg_boco_normal_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -7446,8 +5709,8 @@ EXTERN_C void cg_boco_normal_write_MeX(int nlhs, mxArray *plhs[],
     int in_BC;
     int * in_NormalIndex;
     int in_NormalListFlag;
-    CG_DataType_t in_NormalDataType;
-    const void * in_NormalList;
+    DataType_t in_NormalDataType;
+    void const * in_NormalList;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -7503,112 +5766,10 @@ EXTERN_C void cg_boco_normal_write_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function 
- * [out_location, ierr] = cg_boco_gridlocation_read(in_file_number, in_B, in_Z, in_BC) 
- *
- * The original C interface is 
- * int cg_boco_gridlocation_read( int file_number, int B, int Z, int BC, CG_GridLocation_t * location);
- */
-EXTERN_C void cg_boco_gridlocation_read_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_file_number;
-    int in_B;
-    int in_Z;
-    int in_BC;
-    CG_GridLocation_t out_location;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 4)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument file_number");
-    in_file_number = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument BC");
-    in_BC = _get_numeric_scalar_int32(prhs[3]);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_boco_gridlocation_read(in_file_number, in_B, in_Z, in_BC, &out_location);
-
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_location;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
-    }
-}
-
-/* Gateway function 
- * ierr = cg_boco_gridlocation_write(in_file_number, in_B, in_Z, in_BC, in_location) 
- *
- * The original C interface is 
- * int cg_boco_gridlocation_write( int file_number, int B, int Z, int BC, CG_GridLocation_t location);
- */
-EXTERN_C void cg_boco_gridlocation_write_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_file_number;
-    int in_B;
-    int in_Z;
-    int in_BC;
-    CG_GridLocation_t in_location;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 5)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument file_number");
-    in_file_number = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument BC");
-    in_BC = _get_numeric_scalar_int32(prhs[3]);
-
-    if (_n_dims(prhs[4]) > 0)
-        mexErrMsgTxt("Error in dimension of argument location");
-    in_location = _get_numeric_scalar_int32(prhs[4]);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_boco_gridlocation_write(in_file_number, in_B, in_Z, in_BC, in_location);
-
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = ierr;
-}
-
-/* Gateway function 
  * [out_BCType, out_DirichletFlag, out_NeumannFlag, ierr] = cg_dataset_read(in_fn, in_B, in_Z, in_BC, in_DS, io_name) 
  *
  * The original C interface is 
- * int cg_dataset_read( int fn, int B, int Z, int BC, int DS, char * name, CG_BCType_t * BCType, int * DirichletFlag, int * NeumannFlag);
+ * int cg_dataset_read( int fn, int B, int Z, int BC, int DS, char * name, BCType_t * BCType, int * DirichletFlag, int * NeumannFlag);
  */
 EXTERN_C void cg_dataset_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -7619,13 +5780,13 @@ EXTERN_C void cg_dataset_read_MeX(int nlhs, mxArray *plhs[],
     int in_BC;
     int in_DS;
     char * io_name;
-    CG_BCType_t out_BCType;
+    BCType_t out_BCType;
     int out_DirichletFlag;
     int out_NeumannFlag;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 4 || nrhs != 6)
+    if (nlhs > 5 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -7657,7 +5818,7 @@ EXTERN_C void cg_dataset_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_name, (mxArray*)prhs[5]);
+    /* _mxPutString(io_name, (mxArray*)prhs[5]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -7674,13 +5835,16 @@ EXTERN_C void cg_dataset_read_MeX(int nlhs, mxArray *plhs[],
         plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[3]) = ierr;
     }
+    if (nlhs > 4) {
+        plhs[4] = mxCreateString(io_name);
+    }
 }
 
 /* Gateway function 
  * [out_Dset, ierr] = cg_dataset_write(in_file_number, in_B, in_Z, in_BC, in_name, in_BCType) 
  *
  * The original C interface is 
- * int cg_dataset_write( int file_number, int B, int Z, int BC, const char * name, CG_BCType_t BCType, int * Dset);
+ * int cg_dataset_write( int file_number, int B, int Z, int BC, char const * name, BCType_t BCType, int * Dset);
  */
 EXTERN_C void cg_dataset_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -7690,7 +5854,7 @@ EXTERN_C void cg_dataset_write_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_BC;
     char * in_name;
-    CG_BCType_t in_BCType;
+    BCType_t in_BCType;
     int out_Dset;
     int ierr;
 
@@ -7739,17 +5903,17 @@ EXTERN_C void cg_dataset_write_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function 
- * ierr = cg_bcdataset_write(in_name, in_BCType, in_BCDataType) 
+ * ierr = cg_bcdataset_write(in_BCType, in_BCDataType, io_name) 
  *
  * The original C interface is 
- * int cg_bcdataset_write( const char * name, CG_BCType_t BCType, CG_BCDataType_t BCDataType);
+ * int cg_bcdataset_write( char const * name, BCType_t BCType, BCDataType_t BCDataType);
  */
 EXTERN_C void cg_bcdataset_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
     char * in_name;
-    CG_BCType_t in_BCType;
-    CG_BCDataType_t in_BCDataType;
+    BCType_t in_BCType;
+    BCDataType_t in_BCDataType;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -7767,13 +5931,8 @@ EXTERN_C void cg_bcdataset_write_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument BCDataType");
     in_BCDataType = _get_numeric_scalar_int32(prhs[2]);
 
-
     /******** Invoke computational function ********/
     ierr = cg_bcdataset_write(in_name, in_BCType, in_BCDataType);
-
-
-    /******** Free up input buffers. ********/
-    _mxFreeString(in_name);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -7814,20 +5973,20 @@ EXTERN_C void cg_bcdataset_info_MeX(int nlhs, mxArray *plhs[],
  * [out_BCType, out_DirichletFlag, out_NeumannFlag, ierr] = cg_bcdataset_read(in_index, io_name) 
  *
  * The original C interface is 
- * int cg_bcdataset_read( int index, char * name, CG_BCType_t * BCType, int * DirichletFlag, int * NeumannFlag);
+ * int cg_bcdataset_read( int index, char * name, BCType_t * BCType, int * DirichletFlag, int * NeumannFlag);
  */
 EXTERN_C void cg_bcdataset_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
     int in_index;
     char * io_name;
-    CG_BCType_t out_BCType;
+    BCType_t out_BCType;
     int out_DirichletFlag;
     int out_NeumannFlag;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 4 || nrhs != 2)
+    if (nlhs > 5 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -7843,7 +6002,7 @@ EXTERN_C void cg_bcdataset_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_name, (mxArray*)prhs[1]);
+    /* _mxPutString(io_name, (mxArray*)prhs[1]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -7860,13 +6019,16 @@ EXTERN_C void cg_bcdataset_read_MeX(int nlhs, mxArray *plhs[],
         plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[3]) = ierr;
     }
+    if (nlhs > 4) {
+        plhs[4] = mxCreateString(io_name);
+    }
 }
 
 /* Gateway function 
  * ierr = cg_bcdata_write(in_file_number, in_B, in_Z, in_BC, in_Dset, in_BCDataType) 
  *
  * The original C interface is 
- * int cg_bcdata_write( int file_number, int B, int Z, int BC, int Dset, CG_BCDataType_t BCDataType);
+ * int cg_bcdata_write( int file_number, int B, int Z, int BC, int Dset, BCDataType_t BCDataType);
  */
 EXTERN_C void cg_bcdata_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -7876,7 +6038,7 @@ EXTERN_C void cg_bcdata_write_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_BC;
     int in_Dset;
-    CG_BCDataType_t in_BCDataType;
+    BCDataType_t in_BCDataType;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -7981,7 +6143,7 @@ EXTERN_C void cg_discrete_read_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 5)
+    if (nlhs > 2 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -8009,18 +6171,21 @@ EXTERN_C void cg_discrete_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_discrete_name, (mxArray*)prhs[4]);
+    /* _mxPutString(io_discrete_name, (mxArray*)prhs[4]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
+    if (nlhs > 1) {
+        plhs[1] = mxCreateString(io_discrete_name);
+    }
 }
 
 /* Gateway function 
  * [out_D, ierr] = cg_discrete_write(in_file_number, in_B, in_Z, in_discrete_name) 
  *
  * The original C interface is 
- * int cg_discrete_write( int file_number, int B, int Z, const char * discrete_name, int * D);
+ * int cg_discrete_write( int file_number, int B, int Z, char const * discrete_name, int * D);
  */
 EXTERN_C void cg_discrete_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -8058,314 +6223,6 @@ EXTERN_C void cg_discrete_write_MeX(int nlhs, mxArray *plhs[],
 
     /******** Free up input buffers. ********/
     _mxFreeString(in_discrete_name);
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_D;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
-    }
-}
-
-/* Gateway function 
- * [out_data_dim, ierr] = cg_discrete_size(in_fn, in_B, in_Z, in_D, io_dim_vals) 
- *
- * The original C interface is 
- * int cg_discrete_size( int fn, int B, int Z, int D, int * data_dim, ptrdiff_t * dim_vals);
- */
-EXTERN_C void cg_discrete_size_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int in_D;
-    int out_data_dim;
-    ptrdiff_t * io_dim_vals;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 5)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument D");
-    in_D = _get_numeric_scalar_int32(prhs[3]);
-
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-            io_dim_vals = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_dim_vals = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[4], (int64*)io_dim_vals))
-                mexErrMsgTxt("Expecting numeric matrix for argument dim_vals");
-        }
-    }
-    else {
-        if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
-            io_dim_vals = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_dim_vals = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[4], (int32*)io_dim_vals))
-                mexErrMsgTxt("Expecting numeric matrix for argument dim_vals");
-        }
-    }
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_discrete_size(in_fn, in_B, in_Z, in_D, &out_data_dim, io_dim_vals);
-
-
-    /******** Process inout argument. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[4]) && !mxIsUint64(prhs[4]))
-            mxFree(io_dim_vals);
-    } else {
-        if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
-            mxFree(io_dim_vals);
-    }
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_data_dim;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
-    }
-}
-
-/* Gateway function 
- * [out_ptset_type, out_npnts, ierr] = cg_discrete_ptset_info(in_fn, in_B, in_Z, in_D) 
- *
- * The original C interface is 
- * int cg_discrete_ptset_info( int fn, int B, int Z, int D, CG_PointSetType_t * ptset_type, ptrdiff_t * npnts);
- */
-EXTERN_C void cg_discrete_ptset_info_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int in_D;
-    CG_PointSetType_t out_ptset_type;
-    ptrdiff_t out_npnts;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 3 || nrhs != 4)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument D");
-    in_D = _get_numeric_scalar_int32(prhs[3]);
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_discrete_ptset_info(in_fn, in_B, in_Z, in_D, &out_ptset_type, &out_npnts);
-
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = out_ptset_type;
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);
-        *(ptrdiff_t*)mxGetData(plhs[1]) = out_npnts;
-    }
-    if (nlhs > 2) {
-        plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[2]) = ierr;
-    }
-}
-
-/* Gateway function 
- * ierr = cg_discrete_ptset_read(in_fn, in_B, in_Z, in_D, io_pnts) 
- *
- * The original C interface is 
- * int cg_discrete_ptset_read( int fn, int B, int Z, int D, ptrdiff_t * pnts);
- */
-EXTERN_C void cg_discrete_ptset_read_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int in_D;
-    ptrdiff_t * io_pnts;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 5)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument D");
-    in_D = _get_numeric_scalar_int32(prhs[3]);
-
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[4], (int64*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
-    else {
-        if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[4]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[4]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[4], (int32*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_discrete_ptset_read(in_fn, in_B, in_Z, in_D, io_pnts);
-
-
-    /******** Process inout argument. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[4]) && !mxIsUint64(prhs[4]))
-            mxFree(io_pnts);
-    } else {
-        if (!mxIsInt32(prhs[4]) && !mxIsUint32(prhs[4]))
-            mxFree(io_pnts);
-    }
-
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = ierr;
-}
-
-/* Gateway function 
- * [out_D, ierr] = cg_discrete_ptset_write(in_fn, in_B, in_Z, in_discrete_name, in_location, in_ptset_type, in_npnts, in_pnts) 
- *
- * The original C interface is 
- * int cg_discrete_ptset_write( int fn, int B, int Z, const char * discrete_name, CG_GridLocation_t location, CG_PointSetType_t ptset_type, ptrdiff_t npnts, const ptrdiff_t * pnts, int * D);
- */
-EXTERN_C void cg_discrete_ptset_write_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[])
-{
-    int in_fn;
-    int in_B;
-    int in_Z;
-    char * in_discrete_name;
-    CG_GridLocation_t in_location;
-    CG_PointSetType_t in_ptset_type;
-    ptrdiff_t in_npnts;
-    ptrdiff_t * in_pnts;
-    int out_D;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 8)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    in_discrete_name = _mxGetString(prhs[3], NULL);
-
-    if (_n_dims(prhs[4]) > 0)
-        mexErrMsgTxt("Error in dimension of argument location");
-    in_location = _get_numeric_scalar_int32(prhs[4]);
-
-    if (_n_dims(prhs[5]) > 0)
-        mexErrMsgTxt("Error in dimension of argument ptset_type");
-    in_ptset_type = _get_numeric_scalar_int32(prhs[5]);
-
-    if (_n_dims(prhs[6]) > 0)
-        mexErrMsgTxt("Error in dimension of argument npnts");
-    if (sizeof(ptrdiff_t)==8) 
-        in_npnts = _get_numeric_scalar_int64(prhs[6]);
-    else
-        in_npnts = _get_numeric_scalar_int32(prhs[6]);
-
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[7]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[7], (int64*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
-    else {
-        if (mxIsInt32(prhs[7]) || mxIsUint32(prhs[7]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[7]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[7]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[7], (int32*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_discrete_ptset_write(in_fn, in_B, in_Z, in_discrete_name, in_location, in_ptset_type, in_npnts, in_pnts, &out_D);
-
-
-    /******** Free up input buffers. ********/
-    _mxFreeString(in_discrete_name);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[7]) && !mxIsUint64(prhs[7]))
-            mxFree(in_pnts);
-    } else {
-        if (!mxIsInt32(prhs[7]) && !mxIsUint32(prhs[7]))
-            mxFree(in_pnts);
-    }
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -8426,7 +6283,7 @@ EXTERN_C void cg_n_rigid_motions_MeX(int nlhs, mxArray *plhs[],
  * [out_type, ierr] = cg_rigid_motion_read(in_file_number, in_B, in_Z, in_R, io_name) 
  *
  * The original C interface is 
- * int cg_rigid_motion_read( int file_number, int B, int Z, int R, char * name, CG_RigidGridMotionType_t * type);
+ * int cg_rigid_motion_read( int file_number, int B, int Z, int R, char * name, RigidGridMotionType_t * type);
  */
 EXTERN_C void cg_rigid_motion_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -8436,11 +6293,11 @@ EXTERN_C void cg_rigid_motion_read_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_R;
     char * io_name;
-    CG_RigidGridMotionType_t out_type;
+    RigidGridMotionType_t out_type;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 5)
+    if (nlhs > 3 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -8468,7 +6325,7 @@ EXTERN_C void cg_rigid_motion_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_name, (mxArray*)prhs[4]);
+    /* _mxPutString(io_name, (mxArray*)prhs[4]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -8477,13 +6334,16 @@ EXTERN_C void cg_rigid_motion_read_MeX(int nlhs, mxArray *plhs[],
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
     }
+    if (nlhs > 2) {
+        plhs[2] = mxCreateString(io_name);
+    }
 }
 
 /* Gateway function 
  * [out_R, ierr] = cg_rigid_motion_write(in_file_number, in_B, in_Z, in_name, in_type) 
  *
  * The original C interface is 
- * int cg_rigid_motion_write( int file_number, int B, int Z, const char * name, CG_RigidGridMotionType_t type, int * R);
+ * int cg_rigid_motion_write( int file_number, int B, int Z, char const * name, RigidGridMotionType_t type, int * R);
  */
 EXTERN_C void cg_rigid_motion_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -8492,7 +6352,7 @@ EXTERN_C void cg_rigid_motion_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     char * in_name;
-    CG_RigidGridMotionType_t in_type;
+    RigidGridMotionType_t in_type;
     int out_R;
     int ierr;
 
@@ -8586,7 +6446,7 @@ EXTERN_C void cg_n_arbitrary_motions_MeX(int nlhs, mxArray *plhs[],
  * [out_type, ierr] = cg_arbitrary_motion_read(in_file_number, in_B, in_Z, in_A, io_name) 
  *
  * The original C interface is 
- * int cg_arbitrary_motion_read( int file_number, int B, int Z, int A, char * name, CG_ArbitraryGridMotionType_t * type);
+ * int cg_arbitrary_motion_read( int file_number, int B, int Z, int A, char * name, ArbitraryGridMotionType_t * type);
  */
 EXTERN_C void cg_arbitrary_motion_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -8596,11 +6456,11 @@ EXTERN_C void cg_arbitrary_motion_read_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_A;
     char * io_name;
-    CG_ArbitraryGridMotionType_t out_type;
+    ArbitraryGridMotionType_t out_type;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 5)
+    if (nlhs > 3 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -8628,7 +6488,7 @@ EXTERN_C void cg_arbitrary_motion_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_name, (mxArray*)prhs[4]);
+    /* _mxPutString(io_name, (mxArray*)prhs[4]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -8637,13 +6497,16 @@ EXTERN_C void cg_arbitrary_motion_read_MeX(int nlhs, mxArray *plhs[],
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
     }
+    if (nlhs > 2) {
+        plhs[2] = mxCreateString(io_name);
+    }
 }
 
 /* Gateway function 
  * [out_A, ierr] = cg_arbitrary_motion_write(in_file_number, in_B, in_Z, in_amotionname, in_type) 
  *
  * The original C interface is 
- * int cg_arbitrary_motion_write( int file_number, int B, int Z, const char * amotionname, CG_ArbitraryGridMotionType_t type, int * A);
+ * int cg_arbitrary_motion_write( int file_number, int B, int Z, char const * amotionname, ArbitraryGridMotionType_t type, int * A);
  */
 EXTERN_C void cg_arbitrary_motion_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -8652,7 +6515,7 @@ EXTERN_C void cg_arbitrary_motion_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     char * in_amotionname;
-    CG_ArbitraryGridMotionType_t in_type;
+    ArbitraryGridMotionType_t in_type;
     int out_A;
     int ierr;
 
@@ -8700,14 +6563,14 @@ EXTERN_C void cg_arbitrary_motion_write_MeX(int nlhs, mxArray *plhs[],
  * [out_type, ierr] = cg_simulation_type_read(in_file_number, in_B) 
  *
  * The original C interface is 
- * int cg_simulation_type_read( int file_number, int B, CG_SimulationType_t * type);
+ * int cg_simulation_type_read( int file_number, int B, SimulationType_t * type);
  */
 EXTERN_C void cg_simulation_type_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
     int in_file_number;
     int in_B;
-    CG_SimulationType_t out_type;
+    SimulationType_t out_type;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -8741,14 +6604,14 @@ EXTERN_C void cg_simulation_type_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_simulation_type_write(in_file_number, in_B, in_type) 
  *
  * The original C interface is 
- * int cg_simulation_type_write( int file_number, int B, CG_SimulationType_t type);
+ * int cg_simulation_type_write( int file_number, int B, SimulationType_t type);
  */
 EXTERN_C void cg_simulation_type_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
     int in_file_number;
     int in_B;
-    CG_SimulationType_t in_type;
+    SimulationType_t in_type;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -8794,7 +6657,7 @@ EXTERN_C void cg_biter_read_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 3)
+    if (nlhs > 3 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -8814,7 +6677,7 @@ EXTERN_C void cg_biter_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_bitername, (mxArray*)prhs[2]);
+    /* _mxPutString(io_bitername, (mxArray*)prhs[2]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -8823,13 +6686,16 @@ EXTERN_C void cg_biter_read_MeX(int nlhs, mxArray *plhs[],
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
     }
+    if (nlhs > 2) {
+        plhs[2] = mxCreateString(io_bitername);
+    }
 }
 
 /* Gateway function 
  * ierr = cg_biter_write(in_file_number, in_B, in_bitername, in_nsteps) 
  *
  * The original C interface is 
- * int cg_biter_write( int file_number, int B, const char * bitername, int nsteps);
+ * int cg_biter_write( int file_number, int B, char const * bitername, int nsteps);
  */
 EXTERN_C void cg_biter_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -8888,7 +6754,7 @@ EXTERN_C void cg_ziter_read_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 4)
+    if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -8912,18 +6778,21 @@ EXTERN_C void cg_ziter_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_zitername, (mxArray*)prhs[3]);
+    /* _mxPutString(io_zitername, (mxArray*)prhs[3]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
+    if (nlhs > 1) {
+        plhs[1] = mxCreateString(io_zitername);
+    }
 }
 
 /* Gateway function 
  * ierr = cg_ziter_write(in_file_number, in_B, in_Z, in_zitername) 
  *
  * The original C interface is 
- * int cg_ziter_write( int file_number, int B, int Z, const char * zitername);
+ * int cg_ziter_write( int file_number, int B, int Z, char const * zitername);
  */
 EXTERN_C void cg_ziter_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -9278,7 +7147,7 @@ EXTERN_C void cg_rotating_write_MeX(int nlhs, mxArray *plhs[],
  * [out_WallFunctionType, ierr] = cg_bc_wallfunction_read(in_file_number, in_B, in_Z, in_BC) 
  *
  * The original C interface is 
- * int cg_bc_wallfunction_read( int file_number, int B, int Z, int BC, CG_WallFunctionType_t * WallFunctionType);
+ * int cg_bc_wallfunction_read( int file_number, int B, int Z, int BC, WallFunctionType_t * WallFunctionType);
  */
 EXTERN_C void cg_bc_wallfunction_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -9287,7 +7156,7 @@ EXTERN_C void cg_bc_wallfunction_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_BC;
-    CG_WallFunctionType_t out_WallFunctionType;
+    WallFunctionType_t out_WallFunctionType;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -9329,7 +7198,7 @@ EXTERN_C void cg_bc_wallfunction_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_bc_wallfunction_write(in_file_number, in_B, in_Z, in_BC, in_WallFunctionType) 
  *
  * The original C interface is 
- * int cg_bc_wallfunction_write( int file_number, int B, int Z, int BC, CG_WallFunctionType_t WallFunctionType);
+ * int cg_bc_wallfunction_write( int file_number, int B, int Z, int BC, WallFunctionType_t WallFunctionType);
  */
 EXTERN_C void cg_bc_wallfunction_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -9338,7 +7207,7 @@ EXTERN_C void cg_bc_wallfunction_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_BC;
-    CG_WallFunctionType_t in_WallFunctionType;
+    WallFunctionType_t in_WallFunctionType;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -9380,7 +7249,7 @@ EXTERN_C void cg_bc_wallfunction_write_MeX(int nlhs, mxArray *plhs[],
  * [out_AreaType, out_SurfaceArea, ierr] = cg_bc_area_read(in_file_number, in_B, in_Z, in_BC, io_RegionName) 
  *
  * The original C interface is 
- * int cg_bc_area_read( int file_number, int B, int Z, int BC, CG_AreaType_t * AreaType, float * SurfaceArea, char * RegionName);
+ * int cg_bc_area_read( int file_number, int B, int Z, int BC, AreaType_t * AreaType, float * SurfaceArea, char * RegionName);
  */
 EXTERN_C void cg_bc_area_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -9389,13 +7258,13 @@ EXTERN_C void cg_bc_area_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_BC;
-    CG_AreaType_t out_AreaType;
+    AreaType_t out_AreaType;
     float out_SurfaceArea;
     char * io_RegionName;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 3 || nrhs != 5)
+    if (nlhs > 4 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -9423,7 +7292,7 @@ EXTERN_C void cg_bc_area_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_RegionName, (mxArray*)prhs[4]);
+    /* _mxPutString(io_RegionName, (mxArray*)prhs[4]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -9436,13 +7305,16 @@ EXTERN_C void cg_bc_area_read_MeX(int nlhs, mxArray *plhs[],
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = ierr;
     }
+    if (nlhs > 3) {
+        plhs[3] = mxCreateString(io_RegionName);
+    }
 }
 
 /* Gateway function 
  * ierr = cg_bc_area_write(in_file_number, in_B, in_Z, in_BC, in_AreaType, in_SurfaceArea, in_RegionName) 
  *
  * The original C interface is 
- * int cg_bc_area_write( int file_number, int B, int Z, int BC, CG_AreaType_t AreaType, float SurfaceArea, const char * RegionName);
+ * int cg_bc_area_write( int file_number, int B, int Z, int BC, AreaType_t AreaType, float SurfaceArea, char const * RegionName);
  */
 EXTERN_C void cg_bc_area_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -9451,7 +7323,7 @@ EXTERN_C void cg_bc_area_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_BC;
-    CG_AreaType_t in_AreaType;
+    AreaType_t in_AreaType;
     float in_SurfaceArea;
     char * in_RegionName;
     int ierr;
@@ -9828,7 +7700,7 @@ EXTERN_C void cg_1to1_periodic_read_MeX(int nlhs, mxArray *plhs[],
  * [out_AverageInterfaceType, ierr] = cg_conn_average_read(in_file_number, in_B, in_Z, in_I) 
  *
  * The original C interface is 
- * int cg_conn_average_read( int file_number, int B, int Z, int I, CG_AverageInterfaceType_t * AverageInterfaceType);
+ * int cg_conn_average_read( int file_number, int B, int Z, int I, AverageInterfaceType_t * AverageInterfaceType);
  */
 EXTERN_C void cg_conn_average_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -9837,7 +7709,7 @@ EXTERN_C void cg_conn_average_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_I;
-    CG_AverageInterfaceType_t out_AverageInterfaceType;
+    AverageInterfaceType_t out_AverageInterfaceType;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -9879,7 +7751,7 @@ EXTERN_C void cg_conn_average_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_conn_average_write(in_file_number, in_B, in_Z, in_I, in_AverageInterfaceType) 
  *
  * The original C interface is 
- * int cg_conn_average_write( int file_number, int B, int Z, int I, CG_AverageInterfaceType_t AverageInterfaceType);
+ * int cg_conn_average_write( int file_number, int B, int Z, int I, AverageInterfaceType_t AverageInterfaceType);
  */
 EXTERN_C void cg_conn_average_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -9888,7 +7760,7 @@ EXTERN_C void cg_conn_average_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_I;
-    CG_AverageInterfaceType_t in_AverageInterfaceType;
+    AverageInterfaceType_t in_AverageInterfaceType;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -9930,7 +7802,7 @@ EXTERN_C void cg_conn_average_write_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_1to1_average_write(in_file_number, in_B, in_Z, in_I, in_AverageInterfaceType) 
  *
  * The original C interface is 
- * int cg_1to1_average_write( int file_number, int B, int Z, int I, CG_AverageInterfaceType_t AverageInterfaceType);
+ * int cg_1to1_average_write( int file_number, int B, int Z, int I, AverageInterfaceType_t AverageInterfaceType);
  */
 EXTERN_C void cg_1to1_average_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -9939,7 +7811,7 @@ EXTERN_C void cg_1to1_average_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_I;
-    CG_AverageInterfaceType_t in_AverageInterfaceType;
+    AverageInterfaceType_t in_AverageInterfaceType;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -9981,7 +7853,7 @@ EXTERN_C void cg_1to1_average_write_MeX(int nlhs, mxArray *plhs[],
  * [out_AverageInterfaceType, ierr] = cg_1to1_average_read(in_file_number, in_B, in_Z, in_I) 
  *
  * The original C interface is 
- * int cg_1to1_average_read( int file_number, int B, int Z, int I, CG_AverageInterfaceType_t * AverageInterfaceType);
+ * int cg_1to1_average_read( int file_number, int B, int Z, int I, AverageInterfaceType_t * AverageInterfaceType);
  */
 EXTERN_C void cg_1to1_average_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -9990,7 +7862,7 @@ EXTERN_C void cg_1to1_average_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_I;
-    CG_AverageInterfaceType_t out_AverageInterfaceType;
+    AverageInterfaceType_t out_AverageInterfaceType;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -10130,7 +8002,7 @@ EXTERN_C void cg_convergence_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_convergence_write(in_iterations, in_NormDefinitions) 
  *
  * The original C interface is 
- * int cg_convergence_write( int iterations, const char * NormDefinitions);
+ * int cg_convergence_write( int iterations, char const * NormDefinitions);
  */
 EXTERN_C void cg_convergence_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -10198,7 +8070,7 @@ EXTERN_C void cg_state_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_state_write(in_StateDescription) 
  *
  * The original C interface is 
- * int cg_state_write( const char * StateDescription);
+ * int cg_state_write( char const * StateDescription);
  */
 EXTERN_C void cg_state_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -10417,12 +8289,12 @@ EXTERN_C void cg_equationset_write_MeX(int nlhs, mxArray *plhs[],
  * [out_EquationsType, ierr] = cg_governing_read() 
  *
  * The original C interface is 
- * int cg_governing_read( CG_GoverningEquationsType_t * EquationsType);
+ * int cg_governing_read( GoverningEquationsType_t * EquationsType);
  */
 EXTERN_C void cg_governing_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_GoverningEquationsType_t out_EquationsType;
+    GoverningEquationsType_t out_EquationsType;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -10447,12 +8319,12 @@ EXTERN_C void cg_governing_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_governing_write(in_Equationstype) 
  *
  * The original C interface is 
- * int cg_governing_write( CG_GoverningEquationsType_t Equationstype);
+ * int cg_governing_write( GoverningEquationsType_t Equationstype);
  */
 EXTERN_C void cg_governing_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_GoverningEquationsType_t in_Equationstype;
+    GoverningEquationsType_t in_Equationstype;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -10517,7 +8389,7 @@ EXTERN_C void cg_diffusion_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_diffusion_write(in_diffusion_model) 
  *
  * The original C interface is 
- * int cg_diffusion_write( const int * diffusion_model);
+ * int cg_diffusion_write( int const * diffusion_model);
  */
 EXTERN_C void cg_diffusion_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -10556,13 +8428,13 @@ EXTERN_C void cg_diffusion_write_MeX(int nlhs, mxArray *plhs[],
  * [out_ModelType, ierr] = cg_model_read(in_ModelLabel) 
  *
  * The original C interface is 
- * int cg_model_read( const char * ModelLabel, CG_ModelType_t * ModelType);
+ * int cg_model_read( char const * ModelLabel, ModelType_t * ModelType);
  */
 EXTERN_C void cg_model_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
     char * in_ModelLabel;
-    CG_ModelType_t out_ModelType;
+    ModelType_t out_ModelType;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -10593,13 +8465,13 @@ EXTERN_C void cg_model_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_model_write(in_ModelLabel, in_ModelType) 
  *
  * The original C interface is 
- * int cg_model_write( const char * ModelLabel, CG_ModelType_t ModelType);
+ * int cg_model_write( char const * ModelLabel, ModelType_t ModelType);
  */
 EXTERN_C void cg_model_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
     char * in_ModelLabel;
-    CG_ModelType_t in_ModelType;
+    ModelType_t in_ModelType;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -10660,20 +8532,20 @@ EXTERN_C void cg_narrays_MeX(int nlhs, mxArray *plhs[],
  * [out_DataType, out_DataDimension, ierr] = cg_array_info(in_A, io_ArrayName, io_DimensionVector) 
  *
  * The original C interface is 
- * int cg_array_info( int A, char * ArrayName, CG_DataType_t * DataType, int * DataDimension, ptrdiff_t * DimensionVector);
+ * int cg_array_info( int A, char * ArrayName, DataType_t * DataType, int * DataDimension, int * DimensionVector);
  */
 EXTERN_C void cg_array_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
     int in_A;
     char * io_ArrayName;
-    CG_DataType_t out_DataType;
+    DataType_t out_DataType;
     int out_DataDimension;
-    ptrdiff_t * io_DimensionVector;
+    int * io_DimensionVector;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 3 || nrhs != 3)
+    if (nlhs > 4 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -10685,23 +8557,12 @@ EXTERN_C void cg_array_info_MeX(int nlhs, mxArray *plhs[],
 
     if (mxGetNumberOfElements(prhs[2]) < (int) (3) || _n_dims(prhs[2]) > 1)
         mexErrMsgTxt("Error in dimension of argument DimensionVector");
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[2]) || mxIsUint64(prhs[2]))
-            io_DimensionVector = (ptrdiff_t*)mxGetData(prhs[2]);
-        else {
-            io_DimensionVector = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[2]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[2], (int64*)io_DimensionVector))
-                mexErrMsgTxt("Expecting numeric matrix for argument DimensionVector");
-        }
-    }
+    if (mxIsInt32(prhs[2]) || mxIsUint32(prhs[2]))
+        io_DimensionVector = (int*)mxGetData(prhs[2]);
     else {
-        if (mxIsInt32(prhs[2]) || mxIsUint32(prhs[2]))
-            io_DimensionVector = (ptrdiff_t*)mxGetData(prhs[2]);
-        else {
-            io_DimensionVector = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[2]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[2], (int32*)io_DimensionVector))
-                mexErrMsgTxt("Expecting numeric matrix for argument DimensionVector");
-        }
+        io_DimensionVector = (int*)mxCalloc(mxGetNumberOfElements(prhs[2]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[2], io_DimensionVector))
+            mexErrMsgTxt("Expecting numeric matrix for argument DimensionVector");
     }
 
 
@@ -10710,14 +8571,9 @@ EXTERN_C void cg_array_info_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_ArrayName, (mxArray*)prhs[1]);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[2]) && !mxIsUint64(prhs[2]))
-            mxFree(io_DimensionVector);
-    } else {
-        if (!mxIsInt32(prhs[2]) && !mxIsUint32(prhs[2]))
-            mxFree(io_DimensionVector);
-    }
+    /* _mxPutString(io_ArrayName, (mxArray*)prhs[1]); */
+    if (!mxIsInt32(prhs[2]) && !mxIsUint32(prhs[2]))
+        mxFree(io_DimensionVector);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -10729,6 +8585,9 @@ EXTERN_C void cg_array_info_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = ierr;
+    }
+    if (nlhs > 3) {
+        plhs[3] = mxCreateString(io_ArrayName);
     }
 }
 
@@ -10769,13 +8628,13 @@ EXTERN_C void cg_array_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_array_read_as(in_A, in_type, io_Data) 
  *
  * The original C interface is 
- * int cg_array_read_as( int A, CG_DataType_t type, void * Data);
+ * int cg_array_read_as( int A, DataType_t type, void * Data);
  */
 EXTERN_C void cg_array_read_as_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
     int in_A;
-    CG_DataType_t in_type;
+    DataType_t in_type;
     void * io_Data;
     int ierr;
 
@@ -10807,16 +8666,16 @@ EXTERN_C void cg_array_read_as_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_array_write(in_ArrayName, in_DataType, in_DataDimension, in_DimensionVector, in_Data) 
  *
  * The original C interface is 
- * int cg_array_write( const char * ArrayName, CG_DataType_t DataType, int DataDimension, const ptrdiff_t * DimensionVector, const void * Data);
+ * int cg_array_write( char const * ArrayName, DataType_t DataType, int DataDimension, int const * DimensionVector, void const * Data);
  */
 EXTERN_C void cg_array_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
     char * in_ArrayName;
-    CG_DataType_t in_DataType;
+    DataType_t in_DataType;
     int in_DataDimension;
-    ptrdiff_t * in_DimensionVector;
-    const void * in_Data;
+    int * in_DimensionVector;
+    void const * in_Data;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -10836,23 +8695,12 @@ EXTERN_C void cg_array_write_MeX(int nlhs, mxArray *plhs[],
 
     if (mxGetNumberOfElements(prhs[3]) < (int) (in_DataDimension) || _n_dims(prhs[3]) > 1)
         mexErrMsgTxt("Error in dimension of argument DimensionVector");
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[3]) || mxIsUint64(prhs[3]))
-            in_DimensionVector = (ptrdiff_t*)mxGetData(prhs[3]);
-        else {
-            in_DimensionVector = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[3]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[3], (int64*)in_DimensionVector))
-                mexErrMsgTxt("Expecting numeric matrix for argument DimensionVector");
-        }
-    }
+    if (mxIsInt32(prhs[3]) || mxIsUint32(prhs[3]))
+        in_DimensionVector = (int*)mxGetData(prhs[3]);
     else {
-        if (mxIsInt32(prhs[3]) || mxIsUint32(prhs[3]))
-            in_DimensionVector = (ptrdiff_t*)mxGetData(prhs[3]);
-        else {
-            in_DimensionVector = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[3]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[3], (int32*)in_DimensionVector))
-                mexErrMsgTxt("Expecting numeric matrix for argument DimensionVector");
-        }
+        in_DimensionVector = (int*)mxCalloc(mxGetNumberOfElements(prhs[3]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[3], in_DimensionVector))
+            mexErrMsgTxt("Expecting numeric matrix for argument DimensionVector");
     }
 
     in_Data = mxGetData( prhs[4]);
@@ -10863,13 +8711,8 @@ EXTERN_C void cg_array_write_MeX(int nlhs, mxArray *plhs[],
 
     /******** Free up input buffers. ********/
     _mxFreeString(in_ArrayName);
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[3]) && !mxIsUint64(prhs[3]))
-            mxFree(in_DimensionVector);
-    } else {
-        if (!mxIsInt32(prhs[3]) && !mxIsUint32(prhs[3]))
-            mxFree(in_DimensionVector);
-    }
+    if (!mxIsInt32(prhs[3]) && !mxIsUint32(prhs[3]))
+        mxFree(in_DimensionVector);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -10920,7 +8763,7 @@ EXTERN_C void cg_user_data_read_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 2)
+    if (nlhs > 2 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -10936,18 +8779,21 @@ EXTERN_C void cg_user_data_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_user_data_name, (mxArray*)prhs[1]);
+    /* _mxPutString(io_user_data_name, (mxArray*)prhs[1]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
+    if (nlhs > 1) {
+        plhs[1] = mxCreateString(io_user_data_name);
+    }
 }
 
 /* Gateway function 
  * ierr = cg_user_data_write(in_user_data_name) 
  *
  * The original C interface is 
- * int cg_user_data_write( const char * user_data_name);
+ * int cg_user_data_write( char const * user_data_name);
  */
 EXTERN_C void cg_user_data_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -11019,7 +8865,7 @@ EXTERN_C void cg_integral_read_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 2)
+    if (nlhs > 2 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -11035,18 +8881,21 @@ EXTERN_C void cg_integral_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_IntegralDataName, (mxArray*)prhs[1]);
+    /* _mxPutString(io_IntegralDataName, (mxArray*)prhs[1]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
+    if (nlhs > 1) {
+        plhs[1] = mxCreateString(io_IntegralDataName);
+    }
 }
 
 /* Gateway function 
  * ierr = cg_integral_write(in_IntegralDataName) 
  *
  * The original C interface is 
- * int cg_integral_write( const char * IntegralDataName);
+ * int cg_integral_write( char const * IntegralDataName);
  */
 EXTERN_C void cg_integral_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -11117,7 +8966,7 @@ EXTERN_C void cg_rind_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_rind_write(in_RindData) 
  *
  * The original C interface is 
- * int cg_rind_write( const int * RindData);
+ * int cg_rind_write( int const * RindData);
  */
 EXTERN_C void cg_rind_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -11197,7 +9046,7 @@ EXTERN_C void cg_descriptor_read_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 2 || nrhs != 2)
+    if (nlhs > 3 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input arguments ********/
@@ -11213,7 +9062,7 @@ EXTERN_C void cg_descriptor_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Process inout argument. ********/
-    _mxPutString(io_descr_name, (mxArray*)prhs[1]);
+    /* _mxPutString(io_descr_name, (mxArray*)prhs[1]); */
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateString(out_descr_text);
@@ -11223,13 +9072,16 @@ EXTERN_C void cg_descriptor_read_MeX(int nlhs, mxArray *plhs[],
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
     }
+    if (nlhs > 2) {
+        plhs[2] = mxCreateString(io_descr_name);
+    }
 }
 
 /* Gateway function 
  * ierr = cg_descriptor_write(in_descr_name, in_descr_text) 
  *
  * The original C interface is 
- * int cg_descriptor_write( const char * descr_name, const char * descr_text);
+ * int cg_descriptor_write( char const * descr_name, char const * descr_text);
  */
 EXTERN_C void cg_descriptor_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -11295,16 +9147,16 @@ EXTERN_C void cg_nunits_MeX(int nlhs, mxArray *plhs[],
  * [out_mass, out_length, out_time, out_temperature, out_angle, ierr] = cg_units_read() 
  *
  * The original C interface is 
- * int cg_units_read( CG_MassUnits_t * mass, CG_LengthUnits_t * length, CG_TimeUnits_t * time, CG_TemperatureUnits_t * temperature, CG_AngleUnits_t * angle);
+ * int cg_units_read( MassUnits_t * mass, LengthUnits_t * length, TimeUnits_t * time, TemperatureUnits_t * temperature, AngleUnits_t * angle);
  */
 EXTERN_C void cg_units_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_MassUnits_t out_mass;
-    CG_LengthUnits_t out_length;
-    CG_TimeUnits_t out_time;
-    CG_TemperatureUnits_t out_temperature;
-    CG_AngleUnits_t out_angle;
+    MassUnits_t out_mass;
+    LengthUnits_t out_length;
+    TimeUnits_t out_time;
+    TemperatureUnits_t out_temperature;
+    AngleUnits_t out_angle;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -11345,16 +9197,16 @@ EXTERN_C void cg_units_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_units_write(in_mass, in_length, in_time, in_temperature, in_angle) 
  *
  * The original C interface is 
- * int cg_units_write( CG_MassUnits_t mass, CG_LengthUnits_t length, CG_TimeUnits_t time, CG_TemperatureUnits_t temperature, CG_AngleUnits_t angle);
+ * int cg_units_write( MassUnits_t mass, LengthUnits_t length, TimeUnits_t time, TemperatureUnits_t temperature, AngleUnits_t angle);
  */
 EXTERN_C void cg_units_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_MassUnits_t in_mass;
-    CG_LengthUnits_t in_length;
-    CG_TimeUnits_t in_time;
-    CG_TemperatureUnits_t in_temperature;
-    CG_AngleUnits_t in_angle;
+    MassUnits_t in_mass;
+    LengthUnits_t in_length;
+    TimeUnits_t in_time;
+    TemperatureUnits_t in_temperature;
+    AngleUnits_t in_angle;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -11396,19 +9248,19 @@ EXTERN_C void cg_units_write_MeX(int nlhs, mxArray *plhs[],
  * [out_mass, out_length, out_time, out_temperature, out_angle, out_current, out_amount, out_intensity, ierr] = cg_unitsfull_read() 
  *
  * The original C interface is 
- * int cg_unitsfull_read( CG_MassUnits_t * mass, CG_LengthUnits_t * length, CG_TimeUnits_t * time, CG_TemperatureUnits_t * temperature, CG_AngleUnits_t * angle, CG_ElectricCurrentUnits_t * current, CG_SubstanceAmountUnits_t * amount, CG_LuminousIntensityUnits_t * intensity);
+ * int cg_unitsfull_read( MassUnits_t * mass, LengthUnits_t * length, TimeUnits_t * time, TemperatureUnits_t * temperature, AngleUnits_t * angle, ElectricCurrentUnits_t * current, SubstanceAmountUnits_t * amount, LuminousIntensityUnits_t * intensity);
  */
 EXTERN_C void cg_unitsfull_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_MassUnits_t out_mass;
-    CG_LengthUnits_t out_length;
-    CG_TimeUnits_t out_time;
-    CG_TemperatureUnits_t out_temperature;
-    CG_AngleUnits_t out_angle;
-    CG_ElectricCurrentUnits_t out_current;
-    CG_SubstanceAmountUnits_t out_amount;
-    CG_LuminousIntensityUnits_t out_intensity;
+    MassUnits_t out_mass;
+    LengthUnits_t out_length;
+    TimeUnits_t out_time;
+    TemperatureUnits_t out_temperature;
+    AngleUnits_t out_angle;
+    ElectricCurrentUnits_t out_current;
+    SubstanceAmountUnits_t out_amount;
+    LuminousIntensityUnits_t out_intensity;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -11461,19 +9313,19 @@ EXTERN_C void cg_unitsfull_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_unitsfull_write(in_mass, in_length, in_time, in_temperature, in_angle, in_current, in_amount, in_intensity) 
  *
  * The original C interface is 
- * int cg_unitsfull_write( CG_MassUnits_t mass, CG_LengthUnits_t length, CG_TimeUnits_t time, CG_TemperatureUnits_t temperature, CG_AngleUnits_t angle, CG_ElectricCurrentUnits_t current, CG_SubstanceAmountUnits_t amount, CG_LuminousIntensityUnits_t intensity);
+ * int cg_unitsfull_write( MassUnits_t mass, LengthUnits_t length, TimeUnits_t time, TemperatureUnits_t temperature, AngleUnits_t angle, ElectricCurrentUnits_t current, SubstanceAmountUnits_t amount, LuminousIntensityUnits_t intensity);
  */
 EXTERN_C void cg_unitsfull_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_MassUnits_t in_mass;
-    CG_LengthUnits_t in_length;
-    CG_TimeUnits_t in_time;
-    CG_TemperatureUnits_t in_temperature;
-    CG_AngleUnits_t in_angle;
-    CG_ElectricCurrentUnits_t in_current;
-    CG_SubstanceAmountUnits_t in_amount;
-    CG_LuminousIntensityUnits_t in_intensity;
+    MassUnits_t in_mass;
+    LengthUnits_t in_length;
+    TimeUnits_t in_time;
+    TemperatureUnits_t in_temperature;
+    AngleUnits_t in_angle;
+    ElectricCurrentUnits_t in_current;
+    SubstanceAmountUnits_t in_amount;
+    LuminousIntensityUnits_t in_intensity;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -11527,12 +9379,12 @@ EXTERN_C void cg_unitsfull_write_MeX(int nlhs, mxArray *plhs[],
  * [out_DataType, ierr] = cg_exponents_info() 
  *
  * The original C interface is 
- * int cg_exponents_info( CG_DataType_t * DataType);
+ * int cg_exponents_info( DataType_t * DataType);
  */
 EXTERN_C void cg_exponents_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_DataType_t out_DataType;
+    DataType_t out_DataType;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -11624,13 +9476,13 @@ EXTERN_C void cg_exponents_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_exponents_write(in_DataType, in_exponents) 
  *
  * The original C interface is 
- * int cg_exponents_write( CG_DataType_t DataType, const void * exponents);
+ * int cg_exponents_write( DataType_t DataType, void const * exponents);
  */
 EXTERN_C void cg_exponents_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_DataType_t in_DataType;
-    const void * in_exponents;
+    DataType_t in_DataType;
+    void const * in_exponents;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -11685,13 +9537,13 @@ EXTERN_C void cg_expfull_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_expfull_write(in_DataType, in_exponents) 
  *
  * The original C interface is 
- * int cg_expfull_write( CG_DataType_t DataType, const void * exponents);
+ * int cg_expfull_write( DataType_t DataType, void const * exponents);
  */
 EXTERN_C void cg_expfull_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_DataType_t in_DataType;
-    const void * in_exponents;
+    DataType_t in_DataType;
+    void const * in_exponents;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -11718,12 +9570,12 @@ EXTERN_C void cg_expfull_write_MeX(int nlhs, mxArray *plhs[],
  * [out_DataType, ierr] = cg_conversion_info() 
  *
  * The original C interface is 
- * int cg_conversion_info( CG_DataType_t * DataType);
+ * int cg_conversion_info( DataType_t * DataType);
  */
 EXTERN_C void cg_conversion_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_DataType_t out_DataType;
+    DataType_t out_DataType;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -11776,13 +9628,13 @@ EXTERN_C void cg_conversion_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_conversion_write(in_DataType, in_ConversionFactors) 
  *
  * The original C interface is 
- * int cg_conversion_write( CG_DataType_t DataType, const void * ConversionFactors);
+ * int cg_conversion_write( DataType_t DataType, void const * ConversionFactors);
  */
 EXTERN_C void cg_conversion_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_DataType_t in_DataType;
-    const void * in_ConversionFactors;
+    DataType_t in_DataType;
+    void const * in_ConversionFactors;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -11809,12 +9661,12 @@ EXTERN_C void cg_conversion_write_MeX(int nlhs, mxArray *plhs[],
  * [out_dataclass, ierr] = cg_dataclass_read() 
  *
  * The original C interface is 
- * int cg_dataclass_read( CG_DataClass_t * dataclass);
+ * int cg_dataclass_read( DataClass_t * dataclass);
  */
 EXTERN_C void cg_dataclass_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_DataClass_t out_dataclass;
+    DataClass_t out_dataclass;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -11839,12 +9691,12 @@ EXTERN_C void cg_dataclass_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_dataclass_write(in_dataclass) 
  *
  * The original C interface is 
- * int cg_dataclass_write( CG_DataClass_t dataclass);
+ * int cg_dataclass_write( DataClass_t dataclass);
  */
 EXTERN_C void cg_dataclass_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_DataClass_t in_dataclass;
+    DataClass_t in_dataclass;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -11870,12 +9722,12 @@ EXTERN_C void cg_dataclass_write_MeX(int nlhs, mxArray *plhs[],
  * [out_GridLocation, ierr] = cg_gridlocation_read() 
  *
  * The original C interface is 
- * int cg_gridlocation_read( CG_GridLocation_t * GridLocation);
+ * int cg_gridlocation_read( GridLocation_t * GridLocation);
  */
 EXTERN_C void cg_gridlocation_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_GridLocation_t out_GridLocation;
+    GridLocation_t out_GridLocation;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -11900,12 +9752,12 @@ EXTERN_C void cg_gridlocation_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_gridlocation_write(in_GridLocation) 
  *
  * The original C interface is 
- * int cg_gridlocation_write( CG_GridLocation_t GridLocation);
+ * int cg_gridlocation_write( GridLocation_t GridLocation);
  */
 EXTERN_C void cg_gridlocation_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_GridLocation_t in_GridLocation;
+    GridLocation_t in_GridLocation;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -11992,13 +9844,13 @@ EXTERN_C void cg_ordinal_write_MeX(int nlhs, mxArray *plhs[],
  * [out_ptset_type, out_npnts, ierr] = cg_ptset_info() 
  *
  * The original C interface is 
- * int cg_ptset_info( CG_PointSetType_t * ptset_type, ptrdiff_t * npnts);
+ * int cg_ptset_info( PointSetType_t * ptset_type, int * npnts);
  */
 EXTERN_C void cg_ptset_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_PointSetType_t out_ptset_type;
-    ptrdiff_t out_npnts;
+    PointSetType_t out_ptset_type;
+    int out_npnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -12014,8 +9866,8 @@ EXTERN_C void cg_ptset_info_MeX(int nlhs, mxArray *plhs[],
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_ptset_type;
     if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);
-        *(ptrdiff_t*)mxGetData(plhs[1]) = out_npnts;
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_npnts;
     }
     if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -12027,14 +9879,14 @@ EXTERN_C void cg_ptset_info_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_ptset_write(in_ptset_type, in_npnts, in_pnts) 
  *
  * The original C interface is 
- * int cg_ptset_write( CG_PointSetType_t ptset_type, ptrdiff_t npnts, const ptrdiff_t * pnts);
+ * int cg_ptset_write( PointSetType_t ptset_type, int npnts, int const * pnts);
  */
 EXTERN_C void cg_ptset_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    CG_PointSetType_t in_ptset_type;
-    ptrdiff_t in_npnts;
-    ptrdiff_t * in_pnts;
+    PointSetType_t in_ptset_type;
+    int in_npnts;
+    int * in_pnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
@@ -12048,28 +9900,14 @@ EXTERN_C void cg_ptset_write_MeX(int nlhs, mxArray *plhs[],
 
     if (_n_dims(prhs[1]) > 0)
         mexErrMsgTxt("Error in dimension of argument npnts");
-    if (sizeof(ptrdiff_t)==8) 
-        in_npnts = _get_numeric_scalar_int64(prhs[1]);
-    else
-        in_npnts = _get_numeric_scalar_int32(prhs[1]);
+    in_npnts = _get_numeric_scalar_int32(prhs[1]);
 
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[2]) || mxIsUint64(prhs[2]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[2]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[2]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[2], (int64*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
+    if (mxIsInt32(prhs[2]) || mxIsUint32(prhs[2]))
+        in_pnts = (int*)mxGetData(prhs[2]);
     else {
-        if (mxIsInt32(prhs[2]) || mxIsUint32(prhs[2]))
-            in_pnts = (ptrdiff_t*)mxGetData(prhs[2]);
-        else {
-            in_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[2]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[2], (int32*)in_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
+        in_pnts = (int*)mxCalloc(mxGetNumberOfElements(prhs[2]), sizeof (int));
+        if (!_get_numeric_array_int32(prhs[2], in_pnts))
+            mexErrMsgTxt("Expecting numeric matrix for argument pnts");
     }
 
 
@@ -12078,13 +9916,8 @@ EXTERN_C void cg_ptset_write_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Free up input buffers. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[2]) && !mxIsUint64(prhs[2]))
-            mxFree(in_pnts);
-    } else {
-        if (!mxIsInt32(prhs[2]) && !mxIsUint32(prhs[2]))
-            mxFree(in_pnts);
-    }
+    if (!mxIsInt32(prhs[2]) && !mxIsUint32(prhs[2]))
+        mxFree(in_pnts);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -12092,58 +9925,33 @@ EXTERN_C void cg_ptset_write_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function 
- * ierr = cg_ptset_read(io_pnts) 
+ * [out_pnts, ierr] = cg_ptset_read() 
  *
  * The original C interface is 
- * int cg_ptset_read( ptrdiff_t * pnts);
+ * int cg_ptset_read( int * pnts);
  */
 EXTERN_C void cg_ptset_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
-    ptrdiff_t * io_pnts;
+    int out_pnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/ 
-    if (nlhs > 1 || nrhs != 1)
+    if (nlhs > 2 || nrhs != 0)
         mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input arguments ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (mxIsInt64(prhs[0]) || mxIsUint64(prhs[0]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[0]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[0]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int64(prhs[0], (int64*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
-    else {
-        if (mxIsInt32(prhs[0]) || mxIsUint32(prhs[0]))
-            io_pnts = (ptrdiff_t*)mxGetData(prhs[0]);
-        else {
-            io_pnts = (ptrdiff_t*)mxCalloc(mxGetNumberOfElements(prhs[0]), sizeof (ptrdiff_t));
-            if (!_get_numeric_array_int32(prhs[0], (int32*)io_pnts))
-                mexErrMsgTxt("Expecting numeric matrix for argument pnts");
-        }
-    }
 
 
     /******** Invoke computational function ********/
-    ierr = cg_ptset_read(io_pnts);
+    ierr = cg_ptset_read(&out_pnts);
 
-
-    /******** Process inout argument. ********/
-    if (sizeof(ptrdiff_t)==8) {
-        if (!mxIsInt64(prhs[0]) && !mxIsUint64(prhs[0]))
-            mxFree(io_pnts);
-    } else {
-        if (!mxIsInt32(prhs[0]) && !mxIsUint32(prhs[0]))
-            mxFree(io_pnts);
-    }
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = ierr;
+    *(int*)mxGetData(plhs[0]) = out_pnts;
+    if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = ierr;
+    }
 }
 
 /* Gateway function 
@@ -12217,7 +10025,7 @@ EXTERN_C void cg_link_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_link_write(in_nodename, in_filename, in_name_in_file) 
  *
  * The original C interface is 
- * int cg_link_write( const char * nodename, const char * filename, const char * name_in_file);
+ * int cg_link_write( char const * nodename, char const * filename, char const * name_in_file);
  */
 EXTERN_C void cg_link_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -12257,7 +10065,7 @@ EXTERN_C void cg_link_write_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_delete_node(in_node_name) 
  *
  * The original C interface is 
- * int cg_delete_node( const char * node_name);
+ * int cg_delete_node( char const * node_name);
  */
 EXTERN_C void cg_delete_node_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
@@ -12272,13 +10080,8 @@ EXTERN_C void cg_delete_node_MeX(int nlhs, mxArray *plhs[],
     /******** Obtain input arguments ********/
     in_node_name = _mxGetString(prhs[0], NULL);
 
-
     /******** Invoke computational function ********/
     ierr = cg_delete_node(in_node_name);
-
-
-    /******** Free up input buffers. ********/
-    _mxFreeString(in_node_name);
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -12370,241 +10173,215 @@ EXTERN_C void mexFunction(int nlhs, mxArray *plhs[],
         /* 6 */ cg_set_file_type_MeX,
         /* 7 */ cg_get_file_type_MeX,
         /* 8 */ cg_root_id_MeX,
-        /* 9 */ cg_get_cgio_MeX,
-        /* 10 */ cg_configure_MeX,
-        /* 11 */ cg_set_compress_MeX,
-        /* 12 */ cg_get_compress_MeX,
-        /* 13 */ cg_set_path_MeX,
-        /* 14 */ cg_add_path_MeX,
-        /* 15 */ cg_MassUnitsName_MeX,
-        /* 16 */ cg_LengthUnitsName_MeX,
-        /* 17 */ cg_TimeUnitsName_MeX,
-        /* 18 */ cg_TemperatureUnitsName_MeX,
-        /* 19 */ cg_AngleUnitsName_MeX,
-        /* 20 */ cg_ElectricCurrentUnitsName_MeX,
-        /* 21 */ cg_SubstanceAmountUnitsName_MeX,
-        /* 22 */ cg_LuminousIntensityUnitsName_MeX,
-        /* 23 */ cg_DataClassName_MeX,
-        /* 24 */ cg_GridLocationName_MeX,
-        /* 25 */ cg_BCDataTypeName_MeX,
-        /* 26 */ cg_GridConnectivityTypeName_MeX,
-        /* 27 */ cg_PointSetTypeName_MeX,
-        /* 28 */ cg_GoverningEquationsTypeName_MeX,
-        /* 29 */ cg_ModelTypeName_MeX,
-        /* 30 */ cg_BCTypeName_MeX,
-        /* 31 */ cg_DataTypeName_MeX,
-        /* 32 */ cg_ElementTypeName_MeX,
-        /* 33 */ cg_ZoneTypeName_MeX,
-        /* 34 */ cg_RigidGridMotionTypeName_MeX,
-        /* 35 */ cg_ArbitraryGridMotionTypeName_MeX,
-        /* 36 */ cg_SimulationTypeName_MeX,
-        /* 37 */ cg_WallFunctionTypeName_MeX,
-        /* 38 */ cg_AreaTypeName_MeX,
-        /* 39 */ cg_AverageInterfaceTypeName_MeX,
-        /* 40 */ cg_nbases_MeX,
-        /* 41 */ cg_base_read_MeX,
-        /* 42 */ cg_base_id_MeX,
-        /* 43 */ cg_base_write_MeX,
-        /* 44 */ cg_cell_dim_MeX,
-        /* 45 */ cg_nzones_MeX,
-        /* 46 */ cg_zone_read_MeX,
-        /* 47 */ cg_zone_type_MeX,
-        /* 48 */ cg_zone_id_MeX,
-        /* 49 */ cg_zone_write_MeX,
-        /* 50 */ cg_index_dim_MeX,
-        /* 51 */ cg_nfamilies_MeX,
-        /* 52 */ cg_family_read_MeX,
-        /* 53 */ cg_family_write_MeX,
-        /* 54 */ cg_famname_read_MeX,
-        /* 55 */ cg_famname_write_MeX,
-        /* 56 */ cg_fambc_read_MeX,
-        /* 57 */ cg_fambc_write_MeX,
-        /* 58 */ cg_geo_read_MeX,
-        /* 59 */ cg_geo_write_MeX,
-        /* 60 */ cg_part_read_MeX,
-        /* 61 */ cg_part_write_MeX,
-        /* 62 */ cg_ngrids_MeX,
-        /* 63 */ cg_grid_read_MeX,
-        /* 64 */ cg_grid_write_MeX,
-        /* 65 */ cg_ncoords_MeX,
-        /* 66 */ cg_coord_info_MeX,
-        /* 67 */ cg_coord_read_MeX,
-        /* 68 */ cg_coord_id_MeX,
-        /* 69 */ cg_coord_write_MeX,
-        /* 70 */ cg_coord_partial_write_MeX,
-        /* 71 */ cg_nsections_MeX,
-        /* 72 */ cg_section_read_MeX,
-        /* 73 */ cg_elements_read_MeX,
-        /* 74 */ cg_section_write_MeX,
-        /* 75 */ cg_parent_data_write_MeX,
-        /* 76 */ cg_npe_MeX,
-        /* 77 */ cg_ElementDataSize_MeX,
-        /* 78 */ cg_section_partial_write_MeX,
-        /* 79 */ cg_elements_partial_write_MeX,
-        /* 80 */ cg_parent_data_partial_write_MeX,
-        /* 81 */ cg_elements_partial_read_MeX,
-        /* 82 */ cg_ElementPartialSize_MeX,
-        /* 83 */ cg_nsols_MeX,
-        /* 84 */ cg_sol_info_MeX,
-        /* 85 */ cg_sol_id_MeX,
-        /* 86 */ cg_sol_write_MeX,
-        /* 87 */ cg_sol_size_MeX,
-        /* 88 */ cg_sol_ptset_info_MeX,
-        /* 89 */ cg_sol_ptset_read_MeX,
-        /* 90 */ cg_sol_ptset_write_MeX,
-        /* 91 */ cg_nfields_MeX,
-        /* 92 */ cg_field_info_MeX,
-        /* 93 */ cg_field_read_MeX,
-        /* 94 */ cg_field_id_MeX,
-        /* 95 */ cg_field_write_MeX,
-        /* 96 */ cg_field_partial_write_MeX,
-        /* 97 */ cg_nsubregs_MeX,
-        /* 98 */ cg_subreg_info_MeX,
-        /* 99 */ cg_subreg_ptset_read_MeX,
-        /* 100 */ cg_subreg_bcname_read_MeX,
-        /* 101 */ cg_subreg_gcname_read_MeX,
-        /* 102 */ cg_subreg_ptset_write_MeX,
-        /* 103 */ cg_subreg_bcname_write_MeX,
-        /* 104 */ cg_subreg_gcname_write_MeX,
-        /* 105 */ cg_nzconns_MeX,
-        /* 106 */ cg_zconn_read_MeX,
-        /* 107 */ cg_zconn_write_MeX,
-        /* 108 */ cg_zconn_get_MeX,
-        /* 109 */ cg_zconn_set_MeX,
-        /* 110 */ cg_nholes_MeX,
-        /* 111 */ cg_hole_info_MeX,
-        /* 112 */ cg_hole_read_MeX,
-        /* 113 */ cg_hole_id_MeX,
-        /* 114 */ cg_hole_write_MeX,
-        /* 115 */ cg_nconns_MeX,
-        /* 116 */ cg_conn_info_MeX,
-        /* 117 */ cg_conn_read_MeX,
-        /* 118 */ cg_conn_id_MeX,
-        /* 119 */ cg_conn_write_MeX,
-        /* 120 */ cg_conn_write_short_MeX,
-        /* 121 */ cg_conn_read_short_MeX,
-        /* 122 */ cg_n1to1_MeX,
-        /* 123 */ cg_1to1_read_MeX,
-        /* 124 */ cg_1to1_id_MeX,
-        /* 125 */ cg_1to1_write_MeX,
-        /* 126 */ cg_n1to1_global_MeX,
-        /* 127 */ cg_1to1_read_global_MeX,
-        /* 128 */ cg_nbocos_MeX,
-        /* 129 */ cg_boco_info_MeX,
-        /* 130 */ cg_boco_read_MeX,
-        /* 131 */ cg_boco_id_MeX,
-        /* 132 */ cg_boco_write_MeX,
-        /* 133 */ cg_boco_normal_write_MeX,
-        /* 134 */ cg_boco_gridlocation_read_MeX,
-        /* 135 */ cg_boco_gridlocation_write_MeX,
-        /* 136 */ cg_dataset_read_MeX,
-        /* 137 */ cg_dataset_write_MeX,
-        /* 138 */ cg_bcdataset_write_MeX,
-        /* 139 */ cg_bcdataset_info_MeX,
-        /* 140 */ cg_bcdataset_read_MeX,
-        /* 141 */ cg_bcdata_write_MeX,
-        /* 142 */ cg_ndiscrete_MeX,
-        /* 143 */ cg_discrete_read_MeX,
-        /* 144 */ cg_discrete_write_MeX,
-        /* 145 */ cg_discrete_size_MeX,
-        /* 146 */ cg_discrete_ptset_info_MeX,
-        /* 147 */ cg_discrete_ptset_read_MeX,
-        /* 148 */ cg_discrete_ptset_write_MeX,
-        /* 149 */ cg_n_rigid_motions_MeX,
-        /* 150 */ cg_rigid_motion_read_MeX,
-        /* 151 */ cg_rigid_motion_write_MeX,
-        /* 152 */ cg_n_arbitrary_motions_MeX,
-        /* 153 */ cg_arbitrary_motion_read_MeX,
-        /* 154 */ cg_arbitrary_motion_write_MeX,
-        /* 155 */ cg_simulation_type_read_MeX,
-        /* 156 */ cg_simulation_type_write_MeX,
-        /* 157 */ cg_biter_read_MeX,
-        /* 158 */ cg_biter_write_MeX,
-        /* 159 */ cg_ziter_read_MeX,
-        /* 160 */ cg_ziter_write_MeX,
-        /* 161 */ cg_gravity_read_MeX,
-        /* 162 */ cg_gravity_write_MeX,
-        /* 163 */ cg_axisym_read_MeX,
-        /* 164 */ cg_axisym_write_MeX,
-        /* 165 */ cg_rotating_read_MeX,
-        /* 166 */ cg_rotating_write_MeX,
-        /* 167 */ cg_bc_wallfunction_read_MeX,
-        /* 168 */ cg_bc_wallfunction_write_MeX,
-        /* 169 */ cg_bc_area_read_MeX,
-        /* 170 */ cg_bc_area_write_MeX,
-        /* 171 */ cg_conn_periodic_read_MeX,
-        /* 172 */ cg_conn_periodic_write_MeX,
-        /* 173 */ cg_1to1_periodic_write_MeX,
-        /* 174 */ cg_1to1_periodic_read_MeX,
-        /* 175 */ cg_conn_average_read_MeX,
-        /* 176 */ cg_conn_average_write_MeX,
-        /* 177 */ cg_1to1_average_write_MeX,
-        /* 178 */ cg_1to1_average_read_MeX,
-        /* 179 */ cg_goto_MeX,
-        /* 180 */ cg_gorel_MeX,
-        /* 181 */ cg_gopath_MeX,
-        /* 182 */ cg_golist_MeX,
-        /* 183 */ cg_where_MeX,
-        /* 184 */ cg_convergence_read_MeX,
-        /* 185 */ cg_convergence_write_MeX,
-        /* 186 */ cg_state_read_MeX,
-        /* 187 */ cg_state_write_MeX,
-        /* 188 */ cg_equationset_read_MeX,
-        /* 189 */ cg_equationset_chemistry_read_MeX,
-        /* 190 */ cg_equationset_elecmagn_read_MeX,
-        /* 191 */ cg_equationset_write_MeX,
-        /* 192 */ cg_governing_read_MeX,
-        /* 193 */ cg_governing_write_MeX,
-        /* 194 */ cg_diffusion_read_MeX,
-        /* 195 */ cg_diffusion_write_MeX,
-        /* 196 */ cg_model_read_MeX,
-        /* 197 */ cg_model_write_MeX,
-        /* 198 */ cg_narrays_MeX,
-        /* 199 */ cg_array_info_MeX,
-        /* 200 */ cg_array_read_MeX,
-        /* 201 */ cg_array_read_as_MeX,
-        /* 202 */ cg_array_write_MeX,
-        /* 203 */ cg_nuser_data_MeX,
-        /* 204 */ cg_user_data_read_MeX,
-        /* 205 */ cg_user_data_write_MeX,
-        /* 206 */ cg_nintegrals_MeX,
-        /* 207 */ cg_integral_read_MeX,
-        /* 208 */ cg_integral_write_MeX,
-        /* 209 */ cg_rind_read_MeX,
-        /* 210 */ cg_rind_write_MeX,
-        /* 211 */ cg_ndescriptors_MeX,
-        /* 212 */ cg_descriptor_read_MeX,
-        /* 213 */ cg_descriptor_write_MeX,
-        /* 214 */ cg_nunits_MeX,
-        /* 215 */ cg_units_read_MeX,
-        /* 216 */ cg_units_write_MeX,
-        /* 217 */ cg_unitsfull_read_MeX,
-        /* 218 */ cg_unitsfull_write_MeX,
-        /* 219 */ cg_exponents_info_MeX,
-        /* 220 */ cg_nexponents_MeX,
-        /* 221 */ cg_exponents_read_MeX,
-        /* 222 */ cg_exponents_write_MeX,
-        /* 223 */ cg_expfull_read_MeX,
-        /* 224 */ cg_expfull_write_MeX,
-        /* 225 */ cg_conversion_info_MeX,
-        /* 226 */ cg_conversion_read_MeX,
-        /* 227 */ cg_conversion_write_MeX,
-        /* 228 */ cg_dataclass_read_MeX,
-        /* 229 */ cg_dataclass_write_MeX,
-        /* 230 */ cg_gridlocation_read_MeX,
-        /* 231 */ cg_gridlocation_write_MeX,
-        /* 232 */ cg_ordinal_read_MeX,
-        /* 233 */ cg_ordinal_write_MeX,
-        /* 234 */ cg_ptset_info_MeX,
-        /* 235 */ cg_ptset_write_MeX,
-        /* 236 */ cg_ptset_read_MeX,
-        /* 237 */ cg_is_link_MeX,
-        /* 238 */ cg_link_read_MeX,
-        /* 239 */ cg_link_write_MeX,
-        /* 240 */ cg_delete_node_MeX,
-        /* 241 */ cg_get_error_MeX,
-        /* 242 */ cg_error_exit_MeX,
-        /* 243 */ cg_error_print_MeX
+        /* 9 */ cg_configure_MeX,
+        /* 10 */ cg_set_compress_MeX,
+        /* 11 */ cg_get_compress_MeX,
+        /* 12 */ cg_set_path_MeX,
+        /* 13 */ cg_add_path_MeX,
+        /* 14 */ cg_MassUnitsName_MeX,
+        /* 15 */ cg_LengthUnitsName_MeX,
+        /* 16 */ cg_TimeUnitsName_MeX,
+        /* 17 */ cg_TemperatureUnitsName_MeX,
+        /* 18 */ cg_AngleUnitsName_MeX,
+        /* 19 */ cg_ElectricCurrentUnitsName_MeX,
+        /* 20 */ cg_SubstanceAmountUnitsName_MeX,
+        /* 21 */ cg_LuminousIntensityUnitsName_MeX,
+        /* 22 */ cg_DataClassName_MeX,
+        /* 23 */ cg_GridLocationName_MeX,
+        /* 24 */ cg_BCDataTypeName_MeX,
+        /* 25 */ cg_GridConnectivityTypeName_MeX,
+        /* 26 */ cg_PointSetTypeName_MeX,
+        /* 27 */ cg_GoverningEquationsTypeName_MeX,
+        /* 28 */ cg_ModelTypeName_MeX,
+        /* 29 */ cg_BCTypeName_MeX,
+        /* 30 */ cg_DataTypeName_MeX,
+        /* 31 */ cg_ElementTypeName_MeX,
+        /* 32 */ cg_ZoneTypeName_MeX,
+        /* 33 */ cg_RigidGridMotionTypeName_MeX,
+        /* 34 */ cg_ArbitraryGridMotionTypeName_MeX,
+        /* 35 */ cg_SimulationTypeName_MeX,
+        /* 36 */ cg_WallFunctionTypeName_MeX,
+        /* 37 */ cg_AreaTypeName_MeX,
+        /* 38 */ cg_AverageInterfaceTypeName_MeX,
+        /* 39 */ cg_nbases_MeX,
+        /* 40 */ cg_base_read_MeX,
+        /* 41 */ cg_base_id_MeX,
+        /* 42 */ cg_base_write_MeX,
+        /* 43 */ cg_nzones_MeX,
+        /* 44 */ cg_zone_read_MeX,
+        /* 45 */ cg_zone_type_MeX,
+        /* 46 */ cg_zone_id_MeX,
+        /* 47 */ cg_zone_write_MeX,
+        /* 48 */ cg_nfamilies_MeX,
+        /* 49 */ cg_family_read_MeX,
+        /* 50 */ cg_family_write_MeX,
+        /* 51 */ cg_famname_read_MeX,
+        /* 52 */ cg_famname_write_MeX,
+        /* 53 */ cg_fambc_read_MeX,
+        /* 54 */ cg_fambc_write_MeX,
+        /* 55 */ cg_geo_read_MeX,
+        /* 56 */ cg_geo_write_MeX,
+        /* 57 */ cg_part_read_MeX,
+        /* 58 */ cg_part_write_MeX,
+        /* 59 */ cg_ngrids_MeX,
+        /* 60 */ cg_grid_read_MeX,
+        /* 61 */ cg_grid_write_MeX,
+        /* 62 */ cg_ncoords_MeX,
+        /* 63 */ cg_coord_info_MeX,
+        /* 64 */ cg_coord_read_MeX,
+        /* 65 */ cg_coord_id_MeX,
+        /* 66 */ cg_coord_write_MeX,
+        /* 67 */ cg_coord_partial_write_MeX,
+        /* 68 */ cg_nsections_MeX,
+        /* 69 */ cg_section_read_MeX,
+        /* 70 */ cg_elements_read_MeX,
+        /* 71 */ cg_section_write_MeX,
+        /* 72 */ cg_parent_data_write_MeX,
+        /* 73 */ cg_npe_MeX,
+        /* 74 */ cg_ElementDataSize_MeX,
+        /* 75 */ cg_section_partial_write_MeX,
+        /* 76 */ cg_elements_partial_write_MeX,
+        /* 77 */ cg_parent_data_partial_write_MeX,
+        /* 78 */ cg_elements_partial_read_MeX,
+        /* 79 */ cg_ElementPartialSize_MeX,
+        /* 80 */ cg_nsols_MeX,
+        /* 81 */ cg_sol_info_MeX,
+        /* 82 */ cg_sol_id_MeX,
+        /* 83 */ cg_sol_write_MeX,
+        /* 84 */ cg_nfields_MeX,
+        /* 85 */ cg_field_info_MeX,
+        /* 86 */ cg_field_read_MeX,
+        /* 87 */ cg_field_id_MeX,
+        /* 88 */ cg_field_write_MeX,
+        /* 89 */ cg_field_partial_write_MeX,
+        /* 90 */ cg_nholes_MeX,
+        /* 91 */ cg_hole_info_MeX,
+        /* 92 */ cg_hole_read_MeX,
+        /* 93 */ cg_hole_id_MeX,
+        /* 94 */ cg_hole_write_MeX,
+        /* 95 */ cg_nconns_MeX,
+        /* 96 */ cg_conn_info_MeX,
+        /* 97 */ cg_conn_read_MeX,
+        /* 98 */ cg_conn_id_MeX,
+        /* 99 */ cg_conn_write_MeX,
+        /* 100 */ cg_conn_write_short_MeX,
+        /* 101 */ cg_conn_read_short_MeX,
+        /* 102 */ cg_n1to1_MeX,
+        /* 103 */ cg_1to1_read_MeX,
+        /* 104 */ cg_1to1_id_MeX,
+        /* 105 */ cg_1to1_write_MeX,
+        /* 106 */ cg_n1to1_global_MeX,
+        /* 107 */ cg_1to1_read_global_MeX,
+        /* 108 */ cg_nbocos_MeX,
+        /* 109 */ cg_boco_info_MeX,
+        /* 110 */ cg_boco_read_MeX,
+        /* 111 */ cg_boco_id_MeX,
+        /* 112 */ cg_boco_write_MeX,
+        /* 113 */ cg_boco_normal_write_MeX,
+        /* 114 */ cg_dataset_read_MeX,
+        /* 115 */ cg_dataset_write_MeX,
+        /* 116 */ cg_bcdataset_write_MeX,
+        /* 117 */ cg_bcdataset_info_MeX,
+        /* 118 */ cg_bcdataset_read_MeX,
+        /* 119 */ cg_bcdata_write_MeX,
+        /* 120 */ cg_ndiscrete_MeX,
+        /* 121 */ cg_discrete_read_MeX,
+        /* 122 */ cg_discrete_write_MeX,
+        /* 123 */ cg_n_rigid_motions_MeX,
+        /* 124 */ cg_rigid_motion_read_MeX,
+        /* 125 */ cg_rigid_motion_write_MeX,
+        /* 126 */ cg_n_arbitrary_motions_MeX,
+        /* 127 */ cg_arbitrary_motion_read_MeX,
+        /* 128 */ cg_arbitrary_motion_write_MeX,
+        /* 129 */ cg_simulation_type_read_MeX,
+        /* 130 */ cg_simulation_type_write_MeX,
+        /* 131 */ cg_biter_read_MeX,
+        /* 132 */ cg_biter_write_MeX,
+        /* 133 */ cg_ziter_read_MeX,
+        /* 134 */ cg_ziter_write_MeX,
+        /* 135 */ cg_gravity_read_MeX,
+        /* 136 */ cg_gravity_write_MeX,
+        /* 137 */ cg_axisym_read_MeX,
+        /* 138 */ cg_axisym_write_MeX,
+        /* 139 */ cg_rotating_read_MeX,
+        /* 140 */ cg_rotating_write_MeX,
+        /* 141 */ cg_bc_wallfunction_read_MeX,
+        /* 142 */ cg_bc_wallfunction_write_MeX,
+        /* 143 */ cg_bc_area_read_MeX,
+        /* 144 */ cg_bc_area_write_MeX,
+        /* 145 */ cg_conn_periodic_read_MeX,
+        /* 146 */ cg_conn_periodic_write_MeX,
+        /* 147 */ cg_1to1_periodic_write_MeX,
+        /* 148 */ cg_1to1_periodic_read_MeX,
+        /* 149 */ cg_conn_average_read_MeX,
+        /* 150 */ cg_conn_average_write_MeX,
+        /* 151 */ cg_1to1_average_write_MeX,
+        /* 152 */ cg_1to1_average_read_MeX,
+        /* 153 */ cg_goto_MeX,
+        /* 154 */ cg_gorel_MeX,
+        /* 155 */ cg_gopath_MeX,
+        /* 156 */ cg_golist_MeX,
+        /* 157 */ cg_where_MeX,
+        /* 158 */ cg_convergence_read_MeX,
+        /* 159 */ cg_convergence_write_MeX,
+        /* 160 */ cg_state_read_MeX,
+        /* 161 */ cg_state_write_MeX,
+        /* 162 */ cg_equationset_read_MeX,
+        /* 163 */ cg_equationset_chemistry_read_MeX,
+        /* 164 */ cg_equationset_elecmagn_read_MeX,
+        /* 165 */ cg_equationset_write_MeX,
+        /* 166 */ cg_governing_read_MeX,
+        /* 167 */ cg_governing_write_MeX,
+        /* 168 */ cg_diffusion_read_MeX,
+        /* 169 */ cg_diffusion_write_MeX,
+        /* 170 */ cg_model_read_MeX,
+        /* 171 */ cg_model_write_MeX,
+        /* 172 */ cg_narrays_MeX,
+        /* 173 */ cg_array_info_MeX,
+        /* 174 */ cg_array_read_MeX,
+        /* 175 */ cg_array_read_as_MeX,
+        /* 176 */ cg_array_write_MeX,
+        /* 177 */ cg_nuser_data_MeX,
+        /* 178 */ cg_user_data_read_MeX,
+        /* 179 */ cg_user_data_write_MeX,
+        /* 180 */ cg_nintegrals_MeX,
+        /* 181 */ cg_integral_read_MeX,
+        /* 182 */ cg_integral_write_MeX,
+        /* 183 */ cg_rind_read_MeX,
+        /* 184 */ cg_rind_write_MeX,
+        /* 185 */ cg_ndescriptors_MeX,
+        /* 186 */ cg_descriptor_read_MeX,
+        /* 187 */ cg_descriptor_write_MeX,
+        /* 188 */ cg_nunits_MeX,
+        /* 189 */ cg_units_read_MeX,
+        /* 190 */ cg_units_write_MeX,
+        /* 191 */ cg_unitsfull_read_MeX,
+        /* 192 */ cg_unitsfull_write_MeX,
+        /* 193 */ cg_exponents_info_MeX,
+        /* 194 */ cg_nexponents_MeX,
+        /* 195 */ cg_exponents_read_MeX,
+        /* 196 */ cg_exponents_write_MeX,
+        /* 197 */ cg_expfull_read_MeX,
+        /* 198 */ cg_expfull_write_MeX,
+        /* 199 */ cg_conversion_info_MeX,
+        /* 200 */ cg_conversion_read_MeX,
+        /* 201 */ cg_conversion_write_MeX,
+        /* 202 */ cg_dataclass_read_MeX,
+        /* 203 */ cg_dataclass_write_MeX,
+        /* 204 */ cg_gridlocation_read_MeX,
+        /* 205 */ cg_gridlocation_write_MeX,
+        /* 206 */ cg_ordinal_read_MeX,
+        /* 207 */ cg_ordinal_write_MeX,
+        /* 208 */ cg_ptset_info_MeX,
+        /* 209 */ cg_ptset_write_MeX,
+        /* 210 */ cg_ptset_read_MeX,
+        /* 211 */ cg_is_link_MeX,
+        /* 212 */ cg_link_read_MeX,
+        /* 213 */ cg_link_write_MeX,
+        /* 214 */ cg_delete_node_MeX,
+        /* 215 */ cg_get_error_MeX,
+        /* 216 */ cg_error_exit_MeX,
+        /* 217 */ cg_error_print_MeX
     };
 
     /******** Check function selector argument. ********/ 
@@ -12613,7 +10390,7 @@ EXTERN_C void mexFunction(int nlhs, mxArray *plhs[],
 
     func_id = *(int*)mxGetData( prhs[0]);
 
-    if (func_id < 1 || func_id > 243)
+    if (func_id < 1 || func_id > 217)
         mexErrMsgTxt("Function selector out of bound.\n");
     
     /******** Invoke the function. ********/ 

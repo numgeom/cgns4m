@@ -16,9 +16,9 @@ function [io_name, out_BCType, out_DirichletFlag, out_NeumannFlag, ierr] = cg_bc
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_bcdataset_read( int index, char * name, CG_BCType_t * BCType, int * DirichletFlag, int * NeumannFlag);
+% int cg_bcdataset_read( int index, char * name, BCType_t * BCType, int * DirichletFlag, int * NeumannFlag);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 1); 
     error('Incorrect number of input or output arguments.');
@@ -37,4 +37,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_BCType, out_DirichletFlag, out_NeumannFlag, ierr] =  cgnslib_mex(int32(140), in_index, io_name);
+[out_BCType, out_DirichletFlag, out_NeumannFlag, ierr, io_name] =  cgnslib_mex(int32(118), in_index, io_name);

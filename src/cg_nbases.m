@@ -15,13 +15,12 @@ function [io_nbases, ierr] = cg_nbases(in_fn, io_nbases)
 % The original C function is:
 % int cg_nbases( int fn, int * nbases);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/structural.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 2); 
     error('Incorrect number of input or output arguments.');
 end
-basetype='int32';
-if ~isa(io_nbases,basetype);
+if ~isa(io_nbases,'int32');
     io_nbases=int32(io_nbases);
 elseif ~isempty(io_nbases);
     % Write to it to avoid sharing memory with other variables
@@ -30,4 +29,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(40), in_fn, io_nbases);
+ierr =  cgnslib_mex(int32(39), in_fn, io_nbases);

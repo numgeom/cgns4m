@@ -12,7 +12,7 @@ function [out_StateDescription, ierr] = cg_state_read()
 % The original C function is:
 % int cg_state_read( char ** StateDescription);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/auxiliary.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/auxiliary.html">online documentation</a>.
 %
 
 % NOTE: Some buffer space for out char(s) was allocated by C function
@@ -20,4 +20,4 @@ function [out_StateDescription, ierr] = cg_state_read()
 % calling cg_free.
 
 % Invoke the actual MEX-function.
-[out_StateDescription, ierr] =  cgnslib_mex(int32(186));
+[out_StateDescription, ierr] =  cgnslib_mex(int32(160));

@@ -10,10 +10,10 @@ function [out_EquationsType, ierr] = cg_governing_read()
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_governing_read( CG_GoverningEquationsType_t * EquationsType);
+% int cg_governing_read( GoverningEquationsType_t * EquationsType);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/equation.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.
-[out_EquationsType, ierr] =  cgnslib_mex(int32(192));
+[out_EquationsType, ierr] =  cgnslib_mex(int32(166));

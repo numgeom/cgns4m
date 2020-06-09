@@ -15,11 +15,11 @@ function [out_n_arbitrary_motions, ierr] = cg_n_arbitrary_motions(in_file_number
 % The original C function is:
 % int cg_n_arbitrary_motions( int file_number, int B, int Z, int * n_arbitrary_motions);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/timedep.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/timedep.html">online documentation</a>.
 %
 if (nargin < 3); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_n_arbitrary_motions, ierr] =  cgnslib_mex(int32(152), in_file_number, in_B, in_Z);
+[out_n_arbitrary_motions, ierr] =  cgnslib_mex(int32(126), in_file_number, in_B, in_Z);

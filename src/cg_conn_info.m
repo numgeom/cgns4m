@@ -17,17 +17,17 @@ function [io_connectname, io_donorname, out_location, out_type, out_ptset_type, 
 %        location: 32-bit integer (int32), scalar
 %            type: 32-bit integer (int32), scalar
 %      ptset_type: 32-bit integer (int32), scalar
-%           npnts: 64-bit or 32-bit integer (platform dependent), scalar
+%           npnts: 32-bit integer (int32), scalar
 %    donor_zonetype: 32-bit integer (int32), scalar
 %    donor_ptset_type: 32-bit integer (int32), scalar
 %    donor_datatype: 32-bit integer (int32), scalar
-%     ndata_donor: 64-bit or 32-bit integer (platform dependent), scalar
+%     ndata_donor: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_conn_info( int file_number, int B, int Z, int I, char * connectname, CG_GridLocation_t * location, CG_GridConnectivityType_t * type, CG_PointSetType_t * ptset_type, ptrdiff_t * npnts, char * donorname, CG_ZoneType_t * donor_zonetype, CG_PointSetType_t * donor_ptset_type, CG_DataType_t * donor_datatype, ptrdiff_t * ndata_donor);
+% int cg_conn_info( int file_number, int B, int Z, int I, char * connectname, GridLocation_t * location, GridConnectivityType_t * type, PointSetType_t * ptset_type, int * npnts, char * donorname, ZoneType_t * donor_zonetype, PointSetType_t * donor_ptset_type, DataType_t * donor_datatype, int * ndata_donor);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
 %
 if ( nargout < 2 || nargin < 4); 
     error('Incorrect number of input or output arguments.');
@@ -58,4 +58,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_location, out_type, out_ptset_type, out_npnts, out_donor_zonetype, out_donor_ptset_type, out_donor_datatype, out_ndata_donor, ierr] =  cgnslib_mex(int32(116), in_file_number, in_B, in_Z, in_I, io_connectname, io_donorname);
+[out_location, out_type, out_ptset_type, out_npnts, out_donor_zonetype, out_donor_ptset_type, out_donor_datatype, out_ndata_donor, ierr, io_connectname, io_donorname] =  cgnslib_mex(int32(96), in_file_number, in_B, in_Z, in_I, io_connectname, io_donorname);

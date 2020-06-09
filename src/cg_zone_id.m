@@ -21,4 +21,4 @@ if (nargin < 3);
 end
 
 % Invoke the actual MEX-function.
-[out_zone_id, ierr] =  cgnslib_mex(int32(48), in_fn, in_B, in_Z);
+[out_zone_id, ierr] =  cgnslib_mex(int32(46), in_fn, in_B, in_Z);

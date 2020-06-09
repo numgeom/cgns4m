@@ -16,29 +16,26 @@ function [io_ElecFldModelFlag, io_MagnFldModelFlag, io_ConductivityModelFlag, ie
 % The original C function is:
 % int cg_equationset_elecmagn_read( int * ElecFldModelFlag, int * MagnFldModelFlag, int * ConductivityModelFlag);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/equation.html">online documentation</a>.
 %
 if ( nargout < 3 || nargin < 3); 
     error('Incorrect number of input or output arguments.');
 end
-basetype='int32';
-if ~isa(io_ElecFldModelFlag,basetype);
+if ~isa(io_ElecFldModelFlag,'int32');
     io_ElecFldModelFlag=int32(io_ElecFldModelFlag);
 elseif ~isempty(io_ElecFldModelFlag);
     % Write to it to avoid sharing memory with other variables
     t=io_ElecFldModelFlag(1); io_ElecFldModelFlag(1)=t;
 end
 
-basetype='int32';
-if ~isa(io_MagnFldModelFlag,basetype);
+if ~isa(io_MagnFldModelFlag,'int32');
     io_MagnFldModelFlag=int32(io_MagnFldModelFlag);
 elseif ~isempty(io_MagnFldModelFlag);
     % Write to it to avoid sharing memory with other variables
     t=io_MagnFldModelFlag(1); io_MagnFldModelFlag(1)=t;
 end
 
-basetype='int32';
-if ~isa(io_ConductivityModelFlag,basetype);
+if ~isa(io_ConductivityModelFlag,'int32');
     io_ConductivityModelFlag=int32(io_ConductivityModelFlag);
 elseif ~isempty(io_ConductivityModelFlag);
     % Write to it to avoid sharing memory with other variables
@@ -47,4 +44,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(190), io_ElecFldModelFlag, io_MagnFldModelFlag, io_ConductivityModelFlag);
+ierr =  cgnslib_mex(int32(164), io_ElecFldModelFlag, io_MagnFldModelFlag, io_ConductivityModelFlag);

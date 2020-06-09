@@ -15,11 +15,11 @@ function [out_ncoords, ierr] = cg_ncoords(in_fn, in_B, in_Z)
 % The original C function is:
 % int cg_ncoords( int fn, int B, int Z, int * ncoords);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
 %
 if (nargin < 3); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_ncoords, ierr] =  cgnslib_mex(int32(65), in_fn, in_B, in_Z);
+[out_ncoords, ierr] =  cgnslib_mex(int32(62), in_fn, in_B, in_Z);

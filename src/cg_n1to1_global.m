@@ -14,11 +14,11 @@ function [out_n1to1_global, ierr] = cg_n1to1_global(in_fn, in_B)
 % The original C function is:
 % int cg_n1to1_global( int fn, int B, int * n1to1_global);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_n1to1_global, ierr] =  cgnslib_mex(int32(126), in_fn, in_B);
+[out_n1to1_global, ierr] =  cgnslib_mex(int32(106), in_fn, in_B);

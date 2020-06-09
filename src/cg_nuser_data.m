@@ -12,8 +12,8 @@ function [out_nuser_data, ierr] = cg_nuser_data()
 % The original C function is:
 % int cg_nuser_data( int * nuser_data);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/auxiliary.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/auxiliary.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.
-[out_nuser_data, ierr] =  cgnslib_mex(int32(203));
+[out_nuser_data, ierr] =  cgnslib_mex(int32(177));

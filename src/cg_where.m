@@ -14,7 +14,7 @@ function [out_file_number, out_B, out_depth, out_label, out_num, ierr] = cg_wher
 % The original C function is:
 % int cg_where( int * file_number, int * B, int * depth, char ** label, int * num);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/navigating.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/navigating.html">online documentation</a>.
 %
 % See also cg_gopath, cg_goto, cg_gorel.
 

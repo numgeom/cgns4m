@@ -10,13 +10,13 @@ function ierr = cg_gridlocation_write(in_GridLocation)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_gridlocation_write( CG_GridLocation_t GridLocation);
+% int cg_gridlocation_write( GridLocation_t GridLocation);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/location.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/location.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(231), in_GridLocation);
+ierr =  cgnslib_mex(int32(205), in_GridLocation);

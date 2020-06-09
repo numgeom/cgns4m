@@ -17,9 +17,9 @@ function [io_coordname, out_type, ierr] = cg_coord_info(in_fn, in_B, in_Z, in_C,
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_coord_info( int fn, int B, int Z, int C, CG_DataType_t * type, char * coordname);
+% int cg_coord_info( int fn, int B, int Z, int C, DataType_t * type, char * coordname);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 4); 
     error('Incorrect number of input or output arguments.');
@@ -38,4 +38,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_type, ierr] =  cgnslib_mex(int32(66), in_fn, in_B, in_Z, in_C, io_coordname);
+[out_type, ierr, io_coordname] =  cgnslib_mex(int32(63), in_fn, in_B, in_Z, in_C, io_coordname);

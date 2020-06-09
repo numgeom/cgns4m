@@ -6,4 +6,3 @@
 %                       RealSingle:                3
 %                       RealDouble:                4
 %                        Character:                5
-%                      LongInteger:                6

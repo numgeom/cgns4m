@@ -13,11 +13,11 @@ function ierr = cg_gopath(in_file_number, in_path)
 % The original C function is:
 % int cg_gopath( int file_number, const char * path);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/navigating.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/navigating.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(181), in_file_number, in_path);
+ierr =  cgnslib_mex(int32(155), in_file_number, in_path);

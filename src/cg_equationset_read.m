@@ -18,8 +18,8 @@ function [out_EquationDimension, out_GoverningEquationsFlag, out_GasModelFlag, o
 % The original C function is:
 % int cg_equationset_read( int * EquationDimension, int * GoverningEquationsFlag, int * GasModelFlag, int * ViscosityModelFlag, int * ThermalConductivityModelFlag, int * TurbulenceClosureFlag, int * TurbulenceModelFlag);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/equation.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.
-[out_EquationDimension, out_GoverningEquationsFlag, out_GasModelFlag, out_ViscosityModelFlag, out_ThermalConductivityModelFlag, out_TurbulenceClosureFlag, out_TurbulenceModelFlag, ierr] =  cgnslib_mex(int32(188));
+[out_EquationDimension, out_GoverningEquationsFlag, out_GasModelFlag, out_ViscosityModelFlag, out_ThermalConductivityModelFlag, out_TurbulenceClosureFlag, out_TurbulenceModelFlag, ierr] =  cgnslib_mex(int32(162));

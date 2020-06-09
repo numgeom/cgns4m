@@ -14,13 +14,12 @@ function [io_numexp, ierr] = cg_nexponents(io_numexp)
 % The original C function is:
 % int cg_nexponents( int * numexp);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 1); 
     error('Incorrect number of input or output arguments.');
 end
-basetype='int32';
-if ~isa(io_numexp,basetype);
+if ~isa(io_numexp,'int32');
     io_numexp=int32(io_numexp);
 elseif ~isempty(io_numexp);
     % Write to it to avoid sharing memory with other variables
@@ -29,4 +28,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(220), io_numexp);
+ierr =  cgnslib_mex(int32(194), io_numexp);

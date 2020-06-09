@@ -11,9 +11,9 @@ function ierr = cg_conversion_write(in_DataType, in_ConversionFactors)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_conversion_write( CG_DataType_t DataType, const void * ConversionFactors);
+% int cg_conversion_write( DataType_t DataType, void const * ConversionFactors);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');
@@ -22,20 +22,18 @@ end
 % Perform dynamic type casting
 datatype = in_DataType;
 switch (datatype)
-    case 2 % CG_Integer
+    case 2 % Integer
         in_ConversionFactors = int32(in_ConversionFactors);
-    case 3 % CG_RealSingle
+    case 3 % RealSingle
         in_ConversionFactors = single(in_ConversionFactors);
-    case 4 % CG_RealDouble
+    case 4 % RealDouble
         in_ConversionFactors = double(in_ConversionFactors);
-    case 5 % CG_Character
+    case 5 % Character
         in_ConversionFactors = [int8(in_ConversionFactors), int8(zeros(1,1))];
-    case 6 % CG_LongInteger
-        in_ConversionFactors = int64(in_ConversionFactors);
     otherwise
         error('Unknown data type %d', in_DataType);
 end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(227), in_DataType, in_ConversionFactors);
+ierr =  cgnslib_mex(int32(201), in_DataType, in_ConversionFactors);

@@ -15,21 +15,19 @@ function [io_rot_rate, io_rot_center, ierr] = cg_rotating_read(io_rot_rate, io_r
 % The original C function is:
 % int cg_rotating_read( float * rot_rate, float * rot_center);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
 %
 if ( nargout < 2 || nargin < 2); 
     error('Incorrect number of input or output arguments.');
 end
-basetype='single';
-if ~isa(io_rot_rate,basetype);
+if ~isa(io_rot_rate,'single');
     io_rot_rate=single(io_rot_rate);
 elseif ~isempty(io_rot_rate);
     % Write to it to avoid sharing memory with other variables
     t=io_rot_rate(1); io_rot_rate(1)=t;
 end
 
-basetype='single';
-if ~isa(io_rot_center,basetype);
+if ~isa(io_rot_center,'single');
     io_rot_center=single(io_rot_center);
 elseif ~isempty(io_rot_center);
     % Write to it to avoid sharing memory with other variables
@@ -38,4 +36,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(165), io_rot_rate, io_rot_center);
+ierr =  cgnslib_mex(int32(139), io_rot_rate, io_rot_center);

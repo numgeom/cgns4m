@@ -9,8 +9,8 @@ function [io_coord, ierr] = cg_coord_read(in_fn, in_B, in_Z, in_coordname, in_ty
 %               Z: 32-bit integer (int32), scalar
 %       coordname: character string
 %            type: 32-bit integer (int32), scalar
-%            rmin: 64-bit or 32-bit integer (platform dependent), array
-%            rmax: 64-bit or 32-bit integer (platform dependent), array
+%            rmin: 32-bit integer (int32), array
+%            rmax: 32-bit integer (int32), array
 %
 % In&Out argument (required as output; also required as input if specified; type is auto-casted):
 %           coord: dynamic type based on type  (also required as input)
@@ -19,9 +19,9 @@ function [io_coord, ierr] = cg_coord_read(in_fn, in_B, in_Z, in_coordname, in_ty
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_coord_read( int fn, int B, int Z, const char * coordname, CG_DataType_t type, const ptrdiff_t * rmin, const ptrdiff_t * rmax, void * coord);
+% int cg_coord_read( int fn, int B, int Z, char const * coordname, DataType_t type, int const * rmin, int const * rmax, void * coord);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 8); 
     error('Incorrect number of input or output arguments.');
@@ -30,25 +30,23 @@ end
 % Perform dynamic type casting
 datatype = in_type;
 switch (datatype)
-    case 2 % CG_Integer
+    case 2 % Integer
         io_coord = int32(io_coord);
-    case 3 % CG_RealSingle
+    case 3 % RealSingle
         io_coord = single(io_coord);
-    case 4 % CG_RealDouble
+    case 4 % RealDouble
         io_coord = double(io_coord);
-    case 5 % CG_Character
+    case 5 % Character
         io_coord = [int8(io_coord), int8(zeros(1,1))];
-    case 6 % CG_LongInteger
-        io_coord = int64(io_coord);
     otherwise
         error('Unknown data type %d', in_type);
 end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(67), in_fn, in_B, in_Z, in_coordname, in_type, in_rmin, in_rmax, io_coord);
+ierr =  cgnslib_mex(int32(64), in_fn, in_B, in_Z, in_coordname, in_type, in_rmin, in_rmax, io_coord);
 
 % Perform dynamic type casting
-if datatype==5 % CG_Character
+if datatype==5 % Character
     io_coord = char(io_coord(1:end-1));
 end

@@ -10,13 +10,13 @@ function ierr = cg_governing_write(in_Equationstype)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_governing_write( CG_GoverningEquationsType_t Equationstype);
+% int cg_governing_write( GoverningEquationsType_t Equationstype);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/equation.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(193), in_Equationstype);
+ierr =  cgnslib_mex(int32(167), in_Equationstype);

@@ -16,13 +16,13 @@ function [io_holename, out_location, out_ptset_type, out_nptsets, out_npnts, ier
 %        location: 32-bit integer (int32), scalar
 %      ptset_type: 32-bit integer (int32), scalar
 %         nptsets: 32-bit integer (int32), scalar
-%           npnts: 64-bit or 32-bit integer (platform dependent), scalar
+%           npnts: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_hole_info( int fn, int B, int Z, int I, char * holename, CG_GridLocation_t * location, CG_PointSetType_t * ptset_type, int * nptsets, ptrdiff_t * npnts);
+% int cg_hole_info( int fn, int B, int Z, int I, char * holename, GridLocation_t * location, PointSetType_t * ptset_type, int * nptsets, int * npnts);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 4); 
     error('Incorrect number of input or output arguments.');
@@ -41,4 +41,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_location, out_ptset_type, out_nptsets, out_npnts, ierr] =  cgnslib_mex(int32(111), in_fn, in_B, in_Z, in_I, io_holename);
+[out_location, out_ptset_type, out_nptsets, out_npnts, ierr, io_holename] =  cgnslib_mex(int32(91), in_fn, in_B, in_Z, in_I, io_holename);

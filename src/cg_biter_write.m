@@ -13,13 +13,13 @@ function ierr = cg_biter_write(in_file_number, in_B, in_bitername, in_nsteps)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_biter_write( int file_number, int B, const char * bitername, int nsteps);
+% int cg_biter_write( int file_number, int B, char const * bitername, int nsteps);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/timedep.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/timedep.html">online documentation</a>.
 %
 if (nargin < 4); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(158), in_file_number, in_B, in_bitername, in_nsteps);
+ierr =  cgnslib_mex(int32(132), in_file_number, in_B, in_bitername, in_nsteps);

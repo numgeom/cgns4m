@@ -13,8 +13,8 @@ function [out_ThermalRelaxationFlag, out_ChemicalKineticsFlag, ierr] = cg_equati
 % The original C function is:
 % int cg_equationset_chemistry_read( int * ThermalRelaxationFlag, int * ChemicalKineticsFlag);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/equation.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.
-[out_ThermalRelaxationFlag, out_ChemicalKineticsFlag, ierr] =  cgnslib_mex(int32(189));
+[out_ThermalRelaxationFlag, out_ChemicalKineticsFlag, ierr] =  cgnslib_mex(int32(163));

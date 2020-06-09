@@ -14,13 +14,13 @@ function [out_B, ierr] = cg_base_write(in_file_number, in_basename, in_cell_dim,
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_base_write( int file_number, const char * basename, int cell_dim, int phys_dim, int * B);
+% int cg_base_write( int file_number, char const * basename, int cell_dim, int phys_dim, int * B);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/structural.html">online documentation</a>.
 %
 if (nargin < 4); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_B, ierr] =  cgnslib_mex(int32(43), in_file_number, in_basename, in_cell_dim, in_phys_dim);
+[out_B, ierr] =  cgnslib_mex(int32(42), in_file_number, in_basename, in_cell_dim, in_phys_dim);

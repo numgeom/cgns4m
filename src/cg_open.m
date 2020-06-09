@@ -12,9 +12,9 @@ function [out_fn, ierr] = cg_open(in_filename, in_mode)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_open( const char * filename, int mode, int * fn);
+% int cg_open( char const * filename, int mode, int * fn);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/fileops.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/fileops.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');

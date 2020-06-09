@@ -11,9 +11,9 @@ function ierr = cg_expfull_write(in_DataType, in_exponents)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_expfull_write( CG_DataType_t DataType, const void * exponents);
+% int cg_expfull_write( DataType_t DataType, void const * exponents);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');
@@ -22,20 +22,18 @@ end
 % Perform dynamic type casting
 datatype = in_DataType;
 switch (datatype)
-    case 2 % CG_Integer
+    case 2 % Integer
         in_exponents = int32(in_exponents);
-    case 3 % CG_RealSingle
+    case 3 % RealSingle
         in_exponents = single(in_exponents);
-    case 4 % CG_RealDouble
+    case 4 % RealDouble
         in_exponents = double(in_exponents);
-    case 5 % CG_Character
+    case 5 % Character
         in_exponents = [int8(in_exponents), int8(zeros(1,1))];
-    case 6 % CG_LongInteger
-        in_exponents = int64(in_exponents);
     otherwise
         error('Unknown data type %d', in_DataType);
 end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(224), in_DataType, in_exponents);
+ierr =  cgnslib_mex(int32(198), in_DataType, in_exponents);

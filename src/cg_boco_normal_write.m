@@ -17,9 +17,9 @@ function ierr = cg_boco_normal_write(in_file_number, in_B, in_Z, in_BC, in_Norma
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_boco_normal_write( int file_number, int B, int Z, int BC, const int * NormalIndex, int NormalListFlag, CG_DataType_t NormalDataType, const void * NormalList);
+% int cg_boco_normal_write( int file_number, int B, int Z, int BC, int const * NormalIndex, int NormalListFlag, DataType_t NormalDataType, void const * NormalList);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
 %
 if (nargin < 8); 
     error('Incorrect number of input or output arguments.');
@@ -28,20 +28,18 @@ end
 % Perform dynamic type casting
 datatype = in_NormalDataType;
 switch (datatype)
-    case 2 % CG_Integer
+    case 2 % Integer
         in_NormalList = int32(in_NormalList);
-    case 3 % CG_RealSingle
+    case 3 % RealSingle
         in_NormalList = single(in_NormalList);
-    case 4 % CG_RealDouble
+    case 4 % RealDouble
         in_NormalList = double(in_NormalList);
-    case 5 % CG_Character
+    case 5 % Character
         in_NormalList = [int8(in_NormalList), int8(zeros(1,1))];
-    case 6 % CG_LongInteger
-        in_NormalList = int64(in_NormalList);
     otherwise
         error('Unknown data type %d', in_NormalDataType);
 end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(133), in_file_number, in_B, in_Z, in_BC, in_NormalIndex, in_NormalListFlag, in_NormalDataType, in_NormalList);
+ierr =  cgnslib_mex(int32(113), in_file_number, in_B, in_Z, in_BC, in_NormalIndex, in_NormalListFlag, in_NormalDataType, in_NormalList);

@@ -20,4 +20,4 @@ if (nargin < 2);
 end
 
 % Invoke the actual MEX-function.
-[out_base_id, ierr] =  cgnslib_mex(int32(42), in_fn, in_B);
+[out_base_id, ierr] =  cgnslib_mex(int32(41), in_fn, in_B);

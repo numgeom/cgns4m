@@ -22,4 +22,4 @@ io_NormalIndex=int32([0 0 0]);
 
 % Invoke the actual MEX-function.
 [out_bocotype, out_ptset_type, out_npnts, out_NormalListFlag, out_NormalDataType] =  ...
-    cgnslib_mex(int32(129), in_fn, in_B, in_Z, in_BC, io_boconame, io_NormalIndex); %#ok<*ASGLU>
+    cgnslib_mex(int32(109), in_fn, in_B, in_Z, in_BC, io_boconame, io_NormalIndex); %#ok<*ASGLU>

@@ -16,7 +16,7 @@ function ierr = cg_golist(varargin)
 % The original C function is:
 % int cg_golist( int file_number, int B, int depth, char ** label, int * num);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/navigating.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/navigating.html">online documentation</a>.
 %
 
 ierr = cgnslib_mex(MEX_CG_GOLIST,varargin{:});

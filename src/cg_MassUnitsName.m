@@ -10,7 +10,7 @@ function name = cg_MassUnitsName(in_type)
 %            name: character string
 %
 % The original C function is:
-% const char * cg_MassUnitsName( CG_MassUnits_t type);
+% const char * cg_MassUnitsName( MassUnits_t type);
 %
 % For detail, see the documentation of the original function.
 if (nargin < 1); 
@@ -18,4 +18,4 @@ if (nargin < 1);
 end
 
 % Invoke the actual MEX-function.
-name =  cgnslib_mex(int32(15), in_type);
+name =  cgnslib_mex(int32(14), in_type);

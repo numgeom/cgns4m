@@ -9,8 +9,8 @@ function [out_S, ierr] = cg_section_partial_write(in_file_number, in_B, in_Z, in
 %               Z: 32-bit integer (int32), scalar
 %     SectionName: character string
 %            type: 32-bit integer (int32), scalar
-%           start: 64-bit or 32-bit integer (platform dependent), scalar
-%             end: 64-bit or 32-bit integer (platform dependent), scalar
+%           start: 32-bit integer (int32), scalar
+%             end: 32-bit integer (int32), scalar
 %          nbndry: 32-bit integer (int32), scalar
 %
 % Output arguments (optional):
@@ -18,13 +18,13 @@ function [out_S, ierr] = cg_section_partial_write(in_file_number, in_B, in_Z, in
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_section_partial_write( int file_number, int B, int Z, const char * SectionName, CG_ElementType_t type, ptrdiff_t start, ptrdiff_t end, int nbndry, int * S);
+% int cg_section_partial_write( int file_number, int B, int Z, char const * SectionName, ElementType_t type, int start, int end, int nbndry, int * S);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
 %
 if (nargin < 8); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_S, ierr] =  cgnslib_mex(int32(78), in_file_number, in_B, in_Z, in_SectionName, in_type, in_start, in_end, in_nbndry);
+[out_S, ierr] =  cgnslib_mex(int32(75), in_file_number, in_B, in_Z, in_SectionName, in_type, in_start, in_end, in_nbndry);

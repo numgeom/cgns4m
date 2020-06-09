@@ -16,13 +16,13 @@ function ierr = cg_bc_area_write(in_file_number, in_B, in_Z, in_BC, in_AreaType,
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_bc_area_write( int file_number, int B, int Z, int BC, CG_AreaType_t AreaType, float SurfaceArea, const char * RegionName);
+% int cg_bc_area_write( int file_number, int B, int Z, int BC, AreaType_t AreaType, float SurfaceArea, char const * RegionName);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
 %
 if (nargin < 7); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(170), in_file_number, in_B, in_Z, in_BC, in_AreaType, in_SurfaceArea, in_RegionName);
+ierr =  cgnslib_mex(int32(144), in_file_number, in_B, in_Z, in_BC, in_AreaType, in_SurfaceArea, in_RegionName);

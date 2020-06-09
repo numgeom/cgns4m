@@ -13,11 +13,11 @@ function ierr = cg_rotating_write(in_rot_rate, in_rot_center)
 % The original C function is:
 % int cg_rotating_write( float const * rot_rate, float const * rot_center);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(166), in_rot_rate, in_rot_center);
+ierr =  cgnslib_mex(int32(140), in_rot_rate, in_rot_center);

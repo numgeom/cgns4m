@@ -17,9 +17,9 @@ function [io_fambc_name, out_bocotype, ierr] = cg_fambc_read(in_file_number, in_
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_fambc_read( int file_number, int B, int F, int BC, char * fambc_name, CG_BCType_t * bocotype);
+% int cg_fambc_read( int file_number, int B, int F, int BC, char * fambc_name, BCType_t * bocotype);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/families.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 4); 
     error('Incorrect number of input or output arguments.');
@@ -38,4 +38,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_bocotype, ierr] =  cgnslib_mex(int32(56), in_file_number, in_B, in_F, in_BC, io_fambc_name);
+[out_bocotype, ierr, io_fambc_name] =  cgnslib_mex(int32(53), in_file_number, in_B, in_F, in_BC, io_fambc_name);

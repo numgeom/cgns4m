@@ -15,13 +15,13 @@ function [out_A, ierr] = cg_arbitrary_motion_write(in_file_number, in_B, in_Z, i
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_arbitrary_motion_write( int file_number, int B, int Z, const char * amotionname, CG_ArbitraryGridMotionType_t type, int * A);
+% int cg_arbitrary_motion_write( int file_number, int B, int Z, char const * amotionname, ArbitraryGridMotionType_t type, int * A);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/timedep.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/timedep.html">online documentation</a>.
 %
 if (nargin < 5); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_A, ierr] =  cgnslib_mex(int32(154), in_file_number, in_B, in_Z, in_amotionname, in_type);
+[out_A, ierr] =  cgnslib_mex(int32(128), in_file_number, in_B, in_Z, in_amotionname, in_type);

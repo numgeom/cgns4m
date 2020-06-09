@@ -16,11 +16,11 @@ function [out_one21_id, ierr] = cg_1to1_id(in_fn, in_B, in_Z, in_I)
 % The original C function is:
 % int cg_1to1_id( int fn, int B, int Z, int I, double * one21_id);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
 %
 if (nargin < 4); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_one21_id, ierr] =  cgnslib_mex(int32(124), in_fn, in_B, in_Z, in_I);
+[out_one21_id, ierr] =  cgnslib_mex(int32(104), in_fn, in_B, in_Z, in_I);

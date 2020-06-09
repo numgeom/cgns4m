@@ -8,21 +8,21 @@ function [out_ElementDataSize, ierr] = cg_ElementPartialSize(in_file_number, in_
 %               B: 32-bit integer (int32), scalar
 %               Z: 32-bit integer (int32), scalar
 %               S: 32-bit integer (int32), scalar
-%           start: 64-bit or 32-bit integer (platform dependent), scalar
-%             end: 64-bit or 32-bit integer (platform dependent), scalar
+%           start: 32-bit integer (int32), scalar
+%             end: 32-bit integer (int32), scalar
 %
 % Output arguments (optional):
-%    ElementDataSize: 64-bit or 32-bit integer (platform dependent), scalar
+%    ElementDataSize: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_ElementPartialSize( int file_number, int B, int Z, int S, ptrdiff_t start, ptrdiff_t end, ptrdiff_t * ElementDataSize);
+% int cg_ElementPartialSize( int file_number, int B, int Z, int S, int start, int end, int * ElementDataSize);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
 %
 if (nargin < 6); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_ElementDataSize, ierr] =  cgnslib_mex(int32(82), in_file_number, in_B, in_Z, in_S, in_start, in_end);
+[out_ElementDataSize, ierr] =  cgnslib_mex(int32(79), in_file_number, in_B, in_Z, in_S, in_start, in_end);

@@ -15,11 +15,11 @@ function [out_nholes, ierr] = cg_nholes(in_fn, in_B, in_Z)
 % The original C function is:
 % int cg_nholes( int fn, int B, int Z, int * nholes);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
 %
 if (nargin < 3); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-[out_nholes, ierr] =  cgnslib_mex(int32(110), in_fn, in_B, in_Z);
+[out_nholes, ierr] =  cgnslib_mex(int32(90), in_fn, in_B, in_Z);

@@ -14,13 +14,12 @@ function [io_diffusion_model, ierr] = cg_diffusion_read(io_diffusion_model)
 % The original C function is:
 % int cg_diffusion_read( int * diffusion_model);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/equation.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 1); 
     error('Incorrect number of input or output arguments.');
 end
-basetype='int32';
-if ~isa(io_diffusion_model,basetype);
+if ~isa(io_diffusion_model,'int32');
     io_diffusion_model=int32(io_diffusion_model);
 elseif ~isempty(io_diffusion_model);
     % Write to it to avoid sharing memory with other variables
@@ -29,4 +28,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(194), io_diffusion_model);
+ierr =  cgnslib_mex(int32(168), io_diffusion_model);

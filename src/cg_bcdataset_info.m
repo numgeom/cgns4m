@@ -12,8 +12,8 @@ function [out_n_dataset, ierr] = cg_bcdataset_info()
 % The original C function is:
 % int cg_bcdataset_info( int * n_dataset);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.
-[out_n_dataset, ierr] =  cgnslib_mex(int32(139));
+[out_n_dataset, ierr] =  cgnslib_mex(int32(117));

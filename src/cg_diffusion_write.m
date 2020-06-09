@@ -10,13 +10,13 @@ function ierr = cg_diffusion_write(in_diffusion_model)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_diffusion_write( const int * diffusion_model);
+% int cg_diffusion_write( int const * diffusion_model);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/equation.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');
 end
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(195), in_diffusion_model);
+ierr =  cgnslib_mex(int32(169), in_diffusion_model);
