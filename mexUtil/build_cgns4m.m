@@ -59,8 +59,10 @@ if ispc
         end
     end
     
-    hdf5lib = ['-L"' sys_hdfroot '\lib" -lhdf5 -lszip -lzlib'];
     hdf5inc = ['-I' SRCDIR '/adfh -I"' sys_hdfroot '/include" -DBUILD_HDF5'];
+    hdf5lib = ['"' sys_hdfroot '\lib\libhdf5.lib" "' ...
+        sys_hdfroot '\lib\libszip.lib" "' ...
+        sys_hdfroot '\lib\libzlib.lib"'];
 else
     if ~exist(HDF_VERSION, 'dir')
         if ~exist([HDF_VERSION '.tgz'], 'file')
