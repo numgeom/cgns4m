@@ -5,6 +5,7 @@
 extern "C" {
 #endif
 #include "mex.h"
+#include "stddef.h"
 #ifdef __cplusplus
 }
 #endif
@@ -29,7 +30,7 @@ extern "C" {
 /*
  * Return the number of dimensions of a MATLAB Array.
  */
-inline int _n_dims( const mxArray *mat) {
+static inline int _n_dims( const mxArray *mat) {
     int dim = mxGetNumberOfDimensions(mat);
     if (mxGetNumberOfElements(mat)==1)
         return 0;
@@ -72,8 +73,8 @@ typedef unsigned char       uint8;
   case mxUINT16_CLASS: HELPER( uint16, TYPE); \
   case mxINT32_CLASS:  HELPER( int32, TYPE); \
   case mxUINT32_CLASS: HELPER( uint32, TYPE); \
-  case mxINT64_CLASS:  if (sizeof(void*)==8) { HELPER( int64, TYPE); } \
-  case mxUINT64_CLASS: if (sizeof(void*)==8) { HELPER( uint64, TYPE); }\
+  case mxINT64_CLASS:  HELPER( int64, TYPE);  \
+  case mxUINT64_CLASS: HELPER( uint64, TYPE); \
 
 #define GET_HELPER( MTYPE, TYPE) { \
     MTYPE *pr = (MTYPE*)mxGetData(mat); \
@@ -84,7 +85,7 @@ typedef unsigned char       uint8;
     break;
 
 #define GET_NUMERIC_ARRAY( TYPE) \
-inline int \
+static inline int \
 _get_numeric_array_##TYPE(const mxArray *mat, TYPE *arr) \
 { \
     mwSize n_elements = mxGetNumberOfElements(mat); \
@@ -109,7 +110,7 @@ GET_NUMERIC_ARRAY(uint8)
         return *(MTYPE*)mxGetPr(mat)
 
 #define GET_NUMERIC_SCALAR( TYPE) \
-inline TYPE \
+static inline TYPE \
 _get_numeric_scalar_##TYPE(const mxArray *mat) \
 { \
     switch_types( GET_SCALAR_HELPER, TYPE) \
@@ -129,11 +130,11 @@ GET_NUMERIC_SCALAR(uint16)
 GET_NUMERIC_SCALAR(int8)
 GET_NUMERIC_SCALAR(uint8)
 
-/* 
- * The follow pair of functions are for allocating and deallocating buffer 
+/*
+ * The follow pair of functions are for allocating and deallocating buffer
  * space for storing C strings from MATLAB chars.
  */
-inline char * _mxGetString( const mxArray *arr, size_t *fstrlen) {
+static inline char * _mxGetString( const mxArray *arr, size_t *fstrlen) {
     mwSize len = mxGetNumberOfElements(arr)+1;
     char *s = (char *)mxMalloc( len);
     mxGetString(arr, s, len);
@@ -141,13 +142,7 @@ inline char * _mxGetString( const mxArray *arr, size_t *fstrlen) {
     return s;
 }
 
-#ifdef __GNUC__
-/* Bypass a bug in gcc 4.2.x on Linux */
-extern void _mxPutString( char *s, mxArray *arr);
-#else
-inline 
-#endif
-void _mxPutString( char *s, mxArray *arr) {
+static inline void _mxPutString( char *s, mxArray *arr) {
     mxChar *pr = (mxChar*)mxGetData(arr);
     mwSize idx;
     for (idx = mxGetNumberOfElements(arr)-1; idx >= 0; --idx)
@@ -155,7 +150,7 @@ void _mxPutString( char *s, mxArray *arr) {
     mxFree(s);
 }
 
-inline void _mxFreeString( char *s) {
+static inline void _mxFreeString( char *s) {
     mxFree(s);
 }
 

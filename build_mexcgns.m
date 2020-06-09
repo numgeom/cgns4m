@@ -1,48 +1,23 @@
-function build_mexcgns(mexcgnsroot, hdfopt)
-% Script for building mexCGNS.
+function build_mexcgns(mexcgnsroot)
+% Script for building CGNS4M.
 %
 % See also startup_mexcgns.
 
-srcdir = 'cgnslib_3.0';
+SRCDIR = 'cgnslib_3.0';
 if ~isoctave
-    if nargin>1 && strncmp(hdfopt,'--with-hdf5=',12)
-        hdfroot=hdfopt(13:end);
-    else
-        urlroot = 'https://support.hdfgroup.org/ftp/HDF5/prev-releases/hdf5-1.8/hdf5-1.8.5/bin/';
-        switch computer
-            case 'PCWIN'
-                hdfroot = 'hdf5-1.8.5-win32';
-                url = [urlroot 'windows/hdf5-1.8.5-win32.zip'];
-            case 'PCWIN64'
-                hdfroot = 'hdf5-1.8.5-win64';
-                url = [urlroot 'windows/hdf5-1.8.5-win64.zip'];
-            case 'MACI64'
-                hdfroot = 'hdf5-1.8.5-macosx64-static';
-                url = [urlroot 'macosx/hdf5-1.8.5-macosx64-static.tar.gz'];
-            case 'MACI'
-                hdfroot = 'hdf5-1.8.5-macosx32-static';
-                url = [urlroot 'macosx/hdf5-1.8.5-macosx32-static.tar.gz'];
-            case 'GLNX86'
-                hdfroot = 'hdf5-1.8.5-linux-static';
-                url = [urlroot 'linux/hdf5-1.8.5-linux-static.tar.gz'];
-            case 'GLNXA64'
-                hdfroot = 'hdf5-1.8.5-linux-x86_64-static-fpic';
-                url = [urlroot 'linux-x86_64/hdf5-1.8.5-linux-x86_64-static-fpic.tar.gz'];
-            otherwise
-                hdfroot = 'hdf5-1.8.5';
-                url = [urlroot '../src/hdf5-1.8.5.tar.gz'];
-        end
-    end
+    HDF_VERSION = 'hdf5-1.8.21';
+    url = ['https://support.hdfgroup.org/ftp/HDF5/prev-releases/hdf5-1.8/' HDF_VERSION '/src/' ...
+           HDF_VERSION '.tar.gz'];
 else
-    hdfroot = '';
+    HDF_VERSION = '';
 end
 
 oldpwd = pwd;
 if nargin<1
-    mexcgnsroot = which('build_mexcgns'); mexcgnsroot(end-15:end)=[];
+    mexcgnsroot = fileparts(which('build_mexcgns.m'));
 end
 
-% We must build in the mexCGNS directory. Change the directory first.
+% We must build in the CGNS4m directory. Change the directory first.
 if ~strcmp(mexcgnsroot,'.') && ~strcmp(mexcgnsroot,pwd)
     cd(mexcgnsroot);
 else
@@ -51,14 +26,17 @@ end
 
 if isoctave
     mexfile = [computer '/cgnslib_mex.' mexext];
+    if ~exist(computer, 'dir')
+      mkdir(computer)
+     end
 else
     mexfile = ['cgnslib_mex.' mexext];
 end
 
 % Compile the file if the C code is newer than the MEX file.
 if ~isnewer( 'src/cgnslib_mex.c', mexfile) && ...
-        ~isnewer( 'src/cgnslib_mex_ext.c', mexfile) && ...
-        ~isnewer( 'cgnslib_3.0/cgnslib.c', mexfile)
+        ~isnewer('src/cgnslib_mex_ext.c', mexfile) && ...
+        ~isnewer([SRCDIR '/cgnslib.c'], mexfile)
     cd(oldpwd);
     return;
 end
@@ -66,63 +44,62 @@ end
 % Compile all the C-files into MEX functions
 cgnsfiles = ['cgnslib.c cgns_internals.c cgns_io.c cgns_error.c '...
     'adf/adf_cond.c adf/ADF_interface.c adf/ADF_internals.c'];
-if ~isempty(hdfroot) && ~isoctave
-    disp(['Building mexCGNS with the HDF5 library in ' hdfroot '.']);
-    
+if ~isempty(HDF_VERSION) && ~isoctave
     cgnsfiles = [cgnsfiles ' adfh/ADFH.c'];
-    hdf5inc = ['-I' srcdir '/adfh -I' hdfroot '/include -DBUILD_HDF5'];
-    if hdfroot(1)=='/'
-        hdf5lib = ['-L' hdfroot '/lib -lhdf5 -lz'];
-    elseif ispc
-        if ~exist(hdfroot, 'dir')
-            if ~exist([hdfroot '.zip'], 'file')
-                % Download HDF5, unzip, and set path
-                disp('Downloading HDF5 from http://www.hdfgroup.org. Please wait...');
-                urlwrite(url, [hdfroot '.zip']);
+
+    if ~exist(HDF_VERSION, 'dir')
+        if ~exist([HDF_VERSION '.tgz'], 'file')
+            % Download HDF5, unzip, and set path
+            fprintf(['Downloading ' HDF_VERSION ' from http://www.hdfgroup.org. Please wait...']);
+            if exist('websave', 'file')
+                websave([HDF_VERSION '.tgz'], url);
+            else
+                urlwrite(url, [HDF_VERSION '.tgz']); %#ok<*URLWR>
             end
-            unzip([hdfroot '.zip']);
+            disp('Done.');
         end
-
-        hdf5lib = ['-L' hdfroot '/lib -lhdf5 -lszip -lzlib'];
-    else
-        if ~exist(hdfroot, 'dir')
-            if ~exist([hdfroot '.tgz'], 'file')
-                % Download HDF5, unzip, and set path
-                disp('Downloading HDF5 from http://www.hdfgroup.org. Please wait...');
-                system(['curl -L -s -o ' hdfroot '.tgz ' url]);
-            end
-            untar([hdfroot '.tgz']);
-        end
-
-        hdf5lib = [hdfroot '/lib/libhdf5.a -L' hdfroot '/lib -lsz -lz'];
-
-        if isequal(hdfroot,'hdf5-1.8.5')
-            disp('Building HDF5. Please wait. This may take a few minutes...');
-            [~,~] = system(['cd ' hdfroot '; ./configure --enable-shared=no CFLAGS="-m64 -fPIC" --prefix=$PWD; make install']);
-            hdf5lib = [hdfroot '/lib/libhdf5.a -L' hdfroot '/lib -lz'];
-        end
+        untar([HDF_VERSION '.tgz']);
     end
+
+    hdf5lib = ['-L' matlabroot '/bin/' lower(computer) ' -lhdf5'];
+    hdf5inc = ['-I' SRCDIR '/adfh -I' HDF_VERSION '/include -DBUILD_HDF5'];
+
+    if ~exist([HDF_VERSION '/lib/libhdf5.a'], 'file')
+        fprintf('Building HDF5 from source. Please wait. This may take a few minutes...');
+        if contains(computer, '64')
+            CFLAGS='-m64';
+        else
+            CFLAGS='-m32';
+        end
+        system(['cd ' HDF_VERSION '; ./configure ' ...
+                '--enable-shared=no CFLAGS="' CFLAGS ' -fPIC" ' ...
+                '--prefix=$PWD; make install']);
+        disp('Done.');
+        hdf5lib = [HDF_VERSION '/lib/libhdf5.a -L' HDF_VERSION '/lib -ldl -lz'];
+    end
+    
+    disp(['Building CGNS4m with the HDF5 library ' HDF_VERSION '.']);
 elseif isoctave
-    disp('Building mexCGNS with default HDF5 library.');
+    disp('Building CGNS4m with default HDF5 library.');
 
     cgnsfiles = [cgnsfiles ' adfh/ADFH.c'];
     if exist('__octave_config_info__', 'builtin')
         octave_config_info = eval('@__octave_config_info__');
     end
     hdf5inc = [octave_config_info('HDF5_CPPFLAGS') ' ' ...
-              '-I' srcdir '/adfh -DBUILD_HDF5'];
+              '-I' SRCDIR '/adfh -DBUILD_HDF5'];
     hdf5lib = [octave_config_info('HDF5_LDFLAGS') ' ' ...
                octave_config_info('HDF5_LIBS')];
 else
     hdf5inc = '';
     hdf5lib = '';
 
-    disp('Did not find HDF5 library in the path. Building mexCGNS without HDF5 support.');
+    disp('Did not find HDF5 library in the path. Building CGNS4m without HDF5 support.');
 end
-cgnsfiles = addprefix( cgnsfiles, [srcdir '/']);
+cgnsfiles = addprefix( cgnsfiles, [SRCDIR '/']);
 
 if isoctave
-    command = ['mkoctfile --mex -Isrc -I. -I' srcdir ' -I' srcdir '/adf ' ...
+    command = ['mkoctfile --mex -Isrc -I. -I' SRCDIR ' -I' SRCDIR '/adf ' ...
         hdf5inc ' -o ' mexfile ' src/cgnslib_mex.c ' cgnsfiles hdf5lib];
 
     disp(command); fflush(1);
@@ -137,12 +114,14 @@ if isoctave
         error('Error during compilation: %s.', lasterr); %#ok<*LERR>
     end
 else % MATLAB
-    command = ['mex -O -Isrc -I. -I' srcdir ' -I' srcdir '/adf ' ...
+    command = ['mex -O -Isrc -I. -I' SRCDIR ' -I' SRCDIR '/adf ' ...
         hdf5inc ' -output ' mexfile ' src/cgnslib_mex.c ' cgnsfiles hdf5lib];
 
     try
         disp(command); eval(command);
-        rmdir(hdfroot, 's');
+        if exist(HDF_VERSION, 'dir')
+            rmdir(HDF_VERSION, 's');
+        end
     catch
         cd(oldpwd);
         error('Error during compilation with err %s.', lasterr);
@@ -164,7 +143,7 @@ else
 end
 
 if success==0
-    fprintf(2,'\nThere seems to be some error in building mexCGNS. Please email jiao@ams.sunysb.edu to report bug.\n');
+    fprintf(2,'\nThere seems to be some error in building CGNS4m.\n');
 else
-    fprintf(1,'mexCGNS was built successfully.\n');
+    disp('CGNS4m was built successfully.');
 end
