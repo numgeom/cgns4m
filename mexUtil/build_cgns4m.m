@@ -133,10 +133,10 @@ end
 % Perform testing
 if isoctave
     rehash;
-    success=test('readcgns_unstr');
+    success=test('readcgns');
 else
     rehash('path');
-    success=mtest('readcgns_unstr');
+    success=mtest('readcgns');
 end
 
 if success==0
