@@ -10,7 +10,7 @@ You need to run the `startup_cgns4m` script every time you launch MATLAB/Octave.
 
 ### Note for MATLAB on Microsoft Windows
 
-On Microsoft Windows, CGNS4m requires MATLAB and Microsoft Visual C++. After installing Visual C++, just run `mex -setup` in MATLAB to choose Visual C++ as the compiler, and then build CGNS4m using `startup_cgns4m`.
+On Microsoft Windows, CGNS4m requires MATLAB and [Microsoft Visual Studio](https://visualstudio.microsoft.com/) (the free community edition suffices). After installing Visual Studio, just run `mex -setup` in MATLAB to choose Visual C++ as the compiler, and then build CGNS4m using `startup_cgns4m`.
 
 For typical users working with unstructured meshes, it would be sufficient
 to use the high-level functions `readcgns.m` and `writecgns.m` to
