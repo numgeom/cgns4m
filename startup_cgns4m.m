@@ -11,8 +11,7 @@ function startup_cgns4m
 % See also build_cgns4m.
 
 % Determine the absolute path of cgns4m
-cgns4mroot = which('startup_cgns4m');
-cgns4mroot = cgns4mroot(1:end-18);
+cgns4mroot = fileparts(which('startup_cgns4m'));
 if cgns4mroot == '.'
     cgns4mroot = pwd;
 end

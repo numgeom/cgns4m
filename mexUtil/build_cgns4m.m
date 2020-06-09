@@ -47,11 +47,12 @@ if ispc
 
         if ~exist([HDF_VERSION '.zip'], 'file')
             % Download HDF5, unzip, and set path
-            disp('Downloading HDF5 from http://www.hdfgroup.org. Please wait...');
+            fprintf(['Downloading ' HDF_VERSION ' from http://www.hdfgroup.org. Please wait...']);
             websave([HDF_VERSION '.zip'], url);
+            disp('Done.');
         end
-        unzip([HDF_VERSION '.zip'], zipoutdir);
-        disp('Please follow the prompt to install HDF5');
+        unzip([HDF_VERSION '.zip'], HDF_VERSION);
+        disp(['Please follow the prompt to install HDF5 under ' sys_hdfroot]);
         status = system([HDF_VERSION '\hdf\' HDF_VERSION '-win64.msi']);
         if status || ~exist([sys_hdfroot '\lib'], 'dir')
             error(['Error in installing ' HDF_VERSION '.'])
@@ -59,7 +60,7 @@ if ispc
     end
     
     hdf5lib = ['-L"' sys_hdfroot '\lib" -lhdf5 -lszip -lzlib'];
-    hdf5inc = ['-I' srcdir '/adfh -I"' sys_hdfroot '/include" -DBUILD_HDF5'];
+    hdf5inc = ['-I' SRCDIR '/adfh -I"' sys_hdfroot '/include" -DBUILD_HDF5'];
 else
     if ~exist(HDF_VERSION, 'dir')
         if ~exist([HDF_VERSION '.tgz'], 'file')
