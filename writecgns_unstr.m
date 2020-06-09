@@ -4,9 +4,8 @@ function writecgns_unstr( file_name, ps, elems, typestr, var_nodes, var_cells)
 % WRITECGNS_UNSTR( FILENAME, XS, ELEMS, TYPESTR, VAR_NODES, VAR_CELLS)
 %
 % Arguments:
-%   FILENAME is a character string, specifying the output file. The
-%       default format is HDF5. If the filename extension is adf, 
-%       then the ADF format will be used.
+%   FILENAME is a character string, specifying the output file. If the
+%       file name extension is h5 or hdf5, then HDF5 format will be used.
 %
 %   XS is nxd array containing nodal coordinates, where d is the dimension
 %       of the space (in general d is 2 or 3).
@@ -63,8 +62,8 @@ function writecgns_unstr( file_name, ps, elems, typestr, var_nodes, var_cells)
 %        Ying Chen (yingchen@ams.sunysb.edu) 
 
 if ~exist('cgnslib_mex', 'file')
-    warning('CGNS does not appear to be compiled  properly. Try to run build_mexcgns.'); %#ok<WNTAG>
-    build_mexcgns;
+    warning('CGNS does not appear to be compiled  properly. Try to run build_cgns4m.'); %#ok<WNTAG>
+    build_cgns4m;
 end
 
 if (nargin<3)
@@ -86,11 +85,11 @@ else
     [type, icelldim] = get_elemtype( size(elems,2), typestr);
 end
 
-% Set file type to HDF5 or ADF
-if strcmp(file_name(end-2:end),'.adf')
-    ierr = cg_set_file_type(CG_FILE_ADF); chk_error(ierr);
-else
+% Set file type to HDF5.
+if strcmp(file_name(end-2:end),'.h5') || strcmp(file_name(end-4:end),'.hdf5') 
     ierr = cg_set_file_type(CG_FILE_HDF5); chk_error(ierr);
+else
+    ierr = cg_set_file_type(CG_FILE_ADF2); chk_error(ierr);
 end
 
 % Open the CGNS file.
@@ -396,35 +395,27 @@ end
 %! tris = [1 2 3; 3 4 1];
 %! elems = [3 1 2 3, 3 3 4 1]';
 %!test
-%! writecgns_unstr( 'test1_tri.adf', xs, tris);
-%! writecgns_unstr( 'test1_tri.adf', xs, tris, []);
-%! delete test1_tri.adf;
-
-%!test
 %! writecgns_unstr( 'test1_tri.cgns', xs, tris);
 %! writecgns_unstr( 'test1_tri.cgns', xs, tris, []);
 %! delete test1_tri.cgns;
 
-%% Test to write a mixed mesh
 %!test
-%! writecgns_unstr( 'test1_mixed.adf', xs, elems, 'MIXED2');
-%! writecgns_unstr( 'test1_mixed.adf', xs, elems, 'MIXED2', []);
-%! delete test1_mixed.adf;
+%! writecgns_unstr( 'test1_tri.h5', xs, tris);
+%! writecgns_unstr( 'test1_tri.h5', xs, tris, []);
+%! delete test1_tri.h5;
 
+%% Test to write a mixed mesh
 %!test
 %! writecgns_unstr( 'test1_mixed.cgns', xs, elems, 'MIXED2');
 %! writecgns_unstr( 'test1_mixed.cgns', xs, elems, 'MIXED2', []);
 %! delete test1_mixed.cgns;
 
-%% Test to write nodal variables
 %!test
-%! nodal_vars.vec = xs;
-%! nodal_vars.sca = xs(:,1);
-%! writecgns_unstr( 'test1_tri.adf', xs, tris, [], nodal_vars);
-%! writecgns_unstr( 'test1_mixed.adf', xs, elems, 'MIXED2', nodal_vars);
-%! delete test1_tri.adf;
-%! delete test1_mixed.adf;
+%! writecgns_unstr( 'test1_mixed.h5', xs, elems, 'MIXED2');
+%! writecgns_unstr( 'test1_mixed.h5', xs, elems, 'MIXED2', []);
+%! delete test1_mixed.h5;
 
+%% Test to write nodal variables
 %!test
 %! nodal_vars.vec = xs;
 %! nodal_vars.sca = xs(:,1);
@@ -433,15 +424,15 @@ end
 %! delete test1_tri.cgns;
 %! delete test1_mixed.cgns;
 
-%% Test to write elemental variables
 %!test
-%! eleml_vars.vec = tris;
-%! eleml_vars.sca = int32(tris(:,1));
-%! writecgns_unstr( 'test1_tri.adf', xs, tris, [], [], eleml_vars);
-%! writecgns_unstr( 'test1_mixed.adf', xs, elems, 'MIXED2', [], eleml_vars);
-%! delete test1_tri.adf;
-%! delete test1_mixed.adf;
+%! nodal_vars.vec = xs;
+%! nodal_vars.sca = xs(:,1);
+%! writecgns_unstr( 'test1_tri.h5', xs, tris, [], nodal_vars);
+%! writecgns_unstr( 'test1_mixed.h5', xs, elems, 'MIXED2', nodal_vars);
+%! delete test1_tri.h5;
+%! delete test1_mixed.h5;
 
+%% Test to write elemental variables
 %!test
 %! eleml_vars.vec = tris;
 %! eleml_vars.sca = int32(tris(:,1));
@@ -450,17 +441,15 @@ end
 %! delete test1_tri.cgns;
 %! delete test1_mixed.cgns;
 
-%% Test to write both nodal and elemental variables
 %!test
-%! nodal_vars.vec = xs;
-%! nodal_vars.sca = xs(:,1);
 %! eleml_vars.vec = tris;
 %! eleml_vars.sca = int32(tris(:,1));
-%! writecgns_unstr( 'test1_tri.adf', xs, tris, [], nodal_vars, eleml_vars);
-%! writecgns_unstr( 'test1_mixed.adf', xs, elems, 'MIXED2', nodal_vars, eleml_vars);
-%! delete test1_tri.adf;
-%! delete test1_mixed.adf;
+%! writecgns_unstr( 'test1_tri.h5', xs, tris, [], [], eleml_vars);
+%! writecgns_unstr( 'test1_mixed.h5', xs, elems, 'MIXED2', [], eleml_vars);
+%! delete test1_tri.h5;
+%! delete test1_mixed.h5;
 
+%% Test to write both nodal and elemental variables
 %!test
 %! nodal_vars.vec = xs;
 %! nodal_vars.sca = xs(:,1);
@@ -470,3 +459,13 @@ end
 %! writecgns_unstr( 'test1_mixed.cgns', xs, elems, 'MIXED2', nodal_vars, eleml_vars);
 %! delete test1_tri.cgns;
 %! delete test1_mixed.cgns;
+
+%!test
+%! nodal_vars.vec = xs;
+%! nodal_vars.sca = xs(:,1);
+%! eleml_vars.vec = tris;
+%! eleml_vars.sca = int32(tris(:,1));
+%! writecgns_unstr( 'test1_tri.h5', xs, tris, [], nodal_vars, eleml_vars);
+%! writecgns_unstr( 'test1_mixed.h5', xs, elems, 'MIXED2', nodal_vars, eleml_vars);
+%! delete test1_tri.h5;
+%! delete test1_mixed.h5;

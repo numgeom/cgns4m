@@ -56,8 +56,8 @@ function [ps, elems, typestr, var_nodes, var_cells] = ...
 %        Xiangmin Jiao (jiao@ams.sunysb.edu)
 
 if ~exist('cgnslib_mex', 'file')
-    warning('CGNS does not appear to be compiled  properly. Try to run build_mexcgns.'); %#ok<WNTAG>
-    build_mexcgns;
+    warning('CGNS does not appear to be compiled  properly. Try to run build_cgns4m.'); %#ok<WNTAG>
+    build_cgns4m;
 end
 
 % confirm input arguments

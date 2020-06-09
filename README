@@ -1,10 +1,10 @@
 
-This is the release of mexCGNS for CGNS v3.0-8. It provides MEX 
+This is the release of CGNS4m for CGNS v3.0-8. It provides MEX 
 interfaces of the mid-level library of CGNS. It is compatible with both 
 MATLAB and Octave. 
 
-To use mexCGNS, you must run the startup_mexcgns.m script in MATLAB/Octave 
-every time you launch MATLAB/Octave. The first time you run startup_mexcgns, 
+To use CGNS4m, you must run the startup_cgns4m.m script in MATLAB/Octave 
+every time you launch MATLAB/Octave. The first time you run startup_cgns4m, 
 it will compile the MEX functions automatically and perform some testing.
 It should work for MATLAB/Octave on UNIX systems (including Linux, Mac OS X, 
 Solaris, etc.). On Microsoft Windows, only MATLAB with Visual C++ is supported.
@@ -21,5 +21,5 @@ Enjoy!
 
 -Xiangmin Jiao
 jiao@ams.sunysb.edu
-07/01/2010
+06/08/2020
 Stony Brook, NY, USA
