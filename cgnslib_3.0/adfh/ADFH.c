@@ -269,6 +269,9 @@ static struct _ErrorList {
 #define ROOT_OR_DIE(err) \
 if (mta_root == NULL){set_error(ADFH_ERR_ROOTNULL, err);return;} 
 
+#define ROOT_OR_DIE1(err) \
+if (mta_root == NULL){set_error(ADFH_ERR_ROOTNULL, err);return *err;}
+
 /* usefull macros */
 
 #define CMP_OSTAT(r,n) ((r)->objno[0]==(n)->objno[0] && \
@@ -801,7 +804,7 @@ static herr_t children_names(hid_t id, const char *name, void *namelist)
   int order, err;
   char *p;
 
-  ROOT_OR_DIE(&err);
+  ROOT_OR_DIE1(&err);
   if (*name == D_PREFIX) return 0;
 #ifdef ADFH_NO_ORDER
   order = ++mta_root->i_count - mta_root->i_start;
@@ -837,7 +840,7 @@ static herr_t children_ids(hid_t id, const char *name, void *idlist)
   int order, err;
 
   ADFH_DEBUG((">ADFH children_ids [%s]",name));
-  ROOT_OR_DIE(&err);
+  ROOT_OR_DIE1(&err);
   if (*name == D_PREFIX) return 0;
   if ((gid = H5Gopen2(id, name, H5P_DEFAULT)) < 0) return 1;
 #ifdef ADFH_NO_ORDER

@@ -59,8 +59,10 @@ if ispc
         end
     end
     
-    hdf5lib = ['-L"' sys_hdfroot '\lib" -lhdf5 -lszip -lzlib'];
     hdf5inc = ['-I' SRCDIR '/adfh -I"' sys_hdfroot '/include" -DBUILD_HDF5'];
+    hdf5lib = ['"' sys_hdfroot '\lib\libhdf5.lib" "' ...
+        sys_hdfroot '\lib\libszip.lib" "' ...
+        sys_hdfroot '\lib\libzlib.lib"'];
 else
     if ~exist(HDF_VERSION, 'dir')
         if ~exist([HDF_VERSION '.tgz'], 'file')
@@ -79,16 +81,20 @@ else
     end
 
     if ~exist([HDF_VERSION '/lib/libhdf5.a'], 'file')
-        fprintf('Building HDF5 from source. Please wait. This may take a few minutes...');
+        disp('Building HDF5 from source. Please wait. This may take a few minutes...');
         if ~isempty(strfind(computer, '64')) %#ok<STREMP>
             CFLAGS='-m64';
         else
             CFLAGS='-m32';
         end
-        system(['cd ' HDF_VERSION '; ./configure ' ...
+        status = system(['cd ' HDF_VERSION '; CC=cc ./configure ' ...
             '--enable-shared=no CFLAGS="' CFLAGS ' -fPIC" ' ...
             '--prefix=$PWD; make install']);
-        disp('Done.');
+        if status
+            error(['Error in installing ' HDF_VERSION '.'])
+        else
+            disp('Done.');
+        end
     end
     
     hdf5inc = ['-I' SRCDIR '/adfh -I' HDF_VERSION '/include -DBUILD_HDF5'];
