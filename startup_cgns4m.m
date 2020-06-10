@@ -33,6 +33,12 @@ if isoctave
     if ~exist(mexdir,'dir'); mkdir(mexdir); end
     addpath(mexdir);
     addpath([cgns4mroot '/private']);
+
+    mexfile = [computer '/cgnslib_mex.' mexext];
+else
+    mexfile = ['cgnslib_mex.' mexext];
 end
-    
-build_cgns4m(cgns4mroot);
+
+if ~exist(mexfile, 'file')
+    build_cgns4m(cgns4mroot);
+end
