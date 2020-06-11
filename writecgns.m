@@ -113,7 +113,7 @@ if strcmp(typestr,'STRUCT2') || strcmp(typestr,'STRUCT3') % Structured
     end
 
     % Set file type to HDF5 or ADF
-    if strcmp(file_name(end-2:end),'.adf')
+    if strcmp(file_name(end-3:end),'.adf')
         ierr = cg_set_file_type(CG_FILE_ADF); chk_error(ierr);
     else
         ierr = cg_set_file_type(CG_FILE_HDF5); chk_error(ierr);
@@ -217,7 +217,7 @@ else % Unstructured
     end
 
     % Set file type to HDF5 or ADF
-    if strcmp(file_name(end-2:end),'.adf')
+    if strcmp(file_name(end-3:end),'.adf')
         ierr = cg_set_file_type(CG_FILE_ADF); chk_error(ierr);
     else
         ierr = cg_set_file_type(CG_FILE_HDF5); chk_error(ierr);
