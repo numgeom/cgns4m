@@ -3,7 +3,7 @@ function build_cgns4m(cgns4m_root)
 %
 % See also startup_cgns4m.
 
-SRCDIR = 'cgnslib_3.0';
+SRCDIR = 'cgnslib_3.4.1';
 oldpwd = pwd;
 if nargin<1
     cgns4m_root = fileparts(which('startup_cgns4m.m'));
@@ -35,7 +35,7 @@ end
 
 % Compile all the C-files into MEX functions
 cgnsfiles = ['cgnslib.c cgns_internals.c cgns_io.c cgns_error.c '...
-    'adf/adf_cond.c adf/ADF_interface.c adf/ADF_internals.c'];
+    'adf/ADF_interface.c adf/ADF_internals.c'];
 cgnsfiles = [cgnsfiles ' adfh/ADFH.c'];
 
 if ispc

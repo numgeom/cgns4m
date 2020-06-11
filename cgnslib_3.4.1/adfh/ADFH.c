@@ -27,59 +27,41 @@ freely, subject to the following restrictions:
 #include <math.h>
 #include <ctype.h>
 #include <stdlib.h>
+
 #if defined(_WIN32) && !defined(__NUTC__)
-#include <io.h>
+# include <io.h>
+# define ACCESS _access
+# define UNLINK _unlink
 #else
-#include <unistd.h>
+# include <unistd.h>
+# define ACCESS access
+# define UNLINK unlink
 #endif
 
 #include "ADFH.h"
 #include "hdf5.h"
 #include "cgns_io.h" /* for cgio_find_file */
 
-
-#if H5_VERS_MAJOR < 2 && H5_VERS_MINOR < 8
-#define HDF5_PRE_1_8 1
+#ifdef BUILD_PARALLEL
+#include "mpi.h"
+extern int pcg_mpi_initialized;
+extern MPI_Info pcg_mpi_info;
+extern hid_t default_pio_mode;
 #endif
 
-#ifdef HDF5_PRE_1_8
-# warning Building using older version of HDF5. Support for links disabled. */
-
-#define H5A_info_t   void
-#define H5E_error2_t H5E_error_t
-#define H5E_walk2_t  H5E_walk_t
-#define H5E_DEFAULT  0
-
-/* Currently, acpl_id and aapl_id are not used by HDF5 */
-#define H5Acreate2(loc_id, attr_name, type_id, space_id, acpl_id,aapl_id) \
-  H5Acreate(loc_id, attr_name, type_id, space_id, acpl_id)
-
-/* dapl_id has no effect at this point is is always H5P_DEFAULT_*/
-#define H5Dopen2(file_id, name, dapl_id)  H5Dopen(file_id, name)
-
-/* lcpl_id is for link creation and is not supported by older HDF5. */
-#define H5Dcreate2(loc_id, name, type_id, space_id, lcpl_id, dcpl_id, dapl_id)\
-  H5Dcreate(loc_id, name, type_id, space_id, dcpl_id)
-
-/* These functions are for error handling */
-#define H5Ewalk2(a1, a2, a3, a4)  H5Ewalk(a2,a3,a4)
-#define H5Eset_auto2(estack_id, func, client_data)  \
-  H5Eset_auto(func, client_data)
-
-/* gapl_id has no effect at this point is is always H5P_DEFAULT */
-#define H5Gopen2(loc_id, name, gapl_id)   H5Gopen(loc_id, name)
-/* The property lists are always H5P_DEFAULT so they have no effect. */
-#define H5Gcreate2(loc_id, name, lcpl_id,gcpl_id, gapl_id) \
-  H5Gcreate(loc_id, name, 0);
-
-#endif /* HDF5_PRE_1_8 */
-
+#define ADFH_FORCE_ID_CLOSE
+/*#define ADFH_H5F_CLOSE_STRONG*/
 /*#define ADFH_DEBUG_ON*/
+
 #define ADFH_NO_ORDER
 #define ADFH_USE_STRINGS
 #define ADFH_FORTRAN_INDEXING
 
 static int CompressData = -1;
+
+#ifdef BUILD_PARALLEL
+static MPI_Comm ParallelMPICommunicator = MPI_COMM_WORLD;
+#endif
 
 #define TO_UPPER( c ) ((islower(c))?(toupper(c)):(c))
 
@@ -169,15 +151,19 @@ typedef struct _ADFH_MTA {
   int i_count;
 #endif
   /* HDF5 property lists */
-  hid_t g_propfile;
-#if !defined(HDF5_PRE_1_8)
   hid_t g_proplink;
-#endif
+  hid_t g_propgroupcreate;
   hid_t g_propdataset;
 
-  int   g_flags;     
+  int   g_flags;
   hid_t g_files[ADFH_MAXIMUM_FILES];
 
+#ifndef ADFH_FORCE_ID_CLOSE
+  /* object ids returned to API user that should be closed */
+  hid_t *g_extids[ADFH_MAXIMUM_FILES];
+  int    n_extids[ADFH_MAXIMUM_FILES]; /* number of extids */
+  int    x_extids[ADFH_MAXIMUM_FILES]; /* max allocated in g_extids */
+#endif
 } ADFH_MTA;
 
 static ADFH_MTA  *mta_root=NULL;
@@ -222,6 +208,7 @@ static struct _ErrorList {
   {FFLUSH_ERROR,            "H5Fflush:flush error"},
   {NULL_NODEID_POINTER,     "The node ID pointer is NULL"},
   {MAX_FILE_SIZE_EXCEEDED,  "The maximum size for a file exceeded"},
+  {MAX_INT32_SIZE_EXCEEDED, "dimensions exceed that for a 32-bit integer"},
 
   {ADFH_ERR_GLINK,          "H5Glink:soft link creation failed"},
   {ADFH_ERR_NO_ATT,         "Node attribute doesn't exist"},
@@ -261,16 +248,16 @@ static struct _ErrorList {
   {ADFH_ERR_ROOTNULL,       "HDF5: Root descriptor is NULL"},
   {ADFH_ERR_NEED_TRANSPOSE, "dimensions need transposed - open in modify mode"},
   {ADFH_ERR_INVALID_OPTION, "invalid configuration option"},
+  {ADFH_ERR_INVALID_USER_DATA, "invalid configuration data passed in"},
 
   {ADFH_ERR_SENTINEL,       "<None>"}
 };
 
 #define NUM_ERRORS (sizeof(ErrorList)/sizeof(struct _ErrorList))
 #define ROOT_OR_DIE(err) \
-if (mta_root == NULL){set_error(ADFH_ERR_ROOTNULL, err);return;} 
-
-#define ROOT_OR_DIE1(err) \
-if (mta_root == NULL){set_error(ADFH_ERR_ROOTNULL, err);return *err;}
+if (mta_root == NULL){set_error(ADFH_ERR_ROOTNULL, err);return;}
+#define ROOT_OR_DIE_ERR(err) \
+if (mta_root == NULL){set_error(ADFH_ERR_ROOTNULL, err);return 1;}
 
 /* usefull macros */
 
@@ -280,16 +267,20 @@ if (mta_root == NULL){set_error(ADFH_ERR_ROOTNULL, err);return *err;}
                         (r)->fileno[1]==(n)->fileno[1])
 
 static herr_t gfind_by_name(hid_t, const char *, void *);
-static herr_t gprint_name(hid_t, const char *, void *);
 static herr_t find_by_name(hid_t, const char *, const H5A_info_t*, void *);
-static herr_t print_name(hid_t, const char *, const H5A_info_t*, void *);
 
 #define has_child(ID,NAME) H5Giterate(ID,".",NULL,gfind_by_name,(void *)NAME)
 #define has_data(ID)       H5Giterate(ID,".",NULL,gfind_by_name,(void *)D_DATA)
-#define show_grp(ID)       H5Giterate(ID,".",NULL,gprint_name,(void *)"GRP")
 
 #define has_att(ID,NAME)   H5Aiterate2(ID,H5_INDEX_NAME,H5_ITER_NATIVE,NULL,find_by_name,(void *)NAME)
+
+#if 0
+static herr_t gprint_name(hid_t, const char *, void *);
+static herr_t print_name(hid_t, const char *, const H5A_info_t*, void *);
+
+#define show_grp(ID)       H5Giterate(ID,".",NULL,gprint_name,(void *)"GRP")
 #define show_att(ID,NAME)  H5Aiterate2(ID,H5_INDEX_NAME,H5_ITER_NATIVE,NULL,print_name,(void *)NAME)
+#endif
 
 /* ----------------------------------------------------------------
  * set error and terminate if error state set
@@ -325,20 +316,104 @@ static herr_t print_H5_error(int n, H5E_error2_t *desc, void *data)
 
 /* ----------------------------------------------------------------- */
 
-#ifdef HDF5_PRE_1_8
-static herr_t walk_H5_error(void *data)
-#else
 static herr_t walk_H5_error(hid_t estack, void *data)
-#endif /* HDF5_PRE_1_8 */
 {
   if ((mta_root != NULL) && (mta_root->g_error_state)) {
     fflush(stdout);
     fprintf(stderr, "\nHDF5 Error Trace Back\n");
-    return H5Ewalk2(H5E_DEFAULT, H5E_WALK_DOWNWARD, 
+    return H5Ewalk2(H5E_DEFAULT, H5E_WALK_DOWNWARD,
 		    (H5E_walk2_t)print_H5_error, data);
   }
   return 0;
 }
+
+/* -----------------------------------------------------------------
+ * get file ID from node ID
+ * ----------------------------------------------------------------- */
+
+static hid_t get_file_id (hid_t id)
+{
+  int n, nobj;
+  hid_t *objs, fid = -1;
+  H5G_stat_t gstat, rstat;
+
+  /* find the file ID from the root ID */
+
+  if (H5Gget_objinfo(id, "/", 0, &gstat) >= 0) {
+    nobj = H5Fget_obj_count(H5F_OBJ_ALL, H5F_OBJ_FILE);
+    if (nobj > 0) {
+      objs = (hid_t *) malloc (nobj * sizeof(hid_t));
+      if (objs == NULL) return fid;
+      H5Fget_obj_ids(H5F_OBJ_ALL, H5F_OBJ_FILE, -1, objs);
+      for (n = 0; n < nobj; n++) {
+        H5Gget_objinfo(objs[n], "/", 0, &rstat);
+        if (CMP_OSTAT(&gstat, &rstat)) {
+          fid = objs[n];
+          break;
+        }
+      }
+      free (objs);
+    }
+  }
+  return fid;
+}
+
+/* ----------------------------------------------------------------- */
+
+static int get_file_number (hid_t id, int *err)
+{
+  int n;
+  hid_t fid = get_file_id(id);
+
+  if (mta_root == NULL) return -1;
+  for (n = 0; n < ADFH_MAXIMUM_FILES; n++) {
+    if (fid == mta_root->g_files[n]) {
+      set_error(NO_ERROR, err);
+      return n;
+    }
+  }
+  set_error(ADFH_ERR_FILE_INDEX, err);
+  return -1;
+}
+
+#ifndef ADFH_FORCE_ID_CLOSE
+/* ----------------------------------------------------------------- */
+
+static track_id(hid_t refid, hid_t trackid)
+{
+  int fn,er;
+  int sname;
+  char oname[256];
+  H5O_info_t objinfo;
+  size_t maxhid;
+
+  H5Oget_info(trackid,&objinfo);
+  memset(oname,'\0',256);
+  sname=H5Iget_name(trackid,oname,0);
+  sname=H5Iget_name(trackid,oname,sname+1);
+  fn=get_file_number(refid,&er);
+  if (fn==-1)
+  {
+    ADFH_DEBUG((">ADFH track_ids cannot stat [%d][%s]",trackid,oname));
+  }
+  else
+  {
+    if (mta_root->n_extids[fn]>mta_root->x_extids[fn])
+    {
+      mta_root->x_extids[fn]+=256;
+      maxhid=mta_root->x_extids[fn]*sizeof(hid_t*);
+      mta_root->g_extids[fn]=(hid_t*)realloc(mta_root->g_extids[fn],maxhid);
+      ADFH_DEBUG((">ADFH track_ids realloc up to [%d]",\
+		  mta_root->x_extids[fn]));
+
+    }
+    mta_root->g_extids[fn][mta_root->n_extids[fn]]=trackid;
+    ADFH_DEBUG((">ADFH track_ids [%d][%d][%s]",\
+		mta_root->n_extids[fn],trackid,oname));
+    mta_root->n_extids[fn]++;
+  }
+}
+#endif
 
 /*-----------------------------------------------------------------
  * get the native format - returns pointer to static storage
@@ -364,37 +439,9 @@ static char *native_format(void)
   return format;
 }
 
-/* ----------------------------------------------------------------
- * convert between HDF5 and ADF ids
- * ---------------------------------------------------------------- */
-
-#if 1
-
-# define to_HDF_ID(ID) (hid_t) (ID)
-# define to_ADF_ID(ID) (double)(ID)
-
-#else
-static union {
-  hid_t hdf_id;
-  double adf_id;
-} ID_CONVERT;
-
-static hid_t to_HDF_ID (double adf_id) {
-  ID_CONVERT.hdf_id = 0;
-  ID_CONVERT.adf_id = adf_id;
-  return ID_CONVERT.hdf_id;
-}
-
-static double to_ADF_ID (hid_t hdf_id) {
-  ID_CONVERT.adf_id = 0;
-  ID_CONVERT.hdf_id = hdf_id;
-  return ID_CONVERT.adf_id;
-}
-#endif
-
 /* -----------------------------------------------------------------
  * set/get attribute values
-/* ----------------------------------------------------------------- */
+ * ----------------------------------------------------------------- */
 
 static hid_t get_att_id(hid_t id, const char *name, int *err)
 {
@@ -402,11 +449,9 @@ static hid_t get_att_id(hid_t id, const char *name, int *err)
 
   /* H5Aclose() performed elsewhere */
   if (aid < 0) {
-#if !defined(HDF5_PRE_1_8)
     if (!has_att(id, name))
       set_error(ADFH_ERR_NO_ATT, err);
     else
-#endif /* HDF5_PRE_1_8 */
       set_error(ADFH_ERR_AOPEN, err);
   }
   else
@@ -427,13 +472,11 @@ static int new_str_att(hid_t id, const char *name, const char *value,
          which requires an array (see case below with a H5Screate_simple
          and providse an array of chars)
   */
-
   sid = H5Screate(H5S_SCALAR);
   if (sid < 0) {
     set_error(ADFH_ERR_SCREATE_SIMPLE, err);
     return 1;
   }
-
   tid = H5Tcopy(H5T_C_S1);
   if (tid < 0) {
     H5Sclose(sid);
@@ -446,7 +489,6 @@ static int new_str_att(hid_t id, const char *name, const char *value,
     set_error(ADFH_ERR_TSET_SIZE, err);
     return 1;
   }
-
   aid = H5Acreate2(id, name, tid, sid, H5P_DEFAULT, H5P_DEFAULT);
   if (aid < 0) {
     H5Tclose(tid);
@@ -454,13 +496,10 @@ static int new_str_att(hid_t id, const char *name, const char *value,
     set_error(ADFH_ERR_ACREATE, err);
     return 1;
   }
-
   status = H5Awrite(aid, tid, value);
-
   H5Aclose(aid);
   H5Tclose(tid);
   H5Sclose(sid);
-
   if (status < 0) {
     set_error(ADFH_ERR_AWRITE, err);
     return 1;
@@ -468,7 +507,7 @@ static int new_str_att(hid_t id, const char *name, const char *value,
   set_error(NO_ERROR, err);
   return 0;
 #else
-  /* CAUTION: unly use this for strings <= ADF_FILENAME_LENGTH */
+  /* CAUTION: only use this for strings <= ADF_FILENAME_LENGTH */
   hid_t sid, aid;
   hsize_t dim;
   herr_t status;
@@ -511,7 +550,7 @@ static int get_str_att(hid_t id, const char *name, char *value, int *err)
   hid_t tid, att_id;
   herr_t status;
 
-  ADFH_DEBUG((">ADFH get_str_att [%s]",name)); 
+  ADFH_DEBUG((">ADFH get_str_att [%s]",name));
   if ((att_id = get_att_id(id, name, err)) < 0) return 1;
 #if 0
   status = H5Aread(att_id, H5T_NATIVE_CHAR, value);
@@ -628,6 +667,7 @@ static int new_int_att(hid_t id, const char *name, int value, int *err)
   return 0;
 }
 
+#ifndef ADFH_NO_ORDER
 /* ----------------------------------------------------------------- */
 
 static int get_int_att(hid_t id, char *name, int *value, int *err)
@@ -662,6 +702,7 @@ static int set_int_att(hid_t id, char *name, int value, int *err)
   }
   return 0;
 }
+#endif
 
 /* ----------------------------------------------------------------- */
 
@@ -671,6 +712,7 @@ static int new_str_data(hid_t id, const char *name, const char *value,
   hid_t sid, did;
   hsize_t dim;
   herr_t status;
+  hid_t xfer_prp=H5P_DEFAULT;
 
   dim = size+1;
   sid = H5Screate_simple(1, &dim, NULL);
@@ -686,7 +728,21 @@ static int new_str_data(hid_t id, const char *name, const char *value,
     return 1;
   }
 
-  status = H5Dwrite(did, H5T_NATIVE_CHAR, H5S_ALL, H5S_ALL, H5P_DEFAULT, value);
+#ifdef BUILD_PARALLEL
+  if (pcg_mpi_initialized) {
+    xfer_prp = H5Pcreate(H5P_DATASET_XFER);
+    H5Pset_dxpl_mpio(xfer_prp, H5FD_MPIO_COLLECTIVE);
+  }
+#endif
+
+  status = H5Dwrite(did, H5T_NATIVE_CHAR, H5S_ALL, H5S_ALL, xfer_prp, value);
+
+#ifdef BUILD_PARALLEL
+  if (pcg_mpi_initialized) {
+    H5Pclose(xfer_prp);
+  }
+#endif
+
   H5Dclose(did);
   H5Sclose(sid);
 
@@ -718,7 +774,7 @@ static hid_t to_HDF_data_type(const char *tp)
     return H5Tcopy(H5T_NATIVE_UINT64);
   if (0 == strcmp(tp, ADFH_R4)) {
     hid_t tid = H5Tcopy(H5T_NATIVE_FLOAT);
-    H5Tset_precision(tid, 32); 
+    H5Tset_precision(tid, 32);
     return tid;
   }
   if (0 == strcmp(tp, ADFH_R8)) {
@@ -762,18 +818,19 @@ static herr_t gfind_by_name(hid_t id, const char *name, void *dsname)
 
 /* ----------------------------------------------------------------- */
 
-static herr_t gprint_name(hid_t id, const char *name, void *dsname)
-{
-  return 0;
-}
-
-/* ----------------------------------------------------------------- */
-
 static herr_t find_by_name(hid_t id, const char *name, const H5A_info_t* ainfo, void *dsname)
 {
     ADFH_CHECK_HID(id);
     if (0 == strcmp (name, (char *)dsname)) return 1;
     return 0;
+}
+
+#if 0
+/* ----------------------------------------------------------------- */
+
+static herr_t gprint_name(hid_t id, const char *name, void *dsname)
+{
+  return 0;
 }
 
 /* ----------------------------------------------------------------- */
@@ -783,6 +840,7 @@ static herr_t print_name(hid_t id, const char *name, const H5A_info_t* ainfo, vo
   printf("[%s]:[%s]\n",(char*)dsname,name);
   return 0;
 }
+#endif
 
 /* ----------------------------------------------------------------- */
 
@@ -790,7 +848,7 @@ static herr_t count_children(hid_t id, const char *name, void *number)
 {
   ADFH_CHECK_HID(id);
   ADFH_DEBUG(("count_children [%s][%d]",name,(*((int *)number))));
-  
+
   if (*name != D_PREFIX)
     (*((int *)number))++;
   return 0;
@@ -798,13 +856,16 @@ static herr_t count_children(hid_t id, const char *name, void *number)
 
 /* ----------------------------------------------------------------- */
 
-static herr_t children_names(hid_t id, const char *name, void *namelist)
+static herr_t children_names(hid_t id, const char *name,
+			     const H5L_info_t *linfo, void *namelist)
 {
+#ifndef ADFH_NO_ORDER
   hid_t gid;
+#endif
   int order, err;
   char *p;
 
-  ROOT_OR_DIE1(&err);
+  ROOT_OR_DIE_ERR(&err);
   if (*name == D_PREFIX) return 0;
 #ifdef ADFH_NO_ORDER
   order = ++mta_root->i_count - mta_root->i_start;
@@ -816,6 +877,7 @@ static herr_t children_names(hid_t id, const char *name, void *namelist)
   }
 #else
   if ((gid = H5Gopen2(id, name, H5P_DEFAULT)) < 0) return 1;
+  ADFH_DEBUG(("ADFH children_names [%d]",gid));
   if (get_int_att(gid, A_ORDER, &order, &err)) {
     H5Gclose(gid);
     return 1;
@@ -833,21 +895,26 @@ static herr_t children_names(hid_t id, const char *name, void *namelist)
 }
 
 /* ----------------------------------------------------------------- */
+static herr_t children_ids(hid_t id, const char *name,
+			   const H5L_info_t *linfo, void *idlist)
 
-static herr_t children_ids(hid_t id, const char *name, void *idlist)
 {
   hid_t gid;
   int order, err;
 
   ADFH_DEBUG((">ADFH children_ids [%s]",name));
-  ROOT_OR_DIE1(&err);
+  ROOT_OR_DIE_ERR(&err);
   if (*name == D_PREFIX) return 0;
   if ((gid = H5Gopen2(id, name, H5P_DEFAULT)) < 0) return 1;
 #ifdef ADFH_NO_ORDER
   order = ++mta_root->i_count - mta_root->i_start;
+  ADFH_DEBUG((">ADFH children_ids [%s] order is [%d]",name,order));
   if (order >= 0 && order < mta_root->i_len) {
-      ((double *)idlist)[order] = to_ADF_ID(gid);
+    to_ADF_ID(gid,((double *)idlist)[order]);
       mta_root->n_names++;
+#ifndef ADFH_FORCE_ID_CLOSE
+      track_id(id,gid);
+#endif
   }
   else
       H5Gclose(gid);
@@ -858,8 +925,11 @@ static herr_t children_ids(hid_t id, const char *name, void *idlist)
   }
   order -= mta_root->i_start;
   if (order >= 0 && order < mta_root->i_len) {
-      ((double *)idlist)[order] = to_ADF_ID(gid);
+    to_ADF_ID(gid,((double *)idlist)[order]);
       mta_root->n_names++;
+#ifndef ADFH_FORCE_ID_CLOSE
+      track_id(id,gid);
+#endif
   }
   else
       H5Gclose(gid);
@@ -867,6 +937,7 @@ static herr_t children_ids(hid_t id, const char *name, void *idlist)
   return 0;
 }
 
+#ifndef ADFH_NO_ORDER
 /* -----------------------------------------------------------------
   called via H5Giterate in Move_Child & Delete functions.
   removes gaps in _order index attributes */
@@ -894,10 +965,12 @@ static herr_t fix_order(hid_t id, const char *name, void *data)
         ret = ADFH_ERR_AWRITE;
     }
   }
+  ADFH_DEBUG(("ADFH fix_order [%d]",gid));
   H5Aclose(aid);
   H5Gclose(gid);
   return ret;
 }
+#endif
 
 /* ----------------------------------------------------------------- */
 
@@ -913,6 +986,7 @@ static herr_t compare_children(hid_t id, const char *name, void *data)
   return 0;
 }
 
+#if 0
 /* ----------------------------------------------------------------- */
 
 static herr_t print_children(hid_t id, const char *name, void *data)
@@ -921,55 +995,7 @@ static herr_t print_children(hid_t id, const char *name, void *data)
     printf(" %s", name);
   return 0;
 }
-
-/* -----------------------------------------------------------------
- * get file ID from node ID
- * ----------------------------------------------------------------- */
-
-static hid_t get_file_id (hid_t id)
-{
-  int n, nobj;
-  hid_t *objs, fid = -1;
-  H5G_stat_t gstat, rstat;
-
-  /* find the file ID from the root ID */
-
-  if (H5Gget_objinfo(id, "/", 0, &gstat) >= 0) {
-    nobj = H5Fget_obj_count(H5F_OBJ_ALL, H5F_OBJ_FILE);
-    if (nobj > 0) {
-      objs = (hid_t *) malloc (nobj * sizeof(hid_t));
-      if (objs == NULL) return fid;
-      H5Fget_obj_ids(H5F_OBJ_ALL, H5F_OBJ_FILE, -1, objs);
-      for (n = 0; n < nobj; n++) {
-        H5Gget_objinfo(objs[n], "/", 0, &rstat);
-        if (CMP_OSTAT(&gstat, &rstat)) {
-          fid = objs[n];
-          break;
-        }
-      }
-      free (objs);
-    }
-  }
-  return fid;
-}
-
-/* ----------------------------------------------------------------- */
-
-static int get_file_number (hid_t id, int *err)
-{
-  int n;
-  hid_t fid = get_file_id(id);
-
-  if (mta_root == NULL) return -1;
-  for (n = 0; n < ADFH_MAXIMUM_FILES; n++) {
-    if (fid == mta_root->g_files[n]) {
-      set_error(NO_ERROR, err);
-      return n;
-    }
-  }
-  set_error(ADFH_ERR_FILE_INDEX, err);
-  return -1;
-}
+#endif
 
 /* ================================================================
  * routines for dealing with links
@@ -983,22 +1009,21 @@ static hid_t open_link(hid_t id, int *err)
   const char  *path;
   H5G_stat_t	sb; /* Object information */
 
-  char  *objectbuff,querybuff[512];
+  char  querybuff[512];
 
 #ifdef ADFH_DEBUG_ON
+  H5O_info_t oinfo;/* debug purpose only */
   char buffname[ADF_NAME_LENGTH+1];
   get_str_att(id, A_NAME, buffname, err);
 
   ADFH_DEBUG((">ADFH open_link [%s]",buffname));
 #endif
 
-#if !defined(HDF5_PRE_1_8)
   if (H5Lis_registered(H5L_TYPE_EXTERNAL) != 1)
   {
     set_error(ADFH_ERR_LIBREG, err);
     return -1;
   }
-#endif /* HDF5_PRE_1_8 */
   herr=H5Gget_objinfo(id, D_LINK, (hbool_t)0, &sb);
 
   if (herr<0)
@@ -1006,15 +1031,14 @@ static hid_t open_link(hid_t id, int *err)
     ADFH_DEBUG((">ADFH open_link type [%d][%d]",herr,sb.type));
     set_error(ADFH_ERR_OBJINFO_FAILED, err);
     return -1;
-  } 
+  }
 
   /* Soft link                -> link to our current file */
   /* Hard link (User defined) -> link to an external file */
 
-  if (H5G_LINK != sb.type) 
+  if (H5G_LINK != sb.type)
   {
-#if !defined(HDF5_PRE_1_8)
-    if (H5G_UDLINK != sb.type) 
+    if (H5G_UDLINK != sb.type)
     {
       set_error(ADFH_ERR_NOTXLINK, err);
       return -1;
@@ -1024,14 +1048,13 @@ static hid_t open_link(hid_t id, int *err)
     {
       set_error(ADFH_ERR_XLINK_NOVAL, err);
       return -1;
-    } 
+    }
 
     if (H5Lunpack_elink_val(querybuff,sb.linklen,NULL,&file,&path)<0)
     {
       set_error(ADFH_ERR_XLINK_UNPACK, err);
       return -1;
-    } 
-#endif /* HDF5_PRE_1_8 */
+    }
     /* open the actual link >> IN THE LINK GROUP << */
     ADFH_DEBUG((">ADFH open_link (external)"));
     if ((lid = H5Gopen2(id, D_LINK, H5P_DEFAULT)) < 0)
@@ -1049,8 +1072,10 @@ static hid_t open_link(hid_t id, int *err)
 	return lid;
       }
   }
-
-  ADFH_DEBUG(("<ADFH open_link "));
+#ifdef ADFH_DEBUG_ON
+  H5Oget_info(lid, &oinfo);
+  ADFH_DEBUG(("<ADFH open_link [%d]->[%d]:%d",id,lid,oinfo.rc));
+#endif
   return lid;
 }
 
@@ -1070,15 +1095,14 @@ static int is_link(hid_t id)
 
 /* ----------------------------------------------------------------- */
 
-static hid_t open_node(double id, int *err) 
+static hid_t open_node(double id, int *err)
 {
   hid_t hid, gid, lid;
-  H5G_stat_t sb;
 
   ADFH_DEBUG((">ADFH open_node"));
-  hid = to_HDF_ID(id);
+  to_HDF_ID(id,hid);
   set_error(NO_ERROR, err);
-  if (is_link(hid)) 
+  if (is_link(hid))
   {
     lid=open_link(hid, err); /* bad id trapped in the function */
     ADFH_DEBUG(("<ADFH open_node link"));
@@ -1092,11 +1116,13 @@ static hid_t open_node(double id, int *err)
     }
     else
     {
-      ADFH_DEBUG(("<ADFH open_node group"));
+      /* H5G_stat_t sb; */
+      ADFH_DEBUG(("<ADFH open_node group [%d]",gid));
       /* H5Gget_objinfo(gid,".",0,&sb); */
       return gid;
     }
   }
+  return -1;
 }
 
 /* ----------------------------------------------------------------- */
@@ -1120,6 +1146,7 @@ static hid_t parse_path(hid_t pid, char *path, int *err)
   }
   nid = parse_path(id, p, err);
   if (H5Gclose(id)<0) ADFH_DEBUG((">ADFH H5Gclose failed"));
+  ADFH_DEBUG(("ADFH parse_path [%d]",nid));
   return nid;
 }
 
@@ -1141,7 +1168,7 @@ static herr_t delete_children(hid_t id, const char *name, void *data)
     ADFH_DEBUG(("delete_children single"));
     if (! is_link(id))
     {
-      ADFH_DEBUG(("delete_children is not link [%s]\n",name));
+      ADFH_DEBUG(("delete_children is not link [%s]",name));
       H5Gunlink(id, name);
     }
     else
@@ -1217,13 +1244,11 @@ static char *check_name(const char *new_name, int *err)
 
 static int swap_dimensions (hid_t gid)
 {
-  hid_t did;
   char verstr[ADF_NAME_LENGTH+1];
 
   sprintf(verstr, "/%s", D_OLDVERS);
-  if ((did = H5Dopen2(gid, verstr, H5P_DEFAULT)) < 0) return 1;
-  H5Dclose(did);
-  return 0;
+  if (H5Lexists(gid, verstr, H5P_DEFAULT)) return 0;
+  return 1;
 }
 
 static void transpose_dimensions (hid_t hid, const char *name)
@@ -1235,8 +1260,8 @@ static void transpose_dimensions (hid_t hid, const char *name)
   void *data = NULL;
 #else
   hid_t did, sid;
-  int i, j, temp, ndims, diffs;
-  hsize_t dims[ADF_MAX_DIMENSIONS];
+  int i, j, ndims, diffs;
+  hsize_t temp, dims[ADF_MAX_DIMENSIONS];
 #endif
 
   if ((did = H5Dopen2(hid, D_DATA, H5P_DEFAULT)) < 0) return;
@@ -1335,6 +1360,18 @@ void ADFH_Configure(const int option, const void *value, int *err)
             CompressData = compress;
         set_error(NO_ERROR, err);
     }
+#ifdef BUILD_PARALLEL
+    else if (option == ADFH_CONFIG_MPI_COMM) {
+      MPI_Comm* comm = (MPI_Comm*)value;
+      if (!comm) {
+        set_error(ADFH_ERR_INVALID_USER_DATA, err);
+      }
+      else {
+        ParallelMPICommunicator = (MPI_Comm)*comm;
+	set_error(NO_ERROR, err);
+      }
+    }
+#endif
     else {
         set_error(ADFH_ERR_INVALID_OPTION, err);
     }
@@ -1348,16 +1385,22 @@ void ADFH_Move_Child(const double  pid,
                       const double  npid,
                       int          *err)
 {
-  hid_t hpid = to_HDF_ID(pid);
-  hid_t hid = to_HDF_ID(id);
-  hid_t hnpid = to_HDF_ID(npid);
+  hid_t hpid;
+  hid_t hid;
+  hid_t hnpid;
   int len, namelen;
+#ifndef ADFH_NO_ORDER
   int old_order, new_order;
+#endif
   char buff[2];
   char nodename[ADF_NAME_LENGTH+1];
   char *newpath;
   herr_t status;
   H5G_stat_t stat;
+
+  to_HDF_ID(pid,hpid);
+  to_HDF_ID(id,hid);
+  to_HDF_ID(npid,hnpid);
 
   ADFH_DEBUG(("ADFH_Move_Child"));
 
@@ -1377,7 +1420,7 @@ void ADFH_Move_Child(const double  pid,
   /* get node name */
 
   if (get_str_att(hid, A_NAME, nodename, err)) return;
-  namelen = strlen(nodename);
+  namelen = (int)strlen(nodename);
 
   /* get new node path */
 
@@ -1432,7 +1475,9 @@ void ADFH_Set_Label(const double  id,
                     const char   *label,
                     int          *err)
 {
-  hid_t hid = to_HDF_ID(id);
+  hid_t hid;
+
+  to_HDF_ID(id, hid);
 
   ADFH_DEBUG(("ADFH_Set_Label [%s]",label));
 
@@ -1459,9 +1504,12 @@ void ADFH_Put_Name(const double  pid,
                    const char   *name,
                    int          *err)
 {
-  hid_t hpid = to_HDF_ID(pid);
-  hid_t hid = to_HDF_ID(id);
+  hid_t hpid;
+  hid_t hid;
   char *nname, oname[ADF_NAME_LENGTH+1];
+
+  to_HDF_ID(pid,hpid);
+  to_HDF_ID(id,hid);
 
   ADFH_DEBUG(("ADFH_Put_Name [%s]",name));
 
@@ -1492,8 +1540,10 @@ void ADFH_Get_Name(const double  id,
                    char         *name,
                    int          *err)
 {
-  hid_t hid = to_HDF_ID(id);
+  hid_t hid;
   char buffname[ADF_NAME_LENGTH+1];
+
+  to_HDF_ID(id,hid);
 
   ADFH_DEBUG((">ADFH_Get_Name"));
 
@@ -1516,17 +1566,14 @@ void ADFH_Get_Label(const double  id,
                     int          *err)
 {
   hid_t hid;
-  H5G_stat_t sb;  /* Object information */
-  char bufflabel[ADF_LABEL_LENGTH+1];
-
-  ADFH_DEBUG((">ADFH_Get_Label"));
+  char bufflabel[ADF_LABEL_LENGTH+1] = "";
+  ADFH_DEBUG((">ADFH_Get_Label [%d]",id));
 
   if (label == NULL) {
     set_error(NULL_STRING_POINTER, err);
     return;
   }
-
-  if ((hid = open_node(id, err)) >= 0) 
+  if ((hid = open_node(id, err)) >= 0)
   {
     get_str_att(hid, A_LABEL, bufflabel, err);
     if (H5Gclose(hid)<0)
@@ -1549,12 +1596,16 @@ void ADFH_Create(const double  pid,
                  double       *id,
                  int          *err)
 {
-  hid_t hpid = to_HDF_ID(pid);
-  hid_t gid,fid;
-  int order;
+  hid_t hpid;
+  hid_t gid;
   char *pname;
+#ifdef ADFH_DEBUG_ON
+  H5L_info_t lkbuff;
+#endif
 
-  ADFH_DEBUG((">ADFH_Create [%s]",name));
+  to_HDF_ID(pid, hpid);
+
+  ADFH_DEBUG((">ADFH_Create [%s][%d]",name,hpid));
 
   if ((pname = check_name(name, err)) == NULL) return;
   if (id == NULL) {
@@ -1572,8 +1623,13 @@ void ADFH_Create(const double  pid,
     return;
   }
 
-  *id = 0; 
-  gid = H5Gcreate2(hpid, pname, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
+  *id = 0;
+  gid = H5Gcreate2(hpid, pname,
+		   H5P_DEFAULT, mta_root->g_propgroupcreate, H5P_DEFAULT);
+#ifdef ADFH_DEBUG_ON
+  H5Lget_info(hpid,pname,&lkbuff,H5P_DEFAULT);
+  ADFH_DEBUG((">ADFH_Create [%s] index [%d]",pname,lkbuff.corder));
+#endif
 
   if (gid < 0)
     set_error(ADFH_ERR_GCREATE, err);
@@ -1584,7 +1640,7 @@ void ADFH_Create(const double  pid,
         new_str_att(gid, A_TYPE, ADFH_MT, 2, err) ||
         new_int_att(gid, A_FLAGS, mta_root->g_flags, err)) return;
 #else
-    order = 0;
+    int order = 0;
     H5Giterate(hpid, ".", NULL, count_children, (void *)&order);
     if (new_str_att(gid, A_NAME, pname, ADF_NAME_LENGTH, err) ||
         new_str_att(gid, A_LABEL, "", ADF_NAME_LENGTH, err) ||
@@ -1592,8 +1648,11 @@ void ADFH_Create(const double  pid,
         new_int_att(gid, A_ORDER, order, err) ||
         new_int_att(gid, A_FLAGS, mta_root->g_flags, err)) return;
 #endif
-    *id = to_ADF_ID(gid);
-    ADFH_DEBUG(("<ADFH_Create [%s]",name));
+    to_ADF_ID(gid,*id);
+#ifndef ADFH_FORCE_ID_CLOSE
+    track_id(hpid,gid);
+#endif
+    ADFH_DEBUG(("<ADFH_Create [%s][%d][%d]",name,hpid,gid));
   }
 }
 
@@ -1604,13 +1663,18 @@ void ADFH_Delete(const double  pid,
                  const double  id,
                  int    *err)
 {
-  hid_t hpid = to_HDF_ID(pid);
-  hid_t hid = to_HDF_ID(id);
+  hid_t hpid;
+  hid_t hid;
   char old_name[ADF_NAME_LENGTH+1];
+#ifndef ADFH_NO_ORDER
   int old_order;
+#endif
   H5G_stat_t stat;
 
-  ADFH_DEBUG(("ADFH_Delete"));
+  to_HDF_ID(pid, hpid);
+  to_HDF_ID(id, hid);
+
+  ADFH_DEBUG(("ADFH_Delete [%d][%d]",hpid,hid));
 
   if (is_link(hpid)) {
     set_error(ADFH_ERR_LINK_DELETE, err);
@@ -1674,9 +1738,10 @@ void ADFH_Number_of_Children(const double  id,
   *number = 0;
   if ((hid = open_node(id, err)) >= 0) {
     H5Giterate(hid, ".", &gskip, count_children, (void*)number);
-    H5Gclose(hid); 
+    H5Gclose(hid);
   }
   nn=*number;
+  (void)nn;  /* avoid unused variable warning */
   ADFH_DEBUG(("<ADFH_Number_of_Children [%d]",nn));
 }
 
@@ -1687,10 +1752,10 @@ void ADFH_Get_Node_ID(const double  pid,
                       double       *id,
                       int          *err)
 {
-  hid_t sid, hpid = to_HDF_ID(pid);
-  herr_t herr;
+  hid_t sid, hpid;
+  to_HDF_ID(pid,hpid);
 
-  ADFH_DEBUG((">ADFH_Get_Node_ID [%s]",name));
+  ADFH_DEBUG((">ADFH_Get_Node_ID [%s][%d]",name,hpid));
 
   if (name == NULL) {
     set_error(NULL_STRING_POINTER, err);
@@ -1705,7 +1770,7 @@ void ADFH_Get_Node_ID(const double  pid,
   set_error(NO_ERROR, err);
   if (*name == '/') {
     hid_t rid;
-    char *path = (char *) malloc (strlen(name));
+    char *path = (char *) malloc (strlen(name)+1);
     if (path == NULL) {
       set_error(MEMORY_ALLOCATION_FAILED, err);
       return;
@@ -1718,6 +1783,7 @@ void ADFH_Get_Node_ID(const double  pid,
   }
   else if (is_link(hpid)) {
     hid_t lid = open_link(hpid, err);
+    ADFH_DEBUG(("<ADFH_Get_Node_ID open_link [%d]",lid));
     if (lid < 0) return;
     sid = H5Gopen2(lid, name, H5P_DEFAULT);
     ADFH_CHECK_HID(sid);
@@ -1734,8 +1800,11 @@ void ADFH_Get_Node_ID(const double  pid,
       set_error(ADFH_ERR_GOPEN, err);
     }
   }
-  *id = to_ADF_ID(sid);
-  ADFH_DEBUG(("<ADFH_Get_Node_ID [%s]",name));
+#ifndef ADFH_FORCE_ID_CLOSE
+  track_id(hpid,sid);
+#endif
+  to_ADF_ID(sid, *id);
+  ADFH_DEBUG(("<ADFH_Get_Node_ID [%s][%d] return [%d]",name,hpid,sid));
 }
 
 /* ----------------------------------------------------------------- */
@@ -1748,7 +1817,6 @@ void ADFH_Children_Names(const double pid,
                          char  *names,
                          int   *err)
 {
-  int i, ret;
   hid_t hpid;
 
   ADFH_DEBUG(("ADFH_Children_Names"));
@@ -1773,9 +1841,14 @@ void ADFH_Children_Names(const double pid,
 
   /*initialize names to null*/
   memset(names, 0, ilen*name_length);
-
   if ((hpid = open_node(pid, err)) >= 0) {
-    H5Giterate(hpid, ".", NULL, children_names, (void *)names);
+    H5Literate(hpid,H5_INDEX_CRT_ORDER,H5_ITER_INC,
+	       NULL,children_names,(void *)names);
+    if (names[0]==0)
+    {
+      H5Literate(hpid,H5_INDEX_NAME,H5_ITER_INC,
+		 NULL,children_names,(void *)names);
+    }
     H5Gclose(hpid);
   }
   *ilen_ret = mta_root->n_names;
@@ -1790,11 +1863,8 @@ void ADFH_Children_IDs(const double pid,
                          double  *IDs,
                          int   *err)
 {
-  int ret;
   hid_t hpid;
-
   ADFH_DEBUG(("ADFH_Children_IDs"));
-
   ROOT_OR_DIE(err);
   if (icount_ret == NULL) {
     set_error(NULL_POINTER, err);
@@ -1804,28 +1874,36 @@ void ADFH_Children_IDs(const double pid,
     set_error(NULL_NODEID_POINTER, err);
     return;
   }
-
+  IDs[0]=-1;
   mta_root->i_start = istart;
   mta_root->i_len = icount;
   mta_root->n_names = 0;
 #ifdef ADFH_NO_ORDER
   mta_root->i_count = 0;
 #endif
-
   if ((hpid = open_node(pid, err)) >= 0) {
-    H5Giterate(hpid, ".", NULL, children_ids, (void *)IDs);
+    H5Literate(hpid,H5_INDEX_CRT_ORDER,H5_ITER_INC,
+	       NULL,children_ids,(void *)IDs);
+    if (IDs[0]==-1)
+    {
+      H5Literate(hpid,H5_INDEX_NAME,H5_ITER_INC,
+		 NULL,children_ids,(void *)IDs);
+    }
     H5Gclose(hpid);
   }
   *icount_ret = mta_root->n_names;
+  return;
 }
 
 /* ----------------------------------------------------------------- */
 
 void ADFH_Release_ID(const double ID)
 {
+  hid_t hid;
   ADFH_DEBUG(("ADFH_Release_ID"));
 
-  H5Gclose(to_HDF_ID(ID));
+  to_HDF_ID(ID, hid);
+  H5Gclose(hid);
 }
 
 /* ----------------------------------------------------------------- */
@@ -1836,9 +1914,10 @@ void ADFH_Database_Open(const char   *name,
                         double       *root,
                         int          *err)
 {
-  hid_t fid, gid, fapl;
+  hid_t fid, gid;
   char *format, buff[ADF_VERSION_LENGTH+1];
   int i, pos, mode;
+  hid_t g_propfileopen;
 
   ADFH_DEBUG(("ADFH_Database_Open [%s]",name));
 
@@ -1849,20 +1928,30 @@ void ADFH_Database_Open(const char   *name,
     mta_root->g_init = 0;
   }
   mta_root->g_error_state = 0;
-  /* flags is int seen as bitfield, fortran flag is first 0x0001 
-     it is found set to 1 in *all* MLL-based HDF5 files 
+  /* flags is int seen as bitfield, fortran flag is first 0x0001
+     it is found set to 1 in *all* MLL-based HDF5 files
   */
   mta_root->g_flags = 1;
 
-#ifndef ADF_DEBUG_ON
+#ifndef ADFH_DEBUG_ON
   H5Eset_auto2(H5E_DEFAULT, NULL, NULL);
 #endif
   if (!mta_root->g_init) {
-#ifndef ADF_DEBUG_ON
+#ifndef ADFH_DEBUG_ON
     H5Eset_auto2(H5E_DEFAULT, walk_H5_error, NULL);
 #endif
     for (i = 0; i < ADFH_MAXIMUM_FILES; i++) mta_root->g_files[i] = 0;
     mta_root->g_init = 1;
+
+    /* create properties - these are persistent accross all open files.
+       When all files are closed, then delete properties */
+    /* H5Pclose performed at file close time */
+    mta_root->g_proplink=H5Pcreate(H5P_LINK_ACCESS);
+    H5Pset_nlinks(mta_root->g_proplink, ADF_MAXIMUM_LINK_DEPTH);
+    mta_root->g_propgroupcreate=H5Pcreate(H5P_GROUP_CREATE);
+    H5Pset_link_creation_order(mta_root->g_propgroupcreate,
+			     H5P_CRT_ORDER_TRACKED | H5P_CRT_ORDER_INDEXED);
+    mta_root->g_propdataset=H5Pcreate(H5P_DATASET_CREATE);
   }
 
   if (name == NULL || stat == NULL || fmt == NULL) {
@@ -1878,29 +1967,29 @@ void ADFH_Database_Open(const char   *name,
     buff[i] = TO_UPPER(buff[i]);
 
   if (0 == strcmp(buff, "UNKNOWN")) {
-    if (access(name, 0))
+    if (ACCESS(name, 0))
       mode = ADFH_MODE_NEW;
-    else if (access(name, 2))
+    else if (ACCESS(name, 2))
       mode = ADFH_MODE_RDO;
     else
       mode = ADFH_MODE_OLD;
   }
   else if (0 == strcmp(buff, "NEW")) {
-    if (!access(name, 0)) {
+    if (!ACCESS(name, 0)) {
       set_error(REQUESTED_NEW_FILE_EXISTS, err);
       return;
     }
     mode = ADFH_MODE_NEW;
   }
   else if (0 == strcmp(buff, "READ_ONLY")) {
-    if (access(name, 0)) {
+    if (ACCESS(name, 0)) {
       set_error(REQUESTED_OLD_FILE_NOT_FOUND, err);
       return;
     }
     mode = ADFH_MODE_RDO;
   }
   else if (0 == strcmp(buff, "OLD")) {
-    if (access(name, 0)) {
+    if (ACCESS(name, 0)) {
       set_error(REQUESTED_OLD_FILE_NOT_FOUND, err);
       return;
     }
@@ -1940,27 +2029,98 @@ void ADFH_Database_Open(const char   *name,
     return;
   }
 
-  /* set access property to close all open accesses when file closed */
-  mta_root->g_propfile = H5Pcreate(H5P_FILE_ACCESS);
-  H5Pset_fclose_degree(mta_root->g_propfile, H5F_CLOSE_STRONG);
-  /*  H5Pset_latest_format(fapl, 1); */
-#if !defined(HDF5_PRE_1_8)
-  /* Performance patch applied by KSH on 2009.05.18 */
-  H5Pset_libver_bounds(mta_root->g_propfile, H5F_LIBVER_LATEST, H5F_LIBVER_LATEST);
-  /* H5Pclose performed at file close time */
-  mta_root->g_proplink=H5Pcreate(H5P_LINK_ACCESS);
-  H5Pset_nlinks(mta_root->g_proplink, ADF_MAXIMUM_LINK_DEPTH);
-#endif
-  mta_root->g_propdataset=H5Pcreate(H5P_DATASET_CREATE);
+  // Patch from Manuel Gageik on IBM BLUEgene/Q systems for better cgp_open performance.
+#ifdef JFC_PATCH_2015_2
 
+  // http://www.hdfgroup.org/HDF5/doc/RM/H5P/H5Pset_meta_block_size.htm
+  // default setting is 2048 bytes
+  H5Pset_meta_block_size(g_propfileopen, 4096);  // 1024*1024
+
+  // http://hdfgroup.org/HDF5/doc/RM/H5P/H5Pset_alignment.htm
+  // attention: this can increase filesize dramatically if lots of small datasets
+  H5Pset_alignment(g_propfileopen, 4096, 4096);
+
+  // http://www.hdfgroup.org/HDF5/doc/RM/H5P/H5Pset_buffer.htm
+  // 1 MByte is default of hdf5
+  void *tconv; void *bkg;
+  H5Pset_buffer(g_propfileopen, 10*1024*1024,tconv, bkg);
+
+  // http://hdfgroup.org/HDF5/doc/RM/RM_H5P.html#Property-SetSieveBufSize
+  // '..  used by file drivers that are capable of using data sieving'
+  //  1 MByte is default of hdf5
+  H5Pset_sieve_buf_size(g_propfileopen, 4*1024*1024);
+
+#endif
+
+  g_propfileopen = H5Pcreate(H5P_FILE_ACCESS);
+#ifdef ADFH_H5F_CLOSE_STRONG
+  /* set access property to close all open accesses when file closed */
+  H5Pset_fclose_degree(g_propfileopen, H5F_CLOSE_STRONG);
+#endif
+
+  /*  H5Pset_latest_format(fapl, 1); */
+  /* Performance patch applied by KSH on 2009.05.18 */
+  H5Pset_libver_bounds(g_propfileopen,
+#if H5_VERSION_GE(1,10,3)
+		       H5F_LIBVER_V18, H5F_LIBVER_V18);
+#else
+		       H5F_LIBVER_LATEST, H5F_LIBVER_LATEST);
+#endif
   /* open the file */
+
+#ifdef BUILD_PARALLEL
+  int flag = 0;
+  /* check if we are actually running a parallel program */
+  MPI_Initialized(&flag);
+  if(flag) {
+    /* Set the access property list to use MPI */
+    if (0 == strcmp(fmt, "PARALLEL")) {
+
+      if(!pcg_mpi_info) pcg_mpi_info = MPI_INFO_NULL;
+#if HDF5_HAVE_COLL_METADATA  
+      H5Pset_coll_metadata_write(g_propfileopen, 1);
+#endif /*HDF5_HAVE_COLL_METADATA*/
+
+      H5Pset_fapl_mpio(g_propfileopen, ParallelMPICommunicator, pcg_mpi_info);
+    }
+  }
+#endif
 
   set_error(NO_ERROR, err);
 
   if (mode == ADFH_MODE_NEW) {
-    fid = H5Fcreate(name, H5F_ACC_TRUNC, H5P_DEFAULT, mta_root->g_propfile);
+    hid_t g_propfilecreate = H5Pcreate(H5P_FILE_CREATE);
+
+#ifdef JFC_PATCH_2015_2
+
+  // http://www.hdfgroup.org/HDF5/doc/RM/H5P/H5Pset_meta_block_size.htm
+  // default setting is 2048 bytes
+  H5Pset_meta_block_size(g_propfilecreate, 4096);  // 1024*1024
+
+  // http://hdfgroup.org/HDF5/doc/RM/H5P/H5Pset_alignment.htm
+  // attention: this can increase filesize dramatically if lots of small datasets
+  H5Pset_alignment(g_propfilecreate, 4096, 4096);
+
+  // http://www.hdfgroup.org/HDF5/doc/RM/H5P/H5Pset_buffer.htm
+  // 1 MByte is default of hdf5
+  void *tconv; void *bkg;
+  H5Pset_buffer(g_propfilecreate, 10*1024*1024,tconv, bkg);
+
+  // http://hdfgroup.org/HDF5/doc/RM/RM_H5P.html#Property-SetSieveBufSize
+  // '..  used by file drivers that are capable of using data sieving'
+  //  1 MByte is default of hdf5
+  H5Pset_sieve_buf_size(g_propfilecreate, 4*1024*1024);
+
+#endif
+
+    /* add creation time for groups (used by iterators)
+      (prop set to file creation )*/
+    H5Pset_link_creation_order(g_propfilecreate,
+			     H5P_CRT_ORDER_TRACKED | H5P_CRT_ORDER_INDEXED);
+    fid = H5Fcreate(name, H5F_ACC_TRUNC, g_propfilecreate, g_propfileopen);
+    H5Pclose(g_propfilecreate);
+    H5Pclose(g_propfileopen);
     if (fid < 0) {
-      H5Pclose(mta_root->g_propfile);
       set_error(FILE_OPEN_ERROR, err);
       return;
     }
@@ -1971,7 +2131,7 @@ void ADFH_Database_Open(const char   *name,
     if (new_str_att(gid, A_NAME, "HDF5 MotherNode", ADF_NAME_LENGTH, err) ||
         new_str_att(gid, A_LABEL, "Root Node of HDF5 File", ADF_NAME_LENGTH, err) ||
         new_str_att(gid, A_TYPE, ADFH_MT, 2, err) ||
-        new_str_data(gid, D_FORMAT, format, strlen(format), err) ||
+        new_str_data(gid, D_FORMAT, format, (int)strlen(format), err) ||
         new_str_data(gid, D_VERSION, buff, ADF_VERSION_LENGTH, err)) {
       H5Gclose(gid);
       return;
@@ -1979,19 +2139,22 @@ void ADFH_Database_Open(const char   *name,
   }
   else {
     if (H5Fis_hdf5(name) <= 0) {
-      H5Pclose(mta_root->g_propfile);
+      H5Pclose(g_propfileopen);
       set_error(ADFH_ERR_NOT_HDF5_FILE, err);
       return;
     }
-    if (mode == ADFH_MODE_RDO)
-      {
-      fid = H5Fopen(name, H5F_ACC_RDONLY, mta_root->g_propfile);
-      }
-    else
-      {
-      fid = H5Fopen(name, H5F_ACC_RDWR, mta_root->g_propfile);
-      }
-    H5Pclose(mta_root->g_propfile);
+#ifdef BUILD_PARALLEL
+#if HDF5_HAVE_COLL_METADATA
+    H5Pset_all_coll_metadata_ops( g_propfileopen, 1 );
+#endif
+#endif
+    if (mode == ADFH_MODE_RDO) {
+      fid = H5Fopen(name, H5F_ACC_RDONLY, g_propfileopen);
+    }
+    else {
+      fid = H5Fopen(name, H5F_ACC_RDWR, g_propfileopen);
+    }
+    H5Pclose(g_propfileopen);
     if (fid < 0) {
       set_error(FILE_OPEN_ERROR, err);
       return;
@@ -2004,11 +2167,15 @@ void ADFH_Database_Open(const char   *name,
     }
 #endif
   }
-
   mta_root->g_files[pos] = fid;
-  /*  mta_root->g_files[pos].mode = mode; */
-  /*  mta_root->g_files[pos].mounted = NULL; */
-  *root = to_ADF_ID(gid);
+#ifndef ADFH_FORCE_ID_CLOSE
+  mta_root->g_extids[pos]=NULL;
+  mta_root->n_extids[pos]=0;
+  mta_root->x_extids[pos]=-1;
+
+  track_id(fid,gid);
+#endif
+  to_ADF_ID(gid, *root);
 }
 
 /* ----------------------------------------------------------------- */
@@ -2029,8 +2196,9 @@ void ADFH_Database_Get_Format(const double  rootid,
                               int          *err)
 {
   char node[ADF_NAME_LENGTH+1];
-  hid_t did;
+  hid_t did, hid;
   herr_t status;
+  hid_t xfer_prp = H5P_DEFAULT;
 
   ADFH_DEBUG(("ADFH_Database_Get_Format"));
 
@@ -2042,11 +2210,30 @@ void ADFH_Database_Get_Format(const double  rootid,
   set_error(NO_ERROR, err);
 
   sprintf(node, "/%s", D_FORMAT);
-  if ((did = H5Dopen2(to_HDF_ID(rootid), node, H5P_DEFAULT)) < 0) {
+  to_HDF_ID(rootid,hid);
+  if ((did = H5Dopen2(hid, node, H5P_DEFAULT)) < 0) {
     set_error(ADFH_ERR_DOPEN, err);
     return;
   }
-  status = H5Dread(did, H5T_NATIVE_CHAR, H5S_ALL, H5S_ALL, H5P_DEFAULT, format);
+
+#ifdef BUILD_PARALLEL
+  hid_t fid = get_file_id(hid);
+  hid_t fapl=H5Fget_access_plist(fid);
+  if (H5Pget_driver(fapl) == H5FD_MPIO) {
+    xfer_prp = H5Pcreate(H5P_DATASET_XFER);
+    ADFH_CHECK_HID(xfer_prp);
+    H5Pset_dxpl_mpio(xfer_prp, H5FD_MPIO_COLLECTIVE);
+  }
+#endif
+
+  status = H5Dread(did, H5T_NATIVE_CHAR, H5S_ALL, H5S_ALL, xfer_prp, format);
+
+#ifdef BUILD_PARALLEL
+  if (H5Pget_driver(fapl) == H5FD_MPIO) {
+    H5Pclose(xfer_prp);
+  }
+  H5Pclose(fapl); /* close the property list */
+#endif
   H5Dclose(did);
 
   if (status < 0)
@@ -2072,7 +2259,7 @@ void ADFH_Database_Delete(const char *name,
 
   if (H5Fis_hdf5(name) <= 0)
     set_error(ADFH_ERR_NOT_HDF5_FILE, err);
-  else if (unlink(name))
+  else if (UNLINK(name))
     set_error(ADFH_ERR_FILE_DELETE, err);
   else
     set_error(NO_ERROR, err);
@@ -2083,10 +2270,10 @@ void ADFH_Database_Delete(const char *name,
 void ADFH_Database_Close(const double  root,
                          int          *status)
 {
-  int n,idx;
-  hid_t fid, mid;
+  int fn,idx;
+  hid_t hid,fid;
+  int nobj,n;
 #ifdef ADFH_FORCE_ID_CLOSE
-  int nobj;
   hid_t *objs;
 #endif
 
@@ -2097,88 +2284,99 @@ void ADFH_Database_Close(const double  root,
     return;
   }
   ADFH_DEBUG(("ADFH_Database_Close 4"));
-  if ((n = get_file_number(to_HDF_ID(root), status)) < 0) return;
-  fid = mta_root->g_files[n];
-  mta_root->g_files[n] = 0;
+  to_HDF_ID(root,hid);
+  if ((fn = get_file_number(hid, status)) < 0) return;
+  fid = mta_root->g_files[fn];
+  mta_root->g_files[fn] = 0;
 
-  ADFH_DEBUG(("ADFH_Database_Close 3"));
+#if !defined(ADFH_H5F_CLOSE_STRONG) && !defined(ADFH_FORCE_ID_CLOSE)
+  /* this gets the file data to disk even if there are open objects */
+  H5Fflush(fid, H5F_SCOPE_LOCAL);
+#endif
+
   /* free up all open accesses */
-
-#ifdef ADFH_FORCE_ID_CLOSE
-  nobj = H5Fget_obj_count(fid, H5F_OBJ_ALL);
-  objs = (hid_t *) malloc (nobj * sizeof(hid_t));
-
-  /* close datatypes */
-
-  nobj = H5Fget_obj_count(fid, H5F_OBJ_DATATYPE);
-#ifdef ADFH_DEBUG_ON
-  printf("%s close DataType [%d] HIDs\n",ADFH_PREFIX,nobj);
-#endif
-  if (nobj) {
-    H5Fget_obj_ids(fid, H5F_OBJ_DATATYPE, -1, objs);
-    for (n = 0; n < nobj; n++)
-      H5Tclose(objs[n]);
-  }
-
-  /* close datasets */
-
-  nobj = H5Fget_obj_count(fid, H5F_OBJ_DATASET);
-#ifdef ADFH_DEBUG_ON
-  printf("%s close DataSet [%d] HIDs\n",ADFH_PREFIX,nobj);
-#endif
-  if (nobj) {
-    H5Fget_obj_ids(fid, H5F_OBJ_DATASET, -1, objs);
-    for (n = 0; n < nobj; n++)
-      H5Dclose(objs[n]);
-  }
-
-  /* close attributes */
-
-  nobj = H5Fget_obj_count(fid, H5F_OBJ_ATTR);
-#ifdef ADFH_DEBUG_ON
-  printf("%s close Attr [%d] HIDs\n",ADFH_PREFIX,nobj);
-#endif
-  if (nobj) {
-    H5Fget_obj_ids(fid, H5F_OBJ_ATTR, -1, objs);
-    for (n = 0; n < nobj; n++)
-      H5Aclose(objs[n]);
-  }
-
-  /* close groups */
-
-  nobj = H5Fget_obj_count(fid, H5F_OBJ_GROUP);
-#ifdef ADFH_DEBUG_ON
-  printf("%s close Group [%d] HIDs\n",ADFH_PREFIX,nobj);
-#endif
-  if (nobj) {
-    H5Fget_obj_ids(fid, H5F_OBJ_GROUP, -1, objs);
-    for (n = 0; n < nobj; n++)
+#ifndef ADFH_FORCE_ID_CLOSE
+  for (nobj=0;nobj<mta_root->n_extids[fn];nobj++)
+  {
+    ADFH_DEBUG(("ADFH_Database_Close 3 [%.6d/%.6d]:[%d]",\
+		nobj,mta_root->n_extids[fn],mta_root->g_extids[fn][nobj]));
+    if (H5Iis_valid(mta_root->g_extids[fn][nobj]))
     {
-      H5Gclose(objs[n]);
+      H5Oclose(mta_root->g_extids[fn][nobj]);
     }
   }
+#else
+  ADFH_DEBUG(("ADFH_Database_Close 3"));
+  nobj = H5Fget_obj_count(fid, H5F_OBJ_ALL|H5F_OBJ_LOCAL);
+  if (nobj) {
+    objs = (hid_t *) malloc (nobj * sizeof(hid_t));
+
+    /* close datatypes */
+
+    nobj = H5Fget_obj_count(fid, H5F_OBJ_DATATYPE|H5F_OBJ_LOCAL);
+#ifdef ADFH_DEBUG_ON
+    printf("%s close DataType [%d] HIDs\n",ADFH_PREFIX,nobj);
+#endif
+    if (nobj) {
+      H5Fget_obj_ids(fid, H5F_OBJ_DATATYPE|H5F_OBJ_LOCAL, -1, objs);
+      for (n = 0; n < nobj; n++)
+        H5Tclose(objs[n]);
+    }
+
+    /* close datasets */
+
+    nobj = H5Fget_obj_count(fid, H5F_OBJ_DATASET|H5F_OBJ_LOCAL);
+#ifdef ADFH_DEBUG_ON
+    printf("%s close DataSet [%d] HIDs\n",ADFH_PREFIX,nobj);
+#endif
+    if (nobj) {
+      H5Fget_obj_ids(fid, H5F_OBJ_DATASET|H5F_OBJ_LOCAL, -1, objs);
+      for (n = 0; n < nobj; n++)
+        H5Dclose(objs[n]);
+    }
+
+    /* close attributes */
+
+    nobj = H5Fget_obj_count(fid, H5F_OBJ_ATTR|H5F_OBJ_LOCAL);
+#ifdef ADFH_DEBUG_ON
+    printf("%s close Attr [%d] HIDs\n",ADFH_PREFIX,nobj);
+#endif
+    if (nobj) {
+      H5Fget_obj_ids(fid, H5F_OBJ_ATTR|H5F_OBJ_LOCAL, -1, objs);
+      for (n = 0; n < nobj; n++)
+        H5Aclose(objs[n]);
+    }
+
+    /* close groups */
+
+    nobj = H5Fget_obj_count(fid, H5F_OBJ_GROUP|H5F_OBJ_LOCAL);
+#ifdef ADFH_DEBUG_ON
+    printf("%s close Group [%d] HIDs\n",ADFH_PREFIX,nobj);
+#endif
+    if (nobj) {
+      H5Fget_obj_ids(fid, H5F_OBJ_GROUP|H5F_OBJ_LOCAL, -1, objs);
+      for (n = 0; n < nobj; n++)
+        H5Gclose(objs[n]);
+    }
 
 #if 0
-  /* close file accesses except for current */
+    /* close file accesses except for current */
 
-  nobj = H5Fget_obj_count(fid, H5F_OBJ_FILE);
-  if (nobj) {
-    H5Fget_obj_ids(fid, H5F_OBJ_FILE, -1, objs);
-    for (n = 0; n < nobj; n++) {
+    nobj = H5Fget_obj_count(fid, H5F_OBJ_FILE|H5F_OBJ_LOCAL);
+    if (nobj) {
+      H5Fget_obj_ids(fid, H5F_OBJ_FILE|H5F_OBJ_LOCAL, -1, objs);
+      for (n = 0; n < nobj; n++) {
         if (objs[n] != fid)
-            H5Fclose(objs[n]);
+          H5Fclose(objs[n]);
+      }
     }
-  }
 #endif
 
-  free (objs);
+    free (objs);
+  }
 #endif
 
   ADFH_DEBUG(("ADFH_Database_Close 2"));
-#if !defined(HDF5_PRE_1_8)
-  H5Pclose(mta_root->g_proplink);
-#endif /* HDF5_PRE_1_8 */
-  H5Pclose(mta_root->g_propdataset);
 
   /* close file */
   if (H5Fclose(fid) < 0)
@@ -2186,16 +2384,24 @@ void ADFH_Database_Close(const double  root,
   else
     set_error(NO_ERROR, status);
 
+#ifndef ADFH_FORCE_ID_CLOSE
+  free(mta_root->g_extids[fn]);
+#endif
+
   ADFH_DEBUG(("ADFH_Database_Close 1"));
-  if (mta_root != NULL)
-  {
-    idx=0;
-    for (n = 0; n < ADFH_MAXIMUM_FILES; n++)  idx+=mta_root->g_files[n];
-    if (! idx) 
-    {
-      free(mta_root);
-      mta_root=NULL;
+  idx=0;
+  for (n = 0; n < ADFH_MAXIMUM_FILES; n++) {
+    if (mta_root->g_files[n]) {
+      idx++;
     }
+  }
+  /* if no more files open, close properties and free MTA */
+  if (idx == 0) {
+    H5Pclose(mta_root->g_proplink);
+    H5Pclose(mta_root->g_propgroupcreate);
+    H5Pclose(mta_root->g_propdataset);
+    free(mta_root);
+    mta_root=NULL;
   }
   ADFH_DEBUG(("ADFH_Database_Close 0"));
 }
@@ -2206,7 +2412,8 @@ void ADFH_Is_Link(const double  id,
                   int          *link_path_length,
                   int          *err)
 {
-  hid_t hid = to_HDF_ID(id);
+  hid_t hid;
+  to_HDF_ID(id,hid);
 
   ADFH_DEBUG(("ADFH_Is_Link"));
 
@@ -2247,8 +2454,8 @@ void ADFH_Link_Size(const double  id,
                   int          *name_len,
                   int          *err)
 {
-  hid_t hid = to_HDF_ID(id);
-
+  hid_t hid;
+  to_HDF_ID(id,hid);
   ADFH_DEBUG(("ADFH_Link_Size"));
 
   *name_len = *file_len = 0;
@@ -2282,17 +2489,23 @@ void ADFH_Get_Root_ID(const double  id,
                       double       *root_id,
                       int          *err)
 {
-  hid_t rid;
+  hid_t rid, hid;
 
   ADFH_DEBUG(("ADFH_Get_Root_ID"));
 
-  rid = H5Gopen2(to_HDF_ID(id), "/", H5P_DEFAULT);
+  to_HDF_ID(id, hid);
+
+  rid = H5Gopen2(hid, "/", H5P_DEFAULT);
   if (rid < 0)
     set_error(ADFH_ERR_GOPEN, err);
   else {
-    *root_id = to_ADF_ID(rid);
+    to_ADF_ID(rid, *root_id);
     set_error(NO_ERROR, err);
   }
+#ifndef ADFH_FORCE_ID_CLOSE
+  track_id(hid,rid);
+#endif
+  ADFH_DEBUG(("ADFH_Get_Root_ID root id [%d]",rid));
 }
 
 /* ----------------------------------------------------------------- */
@@ -2349,13 +2562,12 @@ void ADFH_Get_Number_of_Dimensions(const double  id,
 /* ----------------------------------------------------------------- */
 
 void ADFH_Get_Dimension_Values(const double  id,
-                               int           dim_vals[],
+                               cgsize_t      dim_vals[],
                                int           *err)
 {
   int i, ndims, swap = 0;
   hid_t hid, did, sid;
   hsize_t temp_vals[ADF_MAX_DIMENSIONS];
-  herr_t status;
 
   ADFH_DEBUG(("ADFH_Get_Dimension_Values"));
 
@@ -2371,16 +2583,26 @@ void ADFH_Get_Dimension_Values(const double  id,
       ndims = H5Sget_simple_extent_ndims(sid);
       if (ndims > 0) {
         H5Sget_simple_extent_dims(sid, temp_vals, NULL);
+#if CG_SIZEOF_SIZE == 32
+        for (i = 0; i < ndims; i++) {
+          if (temp_vals[i] > CG_MAX_INT32) {
+            set_error(MAX_INT32_SIZE_EXCEEDED, err);
+            break;
+          }
+        }
+#endif
 #ifdef ADFH_FORTRAN_INDEXING
         if (ndims > 1) swap = swap_dimensions(hid);
 #endif
         if (swap) {
-          for (i = 0; i < ndims; i++)
-            dim_vals[i] = (int)temp_vals[ndims-1-i];
+	  for (i = 0; i < ndims; i++) {
+            dim_vals[i] = (cgsize_t)temp_vals[ndims-1-i];
+	  }
         }
         else {
-          for (i = 0; i < ndims; i++)
-            dim_vals[i] = (int)temp_vals[i];
+	  for (i = 0; i < ndims; i++) {
+            dim_vals[i] = (cgsize_t)temp_vals[i];
+	  }
         }
       }
       H5Sclose(sid);
@@ -2392,23 +2614,24 @@ void ADFH_Get_Dimension_Values(const double  id,
 
 /* ----------------------------------------------------------------- */
 
-void ADFH_Put_Dimension_Information(const double  id,
-                                    const char   *data_type,
-                                    const int     dims,
-                                    const int     dim_vals[],
-                                    int          *err)
+void ADFH_Put_Dimension_Information(const double   id,
+                                    const char    *data_type,
+                                    const int      dims,
+                                    const cgsize_t dim_vals[],
+                                    int           *err)
 {
-  hid_t hid = to_HDF_ID(id);
+  hid_t hid;
   hid_t did, tid, sid, mid;
   int i, swap = 0;
   hsize_t old_size;
   hsize_t old_dims[ADF_MAX_DIMENSIONS];
   hsize_t new_dims[ADF_MAX_DIMENSIONS];
-  void *data = NULL;
-  char old_type[3];
   char new_type[3];
+  hid_t xfer_prp = H5P_DEFAULT;
 
-  ADFH_DEBUG(("ADFH_Put_Dimension_Information"));
+  to_HDF_ID(id,hid);
+
+  ADFH_DEBUG(("ADFH_Put_Dimension_Information [%d]",hid));
 
   if (is_link(hid)) {
     set_error(ADFH_ERR_LINK_DATA, err);
@@ -2451,11 +2674,11 @@ void ADFH_Put_Dimension_Information(const double  id,
 
   old_size = 0;
   if(has_data(hid)) {
+    ADFH_DEBUG(("ADFH_Put_Dimension_Information unlink [%d]",hid));
     H5Gunlink(hid, D_DATA);
   }
 
   if (set_str_att(hid, A_TYPE, new_type, err)) {
-    if (data != NULL) free(data);
     return;
   }
 
@@ -2481,30 +2704,21 @@ void ADFH_Put_Dimension_Information(const double  id,
   {
     H5Pset_deflate(mta_root->g_propdataset, CompressData);
   }
+#if 0
+  this causes a problem with memory allocation. For example,
+  writing an unstructured coordinate array of 5 billion values
+  will result in the HDF5 library trying to allocation 20Gb
+  of memory for the chunk, since the first dimension is 5 billion.
+  We really need to try to do something more intelligent here
+
   H5Pset_chunk(mta_root->g_propdataset, dims, new_dims);
+#endif
 
   ADFH_CHECK_HID(sid);
   did = H5Dcreate2(hid, D_DATA, tid, sid,
 		   H5P_DEFAULT, mta_root->g_propdataset, H5P_DEFAULT);
 /*  H5Eprint1(stdout);*/
   ADFH_CHECK_HID(did);
-
-  if (did < 0 && data != NULL) {
-    free(data);
-    data = NULL;
-  }
-
-  /* write the saved data back to the data space */
-
-  if (data != NULL) {
-    mid = H5Tget_native_type(tid, H5T_DIR_ASCEND);
-    ADFH_CHECK_HID(mid);
-    if (old_size < H5Dget_storage_size(did))
-      H5Sset_extent_simple(sid, dims, old_dims, NULL);
-    H5Dwrite(did, mid, H5S_ALL, sid, H5P_DEFAULT, data);
-    H5Tclose(mid);
-    free(data);
-  }
 
   H5Sclose(sid);
   H5Tclose(tid);
@@ -2525,32 +2739,45 @@ void ADFH_Get_Link_Path(const double  id,
                         int    *err)
 {
   hid_t hid, did;
-  char *mntpath;
+  hid_t xfer_prp = H5P_DEFAULT;
 
   ADFH_DEBUG(("ADFH_Get_Link_Path"));
-
-  hid = to_HDF_ID(id);
+  to_HDF_ID(id,hid);
   ADFH_CHECK_HID(hid);
   if (!is_link(hid)) {
     set_error(NODE_IS_NOT_A_LINK, err);
     return;
   }
 
+#ifdef BUILD_PARALLEL
+  if (pcg_mpi_initialized) {
+    xfer_prp = H5Pcreate(H5P_DATASET_XFER);
+    ADFH_CHECK_HID(xfer_prp);
+    H5Pset_dxpl_mpio(xfer_prp, H5FD_MPIO_COLLECTIVE);
+  }
+#endif
+
   did = H5Dopen2(hid, D_PATH, H5P_DEFAULT);
   ADFH_CHECK_HID(did);
-  H5Dread(did, H5T_NATIVE_CHAR, H5S_ALL, H5S_ALL, H5P_DEFAULT, link_path);
+  H5Dread(did, H5T_NATIVE_CHAR, H5S_ALL, H5S_ALL, xfer_prp, link_path);
   H5Dclose(did);
 
   if (has_child(hid, D_FILE)) {
     did = H5Dopen2(hid, D_FILE, H5P_DEFAULT);
     ADFH_CHECK_HID(did);
-    H5Dread(did, H5T_NATIVE_CHAR, H5S_ALL, H5S_ALL, H5P_DEFAULT, filename);
+    H5Dread(did, H5T_NATIVE_CHAR, H5S_ALL, H5S_ALL, xfer_prp, filename);
     H5Dclose(did);
   }
   else
   {
     *filename = 0;
   }
+
+#ifdef BUILD_PARALLEL
+  if (pcg_mpi_initialized) {
+    H5Pclose(xfer_prp);
+  }
+#endif
 
   set_error(NO_ERROR, err);
 }
@@ -2564,10 +2791,10 @@ void ADFH_Link(const double  pid,
                double       *id,
                int          *err)
 {
-  int refcnt, mntnum;
-  char mntname[32], *target;
+  char *target;
   herr_t status;
-  hid_t rid, gid, mid, lid;
+  hid_t lid, hid;
+  (void)hid;  /* avoid unused variable warning */
 
   ADFH_DEBUG(("ADFH_Link [%s][%s][%s]",name,file,name_in_file));
 
@@ -2575,11 +2802,11 @@ void ADFH_Link(const double  pid,
   ADFH_Create(pid, name, id, err);
 
   if (*err != NO_ERROR) return;
-  lid = to_HDF_ID(*id);
+
+  to_HDF_ID(*id,lid);
   ADFH_CHECK_HID(lid);
   if (set_str_att(lid, A_TYPE, ADFH_LK, err)) return;
 
-#if !defined(HDF5_PRE_1_8)
   /*
    * If this is a link to a file, then need to create external link
    * Otherwise, create a soft link
@@ -2597,7 +2824,6 @@ void ADFH_Link(const double  pid,
 		     mta_root->g_proplink);
   }
   else
-#endif
   {
     target = (char *) malloc (strlen(name_in_file)+2);
     if (target == NULL) {
@@ -2610,7 +2836,7 @@ void ADFH_Link(const double  pid,
       sprintf(target, "/%s", name_in_file);
 
     /* create a soft link */
-    
+
     status = H5Glink(lid, H5G_LINK_SOFT, target, D_LINK);
     free(target);
     if (status < 0) {
@@ -2620,9 +2846,12 @@ void ADFH_Link(const double  pid,
   }
 
   /* save link path and file */
-  if (new_str_data(lid,D_PATH,name_in_file,strlen(name_in_file),err)) return;
-  if (*file && new_str_data(lid,D_FILE,file,strlen(file),err))        return;
-
+  if (new_str_data(lid,D_PATH,name_in_file,(int)strlen(name_in_file),err)) return;
+  if (*file && new_str_data(lid,D_FILE,file,(int)strlen(file),err))        return;
+#ifndef ADFH_FORCE_ID_CLOSE
+  to_HDF_ID(pid,hid);
+  track_id(hid,lid);
+#endif
   set_error(NO_ERROR, err);
 }
 
@@ -2631,9 +2860,11 @@ void ADFH_Link(const double  pid,
 void ADFH_Flush_to_Disk(const double  id,
                         int          *err)
 {
+  hid_t hid;
   ADFH_DEBUG(("ADFH_Flush_to_Disk"));
 
-  if(H5Fflush(to_HDF_ID(id), H5F_SCOPE_LOCAL) >=0 )
+  to_HDF_ID(id,hid);
+  if(H5Fflush(hid, H5F_SCOPE_LOCAL) >=0 )
     set_error(NO_ERROR, err);
   else
     set_error(FFLUSH_ERROR, err);
@@ -2662,8 +2893,9 @@ void ADFH_Database_Version(const double  root_id,
 {
   char buff[ADF_VERSION_LENGTH+1];
   char node[ADF_NAME_LENGTH+1];
-  hid_t did;
+  hid_t hid, did;
   herr_t status;
+  hid_t xfer_prp = H5P_DEFAULT;
 
   ADFH_DEBUG(("ADFH_Database_Version"));
 
@@ -2677,10 +2909,11 @@ void ADFH_Database_Version(const double  root_id,
   set_error(NO_ERROR, err);
 
   sprintf(node, "/%s", D_VERSION);
-  if ((did = H5Dopen2(to_HDF_ID(root_id), node, H5P_DEFAULT)) < 0) {
+  to_HDF_ID(root_id,hid);
+  if ((did = H5Dopen2(hid, node, H5P_DEFAULT)) < 0) {
 #ifdef ADFH_FORTRAN_INDEXING
     sprintf(node, "/%s", D_OLDVERS);
-    if ((did = H5Dopen2(to_HDF_ID(root_id), node, H5P_DEFAULT)) < 0) {
+    if ((did = H5Dopen2(hid, node, H5P_DEFAULT)) < 0) {
       set_error(ADFH_ERR_DOPEN, err);
       return;
     }
@@ -2689,9 +2922,22 @@ void ADFH_Database_Version(const double  root_id,
     return;
 #endif
   }
-  status = H5Dread(did, H5T_NATIVE_CHAR, H5S_ALL, H5S_ALL, H5P_DEFAULT, buff);
+#ifdef BUILD_PARALLEL
+  hid_t fid = get_file_id(hid);
+  hid_t fapl=H5Fget_access_plist(fid);
+  if (H5Pget_driver(fapl) == H5FD_MPIO) {
+    xfer_prp = H5Pcreate(H5P_DATASET_XFER);
+    H5Pset_dxpl_mpio(xfer_prp, H5FD_MPIO_COLLECTIVE);
+  }
+#endif
+  status = H5Dread(did, H5T_NATIVE_CHAR, H5S_ALL, H5S_ALL, xfer_prp, buff);
   H5Dclose(did);
+#ifdef BUILD_PARALLEL
 
+  if (H5Pget_driver(fapl) == H5FD_MPIO) {
+    H5Pclose(xfer_prp);
+  }
+#endif
   if (status < 0)
     set_error(ADFH_ERR_DREAD, err);
   else
@@ -2762,14 +3008,15 @@ void ADFH_Get_Error_State(int *error_state,
 /* ----------------------------------------------------------------- */
 
 void ADFH_Read_Block_Data(const double ID,
-                      const long b_start,
-                      const long b_end,
+                      const cgsize_t b_start,
+                      const cgsize_t b_end,
                       char *data,
                       int *err )
 {
   hid_t hid, did, mid, tid, dspace;
   size_t size, count, offset;
   char *buff;
+  hid_t xfer_prp = H5P_DEFAULT;
 
   ADFH_DEBUG(("ADFH_Read_Block_Data"));
 
@@ -2829,16 +3076,31 @@ void ADFH_Read_Block_Data(const double ID,
     return;
   }
 
-  if (H5Dread(did, mid, H5S_ALL, H5S_ALL, H5P_DEFAULT, buff) < 0)
+#ifdef BUILD_PARALLEL
+  hid_t fid = get_file_id(hid);
+  hid_t fapl=H5Fget_access_plist(fid);
+  if (H5Pget_driver(fapl) == H5FD_MPIO) {
+    xfer_prp = H5Pcreate(H5P_DATASET_XFER);
+    ADFH_CHECK_HID(xfer_prp);
+    H5Pset_dxpl_mpio(xfer_prp, H5FD_MPIO_COLLECTIVE);
+  }
+#endif
+
+  if (H5Dread(did, mid, H5S_ALL, H5S_ALL, xfer_prp, buff) < 0)
     set_error(ADFH_ERR_DREAD, err);
   else {
-    offset = size * (b_start - 1);
-    count = size * (b_end - b_start + 1);
+    offset = size * (size_t)(b_start - 1);
+    count = size * (size_t)(b_end - b_start + 1);
     memcpy(data, &buff[offset], count);
     set_error(NO_ERROR, err);
   }
 
   free (buff);
+#ifdef BUILD_PARALLEL
+  if (H5Pget_driver(fapl) == H5FD_MPIO) {
+    H5Pclose(xfer_prp);
+  }
+#endif
   H5Tclose(mid);
   H5Tclose(tid);
   H5Dclose(did);
@@ -2848,16 +3110,17 @@ void ADFH_Read_Block_Data(const double ID,
 /* ----------------------------------------------------------------- */
 
 void ADFH_Read_Data(const double ID,
-                     const int s_start[],
-                     const int s_end[],
-                     const int s_stride[],
-                     const int m_num_dims,
-                     const int m_dims[],
-                     const int m_start[],
-                     const int m_end[],
-                     const int m_stride[],
-                     char *data,
-                     int *err )
+                    const cgsize_t s_start[],
+                    const cgsize_t s_end[],
+                    const cgsize_t s_stride[],
+                    const char *m_data_type,
+                    const int m_num_dims,
+                    const cgsize_t m_dims[],
+                    const cgsize_t m_start[],
+                    const cgsize_t m_end[],
+                    const cgsize_t m_stride[],
+                    char *data,
+                    int *err )
 {
   int n, ndim;
   hid_t hid, did, mid, tid, dspace, mspace;
@@ -2866,6 +3129,7 @@ void ADFH_Read_Data(const double ID,
   hsize_t stride[ADF_MAX_DIMENSIONS];
   hsize_t count[ADF_MAX_DIMENSIONS];
   herr_t status;
+  hid_t xfer_prp = H5P_DEFAULT;
 
   ADFH_DEBUG(("ADFH_Read_Data"));
 
@@ -2986,10 +3250,31 @@ void ADFH_Read_Data(const double ID,
 
   tid = H5Dget_type(did);
   ADFH_CHECK_HID(tid);
-  mid = H5Tget_native_type(tid, H5T_DIR_ASCEND);
+  if (m_data_type) {
+    mid = to_HDF_data_type(m_data_type);
+  }
+  else {
+    mid = H5Tget_native_type(tid, H5T_DIR_ASCEND);
+  }
   ADFH_CHECK_HID(mid);
-  status = H5Dread(did, mid, mspace, dspace, H5P_DEFAULT, data);
 
+#ifdef BUILD_PARALLEL
+  hid_t fid = get_file_id(hid);
+  hid_t fapl=H5Fget_access_plist(fid);
+  if (H5Pget_driver(fapl) == H5FD_MPIO) {
+    xfer_prp = H5Pcreate(H5P_DATASET_XFER);
+    ADFH_CHECK_HID(xfer_prp);
+    H5Pset_dxpl_mpio(xfer_prp, default_pio_mode);
+  }
+#endif
+
+  status = H5Dread(did, mid, mspace, dspace, xfer_prp, data);
+
+#ifdef BUILD_PARALLEL
+  if (H5Pget_driver(fapl) == H5FD_MPIO) {
+    H5Pclose(xfer_prp);
+  }
+#endif
   H5Sclose(mspace);
   H5Sclose(dspace);
   H5Tclose(mid);
@@ -3006,11 +3291,12 @@ void ADFH_Read_Data(const double ID,
 /* ----------------------------------------------------------------- */
 
 void ADFH_Read_All_Data(const double  id,
+                        const char   *m_data_type,
                         char         *data,
                         int          *err)
 {
   hid_t hid, did, tid, mid;
-  herr_t status;
+  hid_t xfer_prp = H5P_DEFAULT;
 
   ADFH_DEBUG(("ADFH_Read_All_Data"));
 
@@ -3021,14 +3307,30 @@ void ADFH_Read_All_Data(const double  id,
     ADFH_CHECK_HID(did);
     tid = H5Dget_type(did);
     ADFH_CHECK_HID(tid);
-    mid = H5Tget_native_type(tid, H5T_DIR_ASCEND);
+    if (m_data_type) {
+      mid = to_HDF_data_type(m_data_type);
+    }
+    else {
+      mid = H5Tget_native_type(tid, H5T_DIR_ASCEND);
+    }
     ADFH_CHECK_HID(mid);
-
-    if (H5Dread(did, mid, H5S_ALL, H5S_ALL, H5P_DEFAULT, data) < 0)
+#ifdef BUILD_PARALLEL
+    if (pcg_mpi_initialized) {
+      xfer_prp = H5Pcreate(H5P_DATASET_XFER);
+      ADFH_CHECK_HID(xfer_prp);
+      H5Pset_dxpl_mpio(xfer_prp, H5FD_MPIO_COLLECTIVE);
+    }
+#endif
+    if (H5Dread(did, mid, H5S_ALL, H5S_ALL, xfer_prp, data) < 0)
       set_error(ADFH_ERR_DREAD, err);
     else
       set_error(NO_ERROR, err);
 
+#ifdef BUILD_PARALLEL
+    if (pcg_mpi_initialized) {
+      H5Pclose(xfer_prp);
+    }
+#endif
     H5Tclose(mid);
     H5Tclose(tid);
     H5Dclose(did);
@@ -3041,14 +3343,15 @@ void ADFH_Read_All_Data(const double  id,
 /* ----------------------------------------------------------------- */
 
 void ADFH_Write_Block_Data(const double ID,
-                            const long b_start,
-                            const long b_end,
+                            const cgsize_t b_start,
+                            const cgsize_t b_end,
                             char *data,
                             int *err )
 {
   hid_t hid, did, mid, tid, dspace;
   size_t size, count, offset;
   char *buff;
+  hid_t xfer_prp = H5P_DEFAULT;
 
   ADFH_DEBUG(("ADFH_Write_Block_Data"));
 
@@ -3064,7 +3367,8 @@ void ADFH_Write_Block_Data(const double ID,
     set_error(START_OUT_OF_DEFINED_RANGE, err);
     return;
   }
-  hid = to_HDF_ID(ID);
+
+  to_HDF_ID(ID,hid);
   if (is_link(hid)) {
     set_error(ADFH_ERR_LINK_DATA, err);
     return;
@@ -3108,19 +3412,34 @@ void ADFH_Write_Block_Data(const double ID,
     return;
   }
 
-  if (H5Dread(did, mid, H5S_ALL, H5S_ALL, H5P_DEFAULT, buff) < 0)
+#ifdef BUILD_PARALLEL
+    hid_t fid = get_file_id(hid);
+    hid_t fapl=H5Fget_access_plist(fid);
+    if (H5Pget_driver(fapl) == H5FD_MPIO) {
+      xfer_prp = H5Pcreate(H5P_DATASET_XFER);
+      ADFH_CHECK_HID(xfer_prp);
+      H5Pset_dxpl_mpio(xfer_prp, H5FD_MPIO_COLLECTIVE);
+    }
+#endif
+
+  if (H5Dread(did, mid, H5S_ALL, H5S_ALL, xfer_prp, buff) < 0)
     set_error(ADFH_ERR_DREAD, err);
   else {
-    offset = size * (b_start - 1);
-    count = size * (b_end - b_start + 1);
+    offset = size * (size_t)(b_start - 1);
+    count = size * (size_t)(b_end - b_start + 1);
     memcpy(&buff[offset], data, count);
-    if (H5Dwrite(did, mid, H5S_ALL, H5S_ALL, H5P_DEFAULT, buff) < 0)
+    if (H5Dwrite(did, mid, H5S_ALL, H5S_ALL, xfer_prp, buff) < 0)
       set_error(ADFH_ERR_DWRITE, err);
     else
       set_error(NO_ERROR, err);
   }
 
   free (buff);
+#ifdef BUILD_PARALLEL
+    if (H5Pget_driver(fapl) == H5FD_MPIO) {
+      H5Pclose(xfer_prp);
+    }
+#endif
   H5Tclose(mid);
   H5Tclose(tid);
   H5Dclose(did);
@@ -3129,16 +3448,17 @@ void ADFH_Write_Block_Data(const double ID,
 /* ----------------------------------------------------------------- */
 
 void ADFH_Write_Data(const double ID,
-                      const int s_start[],
-                      const int s_end[],
-                      const int s_stride[],
-                      const int m_num_dims,
-                      const int m_dims[],
-                      const int m_start[],
-                      const int m_end[],
-                      const int m_stride[],
-                      const char *data,
-                      int *err )
+                     const cgsize_t s_start[],
+                     const cgsize_t s_end[],
+                     const cgsize_t s_stride[],
+                     const char *m_data_type,
+                     const int m_num_dims,
+                     const cgsize_t m_dims[],
+                     const cgsize_t m_start[],
+                     const cgsize_t m_end[],
+                     const cgsize_t m_stride[],
+                     const char *data,
+                     int *err )
 {
   int n, ndim;
   hid_t hid, did, mid, tid, dspace, mspace;
@@ -3147,6 +3467,7 @@ void ADFH_Write_Data(const double ID,
   hsize_t stride[ADF_MAX_DIMENSIONS];
   hsize_t count[ADF_MAX_DIMENSIONS];
   herr_t status;
+  hid_t xfer_prp = H5P_DEFAULT;
 
   ADFH_DEBUG(("ADFH_Write_Data"));
 
@@ -3154,7 +3475,7 @@ void ADFH_Write_Data(const double ID,
     set_error(NULL_POINTER, err);
     return;
   }
-  hid = to_HDF_ID(ID);
+  to_HDF_ID(ID,hid);
   if (is_link(hid)) {
     set_error(ADFH_ERR_LINK_DATA, err);
     return;
@@ -3269,10 +3590,31 @@ void ADFH_Write_Data(const double ID,
   ADFH_CHECK_HID(did);
   tid = H5Dget_type(did);
   ADFH_CHECK_HID(tid);
-  mid = H5Tget_native_type(tid, H5T_DIR_ASCEND);
+  if (m_data_type) {
+    mid = to_HDF_data_type(m_data_type);
+  }
+  else {
+    mid = H5Tget_native_type(tid, H5T_DIR_ASCEND);
+  }
   ADFH_CHECK_HID(mid);
-  status = H5Dwrite(did, mid, mspace, dspace, H5P_DEFAULT, data);
 
+#ifdef BUILD_PARALLEL
+  hid_t fid = get_file_id(hid);
+  hid_t fapl=H5Fget_access_plist(fid);
+  if (H5Pget_driver(fapl) == H5FD_MPIO) {
+    xfer_prp = H5Pcreate(H5P_DATASET_XFER);
+    ADFH_CHECK_HID(xfer_prp);
+    H5Pset_dxpl_mpio(xfer_prp, default_pio_mode);
+  }
+#endif
+
+  status = H5Dwrite(did, mid, mspace, dspace, xfer_prp, data);
+
+#ifdef BUILD_PARALLEL
+  if (H5Pget_driver(fapl) == H5FD_MPIO) {
+    H5Pclose(xfer_prp);
+  }
+#endif
   H5Sclose(mspace);
   H5Sclose(dspace);
   H5Tclose(mid);
@@ -3288,11 +3630,15 @@ void ADFH_Write_Data(const double ID,
 /* ----------------------------------------------------------------- */
 
 void ADFH_Write_All_Data(const double  id,
+                         const char   *m_data_type,
                          const char   *data,
                          int          *err)
 {
-  hid_t hid = to_HDF_ID(id);
+  hid_t hid;
   hid_t did, tid, mid;
+  hid_t xfer_prp = H5P_DEFAULT;
+
+  to_HDF_ID(id, hid);
 
   ADFH_DEBUG(("ADFH_Write_All_Data"));
 
@@ -3310,14 +3656,31 @@ void ADFH_Write_All_Data(const double  id,
     ADFH_CHECK_HID(did);
     tid = H5Dget_type(did);
     ADFH_CHECK_HID(tid);
-    mid = H5Tget_native_type(tid, H5T_DIR_ASCEND);
+    if (m_data_type) {
+      mid = to_HDF_data_type(m_data_type);
+    }
+    else {
+      mid = H5Tget_native_type(tid, H5T_DIR_ASCEND);
+    }
     ADFH_CHECK_HID(mid);
+#ifdef BUILD_PARALLEL
+    if (pcg_mpi_initialized) {
+      xfer_prp = H5Pcreate(H5P_DATASET_XFER);
+      ADFH_CHECK_HID(xfer_prp);
+      if (H5Pset_dxpl_mpio(xfer_prp, H5FD_MPIO_COLLECTIVE) < 0)
+	set_error(ADFH_ERR_DWRITE, err);
+    }
+#endif
 
-    if (H5Dwrite(did, mid, H5S_ALL, H5S_ALL, H5P_DEFAULT, data) < 0)
+    if (H5Dwrite(did, mid, H5S_ALL, H5S_ALL, xfer_prp, data) < 0)
       set_error(ADFH_ERR_DWRITE, err);
     else
       set_error(NO_ERROR, err);
-
+#ifdef BUILD_PARALLEL
+    if (pcg_mpi_initialized) {
+      H5Pclose(xfer_prp);
+    }
+#endif
     H5Tclose(mid);
     H5Tclose(tid);
     H5Dclose(did);

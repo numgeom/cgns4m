@@ -24,6 +24,21 @@ freely, subject to the following restrictions:
 3. This notice may not be removed or altered from any source distribution.
 -------------------------------------------------------------------------*/
 
+/*    _____ __  __ _____   ____  _____ _______       _   _ _______
+ *   |_   _|  \/  |  __ \ / __ \|  __ \__   __|/\   | \ | |__   __|
+ *     | | | \  / | |__) | |  | | |__) | | |  /  \  |  \| |  | |
+ *     | | | |\/| |  ___/| |  | |  _  /  | | / /\ \ | . ` |  | |
+ *    _| |_| |  | | |    | |__| | | \ \  | |/ ____ \| |\  |  | |
+ *   |_____|_|  |_|_|     \____/|_|  \_\ |_/_/    \_\_| \_|  |_|
+ *
+ * -------------------  DEVELOPER'S NOTES  ---------------------------
+ *
+ * (1) If a new keyword is introduced into this file then the same keyword
+ * needs to be added to cgns_f.F90 in order to maintain Fortran
+ * compatibility.
+ *
+ */
+
 #ifndef CGNSLIB_KEYWORDS_H
 #define CGNSLIB_KEYWORDS_H
 
@@ -48,8 +63,8 @@ freely, subject to the following restrictions:
  *      VERSION NUMBER                                                   *
 \* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-#define CGNS_VERSION 3000
-#define CGNS_DOTVERS 3.0
+#define CGNS_VERSION 3400
+#define CGNS_DOTVERS 3.40
 #define CGNS_COMPATVERSION 2540
 #define CGNS_COMPATDOTVERS 2.54
 
@@ -90,11 +105,6 @@ freely, subject to the following restrictions:
 #define CG_CONFIG_SET_PATH  3
 #define CG_CONFIG_ADD_PATH  4
 #define CG_CONFIG_FILE_TYPE 5
-
-#define CG_CONFIG_XML_DELETED     301
-#define CG_CONFIG_XML_NAMESPACE   302
-#define CG_CONFIG_XML_THRESHOLD   303
-#define CG_CONFIG_XML_COMPRESSION 304
 
 /* The Null and the UserDefined string constants are always the same,
    whatever enumerate you consider. */
@@ -384,7 +394,7 @@ typedef enum {
 #define Ideal_s                        "Ideal"
 #define VanderWaals_s                  "VanderWaals"
 #define Constant_s                     "Constant"
-#define PowerLaw_s                     "PowerLaw"    
+#define PowerLaw_s                     "PowerLaw"
 #define SutherlandLaw_s                "SutherlandLaw"
 #define ConstantPrandtl_s              "ConstantPrandtl"
 #define EddyViscosity_s                "EddyViscosity"
@@ -458,7 +468,7 @@ typedef enum {
 #define BCWallViscous_s                "BCWallViscous"
 #define BCWallViscousHeatFlux_s        "BCWallViscousHeatFlux"
 #define BCWallViscousIsothermal_s      "BCWallViscousIsothermal"
-#define FamilySpecified_s              "FamilySpecified_s"
+#define FamilySpecified_s              "FamilySpecified"
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - *\
  *      Data types:  Can not add data types and stay forward compatible  *
@@ -467,15 +477,16 @@ typedef enum {
 #ifdef __CGNS_ENUMS__
 typedef enum {
 	DataTypeNull, DataTypeUserDefined, Integer, RealSingle,
-	RealDouble, Character
+	RealDouble, Character, LongInteger
 } DataType_t;
 #endif
-#define NofValidDataTypes 6
+#define NofValidDataTypes 7
 
 #define Integer_s                      "Integer"
 #define RealSingle_s                   "RealSingle"
 #define RealDouble_s                   "RealDouble"
 #define Character_s                    "Character"
+#define LongInteger_s                  "LongInteger"
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - *\
  *      Element types                                                    *
@@ -488,36 +499,36 @@ typedef enum {
 	TRI_3, TRI_6,					/* 5, 6,	*/
 	QUAD_4, QUAD_8, QUAD_9,				/* 7, 8, 9,	*/
 	TETRA_4, TETRA_10, 				/* 10, 11,	*/
-	PYRA_5, PYRA_13, PYRA_14, 			/* 12, 13, 14,	*/
-	PENTA_6, PENTA_15, PENTA_18,			/* 15, 16, 17,	*/
-	HEXA_8, HEXA_20, HEXA_27, 			/* 18, 19, 20,	*/
-	MIXED, NGON_n, NFACE_n					/* 21, 22, 23	*/
+	PYRA_5, PYRA_14, 				/* 12, 13,	*/
+	PENTA_6, PENTA_15, PENTA_18,			/* 14, 15, 16,	*/
+	HEXA_8, HEXA_20, HEXA_27, 			/* 17, 18, 19,	*/
+	MIXED, PYRA_13, NGON_n, NFACE_n			/* 20, 21, 22, 23*/
 } ElementType_t;
 #endif
-#define NofValidElementTypes 22
+#define NofValidElementTypes 24
 
 #define NODE_s                         "NODE"
-#define BAR_2_s                        "BAR_2" 	 
+#define BAR_2_s                        "BAR_2"
 #define BAR_3_s                        "BAR_3"
-#define TRI_3_s                        "TRI_3" 	 
-#define TRI_6_s                        "TRI_6"           
-#define QUAD_4_s                       "QUAD_4" 	 
-#define QUAD_8_s                       "QUAD_8"          
-#define QUAD_9_s                       "QUAD_9"           
-#define TETRA_4_s                      "TETRA_4" 	 
-#define TETRA_10_s                     "TETRA_10"           
-#define PYRA_5_s                       "PYRA_5" 	 
-#define PYRA_13_s                      "PYRA_13"           
-#define PYRA_14_s                      "PYRA_14"           
-#define PENTA_6_s                      "PENTA_6" 	 
-#define PENTA_15_s                     "PENTA_15"          
-#define PENTA_18_s                     "PENTA_18"           
-#define HEXA_8_s                       "HEXA_8" 	 
-#define HEXA_20_s                      "HEXA_20"          
-#define HEXA_27_s                      "HEXA_27"           
-#define MIXED_s                        "MIXED" 	 
-#define NGON_n_s                       "NGON_n"          
-#define NFACE_n_s                      "NFACE_n"          
+#define TRI_3_s                        "TRI_3"
+#define TRI_6_s                        "TRI_6"
+#define QUAD_4_s                       "QUAD_4"
+#define QUAD_8_s                       "QUAD_8"
+#define QUAD_9_s                       "QUAD_9"
+#define TETRA_4_s                      "TETRA_4"
+#define TETRA_10_s                     "TETRA_10"
+#define PYRA_5_s                       "PYRA_5"
+#define PYRA_14_s                      "PYRA_14"
+#define PENTA_6_s                      "PENTA_6"
+#define PENTA_15_s                     "PENTA_15"
+#define PENTA_18_s                     "PENTA_18"
+#define HEXA_8_s                       "HEXA_8"
+#define HEXA_20_s                      "HEXA_20"
+#define HEXA_27_s                      "HEXA_27"
+#define MIXED_s                        "MIXED"
+#define PYRA_13_s                      "PYRA_13"
+#define NGON_n_s                       "NGON_n"
+#define NFACE_n_s                      "NFACE_n"
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - *\
  *      Zone types                                                       *
@@ -655,7 +666,7 @@ typedef enum {
 /* Patterns --- */
 #define VectorX_ps                     "%sX"
 #define VectorY_ps                     "%sY"
-#define VectorZ_ps                     "%sZ"    
+#define VectorZ_ps                     "%sZ"
 #define VectorTheta_ps                 "%sTheta"
 #define VectorPhi_ps                   "%sPhi"
 #define VectorMagnitude_ps             "%sMagnitude"
@@ -923,7 +934,7 @@ typedef enum {
 #define DataConversion_ts              "DataConversion_t"
 #define Descriptor_ts                  "Descriptor_t"
 #define DimensionalExponents_ts        "DimensionalExponents_t"
-#define DimensionalUnits_ts            "DimensionalUnits_t"   
+#define DimensionalUnits_ts            "DimensionalUnits_t"
 #define DiscreteData_ts                "DiscreteData_t"
 #define Elements_ts                    "Elements_t"
 #define FamilyBC_ts                    "FamilyBC_t"
@@ -945,7 +956,7 @@ typedef enum {
 #define GridCoordinates_ts             "GridCoordinates_t"
 #define GridLocation_ts                "GridLocation_t"
 #define IndexArray_ts                  "IndexArray_t"
-#define IndexRange_ts                  "IndexRange_t"   
+#define IndexRange_ts                  "IndexRange_t"
 #define IntegralData_ts                "IntegralData_t"
 #define InwardNormalList_ts            "InwardNormalList_t"
 #define Ordinal_ts                     "Ordinal_t"
@@ -953,7 +964,7 @@ typedef enum {
 #define Periodic_ts                    "Periodic_t"
 #define ReferenceState_ts              "ReferenceState_t"
 #define RigidGridMotion_ts             "RigidGridMotion_t"
-#define Rind_ts                        "Rind_t"   
+#define Rind_ts                        "Rind_t"
 #define RotatingCoordinates_ts         "RotatingCoordinates_t"
 #define SimulationType_ts              "SimulationType_t"
 #define ThermalConductivityModel_ts    "ThermalConductivityModel_t"

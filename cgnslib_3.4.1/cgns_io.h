@@ -1,28 +1,38 @@
-/*-------------------------------------------------------------------------
-This software is provided 'as-is', without any express or implied warranty.
-In no event will the authors be held liable for any damages arising from
-the use of this software.
+/* ------------------------------------------------------------------------- *
+ * CGNS - CFD General Notation System (http://www.cgns.org)                  *
+ * CGNS/MLL - Mid-Level Library header file                                  *
+ * Please see cgnsconfig.h file for this local installation configuration    *
+ * ------------------------------------------------------------------------- */
 
-Permission is granted to anyone to use this software for any purpose,
-including commercial applications, and to alter it and redistribute it
-freely, subject to the following restrictions:
+/* ------------------------------------------------------------------------- *
 
-1. The origin of this software must not be misrepresented; you must not
-   claim that you wrote the original software. If you use this software
-   in a product, an acknowledgment in the product documentation would be
-   appreciated but is not required.
+  This software is provided 'as-is', without any express or implied warranty.
+  In no event will the authors be held liable for any damages arising from
+  the use of this software.
 
-2. Altered source versions must be plainly marked as such, and must not
-   be misrepresented as being the original software.
+  Permission is granted to anyone to use this software for any purpose,
+  including commercial applications, and to alter it and redistribute it
+  freely, subject to the following restrictions:
 
-3. This notice may not be removed or altered from any source distribution.
--------------------------------------------------------------------------*/
+  1. The origin of this software must not be misrepresented; you must not
+     claim that you wrote the original software. If you use this software
+     in a product, an acknowledgment in the product documentation would be
+     appreciated but is not required.
+
+  2. Altered source versions must be plainly marked as such, and must not
+     be misrepresented as being the original software.
+
+  3. This notice may not be removed or altered from any source distribution.
+
+ * ------------------------------------------------------------------------- */
 
 #ifndef CGNS_IO_H
 #define CGNS_IO_H
 
+#include "cgnstypes.h"
+
 #if defined(_WIN32) && defined(BUILD_DLL)
-# define CGEXTERN extern _declspec(dllexport)
+# define CGEXTERN extern __declspec(dllexport)
 #else
 # define CGEXTERN extern
 #endif
@@ -37,8 +47,7 @@ freely, subject to the following restrictions:
 #define CGIO_FILE_NONE   0
 #define CGIO_FILE_ADF    1
 #define CGIO_FILE_HDF5   2
-#define CGIO_FILE_XML    3
-#define CGIO_FILE_ADF2   4
+#define CGIO_FILE_ADF2   3
 
 /* currently these are the same as for ADF */
 
@@ -47,17 +56,11 @@ freely, subject to the following restrictions:
 #define CGIO_MAX_NAME_LENGTH     32
 #define CGIO_MAX_LABEL_LENGTH    32
 #define CGIO_MAX_VERSION_LENGTH  32
+#define CGIO_MAX_DATE_LENGTH     32
 #define CGIO_MAX_ERROR_LENGTH    80
 #define CGIO_MAX_LINK_DEPTH     100
 #define CGIO_MAX_FILE_LENGTH   1024
 #define CGIO_MAX_LINK_LENGTH   4096
-
-/* configure options */
-
-#define CGIO_CONFIG_XML_DELETED     301
-#define CGIO_CONFIG_XML_NAMESPACE   302
-#define CGIO_CONFIG_XML_THRESHOLD   303
-#define CGIO_CONFIG_XML_COMPRESSION 304
 
 /* these are the cgio error codes */
 
@@ -77,6 +80,9 @@ freely, subject to the following restrictions:
 #define CGIO_ERR_BAD_OPTION  -13
 #define CGIO_ERR_FILE_RENAME -14
 #define CGIO_ERR_TOO_MANY    -15
+#define CGIO_ERR_DIMENSIONS  -16
+#define CGIO_ERR_BAD_TYPE    -17
+#define CGIO_ERR_NOT_HDF5    -18
 
 #ifdef __cplusplus
 extern "C" {
@@ -93,6 +99,7 @@ CGEXTERN int cgio_path_delete (
 );
 
 CGEXTERN int cgio_find_file (
+    const char *parentfile,
     const char *filename,
     int file_type,
     int max_path_len,
@@ -120,8 +127,19 @@ CGEXTERN int cgio_check_file (
 CGEXTERN int cgio_compute_data_size (
     const char *data_type,
     int num_dims,
-    const int *dim_vals,
-    unsigned long *count
+    const cgsize_t *dim_vals,
+    cglong_t *count
+);
+
+CGEXTERN int cgio_check_dimensions (
+    int ndims,
+    const cglong_t *dims
+);
+
+CGEXTERN int cgio_copy_dimensions (
+    int ndims,
+    const cglong_t *dims64,
+    cgsize_t *dims
 );
 
 /*---------------------------------------------------------*/
@@ -184,12 +202,15 @@ CGEXTERN void cgio_error_code (
 );
 
 CGEXTERN int cgio_error_message (
-    int max_len,
     char *error_msg
 );
 
 CGEXTERN void cgio_error_exit (
     const char *msg
+);
+
+CGEXTERN void cgio_error_abort (
+    int abort_flag
 );
 
 /*---------------------------------------------------------*/
@@ -208,7 +229,7 @@ CGEXTERN int cgio_new_node (
     const char *label,
     const char *data_type,
     int ndims,
-    const int *dims,
+    const cgsize_t *dims,
     const void *data,
     double *id
 );
@@ -326,14 +347,14 @@ CGEXTERN int cgio_get_data_type (
 CGEXTERN int cgio_get_data_size (
     int cgio_num,
     double id,
-    unsigned long *data_size
+    cglong_t *data_size
 );
 
 CGEXTERN int cgio_get_dimensions (
     int cgio_num,
     double id,
     int *num_dims,
-    int *dims
+    cgsize_t *dims
 );
 
 CGEXTERN int cgio_read_all_data (
@@ -342,17 +363,47 @@ CGEXTERN int cgio_read_all_data (
     void *data
 );
 
+CGEXTERN int cgio_read_all_data_type (
+    int cgio_num,
+    double id,
+    const char *m_data_type,
+    void *data
+);
+
+CGEXTERN int cgio_read_block_data (
+    int cgio_num,
+    double id,
+    cgsize_t b_start,
+    cgsize_t b_end,
+    void *data
+);
+
 CGEXTERN int cgio_read_data (
     int cgio_num,
     double id,
-    const int *s_start,
-    const int *s_end,
-    const int *s_stride,
+    const cgsize_t *s_start,
+    const cgsize_t *s_end,
+    const cgsize_t *s_stride,
     int m_num_dims,
-    const int *m_dims,
-    const int *m_start,
-    const int *m_end,
-    const int *m_stride,
+    const cgsize_t *m_dims,
+    const cgsize_t *m_start,
+    const cgsize_t *m_end,
+    const cgsize_t *m_stride,
+    void *data
+);
+
+CGEXTERN int cgio_read_data_type (
+    int cgio_num,
+    double id,
+    const cgsize_t *s_start,
+    const cgsize_t *s_end,
+    const cgsize_t *s_stride,
+    const char *m_data_type,
+    int m_num_dims,
+    const cgsize_t *m_dims,
+    const cgsize_t *m_start,
+    const cgsize_t *m_end,
+    const cgsize_t *m_stride,
     void *data
 );
 
@@ -376,7 +427,7 @@ CGEXTERN int cgio_set_dimensions (
     double id,
     const char *data_type,
     int num_dims,
-    const int *dims
+    const cgsize_t *dims
 );
 
 CGEXTERN int cgio_write_all_data (
@@ -385,17 +436,47 @@ CGEXTERN int cgio_write_all_data (
     const void *data
 );
 
+CGEXTERN int cgio_write_all_data_type (
+    int cgio_num,
+    double id,
+    const char *m_data_type,
+    const void *data
+);
+
+CGEXTERN int cgio_write_block_data (
+    int cgio_num,
+    double id,
+    cgsize_t b_start,
+    cgsize_t b_end,
+    void *data
+);
+
 CGEXTERN int cgio_write_data (
     int cgio_num,
     double id,
-    const int *s_start,
-    const int *s_end,
-    const int *s_stride,
+    const cgsize_t *s_start,
+    const cgsize_t *s_end,
+    const cgsize_t *s_stride,
     int m_num_dims,
-    const int *m_dims,
-    const int *m_start,
-    const int *m_end,
-    const int *m_stride,
+    const cgsize_t *m_dims,
+    const cgsize_t *m_start,
+    const cgsize_t *m_end,
+    const cgsize_t *m_stride,
+    const void *data
+);
+
+CGEXTERN int cgio_write_data_type (
+    int cgio_num,
+    double id,
+    const cgsize_t *s_start,
+    const cgsize_t *s_end,
+    const cgsize_t *s_stride,
+    const char *m_data_type,
+    int m_num_dims,
+    const cgsize_t *m_dims,
+    const cgsize_t *m_start,
+    const cgsize_t *m_end,
+    const cgsize_t *m_stride,
     const void *data
 );
 
