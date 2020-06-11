@@ -4,10 +4,9 @@ function build_cgns4m(cgns4m_root)
 % See also startup_cgns4m.
 
 SRCDIR = 'cgnslib_3.0';
-HDF_VERSION = 'hdf5-1.8.21';
 oldpwd = pwd;
 if nargin<1
-    cgns4m_root = fileparts(which('build_cgns4m.m'));
+    cgns4m_root = fileparts(which('startup_cgns4m.m'));
 end
 
 % We must build in the CGNS4m directory. Change the directory first.
@@ -40,6 +39,7 @@ cgnsfiles = ['cgnslib.c cgns_internals.c cgns_io.c cgns_error.c '...
 cgnsfiles = [cgnsfiles ' adfh/ADFH.c'];
 
 if ispc
+    HDF_VERSION = 'hdf5-1.8.21';
     sys_hdfroot = ['C:\Program Files\HDF_Group\HDF5\' HDF_VERSION(6:end)];
     if ~exist([sys_hdfroot '\lib'], 'dir')
         url = ['https://support.hdfgroup.org/ftp/HDF5/current18/bin/' ...
@@ -63,7 +63,23 @@ if ispc
     hdf5lib = ['"' sys_hdfroot '\lib\libhdf5.lib" "' ...
         sys_hdfroot '\lib\libszip.lib" "' ...
         sys_hdfroot '\lib\libzlib.lib"'];
+elseif isoctave
+    if exist('__octave_config_info__', 'builtin')
+        octave_config_info = eval('@__octave_config_info__');
+    end
+    hdf5inc = [octave_config_info('HDF5_CPPFLAGS') ' ' ...
+              '-I' SRCDIR '/adfh -DBUILD_HDF5'];
+    hdf5lib = [octave_config_info('HDF5_LDFLAGS') ' ' ...
+               octave_config_info('HDF5_LIBS')];
+   HDF_VERSION = '';
 else
+    % Try to the same version as MATLAB's built-in version
+    [major, minor, release] = H5.get_libversion();
+    if major == 1 && minor == 8
+        HDF_VERSION = sprintf('hdf5-%d.%d.%d', major, minor, release);
+    else
+        HDF_VERSION = 'hdf5-1.8.21';
+    end
     if ~exist(HDF_VERSION, 'dir')
         if ~exist([HDF_VERSION '.tgz'], 'file')
             % Download HDF5, unzip, and set path
@@ -101,7 +117,7 @@ else
     hdf5lib = [HDF_VERSION '/lib/libhdf5.a -L' HDF_VERSION '/lib -ldl -lz'];
 end
 
-disp(['Building CGNS4m with the HDF5 library ' HDF_VERSION '.']);
+disp(['Building CGNS4m with HDF5 library ' HDF_VERSION '.']);
 cgnsfiles = addprefix(cgnsfiles, [SRCDIR '/']);
 
 if isoctave
