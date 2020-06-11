@@ -14,7 +14,7 @@ function [out_nfamilies, ierr] = cg_nfamilies(in_file_number, in_B)
 % The original C function is:
 % int cg_nfamilies( int file_number, int B, int * nfamilies);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/families.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');

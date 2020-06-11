@@ -17,7 +17,7 @@ function [out_BC, ierr] = cg_fambc_write(in_file_number, in_B, in_F, in_fambc_na
 % The original C function is:
 % int cg_fambc_write( int file_number, int B, int F, char const * fambc_name, BCType_t bocotype, int * BC);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/families.html">online documentation</a>.
 %
 if (nargin < 5); 
     error('Incorrect number of input or output arguments.');

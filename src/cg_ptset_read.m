@@ -12,7 +12,7 @@ function [out_pnts, ierr] = cg_ptset_read()
 % The original C function is:
 % int cg_ptset_read( int * pnts);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/location.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/location.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.

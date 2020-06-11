@@ -14,7 +14,7 @@ function ierr = cg_bcdataset_write(in_name, in_BCType, in_BCDataType)
 % The original C function is:
 % int cg_bcdataset_write( char const * name, BCType_t BCType, BCDataType_t BCDataType);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 2); 
     error('Incorrect number of input or output arguments.');

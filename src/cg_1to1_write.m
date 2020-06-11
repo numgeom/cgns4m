@@ -20,7 +20,7 @@ function [out_I, ierr] = cg_1to1_write(in_fn, in_B, in_Z, in_connectname, in_don
 % The original C function is:
 % int cg_1to1_write( int fn, int B, int Z, char const * connectname, char const * donorname, int const * range, int const * donor_range, int const * transform, int * I);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
 if (nargin < 8); 
     error('Incorrect number of input or output arguments.');

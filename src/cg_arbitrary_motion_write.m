@@ -17,7 +17,7 @@ function [out_A, ierr] = cg_arbitrary_motion_write(in_file_number, in_B, in_Z, i
 % The original C function is:
 % int cg_arbitrary_motion_write( int file_number, int B, int Z, char const * amotionname, ArbitraryGridMotionType_t type, int * A);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/timedep.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/timedep.html">online documentation</a>.
 %
 if (nargin < 5); 
     error('Incorrect number of input or output arguments.');

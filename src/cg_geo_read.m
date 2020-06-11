@@ -21,7 +21,7 @@ function [io_geo_name, io_CAD_name, out_geo_file, out_npart, ierr] = cg_geo_read
 % The original C function is:
 % int cg_geo_read( int file_number, int B, int F, int G, char * geo_name, char ** geo_file, char * CAD_name, int * npart);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/families.html">online documentation</a>.
 %
 
 % NOTE: Some buffer space for out char(s) was allocated by C function

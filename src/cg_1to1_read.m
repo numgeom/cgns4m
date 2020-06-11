@@ -22,7 +22,7 @@ function [io_connectname, io_donorname, io_range, io_donor_range, io_transform, 
 % The original C function is:
 % int cg_1to1_read( int fn, int B, int Z, int I, char * connectname, char * donorname, int * range, int * donor_range, int * transform);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
 if ( nargout < 5 || nargin < 4); 
     error('Incorrect number of input or output arguments.');

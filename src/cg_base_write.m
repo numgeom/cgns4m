@@ -16,7 +16,7 @@ function [out_B, ierr] = cg_base_write(in_file_number, in_basename, in_cell_dim,
 % The original C function is:
 % int cg_base_write( int file_number, char const * basename, int cell_dim, int phys_dim, int * B);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/structural.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
 %
 if (nargin < 4); 
     error('Incorrect number of input or output arguments.');

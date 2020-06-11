@@ -15,7 +15,7 @@ function [out_F, ierr] = cg_family_write(in_file_number, in_B, in_family_name)
 % The original C function is:
 % int cg_family_write( int file_number, int B, char const * family_name, int * F);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/families.html">online documentation</a>.
 %
 if (nargin < 3); 
     error('Incorrect number of input or output arguments.');

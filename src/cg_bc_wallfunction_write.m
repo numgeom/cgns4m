@@ -16,7 +16,7 @@ function ierr = cg_bc_wallfunction_write(in_file_number, in_B, in_Z, in_BC, in_W
 % The original C function is:
 % int cg_bc_wallfunction_write( int file_number, int B, int Z, int BC, WallFunctionType_t WallFunctionType);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %
 if (nargin < 5); 
     error('Incorrect number of input or output arguments.');

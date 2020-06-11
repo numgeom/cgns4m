@@ -15,7 +15,7 @@ function [io_nbases, ierr] = cg_nbases(in_fn, io_nbases)
 % The original C function is:
 % int cg_nbases( int fn, int * nbases);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/structural.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 2); 
     error('Incorrect number of input or output arguments.');

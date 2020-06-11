@@ -13,7 +13,7 @@ function ierr = cg_conversion_write(in_DataType, in_ConversionFactors)
 % The original C function is:
 % int cg_conversion_write( DataType_t DataType, void const * ConversionFactors);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');

@@ -19,7 +19,7 @@ function [io_elements, io_parent_data, ierr] = cg_elements_read(in_file_number, 
 % The original C function is:
 % int cg_elements_read( int file_number, int B, int Z, int S, int * elements, int * parent_data);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
 if ( nargout < 2 || nargin < 6); 
     error('Incorrect number of input or output arguments.');

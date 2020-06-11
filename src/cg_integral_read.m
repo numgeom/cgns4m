@@ -15,7 +15,7 @@ function [io_IntegralDataName, ierr] = cg_integral_read(in_IntegralDataIndex, io
 % The original C function is:
 % int cg_integral_read( int IntegralDataIndex, char * IntegralDataName);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/auxiliary.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 1); 
     error('Incorrect number of input or output arguments.');

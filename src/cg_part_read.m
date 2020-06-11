@@ -19,7 +19,7 @@ function [io_part_name, ierr] = cg_part_read(in_file_number, in_B, in_F, in_G, i
 % The original C function is:
 % int cg_part_read( int file_number, int B, int F, int G, int P, char * part_name);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/families.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 5); 
     error('Incorrect number of input or output arguments.');

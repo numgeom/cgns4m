@@ -16,7 +16,7 @@ function ierr = cg_parent_data_write(in_file_number, in_B, in_Z, in_S, in_parent
 % The original C function is:
 % int cg_parent_data_write( int file_number, int B, int Z, int S, int const * parent_data);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
 if (nargin < 5); 
     error('Incorrect number of input or output arguments.');

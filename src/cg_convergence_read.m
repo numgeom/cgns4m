@@ -15,7 +15,7 @@ function [io_iterations, out_NormDefinitions, ierr] = cg_convergence_read(io_ite
 % The original C function is:
 % int cg_convergence_read( int * iterations, char ** NormDefinitions);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/auxiliary.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html">online documentation</a>.
 %
 
 % NOTE: Some buffer space for out char(s) was allocated by C function

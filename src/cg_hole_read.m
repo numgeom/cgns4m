@@ -18,7 +18,7 @@ function [io_pnts, ierr] = cg_hole_read(in_fn, in_B, in_Z, in_I, io_pnts)
 % The original C function is:
 % int cg_hole_read( int fn, int B, int Z, int I, int * pnts);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 5); 
     error('Incorrect number of input or output arguments.');

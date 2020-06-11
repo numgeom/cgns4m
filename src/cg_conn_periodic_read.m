@@ -20,7 +20,7 @@ function [io_RotationCenter, io_RotationAngle, io_Translation, ierr] = cg_conn_p
 % The original C function is:
 % int cg_conn_periodic_read( int file_number, int B, int Z, int I, float * RotationCenter, float * RotationAngle, float * Translation);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
 if ( nargout < 3 || nargin < 4); 
     error('Incorrect number of input or output arguments.');

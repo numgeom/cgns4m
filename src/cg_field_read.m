@@ -22,7 +22,7 @@ function [io_field_ptr, ierr] = cg_field_read(in_fn, in_B, in_Z, in_S, in_fieldn
 % The original C function is:
 % int cg_field_read( int fn, int B, int Z, int S, char const * fieldname, DataType_t type, int * rmin, int * rmax, void * field_ptr);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/solution.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 9); 
     error('Incorrect number of input or output arguments.');

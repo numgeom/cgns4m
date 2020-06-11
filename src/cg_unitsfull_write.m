@@ -19,7 +19,7 @@ function ierr = cg_unitsfull_write(in_mass, in_length, in_time, in_temperature, 
 % The original C function is:
 % int cg_unitsfull_write( MassUnits_t mass, LengthUnits_t length, TimeUnits_t time, TemperatureUnits_t temperature, AngleUnits_t angle, ElectricCurrentUnits_t current, SubstanceAmountUnits_t amount, LuminousIntensityUnits_t intensity);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
 if (nargin < 8); 
     error('Incorrect number of input or output arguments.');

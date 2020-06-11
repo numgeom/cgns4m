@@ -14,7 +14,7 @@ function ierr = cg_ptset_write(in_ptset_type, in_npnts, in_pnts)
 % The original C function is:
 % int cg_ptset_write( PointSetType_t ptset_type, int npnts, int const * pnts);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/location.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/location.html">online documentation</a>.
 %
 if (nargin < 3); 
     error('Incorrect number of input or output arguments.');

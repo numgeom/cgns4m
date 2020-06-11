@@ -21,7 +21,7 @@ function [out_I, ierr] = cg_hole_write(in_fn, in_B, in_Z, in_holename, in_locati
 % The original C function is:
 % int cg_hole_write( int fn, int B, int Z, char const * holename, GridLocation_t location, PointSetType_t ptset_type, int nptsets, int npnts, int const * pnts, int * I);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
 if (nargin < 9); 
     error('Incorrect number of input or output arguments.');

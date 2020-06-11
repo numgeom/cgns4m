@@ -12,7 +12,7 @@ function [out_EquationsType, ierr] = cg_governing_read()
 % The original C function is:
 % int cg_governing_read( GoverningEquationsType_t * EquationsType);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.

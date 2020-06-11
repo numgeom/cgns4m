@@ -12,7 +12,7 @@ function ierr = cg_set_file_type(in_file_type)
 % The original C function is:
 % int cg_set_file_type( int file_type);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/fileops.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/fileops.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');

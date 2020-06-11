@@ -16,7 +16,7 @@ function [out_WallFunctionType, ierr] = cg_bc_wallfunction_read(in_file_number, 
 % The original C function is:
 % int cg_bc_wallfunction_read( int file_number, int B, int Z, int BC, WallFunctionType_t * WallFunctionType);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %
 if (nargin < 4); 
     error('Incorrect number of input or output arguments.');

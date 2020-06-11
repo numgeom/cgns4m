@@ -15,7 +15,7 @@ function [io_user_data_name, ierr] = cg_user_data_read(in_Index, io_user_data_na
 % The original C function is:
 % int cg_user_data_read( int Index, char * user_data_name);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/auxiliary.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 1); 
     error('Incorrect number of input or output arguments.');

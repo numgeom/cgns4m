@@ -13,7 +13,7 @@ function ierr = cg_configure(in_what, in_value)
 % The original C function is:
 % int cg_configure( int what, void * value);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/fileops.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/fileops.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');

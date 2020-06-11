@@ -14,7 +14,7 @@ function [io_RindData, ierr] = cg_rind_read(io_RindData)
 % The original C function is:
 % int cg_rind_read( int * RindData);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/location.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/location.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 1); 
     error('Incorrect number of input or output arguments.');

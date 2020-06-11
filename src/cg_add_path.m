@@ -12,7 +12,7 @@ function ierr = cg_add_path(in_path)
 % The original C function is:
 % int cg_add_path( const char * path);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/fileops.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/fileops.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');

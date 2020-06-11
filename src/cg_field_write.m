@@ -19,7 +19,7 @@ function [out_F, ierr] = cg_field_write(in_fn, in_B, in_Z, in_S, in_type, in_fie
 % The original C function is:
 % int cg_field_write( int fn, int B, int Z, int S, DataType_t type, char const * fieldname, void const * field_ptr, int * F);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/solution.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %
 if (nargin < 7); 
     error('Incorrect number of input or output arguments.');

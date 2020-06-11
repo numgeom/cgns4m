@@ -14,7 +14,7 @@ function [io_numexp, ierr] = cg_nexponents(io_numexp)
 % The original C function is:
 % int cg_nexponents( int * numexp);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 1); 
     error('Incorrect number of input or output arguments.');

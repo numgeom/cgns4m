@@ -15,7 +15,7 @@ function [out_nbocos, ierr] = cg_nbocos(in_fn, in_B, in_Z)
 % The original C function is:
 % int cg_nbocos( int fn, int B, int Z, int * nbocos);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %
 if (nargin < 3); 
     error('Incorrect number of input or output arguments.');

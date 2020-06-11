@@ -25,7 +25,7 @@ function [io_boconame, io_NormalIndex, out_bocotype, out_ptset_type, out_npnts, 
 % The original C function is:
 % int cg_boco_info( int fn, int B, int Z, int BC, char * boconame, BCType_t * bocotype, PointSetType_t * ptset_type, int * npnts, int * NormalIndex, int * NormalListFlag, DataType_t * NormalDataType, int * ndataset);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %
 if ( nargout < 2 || nargin < 6); 
     error('Incorrect number of input or output arguments.');

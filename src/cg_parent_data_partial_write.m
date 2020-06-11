@@ -18,7 +18,7 @@ function ierr = cg_parent_data_partial_write(in_fn, in_B, in_Z, in_S, in_start, 
 % The original C function is:
 % int cg_parent_data_partial_write( int fn, int B, int Z, int S, int start, int end, int const * ParentData);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
 if (nargin < 7); 
     error('Incorrect number of input or output arguments.');

@@ -13,7 +13,7 @@ function [out_ModelType, ierr] = cg_model_read(in_ModelLabel)
 % The original C function is:
 % int cg_model_read( char const * ModelLabel, ModelType_t * ModelType);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');

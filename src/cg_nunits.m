@@ -12,7 +12,7 @@ function [out_nunits, ierr] = cg_nunits()
 % The original C function is:
 % int cg_nunits( int * nunits);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.

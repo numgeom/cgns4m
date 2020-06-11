@@ -16,7 +16,7 @@ function [out_AverageInterfaceType, ierr] = cg_conn_average_read(in_file_number,
 % The original C function is:
 % int cg_conn_average_read( int file_number, int B, int Z, int I, AverageInterfaceType_t * AverageInterfaceType);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
 if (nargin < 4); 
     error('Incorrect number of input or output arguments.');

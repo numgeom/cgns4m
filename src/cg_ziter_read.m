@@ -17,7 +17,7 @@ function [io_zitername, ierr] = cg_ziter_read(in_file_number, in_B, in_Z, io_zit
 % The original C function is:
 % int cg_ziter_read( int file_number, int B, int Z, char * zitername);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/timedep.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/timedep.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 3); 
     error('Incorrect number of input or output arguments.');

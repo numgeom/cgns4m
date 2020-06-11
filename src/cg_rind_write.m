@@ -12,7 +12,7 @@ function ierr = cg_rind_write(in_RindData)
 % The original C function is:
 % int cg_rind_write( int const * RindData);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/location.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/location.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');

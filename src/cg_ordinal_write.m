@@ -12,7 +12,7 @@ function ierr = cg_ordinal_write(in_Ordinal)
 % The original C function is:
 % int cg_ordinal_write( int Ordinal);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/descriptor.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/descriptor.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');

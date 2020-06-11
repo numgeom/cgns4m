@@ -14,7 +14,7 @@ function [io_exponents, ierr] = cg_expfull_read(io_exponents)
 % The original C function is:
 % int cg_expfull_read( void * exponents);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 1); 
     error('Incorrect number of input or output arguments.');

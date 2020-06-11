@@ -16,7 +16,7 @@ function ierr = cg_array_write(in_ArrayName, in_DataType, in_DataDimension, in_D
 % The original C function is:
 % int cg_array_write( char const * ArrayName, DataType_t DataType, int DataDimension, int const * DimensionVector, void const * Data);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
 if (nargin < 5); 
     error('Incorrect number of input or output arguments.');

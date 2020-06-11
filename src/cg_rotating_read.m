@@ -15,7 +15,7 @@ function [io_rot_rate, io_rot_center, ierr] = cg_rotating_read(io_rot_rate, io_r
 % The original C function is:
 % int cg_rotating_read( float * rot_rate, float * rot_center);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
 if ( nargout < 2 || nargin < 2); 
     error('Incorrect number of input or output arguments.');

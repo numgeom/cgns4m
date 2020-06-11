@@ -15,7 +15,7 @@ function [io_file_type, ierr] = cg_get_file_type(in_fn, io_file_type)
 % The original C function is:
 % int cg_get_file_type( int fn, int * file_type);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/fileops.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/fileops.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 2); 
     error('Incorrect number of input or output arguments.');

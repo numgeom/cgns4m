@@ -12,7 +12,7 @@ function ierr = cg_equationset_write(in_EquationDimension)
 % The original C function is:
 % int cg_equationset_write( int EquationDimension);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
 %
 if (nargin < 1); 
     error('Incorrect number of input or output arguments.');

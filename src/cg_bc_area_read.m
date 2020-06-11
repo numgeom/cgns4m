@@ -20,7 +20,7 @@ function [io_RegionName, out_AreaType, out_SurfaceArea, ierr] = cg_bc_area_read(
 % The original C function is:
 % int cg_bc_area_read( int file_number, int B, int Z, int BC, AreaType_t * AreaType, float * SurfaceArea, char * RegionName);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 4); 
     error('Incorrect number of input or output arguments.');

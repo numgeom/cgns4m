@@ -18,7 +18,7 @@ function [out_Dset, ierr] = cg_dataset_write(in_file_number, in_B, in_Z, in_BC, 
 % The original C function is:
 % int cg_dataset_write( int file_number, int B, int Z, int BC, char const * name, BCType_t BCType, int * Dset);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %
 if (nargin < 6); 
     error('Incorrect number of input or output arguments.');

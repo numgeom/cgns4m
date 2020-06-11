@@ -12,7 +12,7 @@ function [out_compress, ierr] = cg_get_compress()
 % The original C function is:
 % int cg_get_compress( int * compress);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/fileops.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/fileops.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.

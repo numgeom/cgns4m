@@ -27,7 +27,7 @@ function [io_connectname, io_donorname, out_location, out_type, out_ptset_type, 
 % The original C function is:
 % int cg_conn_info( int file_number, int B, int Z, int I, char * connectname, GridLocation_t * location, GridConnectivityType_t * type, PointSetType_t * ptset_type, int * npnts, char * donorname, ZoneType_t * donor_zonetype, PointSetType_t * donor_ptset_type, DataType_t * donor_datatype, int * ndata_donor);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
 if ( nargout < 2 || nargin < 4); 
     error('Incorrect number of input or output arguments.');

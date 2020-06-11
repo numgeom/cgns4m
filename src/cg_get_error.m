@@ -11,7 +11,7 @@ function msg = cg_get_error()
 % The original C function is:
 % const char * cg_get_error( );
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/error.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/error.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.

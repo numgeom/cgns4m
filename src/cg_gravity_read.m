@@ -16,7 +16,7 @@ function [io_gravity_vector, ierr] = cg_gravity_read(in_file_number, in_B, io_gr
 % The original C function is:
 % int cg_gravity_read( int file_number, int B, float * gravity_vector);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/auxiliary.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 3); 
     error('Incorrect number of input or output arguments.');

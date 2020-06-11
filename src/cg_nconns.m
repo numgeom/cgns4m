@@ -15,7 +15,7 @@ function [out_nconns, ierr] = cg_nconns(in_fn, in_B, in_Z)
 % The original C function is:
 % int cg_nconns( int fn, int B, int Z, int * nconns);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
 if (nargin < 3); 
     error('Incorrect number of input or output arguments.');

@@ -12,7 +12,7 @@ function [out_nintegrals, ierr] = cg_nintegrals()
 % The original C function is:
 % int cg_nintegrals( int * nintegrals);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/auxiliary.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.

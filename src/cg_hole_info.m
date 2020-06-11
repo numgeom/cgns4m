@@ -22,7 +22,7 @@ function [io_holename, out_location, out_ptset_type, out_nptsets, out_npnts, ier
 % The original C function is:
 % int cg_hole_info( int fn, int B, int Z, int I, char * holename, GridLocation_t * location, PointSetType_t * ptset_type, int * nptsets, int * npnts);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 4); 
     error('Incorrect number of input or output arguments.');

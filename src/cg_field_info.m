@@ -20,7 +20,7 @@ function [io_fieldname, out_type, ierr] = cg_field_info(in_fn, in_B, in_Z, in_S,
 % The original C function is:
 % int cg_field_info( int fn, int B, int Z, int S, int F, DataType_t * type, char * fieldname);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/solution.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 5); 
     error('Incorrect number of input or output arguments.');

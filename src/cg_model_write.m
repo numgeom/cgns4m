@@ -13,7 +13,7 @@ function ierr = cg_model_write(in_ModelLabel, in_ModelType)
 % The original C function is:
 % int cg_model_write( char const * ModelLabel, ModelType_t ModelType);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');

@@ -19,7 +19,7 @@ function [out_mass, out_length, out_time, out_temperature, out_angle, out_curren
 % The original C function is:
 % int cg_unitsfull_read( MassUnits_t * mass, LengthUnits_t * length, TimeUnits_t * time, TemperatureUnits_t * temperature, AngleUnits_t * angle, ElectricCurrentUnits_t * current, SubstanceAmountUnits_t * amount, LuminousIntensityUnits_t * intensity);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.

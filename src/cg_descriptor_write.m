@@ -13,7 +13,7 @@ function ierr = cg_descriptor_write(in_descr_name, in_descr_text)
 % The original C function is:
 % int cg_descriptor_write( char const * descr_name, char const * descr_text);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/descriptor.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/descriptor.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');

@@ -22,7 +22,7 @@ function [out_I, ierr] = cg_conn_write_short(in_file_number, in_B, in_Z, in_conn
 % The original C function is:
 % int cg_conn_write_short( int file_number, int B, int Z, char const * connectname, GridLocation_t location, GridConnectivityType_t type, PointSetType_t ptset_type, int npnts, int const * pnts, char const * donorname, int * I);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
 if (nargin < 10); 
     error('Incorrect number of input or output arguments.');

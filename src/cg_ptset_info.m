@@ -13,7 +13,7 @@ function [out_ptset_type, out_npnts, ierr] = cg_ptset_info()
 % The original C function is:
 % int cg_ptset_info( PointSetType_t * ptset_type, int * npnts);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/location.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/location.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.

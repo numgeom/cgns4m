@@ -19,7 +19,7 @@ function [io_fambc_name, out_bocotype, ierr] = cg_fambc_read(in_file_number, in_
 % The original C function is:
 % int cg_fambc_read( int file_number, int B, int F, int BC, char * fambc_name, BCType_t * bocotype);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/families.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 4); 
     error('Incorrect number of input or output arguments.');

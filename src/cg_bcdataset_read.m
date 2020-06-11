@@ -18,7 +18,7 @@ function [io_name, out_BCType, out_DirichletFlag, out_NeumannFlag, ierr] = cg_bc
 % The original C function is:
 % int cg_bcdataset_read( int index, char * name, BCType_t * BCType, int * DirichletFlag, int * NeumannFlag);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 1); 
     error('Incorrect number of input or output arguments.');

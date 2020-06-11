@@ -12,7 +12,7 @@ function [out_dataclass, ierr] = cg_dataclass_read()
 % The original C function is:
 % int cg_dataclass_read( DataClass_t * dataclass);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.

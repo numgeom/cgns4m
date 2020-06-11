@@ -18,7 +18,7 @@ function [out_G, ierr] = cg_geo_write(in_file_number, in_B, in_F, in_geo_name, i
 % The original C function is:
 % int cg_geo_write( int file_number, int B, int F, char const * geo_name, char const * filename, char const * CADname, int * G);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/families.html">online documentation</a>.
 %
 if (nargin < 6); 
     error('Incorrect number of input or output arguments.');

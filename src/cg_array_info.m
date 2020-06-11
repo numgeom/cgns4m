@@ -18,7 +18,7 @@ function [io_ArrayName, io_DimensionVector, out_DataType, out_DataDimension, ier
 % The original C function is:
 % int cg_array_info( int A, char * ArrayName, DataType_t * DataType, int * DataDimension, int * DimensionVector);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
 if ( nargout < 2 || nargin < 1); 
     error('Incorrect number of input or output arguments.');

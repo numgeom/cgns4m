@@ -16,7 +16,7 @@ function [io_descr_name, out_descr_text, ierr] = cg_descriptor_read(in_descr_no,
 % The original C function is:
 % int cg_descriptor_read( int descr_no, char * descr_name, char ** descr_text);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/descriptor.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/descriptor.html">online documentation</a>.
 %
 
 % NOTE: Some buffer space for out char(s) was allocated by C function

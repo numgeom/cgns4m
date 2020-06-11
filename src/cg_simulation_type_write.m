@@ -14,7 +14,7 @@ function ierr = cg_simulation_type_write(in_file_number, in_B, in_type)
 % The original C function is:
 % int cg_simulation_type_write( int file_number, int B, SimulationType_t type);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/structural.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
 %
 if (nargin < 3); 
     error('Incorrect number of input or output arguments.');

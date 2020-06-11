@@ -13,7 +13,7 @@ function ierr = cg_convergence_write(in_iterations, in_NormDefinitions)
 % The original C function is:
 % int cg_convergence_write( int iterations, char const * NormDefinitions);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/auxiliary.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html">online documentation</a>.
 %
 if (nargin < 2); 
     error('Incorrect number of input or output arguments.');

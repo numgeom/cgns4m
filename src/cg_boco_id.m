@@ -16,7 +16,7 @@ function [out_boco_id, ierr] = cg_boco_id(in_fn, in_B, in_Z, in_BC)
 % The original C function is:
 % int cg_boco_id( int fn, int B, int Z, int BC, double * boco_id);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %
 if (nargin < 4); 
     error('Incorrect number of input or output arguments.');

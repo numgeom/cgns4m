@@ -19,7 +19,7 @@ function [io_solname, out_location, ierr] = cg_sol_info(in_fn, in_B, in_Z, in_S,
 % The original C function is:
 % int cg_sol_info( int fn, int B, int Z, int S, char * solname, GridLocation_t * location);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/solution.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 4); 
     error('Incorrect number of input or output arguments.');

@@ -21,7 +21,7 @@ function [out_S, ierr] = cg_section_write(in_file_number, in_B, in_Z, in_Section
 % The original C function is:
 % int cg_section_write( int file_number, int B, int Z, char const * SectionName, ElementType_t type, int start, int end, int nbndry, int const * elements, int * S);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
 if (nargin < 9); 
     error('Incorrect number of input or output arguments.');

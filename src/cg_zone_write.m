@@ -17,7 +17,7 @@ function [out_Z, ierr] = cg_zone_write(in_fn, in_B, in_zonename, in_size, in_typ
 % The original C function is:
 % int cg_zone_write( int fn, int B, char const * zonename, int const * size, ZoneType_t type, int * Z);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/structural.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
 %
 if (nargin < 5); 
     error('Incorrect number of input or output arguments.');

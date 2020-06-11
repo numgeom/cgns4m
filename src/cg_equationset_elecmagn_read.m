@@ -16,7 +16,7 @@ function [io_ElecFldModelFlag, io_MagnFldModelFlag, io_ConductivityModelFlag, ie
 % The original C function is:
 % int cg_equationset_elecmagn_read( int * ElecFldModelFlag, int * MagnFldModelFlag, int * ConductivityModelFlag);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
 %
 if ( nargout < 3 || nargin < 3); 
     error('Incorrect number of input or output arguments.');

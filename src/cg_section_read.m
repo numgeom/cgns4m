@@ -23,7 +23,7 @@ function [io_SectionName, out_type, out_start, out_end, out_nbndry, out_parent_f
 % The original C function is:
 % int cg_section_read( int file_number, int B, int Z, int S, char * SectionName, ElementType_t * type, int * start, int * end, int * nbndry, int * parent_flag);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
 if ( nargout < 1 || nargin < 4); 
     error('Incorrect number of input or output arguments.');

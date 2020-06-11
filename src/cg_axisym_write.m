@@ -15,7 +15,7 @@ function ierr = cg_axisym_write(in_file_number, in_B, in_ref_point, in_axis)
 % The original C function is:
 % int cg_axisym_write( int file_number, int B, float const * ref_point, float const * axis);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
 if (nargin < 4); 
     error('Incorrect number of input or output arguments.');

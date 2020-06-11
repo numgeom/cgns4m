@@ -16,7 +16,7 @@ function [out_ElementDataSize, ierr] = cg_ElementDataSize(in_file_number, in_B, 
 % The original C function is:
 % int cg_ElementDataSize( int file_number, int B, int Z, int S, int * ElementDataSize);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
 if (nargin < 4); 
     error('Incorrect number of input or output arguments.');

@@ -16,7 +16,7 @@ function [out_D, ierr] = cg_discrete_write(in_file_number, in_B, in_Z, in_discre
 % The original C function is:
 % int cg_discrete_write( int file_number, int B, int Z, char const * discrete_name, int * D);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/solution.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %
 if (nargin < 4); 
     error('Incorrect number of input or output arguments.');

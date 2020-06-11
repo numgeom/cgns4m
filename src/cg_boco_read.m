@@ -19,7 +19,7 @@ function [io_pnts, io_NormalList, ierr] = cg_boco_read(in_fn, in_B, in_Z, in_BC,
 % The original C function is:
 % int cg_boco_read( int fn, int B, int Z, int BC, int * pnts, void * NormalList);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/bc.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %
 if ( nargout < 2 || nargin < 6); 
     error('Incorrect number of input or output arguments.');

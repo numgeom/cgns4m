@@ -12,7 +12,7 @@ function ierr = cg_delete_node(in_node_name)
 % The original C function is:
 % int cg_delete_node( char const *node_name);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/navigating.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/navigating.html">online documentation</a>.
 %
 if ( nargout < 1); 
     error('Incorrect number of input or output arguments.');

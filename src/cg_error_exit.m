@@ -10,7 +10,7 @@ function cg_error_exit()
 % The original C function is:
 % void cg_error_exit( );
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/error.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/error.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.

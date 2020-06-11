@@ -18,7 +18,7 @@ function [out_C, ierr] = cg_coord_write(in_fn, in_B, in_Z, in_type, in_coordname
 % The original C function is:
 % int cg_coord_write( int fn, int B, int Z, DataType_t type, char const * coordname, void const * coord_ptr, int * C);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
 if (nargin < 6); 
     error('Incorrect number of input or output arguments.');

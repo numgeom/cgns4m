@@ -16,7 +16,7 @@ function [out_one21_id, ierr] = cg_1to1_id(in_fn, in_B, in_Z, in_I)
 % The original C function is:
 % int cg_1to1_id( int fn, int B, int Z, int I, double * one21_id);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
 if (nargin < 4); 
     error('Incorrect number of input or output arguments.');

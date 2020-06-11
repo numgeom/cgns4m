@@ -17,7 +17,7 @@ function [out_S, ierr] = cg_sol_write(in_fn, in_B, in_Z, in_solname, in_location
 % The original C function is:
 % int cg_sol_write( int fn, int B, int Z, char const * solname, GridLocation_t location, int * S);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/solution.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %
 if (nargin < 5); 
     error('Incorrect number of input or output arguments.');
