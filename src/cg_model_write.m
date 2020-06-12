@@ -7,17 +7,19 @@ function ierr = cg_model_write(in_ModelLabel, in_ModelType)
 %      ModelLabel: character string
 %       ModelType: 32-bit integer (int32), scalar
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_model_write( char const * ModelLabel, ModelType_t ModelType);
+% int cg_model_write(const char * ModelLabel, CG_ModelType_t ModelType);
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
 %
-if (nargin < 2); 
+if (nargin < 2)
     error('Incorrect number of input or output arguments.');
 end
+in_ModelLabel = char(in_ModelLabel);
+in_ModelType = int32(in_ModelType);
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(171), in_ModelLabel, in_ModelType);
+ierr = cgnslib_mex(int32(208), in_ModelLabel, in_ModelType);

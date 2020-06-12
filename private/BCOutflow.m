@@ -1,3 +1,3 @@
 function val = BCOutflow
-%% Value 13 of enumeration type BCType_t
+%% Value 13 of enumeration type CG_BCType_t
 val = int32(13);

@@ -12,13 +12,15 @@ function [out_n1to1_global, ierr] = cg_n1to1_global(in_fn, in_B)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_n1to1_global( int fn, int B, int * n1to1_global);
+% int cg_n1to1_global(int fn, int B, int * n1to1_global);
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
-if (nargin < 2); 
+if (nargin < 2)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
 
 % Invoke the actual MEX-function.
-[out_n1to1_global, ierr] =  cgnslib_mex(int32(106), in_fn, in_B);
+[out_n1to1_global, ierr] = cgnslib_mex(int32(137), in_fn, in_B);

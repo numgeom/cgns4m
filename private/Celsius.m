@@ -1,3 +1,3 @@
 function val = Celsius
-%% Value 3 of enumeration type TemperatureUnits_t
+%% Value 3 of enumeration type CG_TemperatureUnits_t
 val = int32(3);

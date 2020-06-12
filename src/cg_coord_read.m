@@ -12,41 +12,45 @@ function [io_coord, ierr] = cg_coord_read(in_fn, in_B, in_Z, in_coordname, in_ty
 %            rmin: 32-bit integer (int32), array
 %            rmax: 32-bit integer (int32), array
 %
-% In&Out argument (required as output; also required as input if specified; type is auto-casted):
+% In&Out argument (required as output; type is auto-casted):
 %           coord: dynamic type based on type  (also required as input)
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_coord_read( int fn, int B, int Z, char const * coordname, DataType_t type, int const * rmin, int const * rmax, void * coord);
+% int cg_coord_read(int fn, int B, int Z, const char * coordname, CG_DataType_t type, const int * rmin, const int * rmax, void * coord);
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 8); 
+if ( nargout < 1 || nargin < 8)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_coordname = char(in_coordname);
+in_type = int32(in_type);
+in_rmin = int32(in_rmin);
+in_rmax = int32(in_rmax);
 
 % Perform dynamic type casting
 datatype = in_type;
 switch (datatype)
-    case 2 % Integer
+    case 2 % CG_Integer
         io_coord = int32(io_coord);
-    case 3 % RealSingle
+    case 3 % CG_RealSingle
         io_coord = single(io_coord);
-    case 4 % RealDouble
+    case 4 % CG_RealDouble
         io_coord = double(io_coord);
-    case 5 % Character
+    case 5 % CG_Character
         io_coord = [int8(io_coord), int8(zeros(1,1))];
+    case 6 % CG_LongInteger
+        io_coord = int64(io_coord);
     otherwise
         error('Unknown data type %d', in_type);
 end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(64), in_fn, in_B, in_Z, in_coordname, in_type, in_rmin, in_rmax, io_coord);
-
-% Perform dynamic type casting
-if datatype==5 % Character
-    io_coord = char(io_coord(1:end-1));
-end
+ierr = cgnslib_mex(int32(74), in_fn, in_B, in_Z, in_coordname, in_type, in_rmin, in_rmax, io_coord);

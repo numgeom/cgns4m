@@ -10,17 +10,22 @@ function ierr = cg_parent_data_write(in_file_number, in_B, in_Z, in_S, in_parent
 %               S: 32-bit integer (int32), scalar
 %     parent_data: 32-bit integer (int32), array
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_parent_data_write( int file_number, int B, int Z, int S, int const * parent_data);
+% int cg_parent_data_write(int file_number, int B, int Z, int S, const int * parent_data);
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
-if (nargin < 5); 
+if (nargin < 5)
     error('Incorrect number of input or output arguments.');
 end
+in_file_number = int32(in_file_number);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_S = int32(in_S);
+in_parent_data = int32(in_parent_data);
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(72), in_file_number, in_B, in_Z, in_S, in_parent_data);
+ierr = cgnslib_mex(int32(84), in_file_number, in_B, in_Z, in_S, in_parent_data);

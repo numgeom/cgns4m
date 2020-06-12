@@ -12,13 +12,15 @@ function [out_nfamilies, ierr] = cg_nfamilies(in_file_number, in_B)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_nfamilies( int file_number, int B, int * nfamilies);
+% int cg_nfamilies(int file_number, int B, int * nfamilies);
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/families.html">online documentation</a>.
 %
-if (nargin < 2); 
+if (nargin < 2)
     error('Incorrect number of input or output arguments.');
 end
+in_file_number = int32(in_file_number);
+in_B = int32(in_B);
 
 % Invoke the actual MEX-function.
-[out_nfamilies, ierr] =  cgnslib_mex(int32(48), in_file_number, in_B);
+[out_nfamilies, ierr] = cgnslib_mex(int32(52), in_file_number, in_B);

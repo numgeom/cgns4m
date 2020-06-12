@@ -1,7 +1,7 @@
-function [out_I, ierr] = cg_hole_write(in_fn, in_B, in_Z, in_holename, in_location, in_ptset_type, in_nptsets, in_npnts, in_pnts)
+function [out_Ii, ierr] = cg_hole_write(in_fn, in_B, in_Z, in_holename, in_location, in_ptset_type, in_nptsets, in_npnts, in_pnts)
 % Gateway function for C function cg_hole_write.
 %
-% [I, ierr] = cg_hole_write(fn, B, Z, holename, location, ptset_type, nptsets, npnts, pnts)
+% [Ii, ierr] = cg_hole_write(fn, B, Z, holename, location, ptset_type, nptsets, npnts, pnts)
 %
 % Input arguments (required; type is auto-casted):
 %              fn: 32-bit integer (int32), scalar
@@ -15,17 +15,26 @@ function [out_I, ierr] = cg_hole_write(in_fn, in_B, in_Z, in_holename, in_locati
 %            pnts: 32-bit integer (int32), array
 %
 % Output arguments (optional):
-%               I: 32-bit integer (int32), scalar
+%              Ii: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_hole_write( int fn, int B, int Z, char const * holename, GridLocation_t location, PointSetType_t ptset_type, int nptsets, int npnts, int const * pnts, int * I);
+% int cg_hole_write(int fn, int B, int Z, const char * holename, CG_GridLocation_t location, CG_PointSetType_t ptset_type, int nptsets, int npnts, const int * pnts, int * Ii);
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
-if (nargin < 9); 
+if (nargin < 9)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_holename = char(in_holename);
+in_location = int32(in_location);
+in_ptset_type = int32(in_ptset_type);
+in_nptsets = int32(in_nptsets);
+in_npnts = int32(in_npnts);
+in_pnts = int32(in_pnts);
 
 % Invoke the actual MEX-function.
-[out_I, ierr] =  cgnslib_mex(int32(94), in_fn, in_B, in_Z, in_holename, in_location, in_ptset_type, in_nptsets, in_npnts, in_pnts);
+[out_Ii, ierr] = cgnslib_mex(int32(125), in_fn, in_B, in_Z, in_holename, in_location, in_ptset_type, in_nptsets, in_npnts, in_pnts);

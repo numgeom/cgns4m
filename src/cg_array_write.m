@@ -10,33 +10,39 @@ function ierr = cg_array_write(in_ArrayName, in_DataType, in_DataDimension, in_D
 %    DimensionVector: 32-bit integer (int32), len=DataDimension
 %            Data: dynamic type based on DataType
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_array_write( char const * ArrayName, DataType_t DataType, int DataDimension, int const * DimensionVector, void const * Data);
+% int cg_array_write(const char * ArrayName, CG_DataType_t DataType, int DataDimension, const int * DimensionVector, const void * Data);
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
-if (nargin < 5); 
+if (nargin < 5)
     error('Incorrect number of input or output arguments.');
 end
+in_ArrayName = char(in_ArrayName);
+in_DataType = int32(in_DataType);
+in_DataDimension = int32(in_DataDimension);
+in_DimensionVector = int32(in_DimensionVector);
 
 % Perform dynamic type casting
 datatype = in_DataType;
 switch (datatype)
-    case 2 % Integer
+    case 2 % CG_Integer
         in_Data = int32(in_Data);
-    case 3 % RealSingle
+    case 3 % CG_RealSingle
         in_Data = single(in_Data);
-    case 4 % RealDouble
+    case 4 % CG_RealDouble
         in_Data = double(in_Data);
-    case 5 % Character
+    case 5 % CG_Character
         in_Data = [int8(in_Data), int8(zeros(1,1))];
+    case 6 % CG_LongInteger
+        in_Data = int64(in_Data);
     otherwise
         error('Unknown data type %d', in_DataType);
 end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(176), in_ArrayName, in_DataType, in_DataDimension, in_DimensionVector, in_Data);
+ierr = cgnslib_mex(int32(214), in_ArrayName, in_DataType, in_DataDimension, in_DimensionVector, in_Data);

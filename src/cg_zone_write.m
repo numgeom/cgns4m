@@ -15,13 +15,18 @@ function [out_Z, ierr] = cg_zone_write(in_fn, in_B, in_zonename, in_size, in_typ
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_zone_write( int fn, int B, char const * zonename, int const * size, ZoneType_t type, int * Z);
+% int cg_zone_write(int fn, int B, const char * zonename, const int * size, CG_ZoneType_t type, int * Z);
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
 %
-if (nargin < 5); 
+if (nargin < 5)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
+in_zonename = char(in_zonename);
+in_size = int32(in_size);
+in_type = int32(in_type);
 
 % Invoke the actual MEX-function.
-[out_Z, ierr] =  cgnslib_mex(int32(47), in_fn, in_B, in_zonename, in_size, in_type);
+[out_Z, ierr] = cgnslib_mex(int32(50), in_fn, in_B, in_zonename, in_size, in_type);

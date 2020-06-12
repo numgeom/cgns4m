@@ -1,3 +1,3 @@
 function val = Integer
-%% Value 2 of enumeration type DataType_t
+%% Value 2 of enumeration type CG_DataType_t
 val = int32(2);

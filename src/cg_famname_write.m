@@ -3,20 +3,21 @@ function ierr = cg_famname_write(in_family_name)
 %
 % ierr = cg_famname_write(family_name)
 %
-% Input argument (required; type is auto-casted): 
+% Input argument (required; type is auto-casted):
 %     family_name: character string
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_famname_write( char const * family_name);
+% int cg_famname_write(const char * family_name);
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/families.html">online documentation</a>.
 %
-if (nargin < 1); 
+if (nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
+in_family_name = char(in_family_name);
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(52), in_family_name);
+ierr = cgnslib_mex(int32(59), in_family_name);

@@ -14,13 +14,17 @@ function [out_ElementDataSize, ierr] = cg_ElementDataSize(in_file_number, in_B, 
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_ElementDataSize( int file_number, int B, int Z, int S, int * ElementDataSize);
+% int cg_ElementDataSize(int file_number, int B, int Z, int S, int * ElementDataSize);
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
-if (nargin < 4); 
+if (nargin < 4)
     error('Incorrect number of input or output arguments.');
 end
+in_file_number = int32(in_file_number);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_S = int32(in_S);
 
 % Invoke the actual MEX-function.
-[out_ElementDataSize, ierr] =  cgnslib_mex(int32(74), in_file_number, in_B, in_Z, in_S);
+[out_ElementDataSize, ierr] = cgnslib_mex(int32(86), in_file_number, in_B, in_Z, in_S);

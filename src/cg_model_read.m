@@ -3,7 +3,7 @@ function [out_ModelType, ierr] = cg_model_read(in_ModelLabel)
 %
 % [ModelType, ierr] = cg_model_read(ModelLabel)
 %
-% Input argument (required; type is auto-casted): 
+% Input argument (required; type is auto-casted):
 %      ModelLabel: character string
 %
 % Output arguments (optional):
@@ -11,13 +11,14 @@ function [out_ModelType, ierr] = cg_model_read(in_ModelLabel)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_model_read( char const * ModelLabel, ModelType_t * ModelType);
+% int cg_model_read(const char * ModelLabel, CG_ModelType_t * ModelType);
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
 %
-if (nargin < 1); 
+if (nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
+in_ModelLabel = char(in_ModelLabel);
 
 % Invoke the actual MEX-function.
-[out_ModelType, ierr] =  cgnslib_mex(int32(170), in_ModelLabel);
+[out_ModelType, ierr] = cgnslib_mex(int32(207), in_ModelLabel);

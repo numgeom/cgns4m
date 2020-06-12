@@ -3,7 +3,7 @@ function [out_ptset_type, out_npnts, ierr] = cg_ptset_info()
 %
 % [ptset_type, npnts, ierr] = cg_ptset_info()
 %
-% Input argument (required; type is auto-casted): 
+% Input argument (required; type is auto-casted):
 %
 % Output arguments (optional):
 %      ptset_type: 32-bit integer (int32), scalar
@@ -11,10 +11,10 @@ function [out_ptset_type, out_npnts, ierr] = cg_ptset_info()
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_ptset_info( PointSetType_t * ptset_type, int * npnts);
+% int cg_ptset_info(CG_PointSetType_t * ptset_type, int * npnts);
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/location.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/location.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.
-[out_ptset_type, out_npnts, ierr] =  cgnslib_mex(int32(208));
+[out_ptset_type, out_npnts, ierr] = cgnslib_mex(int32(247));

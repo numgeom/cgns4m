@@ -9,12 +9,12 @@ function out_DataType = cgns_configure_type(in_what)
 % Output arguments:
 %        DataType: 32-bit integer (int32), scalar
 %
-% Currently supported options include CG_CONFIG_COMPRESS, 
+% Supported options include CG_CONFIG_COMPRESS, CG_CONFIG_HDF5_COMPRESS
 % CG_CONFIG_SET_PATH, CG_CONFIG_ADD_PATH, CG_CONFIG_FILE, and
 % CG_CONFIG_ERROR.
 
 switch in_what
-    case {CG_CONFIG_COMPRESS,CG_CONFIG_FILE_TYPE}
+    case {CG_CONFIG_COMPRESS,CG_CONFIG_HDF5_COMPRESS,CG_CONFIG_FILE_TYPE}
         out_DataType = Integer;
     case {CG_CONFIG_ERROR,CG_CONFIG_SET_PATH,CG_CONFIG_ADD_PATH}
         out_DataType = Character;

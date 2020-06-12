@@ -1,12 +1,16 @@
-function build_cgns4m(cgns4m_root)
+function build_cgns4m(force)
 % Script for building CGNS4M.
 %
 % See also startup_cgns4m.
 
 SRCDIR = 'cgnslib_3.4.1';
 oldpwd = pwd;
-if nargin<1
-    cgns4m_root = fileparts(which('startup_cgns4m.m'));
+cgns4m_root = fileparts(which('startup_cgns4m.m'));
+
+if nargin==0
+  force = false;
+else
+  force = ~isempty(force) && ~isequal(force, 0);
 end
 
 % We must build in the CGNS4m directory. Change the directory first.
@@ -26,7 +30,7 @@ else
 end
 
 % Compile the file if the C code is newer than the MEX file.
-if ~isnewer( 'src/cgnslib_mex.c', mexfile) && ...
+if ~force && ~isnewer( 'src/cgnslib_mex.c', mexfile) && ...
         ~isnewer('src/cgnslib_mex_ext.c', mexfile) && ...
         ~isnewer([SRCDIR '/cgnslib.c'], mexfile)
     cd(oldpwd);
@@ -121,7 +125,7 @@ disp(['Building CGNS4m with HDF5 library ' HDF_VERSION '.']);
 cgnsfiles = addprefix(cgnsfiles, [SRCDIR '/']);
 
 if isoctave
-    command = ['mkoctfile --mex -Isrc -I. -I' SRCDIR ' -I' SRCDIR '/adf ' ...
+    command = ['mkoctfile --mex -ImexUtil -Isrc -I. -I' SRCDIR ' -I' SRCDIR '/adf ' ...
         hdf5inc ' -o ' mexfile ' src/cgnslib_mex.c ' cgnsfiles hdf5lib];
     
     disp(command); fflush(1);
@@ -136,11 +140,12 @@ if isoctave
         error('Error during compilation: %s.', lasterr); %#ok<*LERR>
     end
 else % MATLAB
-    command = ['mex -O -Isrc -I. -I' SRCDIR ' -I' SRCDIR '/adf ' ...
+    command = ['mex -O -ImexUtil -Isrc -I. -I' SRCDIR ' -I' SRCDIR '/adf ' ...
         hdf5inc ' -output ' mexfile ' src/cgnslib_mex.c ' cgnsfiles hdf5lib];
     
     try
         disp(command); eval(command);
+        if exist('cgnslib_mex.o', 'f'); delete *.o; end
     catch
         cd(oldpwd);
         error('Error during compilation with err %s.', lasterr);
@@ -165,7 +170,7 @@ if success==0
     fprintf(2,'\nThere seems to be some error in building CGNS4m.\n');
 else
     disp('CGNS4m was built successfully.');
-    if exist(HDF_VERSION, 'dir')
+    if ~force && exist(HDF_VERSION, 'dir')
         rmdir(HDF_VERSION, 's');
     end
 end

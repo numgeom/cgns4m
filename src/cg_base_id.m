@@ -12,12 +12,14 @@ function [out_base_id, ierr] = cg_base_id(in_fn, in_B)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_base_id( int fn, int B, double * base_id);
+% int cg_base_id(int fn, int B, double * base_id);
 %
 % For detail, see the documentation of the original function.
-if (nargin < 2); 
+if (nargin < 2)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
 
 % Invoke the actual MEX-function.
-[out_base_id, ierr] =  cgnslib_mex(int32(41), in_fn, in_B);
+[out_base_id, ierr] = cgnslib_mex(int32(43), in_fn, in_B);

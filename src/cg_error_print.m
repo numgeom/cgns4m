@@ -3,15 +3,15 @@ function cg_error_print()
 %
 % cg_error_print()
 %
-% Input argument (required; type is auto-casted): 
+% Input argument (required; type is auto-casted):
 %
-% Output argument (optional): 
+% Output argument (optional):
 %
 % The original C function is:
-% void cg_error_print( );
+% void cg_error_print();
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/error.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/error.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.
- cgnslib_mex(int32(217));
+ cgnslib_mex(int32(256));

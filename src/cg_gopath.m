@@ -7,17 +7,19 @@ function ierr = cg_gopath(in_file_number, in_path)
 %     file_number: 32-bit integer (int32), scalar
 %            path: character string
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_gopath( int file_number, const char * path);
+% int cg_gopath(int file_number, const char * path);
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/navigating.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/navigating.html">online documentation</a>.
 %
-if (nargin < 2); 
+if (nargin < 2)
     error('Incorrect number of input or output arguments.');
 end
+in_file_number = int32(in_file_number);
+in_path = char(in_path);
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(155), in_file_number, in_path);
+ierr = cgnslib_mex(int32(192), in_file_number, in_path);

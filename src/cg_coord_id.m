@@ -14,12 +14,16 @@ function [out_coord_id, ierr] = cg_coord_id(in_fn, in_B, in_Z, in_C)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_coord_id( int fn, int B, int Z, int C, double * coord_id);
+% int cg_coord_id(int fn, int B, int Z, int C, double * coord_id);
 %
 % For detail, see the documentation of the original function.
-if (nargin < 4); 
+if (nargin < 4)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_C = int32(in_C);
 
 % Invoke the actual MEX-function.
-[out_coord_id, ierr] =  cgnslib_mex(int32(65), in_fn, in_B, in_Z, in_C);
+[out_coord_id, ierr] = cgnslib_mex(int32(76), in_fn, in_B, in_Z, in_C);

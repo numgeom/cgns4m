@@ -12,17 +12,24 @@ function ierr = cg_parent_data_partial_write(in_fn, in_B, in_Z, in_S, in_start, 
 %             end: 32-bit integer (int32), scalar
 %      ParentData: 32-bit integer (int32), array
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_parent_data_partial_write( int fn, int B, int Z, int S, int start, int end, int const * ParentData);
+% int cg_parent_data_partial_write(int fn, int B, int Z, int S, int start, int end, const int * ParentData);
 %
-% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
-if (nargin < 7); 
+if (nargin < 7)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_S = int32(in_S);
+in_start = int32(in_start);
+in_end = int32(in_end);
+in_ParentData = int32(in_ParentData);
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(77), in_fn, in_B, in_Z, in_S, in_start, in_end, in_ParentData);
+ierr = cgnslib_mex(int32(89), in_fn, in_B, in_Z, in_S, in_start, in_end, in_ParentData);
