@@ -27,7 +27,6 @@ end
 in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 in_F = int32(in_F);
-io_family_name = char(io_family_name);
 if nargin<4
     io_family_name=char(zeros(1,32));
 elseif length(io_family_name)<32

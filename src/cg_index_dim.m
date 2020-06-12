@@ -25,7 +25,6 @@ end
 in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
-io_index_dim = int32(io_index_dim);
 basetype = 'int32';
 if nargin<4
     io_index_dim = zeros(1,3,basetype);

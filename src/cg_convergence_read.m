@@ -24,7 +24,6 @@ function [io_iterations, out_NormDefinitions, ierr] = cg_convergence_read(io_ite
 if ( nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
-io_iterations = int32(io_iterations);
 basetype = 'int32';
 if ~isa(io_iterations,basetype)
     io_iterations = cast(io_iterations, basetype);

@@ -27,7 +27,6 @@ in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_G = int32(in_G);
-io_gridname = char(io_gridname);
 if nargin<5
     io_gridname=char(zeros(1,32));
 elseif length(io_gridname)<32

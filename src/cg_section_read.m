@@ -32,7 +32,6 @@ in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_S = int32(in_S);
-io_SectionName = char(io_SectionName);
 if nargin<5
     io_SectionName=char(zeros(1,32));
 elseif length(io_SectionName)<32

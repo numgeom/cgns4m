@@ -28,7 +28,6 @@ in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_S = int32(in_S);
-io_solname = char(io_solname);
 if nargin<5
     io_solname=char(zeros(1,32));
 elseif length(io_solname)<32

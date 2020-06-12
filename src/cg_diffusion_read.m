@@ -19,7 +19,6 @@ function [io_diffusion_model, ierr] = cg_diffusion_read(io_diffusion_model)
 if ( nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
-io_diffusion_model = int32(io_diffusion_model);
 basetype = 'int32';
 if ~isa(io_diffusion_model,basetype)
     io_diffusion_model = cast(io_diffusion_model, basetype);

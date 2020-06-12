@@ -26,12 +26,6 @@ end
 in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
-io_zonename = char(io_zonename);
-if strfind(computer,'64') %#ok<STRIFCND>
-    io_size = int64(io_size);
-else
-    io_size = int32(io_size);
-end
 if nargin<4
     io_zonename=char(zeros(1,32));
 elseif length(io_zonename)<32

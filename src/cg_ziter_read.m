@@ -25,7 +25,6 @@ end
 in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
-io_zitername = char(io_zitername);
 if nargin<4
     io_zitername=char(zeros(1,32));
 elseif length(io_zitername)<32

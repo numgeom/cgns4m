@@ -20,8 +20,6 @@ function [io_rot_rate, io_rot_center, ierr] = cg_rotating_read(io_rot_rate, io_r
 if ( nargout < 2 || nargin < 2)
     error('Incorrect number of input or output arguments.');
 end
-io_rot_rate = single(io_rot_rate);
-io_rot_center = single(io_rot_center);
 basetype = 'single';
 if ~isa(io_rot_rate,basetype)
     io_rot_rate = cast(io_rot_rate, basetype);

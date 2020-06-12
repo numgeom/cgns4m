@@ -30,11 +30,6 @@ in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_Ii = int32(in_Ii);
 in_donor_datatype = int32(in_donor_datatype);
-if strfind(computer,'64') %#ok<STRIFCND>
-    io_pnts = int64(io_pnts);
-else
-    io_pnts = int32(io_pnts);
-end
 
 % Perform dynamic type casting
 datatype = in_donor_datatype;

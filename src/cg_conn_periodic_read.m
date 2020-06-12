@@ -29,9 +29,6 @@ in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_Ii = int32(in_Ii);
-io_RotationCenter = single(io_RotationCenter);
-io_RotationAngle = single(io_RotationAngle);
-io_Translation = single(io_Translation);
 basetype = 'single';
 if nargin<5
     io_RotationCenter = zeros(1,3,basetype);

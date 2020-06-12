@@ -23,7 +23,6 @@ if ( nargout < 1 || nargin < 3)
 end
 in_file_number = int32(in_file_number);
 in_B = int32(in_B);
-io_gravity_vector = single(io_gravity_vector);
 basetype = 'single';
 if ~isa(io_gravity_vector,basetype)
     io_gravity_vector = cast(io_gravity_vector, basetype);

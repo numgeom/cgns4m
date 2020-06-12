@@ -34,8 +34,6 @@ in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_BC = int32(in_BC);
-io_boconame = char(io_boconame);
-io_NormalIndex = int32(io_NormalIndex);
 if nargin<5
     io_boconame=char(zeros(1,32));
 elseif length(io_boconame)<32

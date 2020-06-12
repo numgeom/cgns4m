@@ -1529,7 +1529,7 @@ sub print_matlab_code {
 
         # First, perform type casting
         my $argno = 0;
-        foreach ( @{ $faa->{inputs} }, @{ $faa->{inouts} } ) {
+        foreach ( @{ $faa->{inputs} } ) {
             my $arg      = $faa->{args}{$_};
             my $var_name = $arg->{c_var_name};
             $argno++;
@@ -1554,6 +1554,16 @@ sub print_matlab_code {
                 } else {
                     $mstr .= "$var_name = ${basetype}($var_name);\n";
                 }
+            }
+        }
+        foreach ( @{ $faa->{inouts} } ) {
+            my $arg      = $faa->{args}{$_};
+            my $var_name = $arg->{c_var_name};
+            $argno++;
+
+            if ( defined( $arg->{cast} ) ) {
+                # Check whether it is an argument
+                $mstr .= ::obtain_typecast( $arg->{cast}, $var_name );
             }
         }
 

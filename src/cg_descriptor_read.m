@@ -26,7 +26,6 @@ if ( nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
 in_descr_no = int32(in_descr_no);
-io_descr_name = char(io_descr_name);
 if nargin<2
     io_descr_name=char(zeros(1,32));
 elseif length(io_descr_name)<32

@@ -21,7 +21,6 @@ if ( nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
 in_IntegralDataIndex = int32(in_IntegralDataIndex);
-io_IntegralDataName = char(io_IntegralDataName);
 if nargin<2
     io_IntegralDataName=char(zeros(1,32));
 elseif length(io_IntegralDataName)<32

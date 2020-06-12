@@ -19,7 +19,6 @@ function [io_family_name, ierr] = cg_famname_read(io_family_name)
 if ( nargout < 1)
     error('Incorrect number of input or output arguments.');
 end
-io_family_name = char(io_family_name);
 if nargin<1
     io_family_name=char(zeros(1,32));
 elseif length(io_family_name)<32

@@ -40,16 +40,6 @@ if strfind(computer,'64') %#ok<STRIFCND>
 else
     in_end = int32(in_end);
 end
-if strfind(computer,'64') %#ok<STRIFCND>
-    io_elements = int64(io_elements);
-else
-    io_elements = int32(io_elements);
-end
-if strfind(computer,'64') %#ok<STRIFCND>
-    io_parent_data = int64(io_parent_data);
-else
-    io_parent_data = int32(io_parent_data);
-end
 if strfind(computer,'64')  %#ok<STRIFCND>
     basetype = 'int64';
 else

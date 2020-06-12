@@ -28,7 +28,6 @@ in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_A = int32(in_A);
-io_name = char(io_name);
 if nargin<5
     io_name=char(zeros(1,32));
 elseif length(io_name)<32

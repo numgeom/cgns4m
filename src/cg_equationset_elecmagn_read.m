@@ -21,9 +21,6 @@ function [io_ElecFldModelFlag, io_MagnFldModelFlag, io_ConductivityModelFlag, ie
 if ( nargout < 3 || nargin < 3)
     error('Incorrect number of input or output arguments.');
 end
-io_ElecFldModelFlag = int32(io_ElecFldModelFlag);
-io_MagnFldModelFlag = int32(io_MagnFldModelFlag);
-io_ConductivityModelFlag = int32(io_ConductivityModelFlag);
 basetype = 'int32';
 if ~isa(io_ElecFldModelFlag,basetype)
     io_ElecFldModelFlag = cast(io_ElecFldModelFlag, basetype);

@@ -27,7 +27,6 @@ in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_D = int32(in_D);
-io_discrete_name = char(io_discrete_name);
 if nargin<5
     io_discrete_name=char(zeros(1,32));
 elseif length(io_discrete_name)<32

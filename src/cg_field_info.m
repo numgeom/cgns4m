@@ -30,7 +30,6 @@ in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_S = int32(in_S);
 in_F = int32(in_F);
-io_fieldname = char(io_fieldname);
 if nargin<6
     io_fieldname=char(zeros(1,32));
 elseif length(io_fieldname)<32

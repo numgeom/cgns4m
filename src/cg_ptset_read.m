@@ -19,11 +19,6 @@ function [io_pnts, ierr] = cg_ptset_read(io_pnts)
 if ( nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
-if strfind(computer,'64') %#ok<STRIFCND>
-    io_pnts = int64(io_pnts);
-else
-    io_pnts = int32(io_pnts);
-end
 if strfind(computer,'64')  %#ok<STRIFCND>
     basetype = 'int64';
 else

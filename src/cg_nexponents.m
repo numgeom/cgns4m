@@ -19,7 +19,6 @@ function [io_numexp, ierr] = cg_nexponents(io_numexp)
 if ( nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
-io_numexp = int32(io_numexp);
 basetype = 'int32';
 if ~isa(io_numexp,basetype)
     io_numexp = cast(io_numexp, basetype);

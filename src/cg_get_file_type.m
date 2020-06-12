@@ -21,7 +21,6 @@ if ( nargout < 1 || nargin < 2)
     error('Incorrect number of input or output arguments.');
 end
 in_fn = int32(in_fn);
-io_file_type = int32(io_file_type);
 basetype = 'int32';
 if ~isa(io_file_type,basetype)
     io_file_type = cast(io_file_type, basetype);

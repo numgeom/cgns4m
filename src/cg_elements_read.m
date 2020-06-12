@@ -28,16 +28,6 @@ in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_S = int32(in_S);
-if strfind(computer,'64') %#ok<STRIFCND>
-    io_elements = int64(io_elements);
-else
-    io_elements = int32(io_elements);
-end
-if strfind(computer,'64') %#ok<STRIFCND>
-    io_parent_data = int64(io_parent_data);
-else
-    io_parent_data = int32(io_parent_data);
-end
 if strfind(computer,'64')  %#ok<STRIFCND>
     basetype = 'int64';
 else

@@ -25,7 +25,6 @@ if ( nargout < 1 || nargin < 2)
 end
 in_file_number = int32(in_file_number);
 in_B = int32(in_B);
-io_basename = char(io_basename);
 if nargin<3
     io_basename=char(zeros(1,32));
 elseif length(io_basename)<32

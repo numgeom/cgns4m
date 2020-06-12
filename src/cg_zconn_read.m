@@ -27,7 +27,6 @@ in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_C = int32(in_C);
-io_name = char(io_name);
 if nargin<5
     io_name=char(zeros(1,32));
 elseif length(io_name)<32

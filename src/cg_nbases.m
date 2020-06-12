@@ -21,7 +21,6 @@ if ( nargout < 1 || nargin < 2)
     error('Incorrect number of input or output arguments.');
 end
 in_fn = int32(in_fn);
-io_nbases = int32(io_nbases);
 basetype = 'int32';
 if ~isa(io_nbases,basetype)
     io_nbases = cast(io_nbases, basetype);

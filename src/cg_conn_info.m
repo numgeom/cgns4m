@@ -36,8 +36,6 @@ in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_Ii = int32(in_Ii);
-io_connectname = char(io_connectname);
-io_donorname = char(io_donorname);
 if nargin<5
     io_connectname=char(zeros(1,32));
 elseif length(io_connectname)<32

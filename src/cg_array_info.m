@@ -24,12 +24,6 @@ if ( nargout < 2 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
 in_A = int32(in_A);
-io_ArrayName = char(io_ArrayName);
-if strfind(computer,'64') %#ok<STRIFCND>
-    io_DimensionVector = int64(io_DimensionVector);
-else
-    io_DimensionVector = int32(io_DimensionVector);
-end
 if nargin<2
     io_ArrayName=char(zeros(1,32));
 elseif length(io_ArrayName)<32

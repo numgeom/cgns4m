@@ -24,8 +24,6 @@ if ( nargout < 2 || nargin < 4)
 end
 in_file_number = int32(in_file_number);
 in_B = int32(in_B);
-io_ref_point = single(io_ref_point);
-io_axis = single(io_axis);
 basetype = 'single';
 if ~isa(io_ref_point,basetype)
     io_ref_point = cast(io_ref_point, basetype);

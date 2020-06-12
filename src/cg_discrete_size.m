@@ -28,11 +28,6 @@ in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_D = int32(in_D);
-if strfind(computer,'64') %#ok<STRIFCND>
-    io_dim_vals = int64(io_dim_vals);
-else
-    io_dim_vals = int32(io_dim_vals);
-end
 if strfind(computer,'64')  %#ok<STRIFCND>
     basetype = 'int64';
 else

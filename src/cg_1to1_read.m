@@ -31,19 +31,6 @@ in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_Ii = int32(in_Ii);
-io_connectname = char(io_connectname);
-io_donorname = char(io_donorname);
-if strfind(computer,'64') %#ok<STRIFCND>
-    io_range = int64(io_range);
-else
-    io_range = int32(io_range);
-end
-if strfind(computer,'64') %#ok<STRIFCND>
-    io_donor_range = int64(io_donor_range);
-else
-    io_donor_range = int32(io_donor_range);
-end
-io_transform = int32(io_transform);
 if nargin<5
     io_connectname=char(zeros(1,32));
 elseif length(io_connectname)<32

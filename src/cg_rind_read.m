@@ -19,7 +19,6 @@ function [io_RindData, ierr] = cg_rind_read(io_RindData)
 if ( nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
-io_RindData = int32(io_RindData);
 basetype = 'int32';
 if ~isa(io_RindData,basetype)
     io_RindData = cast(io_RindData, basetype);

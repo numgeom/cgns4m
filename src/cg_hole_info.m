@@ -31,7 +31,6 @@ in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_Ii = int32(in_Ii);
-io_holename = char(io_holename);
 if nargin<5
     io_holename=char(zeros(1,32));
 elseif length(io_holename)<32

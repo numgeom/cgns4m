@@ -28,7 +28,6 @@ in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 in_F = int32(in_F);
 in_BC = int32(in_BC);
-io_fambc_name = char(io_fambc_name);
 if nargin<5
     io_fambc_name=char(zeros(1,32));
 elseif length(io_fambc_name)<32

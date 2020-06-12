@@ -29,7 +29,6 @@ in_B = int32(in_B);
 in_F = int32(in_F);
 in_G = int32(in_G);
 in_P = int32(in_P);
-io_part_name = char(io_part_name);
 if nargin<6
     io_part_name=char(zeros(1,32));
 elseif length(io_part_name)<32

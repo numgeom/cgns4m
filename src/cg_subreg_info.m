@@ -33,7 +33,6 @@ in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_S = int32(in_S);
-io_regname = char(io_regname);
 if nargin<5
     io_regname=char(zeros(1,32));
 elseif length(io_regname)<32
