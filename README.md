@@ -11,7 +11,7 @@ The copyright of CGNS4m belongs to Stony Brook University. CGNS is distributed f
 ## Installation
 
 ### Pre-built binary for MATLAB
-The easiest way to install CGNS4m is to download the binary distribution [cgns4m-v3.4.1-binary.tgz](https://github.com/meshkit/cgns4m/archive/v3.4.1-binary.tgz). It contains binary MEX files for 64-bit Linux, Windows, and Mac OS X, and should work for MATLAB R2016b or later. They were built with 64-bit integers enabled to support large files, and they were statically linked with HDF5 1.8.12, which is the same version as the recent releases of MATLAB.
+The easiest way to install CGNS4m is to download the binary distribution [cgns4m-v3.4.1-binary.tar.gz](https://github.com/meshkit/cgns4m/archive/v3.4.1-binary.tar.gz). It contains binary MEX files for 64-bit Linux, Windows, and Mac OS X, and should work for MATLAB R2016b or later. They were built with 64-bit integers enabled to support large files, and they were statically linked with HDF5 1.8.12, which is the same version as the recent releases of MATLAB.
 
 After downloading cgns4m, please run `run cgns4m-v3.4.1-binary/startup_cgns4m` (or the root directory of `cgns4m`) within MATLAB to add the `cgns4m` path in MATLAB.
 
