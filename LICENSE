@@ -1,18 +1,19 @@
-The use and distribution of CGNS4m is covered under the 
-GNU Lesser General Public License (LGPL), same as the CGNS library.
+The use and distribution of CGNS4m is covered under the CGNS License,
+same as the CGNS library.
 
-For details on the policy governing the distribution of the CGNS 
+For details on the policy governing the distribution of the CGNS
 standard and software see:
 
-    http://www.grc.nasa.gov/www/cgns/charter/principles.html
+    https://cgns.github.io/CGNS_docs_current/charter/principles.html
 
-and for the LGPL:
+and for the CGNS license:
 
-    http://www.grc.nasa.gov/www/cgns/charter/license.html
+    https://cgns.github.io/CGNS_docs_current/charter/license.html
 
-CGNS4m is developed by 
+CGNS4m is developed and maintained by
        Xiangmin Jiao et al., jiao@ams.sunysb.edu
-       Department of Applied Mathematics and Statistics of
+       Department of Applied Mathematics and Statistics &
+       Institute of Advanced Computational Science
        Stony Brook University
 
        Copyright (C) 2009-2020 Stony Brook University.

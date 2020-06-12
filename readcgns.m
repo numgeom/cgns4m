@@ -46,13 +46,13 @@ function [ps, elems, typestr, var_nodes, var_cells] = ...
 %
 % Example usage
 %     % Read only node-centered variables
-%     [xs, elems, etype, var_nodes] = readcgns( 'test.cgns');
+%     [xs, elems, etype, var_nodes] = readcgns('test.ahf');
 %
 %     % Read only cell-centered variables
-%     [xs, elems, etype, tmp, var_cells] = readcgns( 'test.cgns', '-');
+%     [xs, elems, etype, tmp, var_cells] = readcgns('test.ahf', '-');
 %
 %     % Read node-centered and cell-centered variables
-%     [xs, elems, etype, var_nodes, var_cells] = readcgns( 'test.cgns');
+%     [xs, elems, etype, var_nodes, var_cells] = readcgns('test.ahf');
 %
 % See also WRITECGNS
 
@@ -186,7 +186,7 @@ if (zonetype == 2) % Structured
     index_struct = 1;
     for index_sol =1:n_sol
         solname = char(zeros(1,32));
-        [solname, location,ierr] = cg_sol_info(index_file, index_base,...
+        [solname, location, ierr] = cg_sol_info(index_file, index_base,...
             index_zone,index_sol,solname); chk_error(ierr);
 
         [n_fields,ierr] = cg_nfields(index_file, index_base, ...
@@ -195,7 +195,7 @@ if (zonetype == 2) % Structured
         for index_field = 1:n_fields
             field_name = char(zeros(1,32));
 
-            [field_name , datatype,ierr] = cg_field_info(index_file, index_base, ...
+            [field_name, datatype, ierr] = cg_field_info(index_file, index_base, ...
                 index_zone, index_sol, index_field,field_name); chk_error(ierr);
             assert(~isempty(deblank(field_name)))
 
@@ -215,7 +215,7 @@ if (zonetype == 2) % Structured
 
     if (n_sol>0)
         [var_nodes, var_cells,after_struct] = convert_field_name(before_struct,...
-            node_var_list, elem_var_list,nargin,nargout);
+            node_var_list, elem_var_list, nargin, nargout);
     end
 
     % get the number of variables to read
@@ -282,7 +282,7 @@ elseif (zonetype == 3) % Unstructured
     elem_start = istart;  % lower range index of elements
     elem_end = iend;     % upper range index of elements
 
-    [npe, typestr] = get_elemtype_string( itype, icelldim);
+    [npe, typestr] = get_elemtype_string(itype, icelldim);
 
     % Get element connectivity
     [size_ielem,ierr] = cg_ElementDataSize(index_file,index_base,index_zone, ...
@@ -302,7 +302,7 @@ elseif (zonetype == 3) % Unstructured
         elems = inverse_mixed_elements(elems);
     end
 
-    nelems = number_of_elements( elems);    % number of elements (MIXED element type)
+    nelems = number_of_elements(elems);    % number of elements (MIXED element type)
 
     if (itype ~= MIXED) && (num_elems ~= nelems )
         error('Error: Incorrectly reading element connectivity.');
@@ -327,7 +327,7 @@ elseif (zonetype == 3) % Unstructured
             for ii = 1:nelems
                 new_elems(ii,:) = elems((num_type+1)*(ii-1)+2:(num_type+1)*(ii-1)+(num_type+1));
             end
-            [npe, typestr] = get_elemtype_string( element_type, icelldim);
+            [npe, typestr] = get_elemtype_string(element_type, icelldim);
             elems = new_elems;
         end
     end
@@ -407,10 +407,10 @@ ierr = cg_close(index_file); chk_error(ierr);
 
 end
 
-function nelems = number_of_elements( elems)
+function nelems = number_of_elements(elems)
 % Obtain the number of elements in element connectivity
 
-if size(elems,2)>1;
+if size(elems,2)>1
     nelems = size(elems,1);
 else
     es = size(elems,1);
@@ -553,7 +553,7 @@ for ii =1:length(fieldlist)
     var_orig = regexprep(var,'_dOt_','.');
     var_orig = regexprep(var_orig,'_bLk_',' ');
     var_orig = regexprep(var_orig,'_dSh_','-');
-    if ~strcmp( var, var_orig)
+    if ~strcmp(var, var_orig)
         fprintf(1, 'Info: field variable %s is renamed to %s.\n', var_orig, var);
     end
 
@@ -650,7 +650,7 @@ for ii =1:length(fieldlist)
     var_orig = regexprep(var,'_dOt_','.');
     var_orig = regexprep(var_orig,'_bLk_',' ');
     var_orig = regexprep(var_orig,'_dSh_','-');
-    if ~strcmp( var, var_orig)
+    if ~strcmp(var, var_orig)
         fprintf(1, 'Info: field variable %s is renamed to %s.\n', var_orig, var);
     end
 
@@ -704,7 +704,7 @@ for ii =1:length(fieldlist)
 end
 end
 
-function b = match_name( var, inplist)
+function b = match_name(var, inplist)
 % Determine whether variable matches input
 if ischar(inplist)
     b = ~isempty(regexp(var,inplist,'match'));
@@ -717,7 +717,7 @@ else
 end
 end
 
-function [npe, typestr] = get_elemtype_string( itype, icelldim)
+function [npe, typestr] = get_elemtype_string(itype, icelldim)
 % Obtain a string of element type
 switch (itype)
     case NODE
@@ -792,7 +792,7 @@ switch (itype)
 end
 end
 
-function elems = inverse_mixed_elements( elems)
+function elems = inverse_mixed_elements(elems)
 % Convert from element_type in the connectivity table into the number of
 % vertices per element.
 es = size(elems,1);
@@ -845,10 +845,10 @@ while (ii<es)
 end
 end
 
-function chk_error( ierr)
+function chk_error(ierr)
 % Check whether CGNS returned an error code. If so, get error message
 if ierr
-    error( ['Error: ', cg_get_error()]);
+    error(['Error: ', cg_get_error()]);
 end
 end
 
@@ -861,119 +861,139 @@ end
 %! tris = [1 2 3; 3 4 1];
 %! elems = [3 1 2 3, 3 3 4 1]';
 %!test
-%! writecgns( 'test1_tri.cgns', xs, tris);
-%! [xs1,tris1,typestr] = readcgns('test1_tri.cgns');
+%! writecgns('test1_tri.ahf', xs, tris);
+%! [xs1,tris1] = readcgns('test1_tri.ahf');
 %! if(~isequal(xs,xs1)|| ~isequal(tris, tris1))
 %!     error('Error: incorrectly read a triangular mesh');
 %! end
-%! delete test1_tri.cgns;
+%! delete test1_tri.ahf;
 
-%! writecgns( 'test1_tri.cgns', xs, tris, []);
-%! [xs1,tris1,typestr] = readcgns('test1_tri.cgns');
+%! writecgns('test1_tri.ahf', xs, tris, []);
+%! [xs1,tris1] = readcgns('test1_tri.ahf');
 %! if(~isequal(xs,xs1)|| ~isequal(tris, tris1))
 %!     error('Error: incorrectly read a triangular mesh');
 %! end
-%! delete test1_tri.cgns;
+%! delete test1_tri.ahf;
 
 %!test
-%! writecgns( 'test1_tri.h5', xs, tris);
-%! [xs1,tris1,typestr] = readcgns('test1_tri.h5');
+%! writecgns('test1_tri.cgns', xs, tris);
+%! [xs1,tris1] = readcgns('test1_tri.cgns');
 %! if(~isequal(xs,xs1)|| ~isequal(tris, tris1))
 %!     error('Error: incorrectly read a triangular mesh');
 %! end
-%! delete test1_tri.h5;
+%! delete test1_tri.cgns;
 
 
-%! writecgns( 'test1_tri.h5', xs, tris, []);
-%! [xs1,tris1,typestr] = readcgns('test1_tri.h5');
+%! writecgns('test1_tri.cgns', xs, tris, []);
+%! [xs1,tris1] = readcgns('test1_tri.cgns');
 %! if(~isequal(xs,xs1)|| ~isequal(tris, tris1))
 %!     error('Error: incorrectly read a triangular mesh');
 %! end
-%! delete test1_tri.h5;
+%! delete test1_tri.cgns;
 
 %% Test to write and read a mixed mesh
 %!test
-%! writecgns( 'test1_mixed.cgns', xs, elems, 'MIXED2');
-%! [xs1, elems1,typestr] = readcgns('test1_mixed.cgns');
+%! writecgns('test1_mixed.ahf', xs, elems, 'MIXED2');
+%! [xs1, elems1] = readcgns('test1_mixed.ahf');
 %! if(~isequal(xs,xs1) || ~isequal([1 2 3; 3 4 1], elems1))
 %!     error('Error: incorrectly read a mixed mesh');
 %! end
-%! delete test1_mixed.cgns;
+%! delete test1_mixed.ahf;
 
-%! writecgns( 'test1_mixed.cgns', xs, elems, 'MIXED2', []);
-%! [xs1, elems1,typestr] = readcgns('test1_mixed.cgns');
+%! writecgns('test1_mixed.ahf', xs, elems, 'MIXED2', []);
+%! [xs1, elems1] = readcgns('test1_mixed.ahf');
 %! if(~isequal(xs,xs1) || ~isequal([1 2 3; 3 4 1], elems1))
 %!     error('Error: incorrectly read a mixed mesh');
 %! end
 
-%! delete test1_mixed.cgns;
+%! delete test1_mixed.ahf;
 
 %!test
-%! writecgns( 'test1_mixed.h5', xs, elems, 'MIXED2');
-%! [xs1, elems1,typestr] = readcgns('test1_mixed.h5');
+%! writecgns('test1_mixed.cgns', xs, elems, 'MIXED2');
+%! [xs1, elems1] = readcgns('test1_mixed.cgns');
 %! if(~isequal(xs,xs1) || ~isequal([1 2 3; 3 4 1], elems1))
 %!     error('Error: incorrectly read a mixed mesh');
 %! end
-%! delete test1_mixed.h5;
+%! delete test1_mixed.cgns;
 
-%! writecgns( 'test1_mixed.h5', xs, elems, 'MIXED2', []);
-%! [xs1, elems1,typestr] = readcgns('test1_mixed.h5');
+%! writecgns('test1_mixed.cgns', xs, elems, 'MIXED2', []);
+%! [xs1, elems1] = readcgns('test1_mixed.cgns');
 %! if(~isequal(xs,xs1) || ~isequal([1 2 3; 3 4 1], elems1))
 %!     error('Error: incorrectly read a mixed mesh');
 %! end
 
-%! delete test1_mixed.h5;
+%! delete test1_mixed.cgns;
 
 
 %% Test to write and read nodal variables
 %!test
 %! nodal_vars.vec = xs;
 %! nodal_vars.sca = xs(:,1);
-%! writecgns( 'test1_tri.cgns', xs, tris, [], nodal_vars);
-%! [xs1, tris1,typestr,var_nodes] = readcgns('test1_tri.cgns');
+%! writecgns('test1_tri.ahf', xs, tris, [], nodal_vars);
+%! [xs1, tris1,~,var_nodes] = readcgns('test1_tri.ahf');
 %! if(~isequal(xs,xs1) || ~isequal(tris, tris1) || ~isequal(nodal_vars,var_nodes))
 %!     error('Error: incorrectly read nodal variables from triangular mesh');
 %! end
 
-%! writecgns( 'test1_mixed.cgns', xs, elems, 'MIXED2', nodal_vars);
-%! [xs1, elems1,typestr,var_nodes] = readcgns('test1_mixed.cgns');
+%! writecgns('test1_mixed.ahf', xs, elems, 'MIXED2', nodal_vars);
+%! [xs1, elems1,~,var_nodes] = readcgns('test1_mixed.ahf');
+%! if(~isequal(xs,xs1) || ~isequal(nodal_vars,var_nodes))
+%!     error('Error: incorrectly read nodal variables from mixed mesh');
+%! end
+%! delete test1_tri.ahf;
+%! delete test1_mixed.ahf;
+
+
+%% Test to write and read nodal variables
+%!test
+%! nodal_vars.vec = xs;
+%! nodal_vars.sca = xs(:,1);
+%! writecgns('test1_tri.cgns', xs, tris, [], nodal_vars);
+%! [xs1, tris1,~,var_nodes] = readcgns('test1_tri.cgns');
+%! if(~isequal(xs,xs1) || ~isequal(tris, tris1) || ~isequal(nodal_vars,var_nodes))
+%!     error('Error: incorrectly read nodal variables from triangular mesh');
+%! end
+
+%! writecgns('test1_mixed.cgns', xs, elems, 'MIXED2', nodal_vars);
+%! [xs1, elems1,~,var_nodes] = readcgns('test1_mixed.cgns');
 %! if(~isequal(xs,xs1) || ~isequal(nodal_vars,var_nodes))
 %!     error('Error: incorrectly read nodal variables from mixed mesh');
 %! end
 %! delete test1_tri.cgns;
 %! delete test1_mixed.cgns;
-
-
-%% Test to write and read nodal variables
-%!test
-%! nodal_vars.vec = xs;
-%! nodal_vars.sca = xs(:,1);
-%! writecgns( 'test1_tri.h5', xs, tris, [], nodal_vars);
-%! [xs1, tris1,typestr,var_nodes] = readcgns('test1_tri.h5');
-%! if(~isequal(xs,xs1) || ~isequal(tris, tris1) || ~isequal(nodal_vars,var_nodes))
-%!     error('Error: incorrectly read nodal variables from triangular mesh');
-%! end
-
-%! writecgns( 'test1_mixed.h5', xs, elems, 'MIXED2', nodal_vars);
-%! [xs1, elems1,typestr,var_nodes] = readcgns('test1_mixed.h5');
-%! if(~isequal(xs,xs1) || ~isequal(nodal_vars,var_nodes))
-%!     error('Error: incorrectly read nodal variables from mixed mesh');
-%! end
-%! delete test1_tri.h5;
-%! delete test1_mixed.h5;
 
 %% Test to write and read elemental variables
 %!test
 %! eleml_vars.vec = tris;
 %! eleml_vars.sca = int32(tris(:,1));
-%! writecgns( 'test1_tri.cgns', xs, tris, [], [], eleml_vars);
+%! writecgns('test1_tri.ahf', xs, tris, [], [], eleml_vars);
+%! [xs1, tris1,~,var_nodes,var_cells] = readcgns('test1_tri.ahf','-');
+%! if(~isequal(xs,xs1) || ~isequal(tris, tris1) || ~isequal(eleml_vars,var_cells))
+%!     error('Error: incorrectly read elemental variables from triangular mesh');
+%! end
+%!
+%! % Test reading with cell input
+%! writecgns('test1_mixed.ahf', xs, elems, 'MIXED2', [], eleml_vars);
+%! [xs1, elems1,typestr,var_nodes, var_cells] = readcgns('test1_mixed.ahf', '-',{'vec','sca'});
+%! if(~isequal(xs,xs1) || ~isequal(eleml_vars,var_cells))
+%!     error('Error: incorrectly read elemental variables from mixed mesh');
+%! end
+%! delete test1_tri.ahf;
+%! delete test1_mixed.ahf;
+
+
+%% Test to write and read elemental variables
+%!test
+%! eleml_vars.vec = tris;
+%! eleml_vars.sca = int32(tris(:,1));
+%! writecgns('test1_tri.cgns', xs, tris, [], [], eleml_vars);
 %! [xs1, tris1,typestr,var_nodes,var_cells] = readcgns('test1_tri.cgns','-');
 %! if(~isequal(xs,xs1) || ~isequal(tris, tris1) || ~isequal(eleml_vars,var_cells))
 %!     error('Error: incorrectly read elemental variables from triangular mesh');
 %! end
 %!
 %! % Test reading with cell input
-%! writecgns( 'test1_mixed.cgns', xs, elems, 'MIXED2', [], eleml_vars);
+%! writecgns('test1_mixed.cgns', xs, elems, 'MIXED2', [], eleml_vars);
 %! [xs1, elems1,typestr,var_nodes, var_cells] = readcgns('test1_mixed.cgns', '-',{'vec','sca'});
 %! if(~isequal(xs,xs1) || ~isequal(eleml_vars,var_cells))
 %!     error('Error: incorrectly read elemental variables from mixed mesh');
@@ -982,25 +1002,27 @@ end
 %! delete test1_mixed.cgns;
 
 
-%% Test to write and read elemental variables
+%% Test to write and read both nodal and elemental variables
 %!test
+%! nodal_vars.vec = xs;
+%! nodal_vars.sca = xs(:,1);
 %! eleml_vars.vec = tris;
 %! eleml_vars.sca = int32(tris(:,1));
-%! writecgns( 'test1_tri.h5', xs, tris, [], [], eleml_vars);
-%! [xs1, tris1,typestr,var_nodes,var_cells] = readcgns('test1_tri.h5','-');
-%! if(~isequal(xs,xs1) || ~isequal(tris, tris1) || ~isequal(eleml_vars,var_cells))
-%!     error('Error: incorrectly read elemental variables from triangular mesh');
+%! writecgns('test1_tri.ahf', xs, tris, [], nodal_vars, eleml_vars);
+%! [xs1, tris1,typestr,var_nodes,var_cells] = readcgns('test1_tri.ahf');
+%! if(~isequal(xs,xs1) || ~isequal(tris, tris1) || ~isequal(nodal_vars,var_nodes) || ~isequal(eleml_vars,var_cells))
+%!     error('Error: incorrectly read both nodal and elemental variables from triangular mesh');
 %! end
-%!
-%! % Test reading with cell input
-%! writecgns( 'test1_mixed.h5', xs, elems, 'MIXED2', [], eleml_vars);
-%! [xs1, elems1,typestr,var_nodes, var_cells] = readcgns('test1_mixed.h5', '-',{'vec','sca'});
-%! if(~isequal(xs,xs1) || ~isequal(eleml_vars,var_cells))
-%!     error('Error: incorrectly read elemental variables from mixed mesh');
-%! end
-%! delete test1_tri.h5;
-%! delete test1_mixed.h5;
 
+%! % Test reading with cell input
+%! writecgns('test1_mixed.ahf', xs, elems, 'MIXED2', nodal_vars, eleml_vars);
+%! [xs1, elems1,typestr,var_nodes,var_cells] = readcgns('test1_mixed.ahf');
+%! if(~isequal(xs,xs1) || ~isequal(nodal_vars,var_nodes) || ~isequal(eleml_vars,var_cells))
+%!     error('Error: incorrectly read nodal variables from mixed mesh');
+%! end
+
+%! delete test1_tri.ahf;
+%! delete test1_mixed.ahf;
 
 %% Test to write and read both nodal and elemental variables
 %!test
@@ -1008,14 +1030,14 @@ end
 %! nodal_vars.sca = xs(:,1);
 %! eleml_vars.vec = tris;
 %! eleml_vars.sca = int32(tris(:,1));
-%! writecgns( 'test1_tri.cgns', xs, tris, [], nodal_vars, eleml_vars);
+%! writecgns('test1_tri.cgns', xs, tris, [], nodal_vars, eleml_vars);
 %! [xs1, tris1,typestr,var_nodes,var_cells] = readcgns('test1_tri.cgns');
 %! if(~isequal(xs,xs1) || ~isequal(tris, tris1) || ~isequal(nodal_vars,var_nodes) || ~isequal(eleml_vars,var_cells))
 %!     error('Error: incorrectly read both nodal and elemental variables from triangular mesh');
 %! end
 
 %! % Test reading with cell input
-%! writecgns( 'test1_mixed.cgns', xs, elems, 'MIXED2', nodal_vars, eleml_vars);
+%! writecgns('test1_mixed.cgns', xs, elems, 'MIXED2', nodal_vars, eleml_vars);
 %! [xs1, elems1,typestr,var_nodes,var_cells] = readcgns('test1_mixed.cgns');
 %! if(~isequal(xs,xs1) || ~isequal(nodal_vars,var_nodes) || ~isequal(eleml_vars,var_cells))
 %!     error('Error: incorrectly read nodal variables from mixed mesh');
@@ -1023,25 +1045,3 @@ end
 
 %! delete test1_tri.cgns;
 %! delete test1_mixed.cgns;
-
-%% Test to write and read both nodal and elemental variables
-%!test
-%! nodal_vars.vec = xs;
-%! nodal_vars.sca = xs(:,1);
-%! eleml_vars.vec = tris;
-%! eleml_vars.sca = int32(tris(:,1));
-%! writecgns( 'test1_tri.h5', xs, tris, [], nodal_vars, eleml_vars);
-%! [xs1, tris1,typestr,var_nodes,var_cells] = readcgns('test1_tri.h5');
-%! if(~isequal(xs,xs1) || ~isequal(tris, tris1) || ~isequal(nodal_vars,var_nodes) || ~isequal(eleml_vars,var_cells))
-%!     error('Error: incorrectly read both nodal and elemental variables from triangular mesh');
-%! end
-
-%! % Test reading with cell input
-%! writecgns( 'test1_mixed.h5', xs, elems, 'MIXED2', nodal_vars, eleml_vars);
-%! [xs1, elems1,typestr,var_nodes,var_cells] = readcgns('test1_mixed.h5');
-%! if(~isequal(xs,xs1) || ~isequal(nodal_vars,var_nodes) || ~isequal(eleml_vars,var_cells))
-%!     error('Error: incorrectly read nodal variables from mixed mesh');
-%! end
-
-%! delete test1_tri.h5;
-%! delete test1_mixed.h5;

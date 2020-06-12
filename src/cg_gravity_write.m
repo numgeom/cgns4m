@@ -8,17 +8,20 @@ function ierr = cg_gravity_write(in_file_number, in_B, in_gravity_vector)
 %               B: 32-bit integer (int32), scalar
 %    gravity_vector: single-precision (single), array
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_gravity_write( int file_number, int B, float const * gravity_vector);
+% int cg_gravity_write(int file_number, int B, float const * gravity_vector);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/auxiliary.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html">online documentation</a>.
 %
-if (nargin < 3); 
+if (nargin < 3)
     error('Incorrect number of input or output arguments.');
 end
+in_file_number = int32(in_file_number);
+in_B = int32(in_B);
+in_gravity_vector = single(in_gravity_vector);
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(136), in_file_number, in_B, in_gravity_vector);
+ierr = cgnslib_mex(int32(173), in_file_number, in_B, in_gravity_vector);

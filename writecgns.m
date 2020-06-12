@@ -1,7 +1,7 @@
-function writecgns( file_name, ps, elems, typestr, var_nodes, var_cells)
+function writecgns(file_name, ps, elems, typestr, var_nodes, var_cells)
 % Write out a structured or unstructured mesh with node/cell-centered values in CGNS format.
 %
-% WRITECGNS( FILENAME, XS, ELEMS, TYPESTR, VAR_NODES, VAR_CELLS)
+% WRITECGNS(FILENAME, XS, ELEMS, TYPESTR, VAR_NODES, VAR_CELLS)
 %
 % Arguments:
 %   FILENAME is a character string, specifying the output file. The
@@ -51,11 +51,11 @@ function writecgns( file_name, ps, elems, typestr, var_nodes, var_cells)
 %     var_nodes.vnrms = vnrms;
 %     var_cells.fnrms = fnrms;  % Define one elemental variables
 %     % Write out nodal and elemental variables
-%     writecgns( 'test.cgns', xs, elems, '', var_nodes, var_cells);
+%     writecgns('test.cgns', xs, elems, '', var_nodes, var_cells);
 %     % Write out nodal and elemental variables
-%     writecgns( 'test.cgns', xs, elems, '', var_nodes);
+%     writecgns('test.cgns', xs, elems, '', var_nodes);
 %     % Write out only elemental variables
-%     writecgns( 'test.cgns', xs, elems, '', [], var_cells);
+%     writecgns('test.cgns', xs, elems, '', [], var_cells);
 %
 % Note that a field in VAR_NODES (and similarly in VAR_CELLS) is
 % an nxd matrix with d>=1. If d>1, each column of the field will
@@ -72,6 +72,7 @@ function writecgns( file_name, ps, elems, typestr, var_nodes, var_cells)
 %        Xiangmin Jiao (jiao@ams.sunysb.edu)
 %        Ying Chen (yingchen@ams.sunysb.edu)
 %        Bryan Clark (blclark@ams.sunysb.edu)
+
 if ~exist('cgnslib_mex', 'file')
     warning('CGNS does not appear to be compiled  properly. Try to run build_cgns4m.'); %#ok<WNTAG>
     build_cgns4m;
@@ -113,7 +114,7 @@ if strcmp(typestr,'STRUCT2') || strcmp(typestr,'STRUCT3') % Structured
     end
 
     % Set file type to HDF5 or ADF
-    if strcmp(file_name(end-2:end),'.adf')
+    if strcmp(file_name(end-3:end),'.adf')
         ierr = cg_set_file_type(CG_FILE_ADF); chk_error(ierr);
     else
         ierr = cg_set_file_type(CG_FILE_HDF5); chk_error(ierr);
@@ -188,7 +189,7 @@ if strcmp(typestr,'STRUCT2') || strcmp(typestr,'STRUCT3') % Structured
         [index_sol,ierr] = cg_sol_write(index_file, index_base, index_zone, ...
             solname, Vertex); chk_error(ierr);
 
-        write_variables_struct( index_file, index_base, index_zone, index_sol, var_nodes, iphysdim);
+        write_variables_struct(index_file, index_base, index_zone, index_sol, var_nodes, iphysdim);
     end
 
     % Write cell-centered variables
@@ -197,7 +198,7 @@ if strcmp(typestr,'STRUCT2') || strcmp(typestr,'STRUCT3') % Structured
         [index_sol,ierr] = cg_sol_write(index_file, index_base, index_zone, ...
             solname, CellCenter); chk_error(ierr);
 
-        write_variables_struct( index_file, index_base, index_zone, index_sol, var_cells, iphysdim);
+        write_variables_struct(index_file, index_base, index_zone, index_sol, var_cells, iphysdim);
     end
 
 else % Unstructured
@@ -210,14 +211,14 @@ else % Unstructured
         icelldim = 1;
     else
         % get elems_type from elems
-        [type, icelldim] = get_elemtype( size(elems,2), typestr, size(ps,1), elems);
+        [type, icelldim] = get_elemtype(size(elems,2), typestr, elems);
         if type == MIXED
-            [elems,nelems] = convert_mixed_elements( elems, icelldim);
+            [elems,nelems] = convert_mixed_elements(elems, icelldim);
         end
     end
 
     % Set file type to HDF5 or ADF
-    if strcmp(file_name(end-2:end),'.adf')
+    if strcmp(file_name(end-3:end),'.adf')
         ierr = cg_set_file_type(CG_FILE_ADF); chk_error(ierr);
     else
         ierr = cg_set_file_type(CG_FILE_HDF5); chk_error(ierr);
@@ -272,7 +273,7 @@ else % Unstructured
         [index_sol,ierr] = cg_sol_write(index_file, index_base, index_zone, ...
             solname, Vertex); chk_error(ierr);
 
-        write_variables( index_file, index_base, index_zone, index_sol, var_nodes);
+        write_variables(index_file, index_base, index_zone, index_sol, var_nodes);
     end
 
     % Write cell-centered variables
@@ -281,7 +282,7 @@ else % Unstructured
         [index_sol,ierr] = cg_sol_write(index_file, index_base, index_zone, ...
             solname, CellCenter); chk_error(ierr);
 
-        write_variables( index_file, index_base, index_zone, index_sol, var_cells);
+        write_variables(index_file, index_base, index_zone, index_sol, var_cells);
     end
 end
 
@@ -289,7 +290,7 @@ end
 ierr = cg_close(index_file); chk_error(ierr);
 end
 
-function type = get_cgns_datatype( arr)
+function type = get_cgns_datatype(arr)
 % Obtain the corresponding CGNS data type for a given array
 if isinteger(arr)
     type = Integer;
@@ -302,7 +303,7 @@ else
 end
 end
 
-function write_variables_struct( index_file, index_base, index_zone, index_sol, struct, iphysdim)
+function write_variables_struct(index_file, index_base, index_zone, index_sol, struct, iphysdim)
 % Subfunction for writing out variable names.
 fldlist2 = fieldnames(struct);
 fldlist = regexprep(fldlist2,'_dOt_','.');
@@ -310,7 +311,7 @@ fldlist = regexprep(fldlist,'_dSh_','-');
 fldlist = regexprep(fldlist,'_bLk_',' ');
 
 for ii=1:length(fldlist)
-    if ~strcmp( fldlist{ii}, fldlist2{ii})
+    if ~strcmp(fldlist{ii}, fldlist2{ii})
         fprintf(2, 'Info: field variable %s is renamed to %s.\n', fldlist2{ii}, fldlist{ii});
     end
 
@@ -368,7 +369,7 @@ for ii=1:length(fldlist)
 end
 end
 
-function write_variables( index_file, index_base, index_zone, index_sol, struct)
+function write_variables(index_file, index_base, index_zone, index_sol, struct)
 % Subfunction for writing out variable names.
 fldlist2 = fieldnames(struct);
 fldlist = regexprep(fldlist2,'_dOt_','.');
@@ -376,7 +377,7 @@ fldlist = regexprep(fldlist,'_dSh_','-');
 fldlist = regexprep(fldlist,'_bLk_',' ');
 
 for ii=1:length(fldlist)
-    if ~strcmp( fldlist{ii}, fldlist2{ii})
+    if ~strcmp(fldlist{ii}, fldlist2{ii})
         fprintf(2, 'Info: field variable %s is renamed to %s.\n', fldlist2{ii}, fldlist{ii});
     end
 
@@ -412,7 +413,7 @@ for ii=1:length(fldlist)
 end
 end
 
-function [type, icelldim] = get_elemtype( npe, typestr, nv, elems)
+function [type, icelldim] = get_elemtype(npe, typestr, elems)
 % Obtain the element-type ID and dimension of elements
 switch (npe)
     case 1
@@ -424,7 +425,7 @@ switch (npe)
             icelldim = 3;
         else
             try
-                convert_mixed_elements( elems, 3);
+                convert_mixed_elements(elems, 3);
                 icelldim = 3;
             catch %#ok<CTCH>
                 icelldim = 2;
@@ -453,7 +454,7 @@ switch (npe)
         type = PYRA_5;
         icelldim = 3;
     case 6
-        if ( ~isempty(typestr) && upper(typestr(1))=='P')
+        if (~isempty(typestr) && upper(typestr(1))=='P')
             type = PENTA_6;
             icelldim = 3;
         else
@@ -497,7 +498,7 @@ switch (npe)
 end
 end
 
-function [elems,nelems] = convert_mixed_elements( elems, dim)
+function [elems,nelems] = convert_mixed_elements(elems, dim)
 % Convert from the number of vertices per element into
 % element_type in the connecitvity table.
 es = size(elems,1);
@@ -563,10 +564,10 @@ else
 end
 end
 
-function chk_error( ierr)
+function chk_error(ierr)
 % Check whether CGNS returned an error code. If so, get error message
 if ierr
-    error( ['Error: ', cg_get_error()]);
+    error(['Error: ', cg_get_error()]);
 end
 end
 
@@ -579,40 +580,40 @@ end
 %! tris = [1 2 3; 3 4 1];
 %! elems = [3 1 2 3, 3 3 4 1]';
 %!test
-%! writecgns( 'test1_tri.adf', xs, tris);
-%! writecgns( 'test1_tri.adf', xs, tris, []);
+%! writecgns('test1_tri.adf', xs, tris);
+%! writecgns('test1_tri.adf', xs, tris, []);
 %! delete test1_tri.adf;
 
 %!test
-%! writecgns( 'test1_tri.cgns', xs, tris);
-%! writecgns( 'test1_tri.cgns', xs, tris, []);
+%! writecgns('test1_tri.cgns', xs, tris);
+%! writecgns('test1_tri.cgns', xs, tris, []);
 %! delete test1_tri.cgns;
 
 %% Test to write a mixed mesh
 %!test
-%! writecgns( 'test1_mixed.adf', xs, elems, 'MIXED2');
-%! writecgns( 'test1_mixed.adf', xs, elems, 'MIXED2', []);
+%! writecgns('test1_mixed.adf', xs, elems, 'MIXED2');
+%! writecgns('test1_mixed.adf', xs, elems, 'MIXED2', []);
 %! delete test1_mixed.adf;
 
 %!test
-%! writecgns( 'test1_mixed.cgns', xs, elems, 'MIXED2');
-%! writecgns( 'test1_mixed.cgns', xs, elems, 'MIXED2', []);
+%! writecgns('test1_mixed.cgns', xs, elems, 'MIXED2');
+%! writecgns('test1_mixed.cgns', xs, elems, 'MIXED2', []);
 %! delete test1_mixed.cgns;
 
 %% Test to write nodal variables
 %!test
 %! nodal_vars.vec = xs;
 %! nodal_vars.sca = xs(:,1);
-%! writecgns( 'test1_tri.adf', xs, tris, [], nodal_vars);
-%! writecgns( 'test1_mixed.adf', xs, elems, 'MIXED2', nodal_vars);
+%! writecgns('test1_tri.adf', xs, tris, [], nodal_vars);
+%! writecgns('test1_mixed.adf', xs, elems, 'MIXED2', nodal_vars);
 %! delete test1_tri.adf;
 %! delete test1_mixed.adf;
 
 %!test
 %! nodal_vars.vec = xs;
 %! nodal_vars.sca = xs(:,1);
-%! writecgns( 'test1_tri.cgns', xs, tris, [], nodal_vars);
-%! writecgns( 'test1_mixed.cgns', xs, elems, 'MIXED2', nodal_vars);
+%! writecgns('test1_tri.cgns', xs, tris, [], nodal_vars);
+%! writecgns('test1_mixed.cgns', xs, elems, 'MIXED2', nodal_vars);
 %! delete test1_tri.cgns;
 %! delete test1_mixed.cgns;
 
@@ -620,16 +621,16 @@ end
 %!test
 %! eleml_vars.vec = tris;
 %! eleml_vars.sca = int32(tris(:,1));
-%! writecgns( 'test1_tri.adf', xs, tris, [], [], eleml_vars);
-%! writecgns( 'test1_mixed.adf', xs, elems, 'MIXED2', [], eleml_vars);
+%! writecgns('test1_tri.adf', xs, tris, [], [], eleml_vars);
+%! writecgns('test1_mixed.adf', xs, elems, 'MIXED2', [], eleml_vars);
 %! delete test1_tri.adf;
 %! delete test1_mixed.adf;
 
 %!test
 %! eleml_vars.vec = tris;
 %! eleml_vars.sca = int32(tris(:,1));
-%! writecgns( 'test1_tri.cgns', xs, tris, [], [], eleml_vars);
-%! writecgns( 'test1_mixed.cgns', xs, elems, 'MIXED2', [], eleml_vars);
+%! writecgns('test1_tri.cgns', xs, tris, [], [], eleml_vars);
+%! writecgns('test1_mixed.cgns', xs, elems, 'MIXED2', [], eleml_vars);
 %! delete test1_tri.cgns;
 %! delete test1_mixed.cgns;
 
@@ -639,8 +640,8 @@ end
 %! nodal_vars.sca = xs(:,1);
 %! eleml_vars.vec = tris;
 %! eleml_vars.sca = int32(tris(:,1));
-%! writecgns( 'test1_tri.adf', xs, tris, [], nodal_vars, eleml_vars);
-%! writecgns( 'test1_mixed.adf', xs, elems, 'MIXED2', nodal_vars, eleml_vars);
+%! writecgns('test1_tri.adf', xs, tris, [], nodal_vars, eleml_vars);
+%! writecgns('test1_mixed.adf', xs, elems, 'MIXED2', nodal_vars, eleml_vars);
 %! delete test1_tri.adf;
 %! delete test1_mixed.adf;
 
@@ -649,7 +650,7 @@ end
 %! nodal_vars.sca = xs(:,1);
 %! eleml_vars.vec = tris;
 %! eleml_vars.sca = int32(tris(:,1));
-%! writecgns( 'test1_tri.cgns', xs, tris, [], nodal_vars, eleml_vars);
-%! writecgns( 'test1_mixed.cgns', xs, elems, 'MIXED2', nodal_vars, eleml_vars);
+%! writecgns('test1_tri.cgns', xs, tris, [], nodal_vars, eleml_vars);
+%! writecgns('test1_mixed.cgns', xs, elems, 'MIXED2', nodal_vars, eleml_vars);
 %! delete test1_tri.cgns;
 %! delete test1_mixed.cgns;

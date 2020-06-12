@@ -20,7 +20,7 @@ function ierr = cg_gorel(varargin)
 % The original C function is:
 % int cg_gorel( int file_number, ..., "end");
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/navigating.html">online documentation</a>.
+% For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/navigating.html">online documentation</a>.
 % 
 % See also cg_gopath, cg_goto, cg_where.
 

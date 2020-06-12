@@ -3,7 +3,7 @@ function [out_npe, ierr] = cg_npe(in_type)
 %
 % [npe, ierr] = cg_npe(type)
 %
-% Input argument (required; type is auto-casted): 
+% Input argument (required; type is auto-casted):
 %            type: 32-bit integer (int32), scalar
 %
 % Output arguments (optional):
@@ -11,13 +11,14 @@ function [out_npe, ierr] = cg_npe(in_type)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_npe( ElementType_t type, int * npe);
+% int cg_npe(CG_ElementType_t type, int * npe);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
-if (nargin < 1); 
+if (nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
+in_type = int32(in_type);
 
 % Invoke the actual MEX-function.
-[out_npe, ierr] =  cgnslib_mex(int32(73), in_type);
+[out_npe, ierr] = cgnslib_mex(int32(85), in_type);

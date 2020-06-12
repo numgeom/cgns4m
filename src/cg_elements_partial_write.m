@@ -8,21 +8,28 @@ function ierr = cg_elements_partial_write(in_fn, in_B, in_Z, in_S, in_start, in_
 %               B: 32-bit integer (int32), scalar
 %               Z: 32-bit integer (int32), scalar
 %               S: 32-bit integer (int32), scalar
-%           start: 32-bit integer (int32), scalar
-%             end: 32-bit integer (int32), scalar
-%        elements: 32-bit integer (int32), array
+%           start: 64-bit integer (int64), scalar
+%             end: 64-bit integer (int64), scalar
+%        elements: 64-bit integer (int64), array
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_elements_partial_write( int fn, int B, int Z, int S, int start, int end, int const * elements);
+% int cg_elements_partial_write(int fn, int B, int Z, int S, int64_t start, int64_t end, const int64_t * elements);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
-if (nargin < 7); 
+if (nargin < 7)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_S = int32(in_S);
+in_start = int64(in_start);
+in_end = int64(in_end);
+in_elements = int64(in_elements);
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(76), in_fn, in_B, in_Z, in_S, in_start, in_end, in_elements);
+ierr = cgnslib_mex(int32(88), in_fn, in_B, in_Z, in_S, in_start, in_end, in_elements);

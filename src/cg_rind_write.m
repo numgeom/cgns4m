@@ -3,20 +3,21 @@ function ierr = cg_rind_write(in_RindData)
 %
 % ierr = cg_rind_write(RindData)
 %
-% Input argument (required; type is auto-casted): 
+% Input argument (required; type is auto-casted):
 %        RindData: 32-bit integer (int32), array
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_rind_write( int const * RindData);
+% int cg_rind_write(const int * RindData);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/location.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/location.html">online documentation</a>.
 %
-if (nargin < 1); 
+if (nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
+in_RindData = int32(in_RindData);
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(184), in_RindData);
+ierr = cgnslib_mex(int32(223), in_RindData);

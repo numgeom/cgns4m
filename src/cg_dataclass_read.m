@@ -3,17 +3,17 @@ function [out_dataclass, ierr] = cg_dataclass_read()
 %
 % [dataclass, ierr] = cg_dataclass_read()
 %
-% Input argument (required; type is auto-casted): 
+% Input argument (required; type is auto-casted):
 %
 % Output arguments (optional):
 %       dataclass: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_dataclass_read( DataClass_t * dataclass);
+% int cg_dataclass_read(CG_DataClass_t * dataclass);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.
-[out_dataclass, ierr] =  cgnslib_mex(int32(202));
+[out_dataclass, ierr] = cgnslib_mex(int32(241));

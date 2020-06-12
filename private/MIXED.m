@@ -1,3 +1,3 @@
 function val = MIXED
-%% Value 21 of enumeration type ElementType_t
-val = int32(21);
+%% Value 20 of enumeration type CG_ElementType_t
+val = int32(20);

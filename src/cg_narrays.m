@@ -3,17 +3,17 @@ function [out_narrays, ierr] = cg_narrays()
 %
 % [narrays, ierr] = cg_narrays()
 %
-% Input argument (required; type is auto-casted): 
+% Input argument (required; type is auto-casted):
 %
 % Output arguments (optional):
 %         narrays: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_narrays( int * narrays);
+% int cg_narrays(int * narrays);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.
-[out_narrays, ierr] =  cgnslib_mex(int32(172));
+[out_narrays, ierr] = cgnslib_mex(int32(209));

@@ -7,27 +7,29 @@ function [io_bitername, out_nsteps, ierr] = cg_biter_read(in_file_number, in_B, 
 %     file_number: 32-bit integer (int32), scalar
 %               B: 32-bit integer (int32), scalar
 %
-% In&Out argument (required as output; also required as input if specified; type is auto-casted):
-%       bitername: character string with default length 32 
+% In&Out argument (required as output; type is auto-casted):
+%       bitername: character string with default length 32  (optional as input)
 %
 % Output arguments (optional):
 %          nsteps: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_biter_read( int file_number, int B, char * bitername, int * nsteps);
+% int cg_biter_read(int file_number, int B, char * bitername, int * nsteps);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/midlevel/timedep.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/timedep.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 2); 
+if ( nargout < 1 || nargin < 2)
     error('Incorrect number of input or output arguments.');
 end
+in_file_number = int32(in_file_number);
+in_B = int32(in_B);
 if nargin<3
     io_bitername=char(zeros(1,32));
 elseif length(io_bitername)<32
     %% Enlarge the array if necessary;
     io_bitername=char([io_bitername zeros(1,32-length(io_bitername))]);
-elseif ~isa(io_bitername,'char');
+elseif ~isa(io_bitername,'char')
     io_bitername=char(io_bitername);
 else
     % Write to it to avoid sharing memory with other variables
@@ -36,4 +38,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_nsteps, ierr, io_bitername] =  cgnslib_mex(int32(131), in_file_number, in_B, io_bitername);
+[io_bitername, out_nsteps, ierr] = cgnslib_mex(int32(168), in_file_number, in_B, io_bitername);

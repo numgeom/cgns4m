@@ -1,3 +1,3 @@
 function val = TimeUnitsNull
-%% Value 0 of enumeration type TimeUnits_t
+%% Value 0 of enumeration type CG_TimeUnits_t
 val = int32(0);

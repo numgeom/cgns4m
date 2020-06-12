@@ -13,12 +13,15 @@ function [out_zone_id, ierr] = cg_zone_id(in_fn, in_B, in_Z)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_zone_id( int fn, int B, int Z, double * zone_id);
+% int cg_zone_id(int fn, int B, int Z, double * zone_id);
 %
 % For detail, see the documentation of the original function.
-if (nargin < 3); 
+if (nargin < 3)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
 
 % Invoke the actual MEX-function.
-[out_zone_id, ierr] =  cgnslib_mex(int32(46), in_fn, in_B, in_Z);
+[out_zone_id, ierr] = cgnslib_mex(int32(49), in_fn, in_B, in_Z);

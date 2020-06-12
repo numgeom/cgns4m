@@ -1,3 +1,3 @@
 function val = Hefner
-%% Value 5 of enumeration type LuminousIntensityUnits_t
+%% Value 5 of enumeration type CG_LuminousIntensityUnits_t
 val = int32(5);
