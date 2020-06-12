@@ -8,13 +8,13 @@ function [io_coord_ptr, ierr] = cg_coord_general_read(in_fn, in_B, in_Z, in_coor
 %               B: 32-bit integer (int32), scalar
 %               Z: 32-bit integer (int32), scalar
 %       coordname: character string
-%          s_rmin: 64-bit or 32-bit integer (platform dependent), array
-%          s_rmax: 64-bit or 32-bit integer (platform dependent), array
+%          s_rmin: 64-bit integer (int64), array
+%          s_rmax: 64-bit integer (int64), array
 %          m_type: 32-bit integer (int32), scalar
 %        m_numdim: 32-bit integer (int32), scalar
-%       m_dimvals: 64-bit or 32-bit integer (platform dependent), array
-%          m_rmin: 64-bit or 32-bit integer (platform dependent), array
-%          m_rmax: 64-bit or 32-bit integer (platform dependent), array
+%       m_dimvals: 64-bit integer (int64), array
+%          m_rmin: 64-bit integer (int64), array
+%          m_rmax: 64-bit integer (int64), array
 %
 % In&Out argument (required as output; type is auto-casted):
 %       coord_ptr: dynamic type based on m_type  (also required as input)
@@ -23,7 +23,7 @@ function [io_coord_ptr, ierr] = cg_coord_general_read(in_fn, in_B, in_Z, in_coor
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_coord_general_read(int fn, int B, int Z, const char * coordname, const long * s_rmin, const long * s_rmax, CG_DataType_t m_type, int m_numdim, const long * m_dimvals, const long * m_rmin, const long * m_rmax, void * coord_ptr);
+% int cg_coord_general_read(int fn, int B, int Z, const char * coordname, const int64_t * s_rmin, const int64_t * s_rmax, CG_DataType_t m_type, int m_numdim, const int64_t * m_dimvals, const int64_t * m_rmin, const int64_t * m_rmax, void * coord_ptr);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
@@ -34,33 +34,13 @@ in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_coordname = char(in_coordname);
-if strfind(computer,'64') %#ok<STRIFCND>
-    in_s_rmin = int64(in_s_rmin);
-else
-    in_s_rmin = int32(in_s_rmin);
-end
-if strfind(computer,'64') %#ok<STRIFCND>
-    in_s_rmax = int64(in_s_rmax);
-else
-    in_s_rmax = int32(in_s_rmax);
-end
+in_s_rmin = int64(in_s_rmin);
+in_s_rmax = int64(in_s_rmax);
 in_m_type = int32(in_m_type);
 in_m_numdim = int32(in_m_numdim);
-if strfind(computer,'64') %#ok<STRIFCND>
-    in_m_dimvals = int64(in_m_dimvals);
-else
-    in_m_dimvals = int32(in_m_dimvals);
-end
-if strfind(computer,'64') %#ok<STRIFCND>
-    in_m_rmin = int64(in_m_rmin);
-else
-    in_m_rmin = int32(in_m_rmin);
-end
-if strfind(computer,'64') %#ok<STRIFCND>
-    in_m_rmax = int64(in_m_rmax);
-else
-    in_m_rmax = int32(in_m_rmax);
-end
+in_m_dimvals = int64(in_m_dimvals);
+in_m_rmin = int64(in_m_rmin);
+in_m_rmax = int64(in_m_rmax);
 
 % Perform dynamic type casting
 datatype = in_m_type;

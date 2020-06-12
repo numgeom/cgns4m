@@ -10,13 +10,13 @@ function [io_zonename, io_size, ierr] = cg_zone_read(in_fn, in_B, in_Z, io_zonen
 %
 % In&Out arguments (required as output; type is auto-casted):
 %        zonename: character string with default length 32  (optional as input)
-%            size: 64-bit or 32-bit integer (platform dependent), len=9  (optional as input)
+%            size: 64-bit integer (int64), len=9  (optional as input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_zone_read(int fn, int B, int Z, char * zonename, long * size);
+% int cg_zone_read(int fn, int B, int Z, char * zonename, int64_t * size);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
 %
@@ -38,11 +38,7 @@ else
     t=io_zonename(1); io_zonename(1)=t;
 end
 
-if strfind(computer,'64')  %#ok<STRIFCND>
-    basetype = 'int64';
-else
-    basetype = 'int32';
-end
+basetype = 'int64';
 if nargin<5
     io_size = zeros(1,9,basetype);
 elseif length(io_size)<9

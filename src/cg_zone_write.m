@@ -7,7 +7,7 @@ function [out_Z, ierr] = cg_zone_write(in_fn, in_B, in_zonename, in_size, in_typ
 %              fn: 32-bit integer (int32), scalar
 %               B: 32-bit integer (int32), scalar
 %        zonename: character string
-%            size: 64-bit or 32-bit integer (platform dependent), len=9
+%            size: 64-bit integer (int64), len=9
 %            type: 32-bit integer (int32), scalar
 %
 % Output arguments (optional):
@@ -15,7 +15,7 @@ function [out_Z, ierr] = cg_zone_write(in_fn, in_B, in_zonename, in_size, in_typ
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_zone_write(int fn, int B, const char * zonename, const long * size, CG_ZoneType_t type, int * Z);
+% int cg_zone_write(int fn, int B, const char * zonename, const int64_t * size, CG_ZoneType_t type, int * Z);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
 %
@@ -25,11 +25,7 @@ end
 in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_zonename = char(in_zonename);
-if strfind(computer,'64') %#ok<STRIFCND>
-    in_size = int64(in_size);
-else
-    in_size = int32(in_size);
-end
+in_size = int64(in_size);
 in_type = int32(in_type);
 
 % Invoke the actual MEX-function.

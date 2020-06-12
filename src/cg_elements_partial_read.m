@@ -8,18 +8,18 @@ function [io_elements, io_parent_data, ierr] = cg_elements_partial_read(in_file_
 %               B: 32-bit integer (int32), scalar
 %               Z: 32-bit integer (int32), scalar
 %               S: 32-bit integer (int32), scalar
-%           start: 64-bit or 32-bit integer (platform dependent), scalar
-%             end: 64-bit or 32-bit integer (platform dependent), scalar
+%           start: 64-bit integer (int64), scalar
+%             end: 64-bit integer (int64), scalar
 %
 % In&Out arguments (required as output; type is auto-casted):
-%        elements: 64-bit or 32-bit integer (platform dependent), array  (also required as input)
-%     parent_data: 64-bit or 32-bit integer (platform dependent), array  (also required as input)
+%        elements: 64-bit integer (int64), array  (also required as input)
+%     parent_data: 64-bit integer (int64), array  (also required as input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_elements_partial_read(int file_number, int B, int Z, int S, long start, long end, long * elements, long * parent_data);
+% int cg_elements_partial_read(int file_number, int B, int Z, int S, int64_t start, int64_t end, int64_t * elements, int64_t * parent_data);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
@@ -30,21 +30,9 @@ in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_S = int32(in_S);
-if strfind(computer,'64') %#ok<STRIFCND>
-    in_start = int64(in_start);
-else
-    in_start = int32(in_start);
-end
-if strfind(computer,'64') %#ok<STRIFCND>
-    in_end = int64(in_end);
-else
-    in_end = int32(in_end);
-end
-if strfind(computer,'64')  %#ok<STRIFCND>
-    basetype = 'int64';
-else
-    basetype = 'int32';
-end
+in_start = int64(in_start);
+in_end = int64(in_end);
+basetype = 'int64';
 if ~isa(io_elements,basetype)
     io_elements = cast(io_elements, basetype);
 elseif ~isempty(io_elements)
@@ -52,11 +40,7 @@ elseif ~isempty(io_elements)
     t=io_elements(1); io_elements(1)=t;
 end
 
-if strfind(computer,'64')  %#ok<STRIFCND>
-    basetype = 'int64';
-else
-    basetype = 'int32';
-end
+basetype = 'int64';
 if ~isa(io_parent_data,basetype)
     io_parent_data = cast(io_parent_data, basetype);
 elseif ~isempty(io_parent_data)

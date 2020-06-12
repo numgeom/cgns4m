@@ -45,8 +45,8 @@ $default_retname = "ret";    # Default name for return value
                              # for more details).
 
 @basic_type_keywords = (
-    qw(short long signed unsigned
-      float double int char const ptrdiff_t)
+    qw(short long signed unsigned float double int char const ptrdiff_t size_t
+       int64_t uint64_t int32_t uint32_t int16_t uint16_t uint8_t uint8_t)
 );
 @basic_types{@basic_type_keywords} = @basic_type_keywords;
 

@@ -31,13 +31,13 @@ $typemap_get_scalar{'float'} = sub {
     ("    $arg->{c_var_name} = _get_numeric_scalar_float($arg->{mat_expr_in});\n");
 };
 
-$typemap_get_scalar{'long long'} = sub {
+$typemap_get_scalar{'long long'} = $typemap_get_scalar{'int64_t'} = sub {
     my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
     ( "    $arg->{c_var_name} = _get_numeric_scalar_int64($arg->{mat_expr_in});\n"
     );
 };
 
-$typemap_get_scalar{'unsigned long long'} = sub {
+$typemap_get_scalar{'unsigned long long'} = $typemap_get_scalar{'uint64_t'} = sub {
     my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
     ( "    $arg->{c_var_name} = _get_numeric_scalar_uint64($arg->{mat_expr_in});\n"
     );
@@ -59,29 +59,41 @@ $typemap_get_scalar{'unsigned long'} = $typemap_get_scalar{'size_t'} = sub {
     ."        $arg->{c_var_name} = _get_numeric_scalar_uint32($arg->{mat_expr_in});\n");
 };
 
-$typemap_get_scalar{'int'} = sub {
+$typemap_get_scalar{'int'} = $typemap_get_scalar{'int32_t'} = sub {
     my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
     ("    $arg->{c_var_name} = _get_numeric_scalar_int32($arg->{mat_expr_in});\n");
 };
 
-$typemap_get_scalar{'unsigned int'} = $typemap_get_scalar{'unsigned'} = sub {
+$typemap_get_scalar{'unsigned int'} = $typemap_get_scalar{'unsigned'} =
+    $typemap_get_scalar{'uint32_t'} = sub {
     my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
     ( "    $arg->{c_var_name} = _get_numeric_scalar_uint32($arg->{mat_expr_in});\n"
     );
 };
 
-$typemap_get_scalar{'short'} = sub {
+$typemap_get_scalar{'short'} = $typemap_get_scalar{'int16_t'} = sub {
     my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
     ("    $arg->{c_var_name} = _get_numeric_scalar_int16($arg->{mat_expr_in});\n");
 };
 
-$typemap_get_scalar{'unsigned short'} = sub {
+$typemap_get_scalar{'unsigned short'} = $typemap_get_scalar{'uint16_t'} = sub {
     my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
     ( "    $arg->{c_var_name} = _get_numeric_scalar_uint16($arg->{mat_expr_in});\n"
     );
 };
 
-$typemap_get_scalar{'char'} = sub {
+$typemap_get_scalar{'int8_t'} = sub {
+    my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
+    ("    $arg->{c_var_name} = _get_numeric_scalar_int8($arg->{mat_expr_in});\n");
+};
+
+$typemap_get_scalar{'uint8_t'} = sub {
+    my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
+    ( "    $arg->{c_var_name} = _get_numeric_scalar_uint8($arg->{mat_expr_in});\n"
+    );
+};
+
+$typemap_get_scalar{'char'} = $typemap_get_scalar{'unsigned char'} = sub {
     my ( $arg, $argname ) = @_;              # Name the arguments.
 
     (
@@ -91,7 +103,7 @@ $typemap_get_scalar{'char'} = sub {
     );
 };
 
-$typemap_get_scalar{'char *'} = sub {
+$typemap_get_scalar{'char *'} = $typemap_get_scalar{'unsigned char *'} = sub {
     my ( $arg, $argname ) = @_;              # Name the arguments.
     ( $arg->{fstrlen} )
       ? "    $arg->{c_var_name} = _mxGetString($arg->{mat_expr_in}, & $arg->{fstrlen});\n"
@@ -124,24 +136,26 @@ $typemap_get_ptr{'float'} =  sub {
           . "        mexErrMsgTxt(\"Expecting single-precision float matrix for argument $argname\");\n");
   };
 
-$typemap_get_ptr{'long long'}      = $typemap_get_ptr{'int'} =
-  $typemap_get_ptr{'short'}        = $typemap_get_ptr{'unsigned long long'} =
-  $typemap_get_ptr{'unsigned int'} = $typemap_get_ptr{'unsigned'} =
-  $typemap_get_ptr{'unsigned short'} =
+$typemap_get_ptr{'long long'} = $typemap_get_ptr{'unsigned long long'} =
+  $typemap_get_ptr{'int'} = $typemap_get_ptr{'unsigned int'} = $typemap_get_ptr{'unsigned'} =
+  $typemap_get_ptr{'short'} = $typemap_get_ptr{'unsigned short'} =
+  $typemap_get_ptr{'int64_t'} = $typemap_get_ptr{'uint64_t'} =
+  $typemap_get_ptr{'int32_t'} = $typemap_get_ptr{'uint32_t'} =
+  $typemap_get_ptr{'int16_t'} = $typemap_get_ptr{'uint16_t'} =
+  $typemap_get_ptr{'int8_t'} = $typemap_get_ptr{'uint8_t'} =
 
   # Must be an integer or an integer array.
   sub {
     my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
     my $ilen = (
-        $argtype =~ /\bshort$/
-        ? '16'
-        : ( $argtype =~ /\blong$/ ? '64' : '32' )
+        ( $argtype =~ /long$/ || $argtype =~ /int64/ ) ? '64'
+        : ( ( $argtype =~ /short$/ || $argtype =~ /int16/ ) ? '16' :
+            ( $argtype =~ /int8/ ? '8' : '32' ))
     );
 
     # Which Matlab subroutines to call to check
     # for 16 or 32 bit integers.
-    (
-"    if (mxIsInt$ilen($arg->{mat_expr_in}) || mxIsUint$ilen($arg->{mat_expr_in}))\n"
+    ("    if (mxIsInt$ilen($arg->{mat_expr_in}) || mxIsUint$ilen($arg->{mat_expr_in}))\n"
           . "        $arg->{c_var_name} = ($arg->{basic_type}*)mxGetData($arg->{mat_expr_in});\n"
           . "    else\n"
           . "        mexErrMsgTxt(\"Expecting $ilen-bit integer matrix for argument $argname\");\n");
@@ -192,18 +206,21 @@ $typemap_free_ptr{'float'} = sub {
     ("    if (!mxIsSingle($arg->{mat_expr_in})) mxFree($arg->{c_var_name});\n");
 };
 
-$typemap_free_ptr{'long long'}      = $typemap_free_ptr{'int'} =
-  $typemap_free_ptr{'short'}        = $typemap_free_ptr{'unsigned long long'} =
-  $typemap_free_ptr{'unsigned int'} = $typemap_free_ptr{'unsigned'} =
-  $typemap_free_ptr{'unsigned short'} =
+$typemap_free_ptr{'long long'} = $typemap_free_ptr{'unsigned long long'} =
+  $typemap_free_ptr{'int'} = $typemap_free_ptr{'unsigned int'} = $typemap_free_ptr{'unsigned'} =
+  $typemap_free_ptr{'short'} = $typemap_free_ptr{'unsigned short'} =
+  $typemap_free_ptr{'int64_t'} = $typemap_free_ptr{'uint64_t'} =
+  $typemap_free_ptr{'int32_t'} = $typemap_free_ptr{'uint32_t'} =
+  $typemap_free_ptr{'int16_t'} = $typemap_free_ptr{'uint16_t'} =
+  $typemap_free_ptr{'int8_t'}  = $typemap_free_ptr{'uint8_t'} =
 
   # Must be an integer or an integer array.
   sub {
     my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
     my $ilen = (
-        $argtype =~ /\bshort$/
-        ? '16'
-        : ( $argtype =~ /\blong$/ ? '64' : '32' )
+        ( $argtype =~ /long$/ || $argtype =~ /int64/ ) ? '64'
+        : ( ( $argtype =~ /short$/ || $argtype =~ /int16/ ) ? '16' :
+            ( $argtype =~ /int8/ ? '8' : '32' ))
     );
 
     # Which Matlab subroutines to call to check
@@ -259,6 +276,10 @@ $typemap_output_scalar_make{'double'} = $typemap_output_scalar_make{'float'} =
   $typemap_output_scalar_make{'long long'} = $typemap_output_scalar_make{'unsigned long long'} =
   $typemap_output_scalar_make{'int'} = $typemap_output_scalar_make{'unsigned'} =
   $typemap_output_scalar_make{'short'} = $typemap_output_scalar_make{'unsigned short'} =
+  $typemap_output_scalar_make{'int64_t'} = $typemap_output_scalar_make{'uint64_t'} =
+  $typemap_output_scalar_make{'int32_t'} = $typemap_output_scalar_make{'uint32_t'} =
+  $typemap_output_scalar_make{'int16_t'} = $typemap_output_scalar_make{'uint16_t'} =
+  $typemap_output_scalar_make{'int8_t'}  = $typemap_output_scalar_make{'uint8_t'} =
   sub {
     "    $_[1] = mxCreateNumericMatrix(1, 1, mx"
     . uc( matlab_typename( $_[0]->{basic_type} ) )
@@ -317,7 +338,12 @@ $typemap_put_scalar{'double'}  = $typemap_put_scalar{'float'} =
   $typemap_put_scalar{'long'} = $typemap_put_scalar{'unsigned long'} =
   $typemap_put_scalar{'int'}   = $typemap_put_scalar{'unsigned'} =
   $typemap_put_scalar{'short'} = $typemap_put_scalar{'unsigned short'} =
-  $typemap_put_scalar{'ptrdiff_t'} = $typemap_put_scalar{'size_t'} = sub {
+  $typemap_put_scalar{'ptrdiff_t'} = $typemap_put_scalar{'size_t'} =
+  $typemap_put_scalar{'int64_t'} = $typemap_put_scalar{'uint64_t'} =
+  $typemap_put_scalar{'int32_t'} = $typemap_put_scalar{'uint32_t'} =
+  $typemap_put_scalar{'int16_t'} = $typemap_put_scalar{'uint16_t'} =
+  $typemap_put_scalar{'int8_t'}  = $typemap_put_scalar{'uint8_t'} =
+  sub {
     my ( $arg, $matexpr ) = @_;    # Name the arguments.
     "    *($arg->{basic_type}*)mxGetData($matexpr) = $arg->{c_var_name};\n";
   };
@@ -685,9 +711,9 @@ sub matlab_typename {
         'double';
     } elsif ( $typename eq 'float' ) {
         'single';
-    } elsif ( $typename eq 'long long' ) {
+    } elsif ( $typename eq 'long long' || $typename eq 'int64_t' ) {
         'int64';
-    } elsif ( $typename eq 'unsigned long long' ) {
+    } elsif ( $typename eq 'unsigned long long' || $typename eq 'uint64_t' ) {
         'uint64';
     } elsif ( $typename eq 'long' ) {
         'long';
@@ -697,14 +723,18 @@ sub matlab_typename {
         'ptrdiff_t';
     } elsif ( $typename eq 'size_t' ) {
         'size_t';
-    } elsif ( $typename eq 'int' ) {
+    } elsif ( $typename eq 'int' || $typename eq 'int32_t' ) {
         'int32';
-    } elsif ( $typename eq 'uint' ) {
+    } elsif ( $typename eq 'unsigneed int' || $typename eq 'unsigneed' || $typename eq 'uint32_t' ) {
         'uint32';
-    } elsif ( $typename eq 'short' ) {
+    } elsif ( $typename eq 'short' || $typename eq 'int16_t' ) {
         'int16';
-    } elsif ( $typename eq 'unsigned short' ) {
+    } elsif ( $typename eq 'unsigned short' || $typename eq 'uint16_t' ) {
         'uint16';
+    } elsif ( $typename eq 'int8_t' ) {
+        'int8';
+    } elsif ( $typename eq 'uint8_t' ) {
+        'uint8';
     } elsif ( $typename eq 'char' ) {
         'char';
     } elsif ( $typename eq 'unsigned char' ) {
@@ -730,22 +760,26 @@ sub matlab_long_typename {
         'double-precision (double)';
     } elsif ( $typename eq 'float' ) {
         'single-precision (single)';
-    } elsif ( $typename eq 'long long' ) {
+    } elsif ( $typename eq 'long long' || $typename eq 'int64_t' ) {
         '64-bit integer (int64)';
-    } elsif ( $typename eq 'unsigned long long' ) {
+    } elsif ( $typename eq 'unsigned long long' || $typename eq 'uint64_t' ) {
         '64-bit unsigned integer (uint64)';
     } elsif ( $typename eq 'ptrdiff_t' or $typename eq 'long' ) {
         '64-bit or 32-bit integer (platform dependent)';
-    } elsif ( $typename eq 'size_t' or $typename eq 'ulong' ) {
+    } elsif ( $typename eq 'size_t' or $typename eq 'unsigned long' ) {
         '64-bit or 32-bit unsigned integer (platform dependent)';
-    } elsif ( $typename eq 'int' ) {
+    } elsif ( $typename eq 'int' || $typename eq 'int32_t' ) {
         '32-bit integer (int32)';
-    } elsif ( $typename eq 'uint' ) {
+    } elsif ( $typename eq 'unsigned int' || $typename eq 'unsigned' || $typename eq 'uint32_t' ) {
         '32-bit unsigned integer (uint32)';
-    } elsif ( $typename eq 'short' ) {
+    } elsif ( $typename eq 'short' || $typename eq 'int16_t' ) {
         '16-bit unsigned integer (int16)';
-    } elsif ( $typename eq 'unsigned short' ) {
+    } elsif ( $typename eq 'unsigned short' || $typename eq 'uint16_t' ) {
         '16-bit unsigned integer (uint16)';
+    } elsif ( $typename eq 'int8_t' ) {
+        '8-bit unsigned integer (int8)';
+    } elsif ( $typename eq 'uint8_t' ) {
+        '8-bit unsigned integer (uint8)';
     } elsif ( $typename eq 'char' ) {
         'character string (char)';
     } elsif ( $typename eq 'unsigned char' ) {

@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 #include "mex.h"
-#include "stddef.h"
+#include <inttypes.h>
 #ifdef __cplusplus
 }
 #endif

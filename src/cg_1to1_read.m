@@ -12,15 +12,15 @@ function [io_connectname, io_donorname, io_range, io_donor_range, io_transform, 
 % In&Out arguments (required as output; type is auto-casted):
 %     connectname: character string with default length 32  (optional as input)
 %       donorname: character string with default length 32  (optional as input)
-%           range: 64-bit or 32-bit integer (platform dependent), len=6  (optional as input)
-%     donor_range: 64-bit or 32-bit integer (platform dependent), len=6  (optional as input)
+%           range: 64-bit integer (int64), len=6  (optional as input)
+%     donor_range: 64-bit integer (int64), len=6  (optional as input)
 %       transform: 32-bit integer (int32), len=3  (optional as input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_1to1_read(int fn, int B, int Z, int Ii, char * connectname, char * donorname, long * range, long * donor_range, int * transform);
+% int cg_1to1_read(int fn, int B, int Z, int Ii, char * connectname, char * donorname, int64_t * range, int64_t * donor_range, int * transform);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
@@ -55,11 +55,7 @@ else
     t=io_donorname(1); io_donorname(1)=t;
 end
 
-if strfind(computer,'64')  %#ok<STRIFCND>
-    basetype = 'int64';
-else
-    basetype = 'int32';
-end
+basetype = 'int64';
 if nargin<7
     io_range = zeros(1,6,basetype);
 elseif length(io_range)<6
@@ -76,11 +72,7 @@ elseif ~isempty(io_range)
     t=io_range(1); io_range(1)=t;
 end
 
-if strfind(computer,'64')  %#ok<STRIFCND>
-    basetype = 'int64';
-else
-    basetype = 'int32';
-end
+basetype = 'int64';
 if nargin<8
     io_donor_range = zeros(1,6,basetype);
 elseif length(io_donor_range)<6

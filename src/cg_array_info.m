@@ -8,7 +8,7 @@ function [io_ArrayName, io_DimensionVector, out_DataType, out_DataDimension, ier
 %
 % In&Out arguments (required as output; type is auto-casted):
 %       ArrayName: character string with default length 32  (optional as input)
-%    DimensionVector: 64-bit or 32-bit integer (platform dependent), len=3  (optional as input)
+%    DimensionVector: 64-bit integer (int64), len=3  (optional as input)
 %
 % Output arguments (optional):
 %        DataType: 32-bit integer (int32), scalar
@@ -16,7 +16,7 @@ function [io_ArrayName, io_DimensionVector, out_DataType, out_DataDimension, ier
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_array_info(int A, char * ArrayName, CG_DataType_t * DataType, int * DataDimension, long * DimensionVector);
+% int cg_array_info(int A, char * ArrayName, CG_DataType_t * DataType, int * DataDimension, int64_t * DimensionVector);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
@@ -36,11 +36,7 @@ else
     t=io_ArrayName(1); io_ArrayName(1)=t;
 end
 
-if strfind(computer,'64')  %#ok<STRIFCND>
-    basetype = 'int64';
-else
-    basetype = 'int32';
-end
+basetype = 'int64';
 if nargin<3
     io_DimensionVector = zeros(1,3,basetype);
 elseif length(io_DimensionVector)<3

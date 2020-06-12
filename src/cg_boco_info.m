@@ -16,14 +16,14 @@ function [io_boconame, io_NormalIndex, out_bocotype, out_ptset_type, out_npnts, 
 % Output arguments (optional):
 %        bocotype: 32-bit integer (int32), scalar
 %      ptset_type: 32-bit integer (int32), scalar
-%           npnts: 64-bit or 32-bit integer (platform dependent), scalar
-%    NormalListSize: 64-bit or 32-bit integer (platform dependent), scalar
+%           npnts: 64-bit integer (int64), scalar
+%    NormalListSize: 64-bit integer (int64), scalar
 %    NormalDataType: 32-bit integer (int32), scalar
 %        ndataset: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_boco_info(int fn, int B, int Z, int BC, char * boconame, CG_BCType_t * bocotype, CG_PointSetType_t * ptset_type, long * npnts, int * NormalIndex, long * NormalListSize, CG_DataType_t * NormalDataType, int * ndataset);
+% int cg_boco_info(int fn, int B, int Z, int BC, char * boconame, CG_BCType_t * bocotype, CG_PointSetType_t * ptset_type, int64_t * npnts, int * NormalIndex, int64_t * NormalListSize, CG_DataType_t * NormalDataType, int * ndataset);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %

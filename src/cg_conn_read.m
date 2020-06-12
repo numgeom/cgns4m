@@ -11,14 +11,14 @@ function [io_pnts, io_donor_data, ierr] = cg_conn_read(in_file_number, in_B, in_
 %    donor_datatype: 32-bit integer (int32), scalar
 %
 % In&Out arguments (required as output; type is auto-casted):
-%            pnts: 64-bit or 32-bit integer (platform dependent), array  (also required as input)
+%            pnts: 64-bit integer (int64), array  (also required as input)
 %      donor_data: dynamic type based on donor_datatype  (also required as input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_conn_read(int file_number, int B, int Z, int Ii, long * pnts, CG_DataType_t donor_datatype, long * donor_data);
+% int cg_conn_read(int file_number, int B, int Z, int Ii, int64_t * pnts, CG_DataType_t donor_datatype, int64_t * donor_data);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
@@ -48,11 +48,7 @@ switch (datatype)
         error('Unknown data type %d', in_donor_datatype);
 end
 
-if strfind(computer,'64')  %#ok<STRIFCND>
-    basetype = 'int64';
-else
-    basetype = 'int32';
-end
+basetype = 'int64';
 if ~isa(io_pnts,basetype)
     io_pnts = cast(io_pnts, basetype);
 elseif ~isempty(io_pnts)

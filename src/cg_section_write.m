@@ -9,17 +9,17 @@ function [out_S, ierr] = cg_section_write(in_file_number, in_B, in_Z, in_Section
 %               Z: 32-bit integer (int32), scalar
 %     SectionName: character string
 %            type: 32-bit integer (int32), scalar
-%           start: 64-bit or 32-bit integer (platform dependent), scalar
-%             end: 64-bit or 32-bit integer (platform dependent), scalar
+%           start: 64-bit integer (int64), scalar
+%             end: 64-bit integer (int64), scalar
 %          nbndry: 32-bit integer (int32), scalar
-%        elements: 64-bit or 32-bit integer (platform dependent), array
+%        elements: 64-bit integer (int64), array
 %
 % Output arguments (optional):
 %               S: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_section_write(int file_number, int B, int Z, const char * SectionName, CG_ElementType_t type, long start, long end, int nbndry, const long * elements, int * S);
+% int cg_section_write(int file_number, int B, int Z, const char * SectionName, CG_ElementType_t type, int64_t start, int64_t end, int nbndry, const int64_t * elements, int * S);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
@@ -31,22 +31,10 @@ in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_SectionName = char(in_SectionName);
 in_type = int32(in_type);
-if strfind(computer,'64') %#ok<STRIFCND>
-    in_start = int64(in_start);
-else
-    in_start = int32(in_start);
-end
-if strfind(computer,'64') %#ok<STRIFCND>
-    in_end = int64(in_end);
-else
-    in_end = int32(in_end);
-end
+in_start = int64(in_start);
+in_end = int64(in_end);
 in_nbndry = int32(in_nbndry);
-if strfind(computer,'64') %#ok<STRIFCND>
-    in_elements = int64(in_elements);
-else
-    in_elements = int32(in_elements);
-end
+in_elements = int64(in_elements);
 
 % Invoke the actual MEX-function.
 [out_S, ierr] = cgnslib_mex(int32(83), in_file_number, in_B, in_Z, in_SectionName, in_type, in_start, in_end, in_nbndry, in_elements);

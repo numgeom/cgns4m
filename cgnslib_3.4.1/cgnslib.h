@@ -61,7 +61,7 @@
 #include "cgnstypes.h"
 
 #if defined(C2MEX) && defined(CG_BUILD_64BIT)
-    typedef long cgsize_t;
+    typedef int64_t cgsize_t;
 #endif
 #if CG_BUILD_SCOPE
 # ifndef CGNS_SCOPE_ENUMS
