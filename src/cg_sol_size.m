@@ -10,14 +10,14 @@ function [io_dim_vals, out_data_dim, ierr] = cg_sol_size(in_fn, in_B, in_Z, in_S
 %               S: 32-bit integer (int32), scalar
 %
 % In&Out argument (required as output; type is auto-casted):
-%        dim_vals: 32-bit integer (int32), array  (also required as input)
+%        dim_vals: 64-bit or 32-bit integer (platform dependent), array  (also required as input)
 %
 % Output arguments (optional):
 %        data_dim: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_sol_size(int fn, int B, int Z, int S, int * data_dim, int * dim_vals);
+% int cg_sol_size(int fn, int B, int Z, int S, int * data_dim, long * dim_vals);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %
@@ -28,10 +28,18 @@ in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_S = int32(in_S);
-io_dim_vals = int32(io_dim_vals);
-basetype='int32';
+if strfind(computer,'64') %#ok<STRIFCND>
+    io_dim_vals = int64(io_dim_vals);
+else
+    io_dim_vals = int32(io_dim_vals);
+end
+if strfind(computer,'64')  %#ok<STRIFCND>
+    basetype = 'int64';
+else
+    basetype = 'int32';
+end
 if ~isa(io_dim_vals,basetype)
-    io_dim_vals=int32(io_dim_vals);
+    io_dim_vals = cast(io_dim_vals, basetype);
 elseif ~isempty(io_dim_vals)
     % Write to it to avoid sharing memory with other variables
     t=io_dim_vals(1); io_dim_vals(1)=t;

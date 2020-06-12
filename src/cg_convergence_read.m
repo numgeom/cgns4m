@@ -25,9 +25,9 @@ if ( nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
 io_iterations = int32(io_iterations);
-basetype='int32';
+basetype = 'int32';
 if ~isa(io_iterations,basetype)
-    io_iterations=int32(io_iterations);
+    io_iterations = cast(io_iterations, basetype);
 elseif ~isempty(io_iterations)
     % Write to it to avoid sharing memory with other variables
     t=io_iterations(1); io_iterations(1)=t;

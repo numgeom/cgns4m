@@ -43,28 +43,20 @@ $typemap_get_scalar{'unsigned long long'} = sub {
     );
 };
 
-$typemap_get_scalar{'long'} = sub {
+$typemap_get_scalar{'long'} = $typemap_get_scalar{'ptrdiff_t'} = sub {
     my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
-    ("    if (sizeof(long)==8)\n"
+    ("    if (sizeof($arg->{basic_type})==8)\n"
     ."        $arg->{c_var_name} = _get_numeric_scalar_int64($arg->{mat_expr_in});\n"
     ."    else\n"
     ."        $arg->{c_var_name} = _get_numeric_scalar_int32($arg->{mat_expr_in});\n");
 };
 
-$typemap_get_scalar{'unsigned long'} = sub {
+$typemap_get_scalar{'unsigned long'} = $typemap_get_scalar{'size_t'} = sub {
     my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
-    ("    if (sizeof(long)==8)\n"
+    ("    if (sizeof($arg->{basic_type})==8)\n"
     ."        $arg->{c_var_name} = _get_numeric_scalar_uint64($arg->{mat_expr_in});\n"
     ."    else\n"
     ."        $arg->{c_var_name} = _get_numeric_scalar_uint32($arg->{mat_expr_in});\n");
-};
-
-$typemap_get_scalar{'ptrdiff_t'} = sub {
-    my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
-    ("    if (sizeof(ptrdiff_t)==8)\n"
-    ."        $arg->{c_var_name} = _get_numeric_scalar_int64($arg->{mat_expr_in});\n"
-    ."    else\n"
-    ."        $arg->{c_var_name} = _get_numeric_scalar_int32($arg->{mat_expr_in});\n");
 };
 
 $typemap_get_scalar{'int'} = sub {
@@ -156,28 +148,12 @@ $typemap_get_ptr{'long long'}      = $typemap_get_ptr{'int'} =
   };
 
 $typemap_get_ptr{'long'} = $typemap_get_ptr{'unsigned long'} =
+    $typemap_get_ptr{'ptrdiff_t'} = $typemap_get_ptr{'size_t'} =
 
   # Must be long or unsigned long.
   sub {
     my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
-    (       "    if (sizeof(long)==8) {\n"
-          . "        if (mxIsInt64($arg->{mat_expr_in}) || mxIsUint64($arg->{mat_expr_in}))\n"
-          . "            $arg->{c_var_name} = ($arg->{basic_type}*)mxGetData($arg->{mat_expr_in});\n"
-          . "        else\n"
-          . "            mexErrMsgTxt(\"Expecting 64-bit integer matrix for argument $argname\");\n"
-          . "    }\n"
-          . "    else {\n"
-          . "        if (mxIsInt32($arg->{mat_expr_in}) || mxIsUint32($arg->{mat_expr_in}))\n"
-          . "            $arg->{c_var_name} = ($arg->{basic_type}*)mxGetData($arg->{mat_expr_in});\n"
-          . "        else\n"
-          . "            mexErrMsgTxt(\"Expecting 32-bit integer matrix for argument $argname\");\n"
-          . "    }\n" );
-  };
-
-$typemap_get_ptr{'ptrdiff_t'} =
-  sub {
-    my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
-    (       "    if (sizeof(ptrdiff_t)==8) {\n"
+    (       "    if (sizeof($arg->{basic_type})==8) {\n"
           . "        if (mxIsInt64($arg->{mat_expr_in}) || mxIsUint64($arg->{mat_expr_in}))\n"
           . "            $arg->{c_var_name} = ($arg->{basic_type}*)mxGetData($arg->{mat_expr_in});\n"
           . "        else\n"
@@ -238,25 +214,12 @@ $typemap_free_ptr{'long long'}      = $typemap_free_ptr{'int'} =
   };
 
 $typemap_free_ptr{'long'} = $typemap_free_ptr{'unsigned long'} =
+    $typemap_free_ptr{'ptrdiff_t'} = $typemap_free_ptr{'size_t'} =
 
   # Must be long or unsigned long.
   sub {
     my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
-    (       "    if (sizeof(long)==8) {\n"
-          . "        if (!mxIsInt64($arg->{mat_expr_in}) && !mxIsUint64($arg->{mat_expr_in}))\n"
-          . "            mxFree($arg->{c_var_name});\n"
-          . "    } else {\n"
-          . "        if (!mxIsInt32($arg->{mat_expr_in}) && !mxIsUint32($arg->{mat_expr_in}))\n"
-          . "            mxFree($arg->{c_var_name});\n"
-          . "    }\n" );
-  };
-
-$typemap_free_ptr{'ptrdiff_t'} =
-
-  # Must be long or unsigned long.
-  sub {
-    my ( $arg, $argname, $argtype ) = @_;    # Name the arguments.
-    (       "    if (sizeof(ptrdiff_t)==8) {\n"
+    (       "    if (sizeof($arg->{basic_type})==8) {\n"
           . "        if (!mxIsInt64($arg->{mat_expr_in}) && !mxIsUint64($arg->{mat_expr_in}))\n"
           . "            mxFree($arg->{c_var_name});\n"
           . "    } else {\n"
@@ -307,6 +270,11 @@ $typemap_output_scalar_make{'ptrdiff_t'} =
       "    $_[1] = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);\n";    # Create the matrix for output.
   };
 
+$typemap_output_scalar_make{'size_t'} =
+  sub {
+      "    $_[1] = mxCreateNumericMatrix(1, 1, sizeof(size_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);\n";    # Create the matrix for output.
+  };
+
 $typemap_output_scalar_make{'long'} =
   sub {
       "    $_[1] = mxCreateNumericMatrix(1, 1, sizeof(long)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);\n";    # Create the matrix for output.
@@ -346,9 +314,10 @@ $typemap_output_scalar_make{'char *'} = sub { ''; };
 #
 $typemap_put_scalar{'double'}  = $typemap_put_scalar{'float'} =
   $typemap_put_scalar{'long long'} = $typemap_put_scalar{'unsigned long long'} =
+  $typemap_put_scalar{'long'} = $typemap_put_scalar{'unsigned long'} =
   $typemap_put_scalar{'int'}   = $typemap_put_scalar{'unsigned'} =
   $typemap_put_scalar{'short'} = $typemap_put_scalar{'unsigned short'} =
-  $typemap_put_scalar{'ptrdiff_t'} = sub {
+  $typemap_put_scalar{'ptrdiff_t'} = $typemap_put_scalar{'size_t'} = sub {
     my ( $arg, $matexpr ) = @_;    # Name the arguments.
     "    *($arg->{basic_type}*)mxGetData($matexpr) = $arg->{c_var_name};\n";
   };
@@ -720,8 +689,14 @@ sub matlab_typename {
         'int64';
     } elsif ( $typename eq 'unsigned long long' ) {
         'uint64';
+    } elsif ( $typename eq 'long' ) {
+        'long';
+    } elsif ( $typename eq 'unsigned long' ) {
+        'ulong';
     } elsif ( $typename eq 'ptrdiff_t' ) {
         'ptrdiff_t';
+    } elsif ( $typename eq 'size_t' ) {
+        'size_t';
     } elsif ( $typename eq 'int' ) {
         'int32';
     } elsif ( $typename eq 'uint' ) {
@@ -759,8 +734,10 @@ sub matlab_long_typename {
         '64-bit integer (int64)';
     } elsif ( $typename eq 'unsigned long long' ) {
         '64-bit unsigned integer (uint64)';
-    } elsif ( $typename eq 'ptrdiff_t' ) {
+    } elsif ( $typename eq 'ptrdiff_t' or $typename eq 'long' ) {
         '64-bit or 32-bit integer (platform dependent)';
+    } elsif ( $typename eq 'size_t' or $typename eq 'ulong' ) {
+        '64-bit or 32-bit unsigned integer (platform dependent)';
     } elsif ( $typename eq 'int' ) {
         '32-bit integer (int32)';
     } elsif ( $typename eq 'uint' ) {
@@ -854,16 +831,10 @@ sub make_output_scalar {
 
         # Do the conversion.
     } elsif ( $argtype =~ /\*$/ ) {    # Is this a pointer we don't understand?
-        if ( $arg->{basic_type} eq "ptrdiff_t") {
-            return
-                "    $arg->{mat_expr_out} = mxCreateNumericMatrix(1, 1, sizeof(ptrdiff_t)==8?mxINT64_CLASS:mxINT32_CLASS, mxREAL);\n";
-        }
-        else {
-            return
-                "    $arg->{mat_expr_out} = mxCreateNumericMatrix(1, 1, mx"
-                . uc( matlab_typename( $arg->{basic_type} ) )
-                . "_CLASS, mxREAL);\n";
-        }
+        return
+            "    $arg->{mat_expr_out} = mxCreateNumericMatrix(1, 1, mx"
+            . uc( matlab_typename( $arg->{basic_type} ) )
+            . "_CLASS, mxREAL);\n";
     } else {                           # Unrecognized type?
         die("$::progname: don't understand scalar output type '$argtype'\n");
     }
@@ -1335,7 +1306,7 @@ sub wrap_function {
                             $closed = 1;
                         }
                         $retstr .=
-                          "    $faa->{free_func}( $arg->{c_var_name});\n\n";
+                          "    $faa->{free_func}($arg->{c_var_name});\n\n";
                     } else {
                         print STDERR
 "Warning: Character string $arg->{c_var_name} is not freed. Potential memory leak.";
@@ -1568,7 +1539,21 @@ sub print_matlab_code {
                 $mstr .= ::obtain_typecast( $arg->{cast}, $var_name );
             } else {
                 my $basetype = matlab_typename( $arg->{basic_type} );
-                $mstr .= "$var_name = ${basetype}($var_name);\n";
+                if ( $basetype eq "ptrdiff_t" || $basetype eq "long" ) {
+                    $mstr .= "if strfind(computer,'64') %#ok<STRIFCND>\n"
+                          .  "    $var_name = int64($var_name);\n"
+                          .  "else\n"
+                          .  "    $var_name = int32($var_name);\n"
+                          .  "end\n";
+                } elsif ( $basetype eq "size_t" || $basetype eq "ulong" ) {
+                    $mstr .= "if strfind(computer,'64') %#ok<STRIFCND>\n"
+                          .  "    $var_name = uint64($var_name);\n"
+                          .  "else\n"
+                          .  "    $var_name = uint32($var_name);\n"
+                          .  "end\n";
+                } else {
+                    $mstr .= "$var_name = ${basetype}($var_name);\n";
+                }
             }
         }
 
@@ -1627,25 +1612,27 @@ sub print_matlab_code {
                   . "    t=$var_name(1); $var_name(1)=t;\nend\n\n";
             } else {
                 my $basetype = matlab_typename( $arg->{basic_type} );
-                if ( $basetype eq "ptrdiff_t") {
-                    $mstr .= "if strfind(computer,'64')\n"
-                          .  "    basetype='int64'; ptrdiff_t=\@int64;\n"
+                if ( $basetype eq "ptrdiff_t" || $basetype eq "long" ) {
+                    $mstr .= "if strfind(computer,'64')  %#ok<STRIFCND>\n"
+                          .  "    basetype = 'int64';\n"
                           .  "else\n"
-                          .  "    basetype='int32'; ptrdiff_t=\@int32;\n"
+                          .  "    basetype = 'int32';\n"
                           .  "end\n";
-                }
-                else {
-                    $mstr .= "basetype='${basetype}';\n";
+                } elsif ( $basetype eq "size_t" || $basetype eq "ulong" ) {
+                    $mstr .= "if strfind(computer,'64')  %#ok<STRIFCND>\n"
+                          .  "    basetype = 'uint64';\n"
+                          .  "else\n"
+                          .  "    basetype = 'uint32';\n"
+                          .  "end\n";
+                } else {
+                    $mstr .= "basetype = '${basetype}';\n";
                 }
                 if ( @{ $arg->{dimension} } == 0 ) {
-                    $mstr .=
-                      "if nargin<$argno\n    $var_name=${basic_type}(0);\nelse";
-                } elsif ( @{ $arg->{dimension} } == 1
-                    && $arg->{dimension}[0] ne "(:)" )
-                {
+                    $mstr .= "if nargin<$argno\n    $var_name=${basic_type}(0);\nelse";
+                } elsif ( @{ $arg->{dimension} } == 1 && $arg->{dimension}[0] ne "(:)" ) {
                     $mstr .= sprintf(
                         "if nargin<$argno\n"
-                          . "    $var_name=zeros(1,%s,basetype);\n"
+                          . "    $var_name = zeros(1,%s,basetype);\n"
                           . "elseif length($var_name)<%s\n"
                           . "    %% Enlarge the array if necessary;\n"
                           . "    if size($var_name,2)==1\n"
@@ -1664,7 +1651,7 @@ sub print_matlab_code {
                 }
                 $mstr .=
                     "if ~isa($var_name,basetype)\n"
-                  . "    $var_name=${basetype}($var_name);\n"
+                  . "    $var_name = cast($var_name, basetype);\n"
                   . "elseif ~isempty($var_name)\n"
                   . "    % Write to it to avoid sharing memory with other variables\n"
                   . "    t=$var_name(1); $var_name(1)=t;\nend\n\n";

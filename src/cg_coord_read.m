@@ -9,8 +9,8 @@ function [io_coord, ierr] = cg_coord_read(in_fn, in_B, in_Z, in_coordname, in_ty
 %               Z: 32-bit integer (int32), scalar
 %       coordname: character string
 %            type: 32-bit integer (int32), scalar
-%            rmin: 32-bit integer (int32), array
-%            rmax: 32-bit integer (int32), array
+%            rmin: 64-bit or 32-bit integer (platform dependent), array
+%            rmax: 64-bit or 32-bit integer (platform dependent), array
 %
 % In&Out argument (required as output; type is auto-casted):
 %           coord: dynamic type based on type  (also required as input)
@@ -19,7 +19,7 @@ function [io_coord, ierr] = cg_coord_read(in_fn, in_B, in_Z, in_coordname, in_ty
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_coord_read(int fn, int B, int Z, const char * coordname, CG_DataType_t type, const int * rmin, const int * rmax, void * coord);
+% int cg_coord_read(int fn, int B, int Z, const char * coordname, CG_DataType_t type, const long * rmin, const long * rmax, void * coord);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
@@ -31,8 +31,16 @@ in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_coordname = char(in_coordname);
 in_type = int32(in_type);
-in_rmin = int32(in_rmin);
-in_rmax = int32(in_rmax);
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_rmin = int64(in_rmin);
+else
+    in_rmin = int32(in_rmin);
+end
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_rmax = int64(in_rmax);
+else
+    in_rmax = int32(in_rmax);
+end
 
 % Perform dynamic type casting
 datatype = in_type;

@@ -10,21 +10,21 @@ function [out_F, ierr] = cg_field_general_write(in_fn, in_B, in_Z, in_S, in_fiel
 %               S: 32-bit integer (int32), scalar
 %       fieldname: character string
 %          s_type: 32-bit integer (int32), scalar
-%            rmin: 32-bit integer (int32), array
-%            rmax: 32-bit integer (int32), array
+%            rmin: 64-bit or 32-bit integer (platform dependent), array
+%            rmax: 64-bit or 32-bit integer (platform dependent), array
 %          m_type: 32-bit integer (int32), scalar
 %        m_numdim: 32-bit integer (int32), scalar
-%          m_dims: 32-bit integer (int32), array
-%          m_rmin: 32-bit integer (int32), array
-%          m_rmax: 32-bit integer (int32), array
-%       field_ptr: numeric array
+%          m_dims: 64-bit or 32-bit integer (platform dependent), array
+%          m_rmin: 64-bit or 32-bit integer (platform dependent), array
+%          m_rmax: 64-bit or 32-bit integer (platform dependent), array
+%       field_ptr: dynamic type based on m_type
 %
 % Output arguments (optional):
 %               F: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_field_general_write(int fn, int B, int Z, int S, const char * fieldname, CG_DataType_t s_type, const int * rmin, const int * rmax, CG_DataType_t m_type, int m_numdim, const int * m_dims, const int * m_rmin, const int * m_rmax, const void * field_ptr, int * F);
+% int cg_field_general_write(int fn, int B, int Z, int S, const char * fieldname, CG_DataType_t s_type, const long * rmin, const long * rmax, CG_DataType_t m_type, int m_numdim, const long * m_dims, const long * m_rmin, const long * m_rmax, const void * field_ptr, int * F);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %
@@ -37,14 +37,51 @@ in_Z = int32(in_Z);
 in_S = int32(in_S);
 in_fieldname = char(in_fieldname);
 in_s_type = int32(in_s_type);
-in_rmin = int32(in_rmin);
-in_rmax = int32(in_rmax);
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_rmin = int64(in_rmin);
+else
+    in_rmin = int32(in_rmin);
+end
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_rmax = int64(in_rmax);
+else
+    in_rmax = int32(in_rmax);
+end
 in_m_type = int32(in_m_type);
 in_m_numdim = int32(in_m_numdim);
-in_m_dims = int32(in_m_dims);
-in_m_rmin = int32(in_m_rmin);
-in_m_rmax = int32(in_m_rmax);
-in_field_ptr = numeric(in_field_ptr);
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_m_dims = int64(in_m_dims);
+else
+    in_m_dims = int32(in_m_dims);
+end
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_m_rmin = int64(in_m_rmin);
+else
+    in_m_rmin = int32(in_m_rmin);
+end
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_m_rmax = int64(in_m_rmax);
+else
+    in_m_rmax = int32(in_m_rmax);
+end
+
+% Perform dynamic type casting
+datatype = in_m_type;
+switch (datatype)
+    case 2 % CG_Integer
+        in_field_ptr = int32(in_field_ptr);
+    case 3 % CG_RealSingle
+        in_field_ptr = single(in_field_ptr);
+    case 4 % CG_RealDouble
+        in_field_ptr = double(in_field_ptr);
+    case 5 % CG_Character
+        in_field_ptr = [int8(in_field_ptr), int8(zeros(1,1))];
+    case 6 % CG_LongInteger
+        in_field_ptr = int64(in_field_ptr);
+    otherwise
+        error('Unknown data type %d', in_m_type);
+end
+
 
 % Invoke the actual MEX-function.
 [out_F, ierr] = cgnslib_mex(int32(107), in_fn, in_B, in_Z, in_S, in_fieldname, in_s_type, in_rmin, in_rmax, in_m_type, in_m_numdim, in_m_dims, in_m_rmin, in_m_rmax, in_field_ptr);

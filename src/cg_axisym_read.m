@@ -26,17 +26,17 @@ in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 io_ref_point = single(io_ref_point);
 io_axis = single(io_axis);
-basetype='single';
+basetype = 'single';
 if ~isa(io_ref_point,basetype)
-    io_ref_point=single(io_ref_point);
+    io_ref_point = cast(io_ref_point, basetype);
 elseif ~isempty(io_ref_point)
     % Write to it to avoid sharing memory with other variables
     t=io_ref_point(1); io_ref_point(1)=t;
 end
 
-basetype='single';
+basetype = 'single';
 if ~isa(io_axis,basetype)
-    io_axis=single(io_axis);
+    io_axis = cast(io_axis, basetype);
 elseif ~isempty(io_axis)
     % Write to it to avoid sharing memory with other variables
     t=io_axis(1); io_axis(1)=t;

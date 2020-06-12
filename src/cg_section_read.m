@@ -14,14 +14,14 @@ function [io_SectionName, out_type, out_start, out_end, out_nbndry, out_parent_f
 %
 % Output arguments (optional):
 %            type: 32-bit integer (int32), scalar
-%           start: 32-bit integer (int32), scalar
-%             end: 32-bit integer (int32), scalar
+%           start: 64-bit or 32-bit integer (platform dependent), scalar
+%             end: 64-bit or 32-bit integer (platform dependent), scalar
 %          nbndry: 32-bit integer (int32), scalar
 %     parent_flag: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_section_read(int file_number, int B, int Z, int S, char * SectionName, CG_ElementType_t * type, int * start, int * end, int * nbndry, int * parent_flag);
+% int cg_section_read(int file_number, int B, int Z, int S, char * SectionName, CG_ElementType_t * type, long * start, long * end, int * nbndry, int * parent_flag);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %

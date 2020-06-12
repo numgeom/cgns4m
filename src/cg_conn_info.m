@@ -17,15 +17,15 @@ function [io_connectname, io_donorname, out_location, out_type, out_ptset_type, 
 %        location: 32-bit integer (int32), scalar
 %            type: 32-bit integer (int32), scalar
 %      ptset_type: 32-bit integer (int32), scalar
-%           npnts: 32-bit integer (int32), scalar
+%           npnts: 64-bit or 32-bit integer (platform dependent), scalar
 %    donor_zonetype: 32-bit integer (int32), scalar
 %    donor_ptset_type: 32-bit integer (int32), scalar
 %    donor_datatype: 32-bit integer (int32), scalar
-%     ndata_donor: 32-bit integer (int32), scalar
+%     ndata_donor: 64-bit or 32-bit integer (platform dependent), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_conn_info(int file_number, int B, int Z, int Ii, char * connectname, CG_GridLocation_t * location, CG_GridConnectivityType_t * type, CG_PointSetType_t * ptset_type, int * npnts, char * donorname, CG_ZoneType_t * donor_zonetype, CG_PointSetType_t * donor_ptset_type, CG_DataType_t * donor_datatype, int * ndata_donor);
+% int cg_conn_info(int file_number, int B, int Z, int Ii, char * connectname, CG_GridLocation_t * location, CG_GridConnectivityType_t * type, CG_PointSetType_t * ptset_type, long * npnts, char * donorname, CG_ZoneType_t * donor_zonetype, CG_PointSetType_t * donor_ptset_type, CG_DataType_t * donor_datatype, long * ndata_donor);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %

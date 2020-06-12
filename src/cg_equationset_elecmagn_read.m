@@ -24,25 +24,25 @@ end
 io_ElecFldModelFlag = int32(io_ElecFldModelFlag);
 io_MagnFldModelFlag = int32(io_MagnFldModelFlag);
 io_ConductivityModelFlag = int32(io_ConductivityModelFlag);
-basetype='int32';
+basetype = 'int32';
 if ~isa(io_ElecFldModelFlag,basetype)
-    io_ElecFldModelFlag=int32(io_ElecFldModelFlag);
+    io_ElecFldModelFlag = cast(io_ElecFldModelFlag, basetype);
 elseif ~isempty(io_ElecFldModelFlag)
     % Write to it to avoid sharing memory with other variables
     t=io_ElecFldModelFlag(1); io_ElecFldModelFlag(1)=t;
 end
 
-basetype='int32';
+basetype = 'int32';
 if ~isa(io_MagnFldModelFlag,basetype)
-    io_MagnFldModelFlag=int32(io_MagnFldModelFlag);
+    io_MagnFldModelFlag = cast(io_MagnFldModelFlag, basetype);
 elseif ~isempty(io_MagnFldModelFlag)
     % Write to it to avoid sharing memory with other variables
     t=io_MagnFldModelFlag(1); io_MagnFldModelFlag(1)=t;
 end
 
-basetype='int32';
+basetype = 'int32';
 if ~isa(io_ConductivityModelFlag,basetype)
-    io_ConductivityModelFlag=int32(io_ConductivityModelFlag);
+    io_ConductivityModelFlag = cast(io_ConductivityModelFlag, basetype);
 elseif ~isempty(io_ConductivityModelFlag)
     % Write to it to avoid sharing memory with other variables
     t=io_ConductivityModelFlag(1); io_ConductivityModelFlag(1)=t;

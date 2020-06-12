@@ -10,14 +10,14 @@ function [io_pnts, io_NormalList, ierr] = cg_boco_read(in_fn, in_B, in_Z, in_BC,
 %              BC: 32-bit integer (int32), scalar
 %
 % In&Out arguments (required as output; type is auto-casted):
-%            pnts: 32-bit integer (int32), array  (also required as input)
+%            pnts: 64-bit or 32-bit integer (platform dependent), array  (also required as input)
 %      NormalList: dynamic type based on cgns_get_boco_type(fn,B,Z,BC)  (also required as input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_boco_read(int fn, int B, int Z, int BC, int * pnts, void * NormalList);
+% int cg_boco_read(int fn, int B, int Z, int BC, long * pnts, void * NormalList);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %
@@ -28,7 +28,11 @@ in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_BC = int32(in_BC);
-io_pnts = int32(io_pnts);
+if strfind(computer,'64') %#ok<STRIFCND>
+    io_pnts = int64(io_pnts);
+else
+    io_pnts = int32(io_pnts);
+end
 
 % Perform dynamic type casting
 datatype = cgns_get_boco_type(in_fn, in_B, in_Z, in_BC);
@@ -47,9 +51,13 @@ switch (datatype)
         error('Unknown data type %d', cgns_get_boco_type(in_fn, in_B, in_Z, in_BC));
 end
 
-basetype='int32';
+if strfind(computer,'64')  %#ok<STRIFCND>
+    basetype = 'int64';
+else
+    basetype = 'int32';
+end
 if ~isa(io_pnts,basetype)
-    io_pnts=int32(io_pnts);
+    io_pnts = cast(io_pnts, basetype);
 elseif ~isempty(io_pnts)
     % Write to it to avoid sharing memory with other variables
     t=io_pnts(1); io_pnts(1)=t;

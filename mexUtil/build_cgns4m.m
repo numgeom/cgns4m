@@ -131,11 +131,13 @@ if isoctave
     disp(command); fflush(1);
     try
         [status,output]=system(command);
+        if exist('cgnslib.o', 'file'); delete *.o; end
         if status
             cd(oldpwd);
             error('Output is %s\n. Return status is %d\n', output, status);
         end
     catch %#ok<*CTCH>
+        if exist('cgnslib.o', 'file'); delete *.o; end
         cd(oldpwd);
         error('Error during compilation: %s.', lasterr); %#ok<*LERR>
     end
@@ -145,7 +147,6 @@ else % MATLAB
     
     try
         disp(command); eval(command);
-        if exist('cgnslib_mex.o', 'f'); delete *.o; end
     catch
         cd(oldpwd);
         error('Error during compilation with err %s.', lasterr);

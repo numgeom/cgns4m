@@ -10,8 +10,8 @@ function [io_field_ptr, ierr] = cg_field_read(in_fn, in_B, in_Z, in_S, in_fieldn
 %               S: 32-bit integer (int32), scalar
 %       fieldname: character string
 %            type: 32-bit integer (int32), scalar
-%            rmin: 32-bit integer (int32), array
-%            rmax: 32-bit integer (int32), array
+%            rmin: 64-bit or 32-bit integer (platform dependent), array
+%            rmax: 64-bit or 32-bit integer (platform dependent), array
 %
 % In&Out argument (required as output; type is auto-casted):
 %       field_ptr: dynamic type based on type  (also required as input)
@@ -20,7 +20,7 @@ function [io_field_ptr, ierr] = cg_field_read(in_fn, in_B, in_Z, in_S, in_fieldn
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_field_read(int fn, int B, int Z, int S, const char * fieldname, CG_DataType_t type, const int * rmin, const int * rmax, void * field_ptr);
+% int cg_field_read(int fn, int B, int Z, int S, const char * fieldname, CG_DataType_t type, const long * rmin, const long * rmax, void * field_ptr);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %
@@ -33,8 +33,16 @@ in_Z = int32(in_Z);
 in_S = int32(in_S);
 in_fieldname = char(in_fieldname);
 in_type = int32(in_type);
-in_rmin = int32(in_rmin);
-in_rmax = int32(in_rmax);
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_rmin = int64(in_rmin);
+else
+    in_rmin = int32(in_rmin);
+end
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_rmax = int64(in_rmax);
+else
+    in_rmax = int32(in_rmax);
+end
 
 % Perform dynamic type casting
 datatype = in_type;

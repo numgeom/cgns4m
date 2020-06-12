@@ -12,15 +12,15 @@ function [io_connectname, io_donorname, io_range, io_donor_range, io_transform, 
 % In&Out arguments (required as output; type is auto-casted):
 %     connectname: character string with default length 32  (optional as input)
 %       donorname: character string with default length 32  (optional as input)
-%           range: 32-bit integer (int32), len=6  (optional as input)
-%     donor_range: 32-bit integer (int32), len=6  (optional as input)
+%           range: 64-bit or 32-bit integer (platform dependent), len=6  (optional as input)
+%     donor_range: 64-bit or 32-bit integer (platform dependent), len=6  (optional as input)
 %       transform: 32-bit integer (int32), len=3  (optional as input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_1to1_read(int fn, int B, int Z, int Ii, char * connectname, char * donorname, int * range, int * donor_range, int * transform);
+% int cg_1to1_read(int fn, int B, int Z, int Ii, char * connectname, char * donorname, long * range, long * donor_range, int * transform);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
@@ -33,8 +33,16 @@ in_Z = int32(in_Z);
 in_Ii = int32(in_Ii);
 io_connectname = char(io_connectname);
 io_donorname = char(io_donorname);
-io_range = int32(io_range);
-io_donor_range = int32(io_donor_range);
+if strfind(computer,'64') %#ok<STRIFCND>
+    io_range = int64(io_range);
+else
+    io_range = int32(io_range);
+end
+if strfind(computer,'64') %#ok<STRIFCND>
+    io_donor_range = int64(io_donor_range);
+else
+    io_donor_range = int32(io_donor_range);
+end
 io_transform = int32(io_transform);
 if nargin<5
     io_connectname=char(zeros(1,32));
@@ -60,9 +68,13 @@ else
     t=io_donorname(1); io_donorname(1)=t;
 end
 
-basetype='int32';
+if strfind(computer,'64')  %#ok<STRIFCND>
+    basetype = 'int64';
+else
+    basetype = 'int32';
+end
 if nargin<7
-    io_range=zeros(1,6,basetype);
+    io_range = zeros(1,6,basetype);
 elseif length(io_range)<6
     % Enlarge the array if necessary;
     if size(io_range,2)==1
@@ -71,15 +83,19 @@ elseif length(io_range)<6
         io_range=[io_range, zeros(1,6-length(io_range),basetype)];
     end
 elseif ~isa(io_range,basetype)
-    io_range=int32(io_range);
+    io_range = cast(io_range, basetype);
 elseif ~isempty(io_range)
     % Write to it to avoid sharing memory with other variables
     t=io_range(1); io_range(1)=t;
 end
 
-basetype='int32';
+if strfind(computer,'64')  %#ok<STRIFCND>
+    basetype = 'int64';
+else
+    basetype = 'int32';
+end
 if nargin<8
-    io_donor_range=zeros(1,6,basetype);
+    io_donor_range = zeros(1,6,basetype);
 elseif length(io_donor_range)<6
     % Enlarge the array if necessary;
     if size(io_donor_range,2)==1
@@ -88,15 +104,15 @@ elseif length(io_donor_range)<6
         io_donor_range=[io_donor_range, zeros(1,6-length(io_donor_range),basetype)];
     end
 elseif ~isa(io_donor_range,basetype)
-    io_donor_range=int32(io_donor_range);
+    io_donor_range = cast(io_donor_range, basetype);
 elseif ~isempty(io_donor_range)
     % Write to it to avoid sharing memory with other variables
     t=io_donor_range(1); io_donor_range(1)=t;
 end
 
-basetype='int32';
+basetype = 'int32';
 if nargin<9
-    io_transform=zeros(1,3,basetype);
+    io_transform = zeros(1,3,basetype);
 elseif length(io_transform)<3
     % Enlarge the array if necessary;
     if size(io_transform,2)==1
@@ -105,7 +121,7 @@ elseif length(io_transform)<3
         io_transform=[io_transform, zeros(1,3-length(io_transform),basetype)];
     end
 elseif ~isa(io_transform,basetype)
-    io_transform=int32(io_transform);
+    io_transform = cast(io_transform, basetype);
 elseif ~isempty(io_transform)
     % Write to it to avoid sharing memory with other variables
     t=io_transform(1); io_transform(1)=t;

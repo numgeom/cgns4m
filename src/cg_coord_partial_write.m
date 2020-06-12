@@ -9,8 +9,8 @@ function [out_C, ierr] = cg_coord_partial_write(in_fn, in_B, in_Z, in_type, in_c
 %               Z: 32-bit integer (int32), scalar
 %            type: 32-bit integer (int32), scalar
 %       coordname: character string
-%            rmin: 32-bit integer (int32), array
-%            rmax: 32-bit integer (int32), array
+%            rmin: 64-bit or 32-bit integer (platform dependent), array
+%            rmax: 64-bit or 32-bit integer (platform dependent), array
 %       coord_ptr: dynamic type based on type
 %
 % Output arguments (optional):
@@ -18,7 +18,7 @@ function [out_C, ierr] = cg_coord_partial_write(in_fn, in_B, in_Z, in_type, in_c
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_coord_partial_write(int fn, int B, int Z, CG_DataType_t type, const char * coordname, const int * rmin, const int * rmax, const void * coord_ptr, int * C);
+% int cg_coord_partial_write(int fn, int B, int Z, CG_DataType_t type, const char * coordname, const long * rmin, const long * rmax, const void * coord_ptr, int * C);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
@@ -30,8 +30,16 @@ in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_type = int32(in_type);
 in_coordname = char(in_coordname);
-in_rmin = int32(in_rmin);
-in_rmax = int32(in_rmax);
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_rmin = int64(in_rmin);
+else
+    in_rmin = int32(in_rmin);
+end
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_rmax = int64(in_rmax);
+else
+    in_rmax = int32(in_rmax);
+end
 
 % Perform dynamic type casting
 datatype = in_type;

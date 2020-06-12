@@ -60,12 +60,8 @@
 
 #include "cgnstypes.h"
 
-#if defined(C2MEX)
-# if defined CG_BUILD_64BIT
-    typedef ptrdiff_t cgsize_t;
-# else
-    typedef int cgsize_t;
-# endif
+#if defined(C2MEX) && defined(CG_BUILD_64BIT)
+    typedef long cgsize_t;
 #endif
 #if CG_BUILD_SCOPE
 # ifndef CGNS_SCOPE_ENUMS
@@ -1061,8 +1057,8 @@ CGNSDLL int cg_coord_general_read(int fn, int B, int Z,
         const char * coordname, const cgsize_t *s_rmin, const cgsize_t *s_rmax,
         CGNS_ENUMT(DataType_t) m_type, int m_numdim, const cgsize_t *m_dimvals,
         const cgsize_t *m_rmin, const cgsize_t *m_rmax, void *coord_ptr);
+/*%typecast coord_ptr:m_type */
 /*%input s_rmin(:), s_rmax(:), m_rmin(:), m_rmax(:) */
-/*%output coord_ptr */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/grid.html */
 
 CGNSDLL int cg_coord_id(int fn, int B, int Z, int C, double *coord_id);
@@ -1089,6 +1085,7 @@ CGNSDLL int cg_coord_general_write(int fn, int B, int Z,
 	CGNS_ENUMT(DataType_t) m_type, int m_numdim, const cgsize_t *m_dims,
 	const cgsize_t *m_rmin, const cgsize_t *m_rmax,
 	const void *coord_ptr, int *C);
+/*%typecast coord_ptr:m_type */
 /*%input rmin(:), rmax(:), m_rmin(:), m_rmax(:) */
 /*%output C */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/grid.html */
@@ -1207,8 +1204,8 @@ CGNSDLL int cg_field_general_read(int fn, int B, int Z, int S,
         const char *fieldname, const cgsize_t *s_rmin, const cgsize_t *s_rmax,
         CGNS_ENUMT(DataType_t) m_type, int m_numdim, const cgsize_t *m_dimvals,
         const cgsize_t *m_rmin, const cgsize_t *m_rmax, void *field_ptr);
+/*%typecast field_ptr:m_type */
 /*%input s_rmin(:), s_rmax(:), m_rmin(:), m_rmax(:) */
-/*%output field_ptr */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/solution.html */
 
 CGNSDLL int cg_field_id(int fn, int B, int Z,int S, int F, double *field_id);
@@ -1236,6 +1233,7 @@ CGNSDLL int cg_field_general_write(int fn, int B, int Z, int S,
         CGNS_ENUMT(DataType_t) m_type, int m_numdim, const cgsize_t *m_dims,
         const cgsize_t *m_rmin, const cgsize_t *m_rmax,
         const void *field_ptr, int *F);
+/*%typecast field_ptr:m_type */
 /*%input rmin(:), rmax(:), m_rmin(:), m_rmax(:) */
 /*%output F */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/solution.html */
@@ -1784,17 +1782,18 @@ CGNSDLL int cg_array_info(int A, char *ArrayName,
 /*%output DataType, DataDimension */
 /*%inout DimensionVector(3) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/physical.html */
-CGNSDLL int cg_array_read(int A, void *Data);
-/*%typecast Data:cgns_get_array_type(A) */
+CGNSDLL int cg_array_read(int A, void *data);
+/*%typecast data:cgns_get_array_type(A) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/physical.html */
-CGNSDLL int cg_array_read_as(int A, CGNS_ENUMT(DataType_t) type, void *Data);
-/*%typecast Data:type */
+CGNSDLL int cg_array_read_as(int A, CGNS_ENUMT(DataType_t) type, void *data);
+/*%typecast data:type */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/physical.html */
 
 CGNSDLL int cg_array_general_read(int A,
         const cgsize_t *s_rmin, const cgsize_t *s_rmax,
         CGNS_ENUMT(DataType_t) m_type, int m_numdim, const cgsize_t *m_dimvals,
         const cgsize_t *m_rmin, const cgsize_t *m_rmax, void *data);
+/*%typecast data:m_type */
 /*%input s_rmin(:), s_rmax(:), m_rmin(:), m_rmax(:) */
 /*%output data */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/physical.html */
@@ -2009,6 +2008,8 @@ CGNSDLL int cg_delete_node(const char *node_name);
 CGNSDLL int cg_free(void *data);
 /*%ignore */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html */
+
+/* Data are deallocated automatially, so free is not needed. */
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - *\
  *      Error Handling Functions                                         *

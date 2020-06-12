@@ -26,9 +26,9 @@ in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 io_index_dim = int32(io_index_dim);
-basetype='int32';
+basetype = 'int32';
 if nargin<4
-    io_index_dim=zeros(1,3,basetype);
+    io_index_dim = zeros(1,3,basetype);
 elseif length(io_index_dim)<3
     % Enlarge the array if necessary;
     if size(io_index_dim,2)==1
@@ -37,7 +37,7 @@ elseif length(io_index_dim)<3
         io_index_dim=[io_index_dim, zeros(1,3-length(io_index_dim),basetype)];
     end
 elseif ~isa(io_index_dim,basetype)
-    io_index_dim=int32(io_index_dim);
+    io_index_dim = cast(io_index_dim, basetype);
 elseif ~isempty(io_index_dim)
     % Write to it to avoid sharing memory with other variables
     t=io_index_dim(1); io_index_dim(1)=t;

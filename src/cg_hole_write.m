@@ -11,15 +11,15 @@ function [out_Ii, ierr] = cg_hole_write(in_fn, in_B, in_Z, in_holename, in_locat
 %        location: 32-bit integer (int32), scalar
 %      ptset_type: 32-bit integer (int32), scalar
 %         nptsets: 32-bit integer (int32), scalar
-%           npnts: 32-bit integer (int32), scalar
-%            pnts: 32-bit integer (int32), array
+%           npnts: 64-bit or 32-bit integer (platform dependent), scalar
+%            pnts: 64-bit or 32-bit integer (platform dependent), array
 %
 % Output arguments (optional):
 %              Ii: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_hole_write(int fn, int B, int Z, const char * holename, CG_GridLocation_t location, CG_PointSetType_t ptset_type, int nptsets, int npnts, const int * pnts, int * Ii);
+% int cg_hole_write(int fn, int B, int Z, const char * holename, CG_GridLocation_t location, CG_PointSetType_t ptset_type, int nptsets, long npnts, const long * pnts, int * Ii);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
@@ -33,8 +33,16 @@ in_holename = char(in_holename);
 in_location = int32(in_location);
 in_ptset_type = int32(in_ptset_type);
 in_nptsets = int32(in_nptsets);
-in_npnts = int32(in_npnts);
-in_pnts = int32(in_pnts);
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_npnts = int64(in_npnts);
+else
+    in_npnts = int32(in_npnts);
+end
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_pnts = int64(in_pnts);
+else
+    in_pnts = int32(in_pnts);
+end
 
 % Invoke the actual MEX-function.
 [out_Ii, ierr] = cgnslib_mex(int32(125), in_fn, in_B, in_Z, in_holename, in_location, in_ptset_type, in_nptsets, in_npnts, in_pnts);

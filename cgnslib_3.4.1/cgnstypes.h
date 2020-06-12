@@ -30,7 +30,7 @@
 #define CGNSTYPES_H
 
 #define CG_BUILD_LEGACY 0
-#define CG_BUILD_64BIT  0
+#define CG_BUILD_64BIT  1
 #define CG_BUILD_SCOPE  1
 #define CG_BUILD_BASESCOPE 0
 

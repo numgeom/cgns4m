@@ -8,15 +8,15 @@ function [out_ElementDataSize, ierr] = cg_ElementPartialSize(in_file_number, in_
 %               B: 32-bit integer (int32), scalar
 %               Z: 32-bit integer (int32), scalar
 %               S: 32-bit integer (int32), scalar
-%           start: 32-bit integer (int32), scalar
-%             end: 32-bit integer (int32), scalar
+%           start: 64-bit or 32-bit integer (platform dependent), scalar
+%             end: 64-bit or 32-bit integer (platform dependent), scalar
 %
 % Output arguments (optional):
-%    ElementDataSize: 32-bit integer (int32), scalar
+%    ElementDataSize: 64-bit or 32-bit integer (platform dependent), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_ElementPartialSize(int file_number, int B, int Z, int S, int start, int end, int * ElementDataSize);
+% int cg_ElementPartialSize(int file_number, int B, int Z, int S, long start, long end, long * ElementDataSize);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
@@ -27,8 +27,16 @@ in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_S = int32(in_S);
-in_start = int32(in_start);
-in_end = int32(in_end);
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_start = int64(in_start);
+else
+    in_start = int32(in_start);
+end
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_end = int64(in_end);
+else
+    in_end = int32(in_end);
+end
 
 % Invoke the actual MEX-function.
 [out_ElementDataSize, ierr] = cgnslib_mex(int32(91), in_file_number, in_B, in_Z, in_S, in_start, in_end);

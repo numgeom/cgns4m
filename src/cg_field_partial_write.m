@@ -10,8 +10,8 @@ function [out_F, ierr] = cg_field_partial_write(in_fn, in_B, in_Z, in_S, in_type
 %               S: 32-bit integer (int32), scalar
 %            type: 32-bit integer (int32), scalar
 %       fieldname: character string
-%            rmin: 32-bit integer (int32), array
-%            rmax: 32-bit integer (int32), array
+%            rmin: 64-bit or 32-bit integer (platform dependent), array
+%            rmax: 64-bit or 32-bit integer (platform dependent), array
 %       field_ptr: dynamic type based on type
 %
 % Output arguments (optional):
@@ -19,7 +19,7 @@ function [out_F, ierr] = cg_field_partial_write(in_fn, in_B, in_Z, in_S, in_type
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_field_partial_write(int fn, int B, int Z, int S, CG_DataType_t type, const char * fieldname, const int * rmin, const int * rmax, const void * field_ptr, int * F);
+% int cg_field_partial_write(int fn, int B, int Z, int S, CG_DataType_t type, const char * fieldname, const long * rmin, const long * rmax, const void * field_ptr, int * F);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %
@@ -32,8 +32,16 @@ in_Z = int32(in_Z);
 in_S = int32(in_S);
 in_type = int32(in_type);
 in_fieldname = char(in_fieldname);
-in_rmin = int32(in_rmin);
-in_rmax = int32(in_rmax);
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_rmin = int64(in_rmin);
+else
+    in_rmin = int32(in_rmin);
+end
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_rmax = int64(in_rmax);
+else
+    in_rmax = int32(in_rmax);
+end
 
 % Perform dynamic type casting
 datatype = in_type;

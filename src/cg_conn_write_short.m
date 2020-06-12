@@ -11,8 +11,8 @@ function [out_Ii, ierr] = cg_conn_write_short(in_file_number, in_B, in_Z, in_con
 %        location: 32-bit integer (int32), scalar
 %            type: 32-bit integer (int32), scalar
 %      ptset_type: 32-bit integer (int32), scalar
-%           npnts: 32-bit integer (int32), scalar
-%            pnts: 32-bit integer (int32), array
+%           npnts: 64-bit or 32-bit integer (platform dependent), scalar
+%            pnts: 64-bit or 32-bit integer (platform dependent), array
 %       donorname: character string
 %
 % Output arguments (optional):
@@ -20,7 +20,7 @@ function [out_Ii, ierr] = cg_conn_write_short(in_file_number, in_B, in_Z, in_con
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_conn_write_short(int file_number, int B, int Z, const char * connectname, CG_GridLocation_t location, CG_GridConnectivityType_t type, CG_PointSetType_t ptset_type, int npnts, const int * pnts, const char * donorname, int * Ii);
+% int cg_conn_write_short(int file_number, int B, int Z, const char * connectname, CG_GridLocation_t location, CG_GridConnectivityType_t type, CG_PointSetType_t ptset_type, long npnts, const long * pnts, const char * donorname, int * Ii);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
@@ -34,8 +34,16 @@ in_connectname = char(in_connectname);
 in_location = int32(in_location);
 in_type = int32(in_type);
 in_ptset_type = int32(in_ptset_type);
-in_npnts = int32(in_npnts);
-in_pnts = int32(in_pnts);
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_npnts = int64(in_npnts);
+else
+    in_npnts = int32(in_npnts);
+end
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_pnts = int64(in_pnts);
+else
+    in_pnts = int32(in_pnts);
+end
 in_donorname = char(in_donorname);
 
 % Invoke the actual MEX-function.

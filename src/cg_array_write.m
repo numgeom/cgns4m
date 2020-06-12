@@ -7,14 +7,14 @@ function ierr = cg_array_write(in_ArrayName, in_DataType, in_DataDimension, in_D
 %       ArrayName: character string
 %        DataType: 32-bit integer (int32), scalar
 %    DataDimension: 32-bit integer (int32), scalar
-%    DimensionVector: 32-bit integer (int32), len=DataDimension
+%    DimensionVector: 64-bit or 32-bit integer (platform dependent), len=DataDimension
 %            Data: dynamic type based on DataType
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_array_write(const char * ArrayName, CG_DataType_t DataType, int DataDimension, const int * DimensionVector, const void * Data);
+% int cg_array_write(const char * ArrayName, CG_DataType_t DataType, int DataDimension, const long * DimensionVector, const void * Data);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
@@ -24,7 +24,11 @@ end
 in_ArrayName = char(in_ArrayName);
 in_DataType = int32(in_DataType);
 in_DataDimension = int32(in_DataDimension);
-in_DimensionVector = int32(in_DimensionVector);
+if strfind(computer,'64') %#ok<STRIFCND>
+    in_DimensionVector = int64(in_DimensionVector);
+else
+    in_DimensionVector = int32(in_DimensionVector);
+end
 
 % Perform dynamic type casting
 datatype = in_DataType;

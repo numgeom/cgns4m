@@ -22,9 +22,9 @@ if ( nargout < 1 || nargin < 2)
 end
 in_fn = int32(in_fn);
 io_file_type = int32(io_file_type);
-basetype='int32';
+basetype = 'int32';
 if ~isa(io_file_type,basetype)
-    io_file_type=int32(io_file_type);
+    io_file_type = cast(io_file_type, basetype);
 elseif ~isempty(io_file_type)
     % Write to it to avoid sharing memory with other variables
     t=io_file_type(1); io_file_type(1)=t;

@@ -22,17 +22,17 @@ if ( nargout < 2 || nargin < 2)
 end
 io_rot_rate = single(io_rot_rate);
 io_rot_center = single(io_rot_center);
-basetype='single';
+basetype = 'single';
 if ~isa(io_rot_rate,basetype)
-    io_rot_rate=single(io_rot_rate);
+    io_rot_rate = cast(io_rot_rate, basetype);
 elseif ~isempty(io_rot_rate)
     % Write to it to avoid sharing memory with other variables
     t=io_rot_rate(1); io_rot_rate(1)=t;
 end
 
-basetype='single';
+basetype = 'single';
 if ~isa(io_rot_center,basetype)
-    io_rot_center=single(io_rot_center);
+    io_rot_center = cast(io_rot_center, basetype);
 elseif ~isempty(io_rot_center)
     % Write to it to avoid sharing memory with other variables
     t=io_rot_center(1); io_rot_center(1)=t;

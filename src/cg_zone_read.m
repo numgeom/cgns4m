@@ -10,13 +10,13 @@ function [io_zonename, io_size, ierr] = cg_zone_read(in_fn, in_B, in_Z, io_zonen
 %
 % In&Out arguments (required as output; type is auto-casted):
 %        zonename: character string with default length 32  (optional as input)
-%            size: 32-bit integer (int32), len=9  (optional as input)
+%            size: 64-bit or 32-bit integer (platform dependent), len=9  (optional as input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_zone_read(int fn, int B, int Z, char * zonename, int * size);
+% int cg_zone_read(int fn, int B, int Z, char * zonename, long * size);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
 %
@@ -27,7 +27,11 @@ in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 io_zonename = char(io_zonename);
-io_size = int32(io_size);
+if strfind(computer,'64') %#ok<STRIFCND>
+    io_size = int64(io_size);
+else
+    io_size = int32(io_size);
+end
 if nargin<4
     io_zonename=char(zeros(1,32));
 elseif length(io_zonename)<32
@@ -40,9 +44,13 @@ else
     t=io_zonename(1); io_zonename(1)=t;
 end
 
-basetype='int32';
+if strfind(computer,'64')  %#ok<STRIFCND>
+    basetype = 'int64';
+else
+    basetype = 'int32';
+end
 if nargin<5
-    io_size=zeros(1,9,basetype);
+    io_size = zeros(1,9,basetype);
 elseif length(io_size)<9
     % Enlarge the array if necessary;
     if size(io_size,2)==1
@@ -51,7 +59,7 @@ elseif length(io_size)<9
         io_size=[io_size, zeros(1,9-length(io_size),basetype)];
     end
 elseif ~isa(io_size,basetype)
-    io_size=int32(io_size);
+    io_size = cast(io_size, basetype);
 elseif ~isempty(io_size)
     % Write to it to avoid sharing memory with other variables
     t=io_size(1); io_size(1)=t;

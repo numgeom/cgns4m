@@ -20,9 +20,9 @@ if ( nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
 io_diffusion_model = int32(io_diffusion_model);
-basetype='int32';
+basetype = 'int32';
 if ~isa(io_diffusion_model,basetype)
-    io_diffusion_model=int32(io_diffusion_model);
+    io_diffusion_model = cast(io_diffusion_model, basetype);
 elseif ~isempty(io_diffusion_model)
     % Write to it to avoid sharing memory with other variables
     t=io_diffusion_model(1); io_diffusion_model(1)=t;

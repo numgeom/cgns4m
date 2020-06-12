@@ -24,9 +24,9 @@ end
 in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 io_gravity_vector = single(io_gravity_vector);
-basetype='single';
+basetype = 'single';
 if ~isa(io_gravity_vector,basetype)
-    io_gravity_vector=single(io_gravity_vector);
+    io_gravity_vector = cast(io_gravity_vector, basetype);
 elseif ~isempty(io_gravity_vector)
     % Write to it to avoid sharing memory with other variables
     t=io_gravity_vector(1); io_gravity_vector(1)=t;

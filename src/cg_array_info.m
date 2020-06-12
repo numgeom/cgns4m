@@ -8,7 +8,7 @@ function [io_ArrayName, io_DimensionVector, out_DataType, out_DataDimension, ier
 %
 % In&Out arguments (required as output; type is auto-casted):
 %       ArrayName: character string with default length 32  (optional as input)
-%    DimensionVector: 32-bit integer (int32), len=3  (optional as input)
+%    DimensionVector: 64-bit or 32-bit integer (platform dependent), len=3  (optional as input)
 %
 % Output arguments (optional):
 %        DataType: 32-bit integer (int32), scalar
@@ -16,7 +16,7 @@ function [io_ArrayName, io_DimensionVector, out_DataType, out_DataDimension, ier
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_array_info(int A, char * ArrayName, CG_DataType_t * DataType, int * DataDimension, int * DimensionVector);
+% int cg_array_info(int A, char * ArrayName, CG_DataType_t * DataType, int * DataDimension, long * DimensionVector);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
@@ -25,7 +25,11 @@ if ( nargout < 2 || nargin < 1)
 end
 in_A = int32(in_A);
 io_ArrayName = char(io_ArrayName);
-io_DimensionVector = int32(io_DimensionVector);
+if strfind(computer,'64') %#ok<STRIFCND>
+    io_DimensionVector = int64(io_DimensionVector);
+else
+    io_DimensionVector = int32(io_DimensionVector);
+end
 if nargin<2
     io_ArrayName=char(zeros(1,32));
 elseif length(io_ArrayName)<32
@@ -38,9 +42,13 @@ else
     t=io_ArrayName(1); io_ArrayName(1)=t;
 end
 
-basetype='int32';
+if strfind(computer,'64')  %#ok<STRIFCND>
+    basetype = 'int64';
+else
+    basetype = 'int32';
+end
 if nargin<3
-    io_DimensionVector=zeros(1,3,basetype);
+    io_DimensionVector = zeros(1,3,basetype);
 elseif length(io_DimensionVector)<3
     % Enlarge the array if necessary;
     if size(io_DimensionVector,2)==1
@@ -49,7 +57,7 @@ elseif length(io_DimensionVector)<3
         io_DimensionVector=[io_DimensionVector, zeros(1,3-length(io_DimensionVector),basetype)];
     end
 elseif ~isa(io_DimensionVector,basetype)
-    io_DimensionVector=int32(io_DimensionVector);
+    io_DimensionVector = cast(io_DimensionVector, basetype);
 elseif ~isempty(io_DimensionVector)
     % Write to it to avoid sharing memory with other variables
     t=io_DimensionVector(1); io_DimensionVector(1)=t;

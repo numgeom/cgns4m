@@ -20,9 +20,9 @@ if ( nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
 io_numexp = int32(io_numexp);
-basetype='int32';
+basetype = 'int32';
 if ~isa(io_numexp,basetype)
-    io_numexp=int32(io_numexp);
+    io_numexp = cast(io_numexp, basetype);
 elseif ~isempty(io_numexp)
     % Write to it to avoid sharing memory with other variables
     t=io_numexp(1); io_numexp(1)=t;

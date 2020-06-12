@@ -20,9 +20,9 @@ if ( nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
 io_RindData = int32(io_RindData);
-basetype='int32';
+basetype = 'int32';
 if ~isa(io_RindData,basetype)
-    io_RindData=int32(io_RindData);
+    io_RindData = cast(io_RindData, basetype);
 elseif ~isempty(io_RindData)
     % Write to it to avoid sharing memory with other variables
     t=io_RindData(1); io_RindData(1)=t;
