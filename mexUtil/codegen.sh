@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# To regenerate the C code after updating the cgnslib.h, run the following 
+# To regenerate the C code after updating the cgnslib.h, run the following
 # this script in the root directory of cgns4m
 
 set -e
@@ -8,7 +8,7 @@ set -e
 # Download CGNS source code
 CGNS_VERSION=3.4.1
 mkdir -p cgnslib_$CGNS_VERSION
-curl -L https://github.com/CGNS/CGNS/archive/v3.4.1.tar.gz \
+curl -L https://github.com/CGNS/CGNS/archive/v$CGNS_VERSION.tar.gz \
 | tar zxvf - --strip-components=2 -C cgnslib_$CGNS_VERSION CGNS-$CGNS_VERSION/src/\
 {LICENSE,cg_malloc.c,cgns_header.h,cgns_io.c,cgnsKeywords.h,cgnslib.h,\
 cg_malloc.h,cgns_error.c,cgns_internals.c,cgns_io.h,cgnslib.c,fortran_macros.h} \
