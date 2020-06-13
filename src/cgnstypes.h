@@ -43,7 +43,7 @@
 # endif
 #endif
 #else
-# define CG_LONG_T long
+# define CG_LONG_T long long
 #endif
 
 #ifdef BUILD_HDF5
