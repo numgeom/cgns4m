@@ -9,7 +9,7 @@ set -e
 CGNS_VERSION=3.4.1
 mkdir -p cgnslib_$CGNS_VERSION
 curl -L https://github.com/CGNS/CGNS/archive/v3.4.1.tar.gz \
-| tar xvf - --strip-components=2 -C cgnslib_$CGNS_VERSION CGNS-$CGNS_VERSION/src/\
+| tar zxvf - --strip-components=2 -C cgnslib_$CGNS_VERSION CGNS-$CGNS_VERSION/src/\
 {LICENSE,cg_malloc.c,cgns_header.h,cgns_io.c,cgnsKeywords.h,cgnslib.h,\
 cg_malloc.h,cgns_error.c,cgns_internals.c,cgns_io.h,cgnslib.c,fortran_macros.h} \
 CGNS-$CGNS_VERSION/src/adf/{ADF_fbind.h,ADF.h,ADF_interface.c,ADF_internals.c,ADF_internals.h} \
