@@ -16,7 +16,7 @@ function [io_pnts, ierr] = cg_discrete_ptset_read(in_fn, in_B, in_Z, in_D, io_pn
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_discrete_ptset_read(int fn, int B, int Z, int D, int64_t * pnts);
+% int cg_discrete_ptset_read(int fn, int B, int Z, int D, long long * pnts);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %

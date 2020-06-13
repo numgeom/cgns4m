@@ -20,7 +20,7 @@ function [io_data, ierr] = cg_array_general_read(in_A, in_s_rmin, in_s_rmax, in_
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_array_general_read(int A, const int64_t * s_rmin, const int64_t * s_rmax, CG_DataType_t m_type, int m_numdim, const int64_t * m_dimvals, const int64_t * m_rmin, const int64_t * m_rmax, void * data);
+% int cg_array_general_read(int A, const long long * s_rmin, const long long * s_rmax, CG_DataType_t m_type, int m_numdim, const long long * m_dimvals, const long long * m_rmin, const long long * m_rmax, void * data);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %

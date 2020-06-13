@@ -6,7 +6,7 @@
 set -e
 
 # generate M files and cgnslib_mex.c file
-./mexUtil/c2mex -debug -outdir src cgnslib_3.4.1/cgnslib.h
+./mexUtil/c2mex -debug -outdir src src/cgnslib.h
 
 # Copy src/CG_*.m to private/ and strip out CG_ prefix in the file name...
 ls src/CG_*.m  | perl -e "s/src\/CG_(\w+\.m)/cp src\/CG_\$1 private\/\$1/g" -p | bash

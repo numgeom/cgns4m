@@ -14,7 +14,7 @@ function ierr = cg_parent_data_write(in_file_number, in_B, in_Z, in_S, in_parent
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_parent_data_write(int file_number, int B, int Z, int S, const int64_t * parent_data);
+% int cg_parent_data_write(int file_number, int B, int Z, int S, const long long * parent_data);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %

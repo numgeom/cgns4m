@@ -18,7 +18,7 @@ function [out_BC, ierr] = cg_boco_write(in_file_number, in_B, in_Z, in_boconame,
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_boco_write(int file_number, int B, int Z, const char * boconame, CG_BCType_t bocotype, CG_PointSetType_t ptset_type, int64_t npnts, const int64_t * pnts, int * BC);
+% int cg_boco_write(int file_number, int B, int Z, const char * boconame, CG_BCType_t bocotype, CG_PointSetType_t ptset_type, long long npnts, const long long * pnts, int * BC);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %

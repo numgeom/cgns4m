@@ -17,7 +17,7 @@ function [io_dim_vals, out_data_dim, ierr] = cg_discrete_size(in_fn, in_B, in_Z,
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_discrete_size(int fn, int B, int Z, int D, int * data_dim, int64_t * dim_vals);
+% int cg_discrete_size(int fn, int B, int Z, int D, int * data_dim, long long * dim_vals);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %

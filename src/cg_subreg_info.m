@@ -22,7 +22,7 @@ function [io_regname, out_dimension, out_location, out_ptset_type, out_npnts, ou
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_subreg_info(int fn, int B, int Z, int S, char * regname, int * dimension, CG_GridLocation_t * location, CG_PointSetType_t * ptset_type, int64_t * npnts, int * bcname_len, int * gcname_len);
+% int cg_subreg_info(int fn, int B, int Z, int S, char * regname, int * dimension, CG_GridLocation_t * location, CG_PointSetType_t * ptset_type, long long * npnts, int * bcname_len, int * gcname_len);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %

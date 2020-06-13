@@ -19,7 +19,7 @@ function [out_S, ierr] = cg_subreg_ptset_write(in_fn, in_B, in_Z, in_regname, in
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_subreg_ptset_write(int fn, int B, int Z, const char * regname, int dimension, CG_GridLocation_t location, CG_PointSetType_t ptset_type, int64_t npnts, const int64_t * pnts, int * S);
+% int cg_subreg_ptset_write(int fn, int B, int Z, const char * regname, int dimension, CG_GridLocation_t location, CG_PointSetType_t ptset_type, long long npnts, const long long * pnts, int * S);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %

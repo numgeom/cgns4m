@@ -25,7 +25,7 @@ function [out_Ii, ierr] = cg_conn_write(in_file_number, in_B, in_Z, in_connectna
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_conn_write(int file_number, int B, int Z, const char * connectname, CG_GridLocation_t location, CG_GridConnectivityType_t type, CG_PointSetType_t ptset_type, int64_t npnts, const int64_t * pnts, const char * donorname, CG_ZoneType_t donor_zonetype, CG_PointSetType_t donor_ptset_type, CG_DataType_t donor_datatype, int64_t ndata_donor, const int64_t * donor_data, int * Ii);
+% int cg_conn_write(int file_number, int B, int Z, const char * connectname, CG_GridLocation_t location, CG_GridConnectivityType_t type, CG_PointSetType_t ptset_type, long long npnts, const long long * pnts, const char * donorname, CG_ZoneType_t donor_zonetype, CG_PointSetType_t donor_ptset_type, CG_DataType_t donor_datatype, long long ndata_donor, const long long * donor_data, int * Ii);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %

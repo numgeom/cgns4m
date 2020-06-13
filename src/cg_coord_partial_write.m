@@ -18,7 +18,7 @@ function [out_C, ierr] = cg_coord_partial_write(in_fn, in_B, in_Z, in_type, in_c
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_coord_partial_write(int fn, int B, int Z, CG_DataType_t type, const char * coordname, const int64_t * rmin, const int64_t * rmax, const void * coord_ptr, int * C);
+% int cg_coord_partial_write(int fn, int B, int Z, CG_DataType_t type, const char * coordname, const long long * rmin, const long long * rmax, const void * coord_ptr, int * C);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %

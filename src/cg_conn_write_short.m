@@ -20,7 +20,7 @@ function [out_Ii, ierr] = cg_conn_write_short(in_file_number, in_B, in_Z, in_con
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_conn_write_short(int file_number, int B, int Z, const char * connectname, CG_GridLocation_t location, CG_GridConnectivityType_t type, CG_PointSetType_t ptset_type, int64_t npnts, const int64_t * pnts, const char * donorname, int * Ii);
+% int cg_conn_write_short(int file_number, int B, int Z, const char * connectname, CG_GridLocation_t location, CG_GridConnectivityType_t type, CG_PointSetType_t ptset_type, long long npnts, const long long * pnts, const char * donorname, int * Ii);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %

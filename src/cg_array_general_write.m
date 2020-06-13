@@ -21,7 +21,7 @@ function ierr = cg_array_general_write(in_arrayname, in_s_type, in_s_numdim, in_
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_array_general_write(const char * arrayname, CG_DataType_t s_type, int s_numdim, const int64_t * s_dimvals, const int64_t * s_rmin, const int64_t * s_rmax, CG_DataType_t m_type, int m_numdim, const int64_t * m_dimvals, const int64_t * m_rmin, const int64_t * m_rmax, const void * data);
+% int cg_array_general_write(const char * arrayname, CG_DataType_t s_type, int s_numdim, const long long * s_dimvals, const long long * s_rmin, const long long * s_rmax, CG_DataType_t m_type, int m_numdim, const long long * m_dimvals, const long long * m_rmin, const long long * m_rmax, const void * data);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %

@@ -12,7 +12,7 @@ function [io_pnts, ierr] = cg_ptset_read(io_pnts)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_ptset_read(int64_t * pnts);
+% int cg_ptset_read(long long * pnts);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/location.html">online documentation</a>.
 %

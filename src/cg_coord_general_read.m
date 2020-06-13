@@ -23,7 +23,7 @@ function [io_coord_ptr, ierr] = cg_coord_general_read(in_fn, in_B, in_Z, in_coor
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_coord_general_read(int fn, int B, int Z, const char * coordname, const int64_t * s_rmin, const int64_t * s_rmax, CG_DataType_t m_type, int m_numdim, const int64_t * m_dimvals, const int64_t * m_rmin, const int64_t * m_rmax, void * coord_ptr);
+% int cg_coord_general_read(int fn, int B, int Z, const char * coordname, const long long * s_rmin, const long long * s_rmax, CG_DataType_t m_type, int m_numdim, const long long * m_dimvals, const long long * m_rmin, const long long * m_rmax, void * coord_ptr);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %

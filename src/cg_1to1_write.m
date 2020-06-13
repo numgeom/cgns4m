@@ -18,7 +18,7 @@ function [out_Ii, ierr] = cg_1to1_write(in_fn, in_B, in_Z, in_connectname, in_do
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_1to1_write(int fn, int B, int Z, const char * connectname, const char * donorname, const int64_t * range, const int64_t * donor_range, const int * transform, int * Ii);
+% int cg_1to1_write(int fn, int B, int Z, const char * connectname, const char * donorname, const long long * range, const long long * donor_range, const int * transform, int * Ii);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
