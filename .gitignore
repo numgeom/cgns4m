@@ -31,3 +31,11 @@
 # Debug files
 *.dSYM/
 *.su
+
+# Data files
+*.cgns
+*.hdf
+*.adf
+
+# Backups
+*.bak
