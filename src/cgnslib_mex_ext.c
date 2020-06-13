@@ -6,7 +6,7 @@
 
 #include "c2mex.h"   /* This includes "mex.h". */
 
-#include "cgnslib_3.4.1/cgnslib.h"
+#include "cgnslib.h"
 #include <string.h>
 #include <assert.h>
 
