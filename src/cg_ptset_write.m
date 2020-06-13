@@ -12,7 +12,7 @@ function ierr = cg_ptset_write(in_ptset_type, in_npnts, in_pnts)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_ptset_write(CG_PointSetType_t ptset_type, int64_t npnts, const int64_t * pnts);
+% int cg_ptset_write(CG_PointSetType_t ptset_type, long long npnts, const long long * pnts);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/location.html">online documentation</a>.
 %

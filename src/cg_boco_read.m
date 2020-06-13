@@ -17,7 +17,7 @@ function [io_pnts, io_NormalList, ierr] = cg_boco_read(in_fn, in_B, in_Z, in_BC,
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_boco_read(int fn, int B, int Z, int BC, int64_t * pnts, void * NormalList);
+% int cg_boco_read(int fn, int B, int Z, int BC, long long * pnts, void * NormalList);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %

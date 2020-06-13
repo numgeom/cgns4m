@@ -19,7 +19,7 @@ function [out_F, ierr] = cg_field_partial_write(in_fn, in_B, in_Z, in_S, in_type
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_field_partial_write(int fn, int B, int Z, int S, CG_DataType_t type, const char * fieldname, const int64_t * rmin, const int64_t * rmax, const void * field_ptr, int * F);
+% int cg_field_partial_write(int fn, int B, int Z, int S, CG_DataType_t type, const char * fieldname, const long long * rmin, const long long * rmax, const void * field_ptr, int * F);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %

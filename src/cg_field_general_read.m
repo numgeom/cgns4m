@@ -24,7 +24,7 @@ function [io_field_ptr, ierr] = cg_field_general_read(in_fn, in_B, in_Z, in_S, i
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_field_general_read(int fn, int B, int Z, int S, const char * fieldname, const int64_t * s_rmin, const int64_t * s_rmax, CG_DataType_t m_type, int m_numdim, const int64_t * m_dimvals, const int64_t * m_rmin, const int64_t * m_rmax, void * field_ptr);
+% int cg_field_general_read(int fn, int B, int Z, int S, const char * fieldname, const long long * s_rmin, const long long * s_rmax, CG_DataType_t m_type, int m_numdim, const long long * m_dimvals, const long long * m_rmin, const long long * m_rmax, void * field_ptr);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %

@@ -15,7 +15,7 @@ function [out_ptset_type, out_npnts, ierr] = cg_discrete_ptset_info(in_fn, in_B,
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_discrete_ptset_info(int fn, int B, int Z, int D, CG_PointSetType_t * ptset_type, int64_t * npnts);
+% int cg_discrete_ptset_info(int fn, int B, int Z, int D, CG_PointSetType_t * ptset_type, long long * npnts);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %

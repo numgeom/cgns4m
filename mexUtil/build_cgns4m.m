@@ -3,7 +3,8 @@ function build_cgns4m(force)
 %
 % See also startup_cgns4m.
 
-SRCDIR = 'cgnslib_3.4.1';
+CGNS_VERSION = '3.4.1';
+SRCDIR = ['cgnslib_' CGNS_VERSION];
 oldpwd = pwd;
 cgns4m_root = fileparts(which('startup_cgns4m.m'));
 

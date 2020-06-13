@@ -18,7 +18,7 @@ function [out_S, ierr] = cg_section_partial_write(in_file_number, in_B, in_Z, in
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_section_partial_write(int file_number, int B, int Z, const char * SectionName, CG_ElementType_t type, int64_t start, int64_t end, int nbndry, int * S);
+% int cg_section_partial_write(int file_number, int B, int Z, const char * SectionName, CG_ElementType_t type, long long start, long long end, int nbndry, int * S);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %

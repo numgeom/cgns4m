@@ -20,7 +20,7 @@ function [io_connectname, io_donorname, io_range, io_donor_range, io_transform, 
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_1to1_read(int fn, int B, int Z, int Ii, char * connectname, char * donorname, int64_t * range, int64_t * donor_range, int * transform);
+% int cg_1to1_read(int fn, int B, int Z, int Ii, char * connectname, char * donorname, long long * range, long long * donor_range, int * transform);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %

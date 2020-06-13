@@ -16,7 +16,7 @@ function ierr = cg_elements_partial_write(in_fn, in_B, in_Z, in_S, in_start, in_
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_elements_partial_write(int fn, int B, int Z, int S, int64_t start, int64_t end, const int64_t * elements);
+% int cg_elements_partial_write(int fn, int B, int Z, int S, long long start, long long end, const long long * elements);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %

@@ -15,7 +15,7 @@ function [out_Z, ierr] = cg_zone_write(in_fn, in_B, in_zonename, in_size, in_typ
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_zone_write(int fn, int B, const char * zonename, const int64_t * size, CG_ZoneType_t type, int * Z);
+% int cg_zone_write(int fn, int B, const char * zonename, const long long * size, CG_ZoneType_t type, int * Z);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
 %

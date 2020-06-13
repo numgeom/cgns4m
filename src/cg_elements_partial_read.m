@@ -19,7 +19,7 @@ function [io_elements, io_parent_data, ierr] = cg_elements_partial_read(in_file_
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_elements_partial_read(int file_number, int B, int Z, int S, int64_t start, int64_t end, int64_t * elements, int64_t * parent_data);
+% int cg_elements_partial_read(int file_number, int B, int Z, int S, long long start, long long end, long long * elements, long long * parent_data);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %

@@ -11,7 +11,7 @@ function [out_ptset_type, out_npnts, ierr] = cg_ptset_info()
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_ptset_info(CG_PointSetType_t * ptset_type, int64_t * npnts);
+% int cg_ptset_info(CG_PointSetType_t * ptset_type, long long * npnts);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/location.html">online documentation</a>.
 %

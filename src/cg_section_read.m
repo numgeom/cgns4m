@@ -21,7 +21,7 @@ function [io_SectionName, out_type, out_start, out_end, out_nbndry, out_parent_f
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_section_read(int file_number, int B, int Z, int S, char * SectionName, CG_ElementType_t * type, int64_t * start, int64_t * end, int * nbndry, int * parent_flag);
+% int cg_section_read(int file_number, int B, int Z, int S, char * SectionName, CG_ElementType_t * type, long long * start, long long * end, int * nbndry, int * parent_flag);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %

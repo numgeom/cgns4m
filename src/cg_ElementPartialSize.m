@@ -16,7 +16,7 @@ function [out_ElementDataSize, ierr] = cg_ElementPartialSize(in_file_number, in_
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_ElementPartialSize(int file_number, int B, int Z, int S, int64_t start, int64_t end, int64_t * ElementDataSize);
+% int cg_ElementPartialSize(int file_number, int B, int Z, int S, long long start, long long end, long long * ElementDataSize);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %

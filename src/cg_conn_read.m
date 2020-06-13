@@ -18,7 +18,7 @@ function [io_pnts, io_donor_data, ierr] = cg_conn_read(in_file_number, in_B, in_
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_conn_read(int file_number, int B, int Z, int Ii, int64_t * pnts, CG_DataType_t donor_datatype, int64_t * donor_data);
+% int cg_conn_read(int file_number, int B, int Z, int Ii, long long * pnts, CG_DataType_t donor_datatype, long long * donor_data);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %

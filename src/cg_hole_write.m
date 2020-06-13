@@ -19,7 +19,7 @@ function [out_Ii, ierr] = cg_hole_write(in_fn, in_B, in_Z, in_holename, in_locat
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_hole_write(int fn, int B, int Z, const char * holename, CG_GridLocation_t location, CG_PointSetType_t ptset_type, int nptsets, int64_t npnts, const int64_t * pnts, int * Ii);
+% int cg_hole_write(int fn, int B, int Z, const char * holename, CG_GridLocation_t location, CG_PointSetType_t ptset_type, int nptsets, long long npnts, const long long * pnts, int * Ii);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %

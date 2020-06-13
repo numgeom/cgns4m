@@ -16,7 +16,7 @@ function [io_zonename, io_size, ierr] = cg_zone_read(in_fn, in_B, in_Z, io_zonen
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_zone_read(int fn, int B, int Z, char * zonename, int64_t * size);
+% int cg_zone_read(int fn, int B, int Z, char * zonename, long long * size);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
 %

@@ -16,7 +16,7 @@ function [io_pnts, ierr] = cg_hole_read(in_fn, in_B, in_Z, in_Ii, io_pnts)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_hole_read(int fn, int B, int Z, int Ii, int64_t * pnts);
+% int cg_hole_read(int fn, int B, int Z, int Ii, long long * pnts);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %

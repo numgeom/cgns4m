@@ -23,7 +23,7 @@ function [out_C, ierr] = cg_coord_general_write(in_fn, in_B, in_Z, in_coordname,
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_coord_general_write(int fn, int B, int Z, const char * coordname, CG_DataType_t s_type, const int64_t * rmin, const int64_t * rmax, CG_DataType_t m_type, int m_numdim, const int64_t * m_dims, const int64_t * m_rmin, const int64_t * m_rmax, const void * coord_ptr, int * C);
+% int cg_coord_general_write(int fn, int B, int Z, const char * coordname, CG_DataType_t s_type, const long long * rmin, const long long * rmax, CG_DataType_t m_type, int m_numdim, const long long * m_dims, const long long * m_rmin, const long long * m_rmax, const void * coord_ptr, int * C);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %

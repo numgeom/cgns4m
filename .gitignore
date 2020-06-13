@@ -27,7 +27,16 @@
 *.i*86
 *.x86_64
 *.hex
+*.mex*
 
 # Debug files
 *.dSYM/
 *.su
+
+# Data files
+*.cgns
+*.hdf
+*.adf
+
+# Backups
+*.bak

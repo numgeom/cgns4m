@@ -16,7 +16,7 @@ function [io_ArrayName, io_DimensionVector, out_DataType, out_DataDimension, ier
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_array_info(int A, char * ArrayName, CG_DataType_t * DataType, int * DataDimension, int64_t * DimensionVector);
+% int cg_array_info(int A, char * ArrayName, CG_DataType_t * DataType, int * DataDimension, long long * DimensionVector);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %

@@ -24,7 +24,7 @@ function [out_F, ierr] = cg_field_general_write(in_fn, in_B, in_Z, in_S, in_fiel
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_field_general_write(int fn, int B, int Z, int S, const char * fieldname, CG_DataType_t s_type, const int64_t * rmin, const int64_t * rmax, CG_DataType_t m_type, int m_numdim, const int64_t * m_dims, const int64_t * m_rmin, const int64_t * m_rmax, const void * field_ptr, int * F);
+% int cg_field_general_write(int fn, int B, int Z, int S, const char * fieldname, CG_DataType_t s_type, const long long * rmin, const long long * rmax, CG_DataType_t m_type, int m_numdim, const long long * m_dims, const long long * m_rmin, const long long * m_rmax, const void * field_ptr, int * F);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %

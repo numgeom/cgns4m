@@ -20,7 +20,7 @@ function [io_holename, out_location, out_ptset_type, out_nptsets, out_npnts, ier
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_hole_info(int fn, int B, int Z, int Ii, char * holename, CG_GridLocation_t * location, CG_PointSetType_t * ptset_type, int * nptsets, int64_t * npnts);
+% int cg_hole_info(int fn, int B, int Z, int Ii, char * holename, CG_GridLocation_t * location, CG_PointSetType_t * ptset_type, int * nptsets, long long * npnts);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %

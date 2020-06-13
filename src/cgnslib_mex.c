@@ -1,12 +1,12 @@
 /*
  * This file was automatically generated for MATLAB & Octave from
- * cgnslib_3.4.1/cgnslib.h using Xiangmin Jiao's c2mex.
+ * src/cgnslib.h using Xiangmin Jiao's c2mex.
  * For bug reports of c2mex, email jiao@ams.sunysb.edu.
  */
 
 #include "c2mex.h"   /* This includes "mex.h". */
 
-#include "cgnslib_3.4.1/cgnslib.h"
+#include "src/cgnslib.h"
 
 
 #ifdef EXTERN_C
@@ -1533,7 +1533,7 @@ EXTERN_C void cg_nzones_MeX(int nlhs, mxArray *plhs[],
  * [io_zonename, ierr] = cg_zone_read(in_fn, in_B, in_Z, io_zonename, io_size)
  *
  * The original C interface is
- * int cg_zone_read(int fn, int B, int Z, char * zonename, int64_t * size);
+ * int cg_zone_read(int fn, int B, int Z, char * zonename, long long * size);
  */
 EXTERN_C void cg_zone_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -1541,7 +1541,7 @@ EXTERN_C void cg_zone_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     char * io_zonename;
-    int64_t * io_size;
+    long long * io_size;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -1566,7 +1566,7 @@ EXTERN_C void cg_zone_read_MeX(int nlhs, mxArray *plhs[],
     if (mxGetNumberOfElements(prhs[4]) < (int) (9) || _n_dims(prhs[4]) > 1)
         mexErrMsgTxt("Error in dimension of argument size");
     if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-        io_size = (int64_t*)mxGetData(prhs[4]);
+        io_size = (long long*)mxGetData(prhs[4]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument size");
 
@@ -1678,14 +1678,14 @@ EXTERN_C void cg_zone_id_MeX(int nlhs, mxArray *plhs[],
  * [out_Z, ierr] = cg_zone_write(in_fn, in_B, in_zonename, in_size, in_type)
  *
  * The original C interface is
- * int cg_zone_write(int fn, int B, const char * zonename, const int64_t * size, CG_ZoneType_t type, int * Z);
+ * int cg_zone_write(int fn, int B, const char * zonename, const long long * size, CG_ZoneType_t type, int * Z);
  */
 EXTERN_C void cg_zone_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     int in_fn;
     int in_B;
     char * in_zonename;
-    int64_t * in_size;
+    long long * in_size;
     CG_ZoneType_t in_type;
     int out_Z;
     int ierr;
@@ -1708,7 +1708,7 @@ EXTERN_C void cg_zone_write_MeX(int nlhs, mxArray *plhs[],
     if (mxGetNumberOfElements(prhs[3]) < (int) (9) || _n_dims(prhs[3]) > 1)
         mexErrMsgTxt("Error in dimension of argument size");
     if (mxIsInt64(prhs[3]) || mxIsUint64(prhs[3]))
-        in_size = (int64_t*)mxGetData(prhs[3]);
+        in_size = (long long*)mxGetData(prhs[3]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument size");
 
@@ -2848,7 +2848,7 @@ EXTERN_C void cg_coord_info_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_coord_read(in_fn, in_B, in_Z, in_coordname, in_type, in_rmin, in_rmax, io_coord)
  *
  * The original C interface is
- * int cg_coord_read(int fn, int B, int Z, const char * coordname, CG_DataType_t type, const int64_t * rmin, const int64_t * rmax, void * coord);
+ * int cg_coord_read(int fn, int B, int Z, const char * coordname, CG_DataType_t type, const long long * rmin, const long long * rmax, void * coord);
  */
 EXTERN_C void cg_coord_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -2857,8 +2857,8 @@ EXTERN_C void cg_coord_read_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     char * in_coordname;
     CG_DataType_t in_type;
-    int64_t * in_rmin;
-    int64_t * in_rmax;
+    long long * in_rmin;
+    long long * in_rmax;
     void * io_coord;
     int ierr;
 
@@ -2886,12 +2886,12 @@ EXTERN_C void cg_coord_read_MeX(int nlhs, mxArray *plhs[],
     in_type = _get_numeric_scalar_int32(prhs[4]);
 
     if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-        in_rmin = (int64_t*)mxGetData(prhs[5]);
+        in_rmin = (long long*)mxGetData(prhs[5]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument rmin");
 
     if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        in_rmax = (int64_t*)mxGetData(prhs[6]);
+        in_rmax = (long long*)mxGetData(prhs[6]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument rmax");
 
@@ -2913,7 +2913,7 @@ EXTERN_C void cg_coord_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_coord_general_read(in_fn, in_B, in_Z, in_coordname, in_s_rmin, in_s_rmax, in_m_type, in_m_numdim, in_m_dimvals, in_m_rmin, in_m_rmax, io_coord_ptr)
  *
  * The original C interface is
- * int cg_coord_general_read(int fn, int B, int Z, const char * coordname, const int64_t * s_rmin, const int64_t * s_rmax, CG_DataType_t m_type, int m_numdim, const int64_t * m_dimvals, const int64_t * m_rmin, const int64_t * m_rmax, void * coord_ptr);
+ * int cg_coord_general_read(int fn, int B, int Z, const char * coordname, const long long * s_rmin, const long long * s_rmax, CG_DataType_t m_type, int m_numdim, const long long * m_dimvals, const long long * m_rmin, const long long * m_rmax, void * coord_ptr);
  */
 EXTERN_C void cg_coord_general_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -2921,13 +2921,13 @@ EXTERN_C void cg_coord_general_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     char * in_coordname;
-    int64_t * in_s_rmin;
-    int64_t * in_s_rmax;
+    long long * in_s_rmin;
+    long long * in_s_rmax;
     CG_DataType_t in_m_type;
     int in_m_numdim;
-    int64_t * in_m_dimvals;
-    int64_t * in_m_rmin;
-    int64_t * in_m_rmax;
+    long long * in_m_dimvals;
+    long long * in_m_rmin;
+    long long * in_m_rmax;
     void * io_coord_ptr;
     int ierr;
 
@@ -2951,12 +2951,12 @@ EXTERN_C void cg_coord_general_read_MeX(int nlhs, mxArray *plhs[],
     in_coordname = _mxGetString(prhs[3], NULL);
 
     if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-        in_s_rmin = (int64_t*)mxGetData(prhs[4]);
+        in_s_rmin = (long long*)mxGetData(prhs[4]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument s_rmin");
 
     if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-        in_s_rmax = (int64_t*)mxGetData(prhs[5]);
+        in_s_rmax = (long long*)mxGetData(prhs[5]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument s_rmax");
 
@@ -2969,17 +2969,17 @@ EXTERN_C void cg_coord_general_read_MeX(int nlhs, mxArray *plhs[],
     in_m_numdim = _get_numeric_scalar_int32(prhs[7]);
 
     if (mxIsInt64(prhs[8]) || mxIsUint64(prhs[8]))
-        in_m_dimvals = (int64_t*)mxGetData(prhs[8]);
+        in_m_dimvals = (long long*)mxGetData(prhs[8]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_dimvals");
 
     if (mxIsInt64(prhs[9]) || mxIsUint64(prhs[9]))
-        in_m_rmin = (int64_t*)mxGetData(prhs[9]);
+        in_m_rmin = (long long*)mxGetData(prhs[9]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_rmin");
 
     if (mxIsInt64(prhs[10]) || mxIsUint64(prhs[10]))
-        in_m_rmax = (int64_t*)mxGetData(prhs[10]);
+        in_m_rmax = (long long*)mxGetData(prhs[10]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_rmax");
 
@@ -3109,7 +3109,7 @@ EXTERN_C void cg_coord_write_MeX(int nlhs, mxArray *plhs[],
  * [out_C, ierr] = cg_coord_partial_write(in_fn, in_B, in_Z, in_type, in_coordname, in_rmin, in_rmax, in_coord_ptr)
  *
  * The original C interface is
- * int cg_coord_partial_write(int fn, int B, int Z, CG_DataType_t type, const char * coordname, const int64_t * rmin, const int64_t * rmax, const void * coord_ptr, int * C);
+ * int cg_coord_partial_write(int fn, int B, int Z, CG_DataType_t type, const char * coordname, const long long * rmin, const long long * rmax, const void * coord_ptr, int * C);
  */
 EXTERN_C void cg_coord_partial_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -3118,8 +3118,8 @@ EXTERN_C void cg_coord_partial_write_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     CG_DataType_t in_type;
     char * in_coordname;
-    int64_t * in_rmin;
-    int64_t * in_rmax;
+    long long * in_rmin;
+    long long * in_rmax;
     const void * in_coord_ptr;
     int out_C;
     int ierr;
@@ -3148,12 +3148,12 @@ EXTERN_C void cg_coord_partial_write_MeX(int nlhs, mxArray *plhs[],
     in_coordname = _mxGetString(prhs[4], NULL);
 
     if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-        in_rmin = (int64_t*)mxGetData(prhs[5]);
+        in_rmin = (long long*)mxGetData(prhs[5]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument rmin");
 
     if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        in_rmax = (int64_t*)mxGetData(prhs[6]);
+        in_rmax = (long long*)mxGetData(prhs[6]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument rmax");
 
@@ -3179,7 +3179,7 @@ EXTERN_C void cg_coord_partial_write_MeX(int nlhs, mxArray *plhs[],
  * [out_C, ierr] = cg_coord_general_write(in_fn, in_B, in_Z, in_coordname, in_s_type, in_rmin, in_rmax, in_m_type, in_m_numdim, in_m_dims, in_m_rmin, in_m_rmax, in_coord_ptr)
  *
  * The original C interface is
- * int cg_coord_general_write(int fn, int B, int Z, const char * coordname, CG_DataType_t s_type, const int64_t * rmin, const int64_t * rmax, CG_DataType_t m_type, int m_numdim, const int64_t * m_dims, const int64_t * m_rmin, const int64_t * m_rmax, const void * coord_ptr, int * C);
+ * int cg_coord_general_write(int fn, int B, int Z, const char * coordname, CG_DataType_t s_type, const long long * rmin, const long long * rmax, CG_DataType_t m_type, int m_numdim, const long long * m_dims, const long long * m_rmin, const long long * m_rmax, const void * coord_ptr, int * C);
  */
 EXTERN_C void cg_coord_general_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -3188,13 +3188,13 @@ EXTERN_C void cg_coord_general_write_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     char * in_coordname;
     CG_DataType_t in_s_type;
-    int64_t * in_rmin;
-    int64_t * in_rmax;
+    long long * in_rmin;
+    long long * in_rmax;
     CG_DataType_t in_m_type;
     int in_m_numdim;
-    int64_t * in_m_dims;
-    int64_t * in_m_rmin;
-    int64_t * in_m_rmax;
+    long long * in_m_dims;
+    long long * in_m_rmin;
+    long long * in_m_rmax;
     const void * in_coord_ptr;
     int out_C;
     int ierr;
@@ -3223,12 +3223,12 @@ EXTERN_C void cg_coord_general_write_MeX(int nlhs, mxArray *plhs[],
     in_s_type = _get_numeric_scalar_int32(prhs[4]);
 
     if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-        in_rmin = (int64_t*)mxGetData(prhs[5]);
+        in_rmin = (long long*)mxGetData(prhs[5]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument rmin");
 
     if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        in_rmax = (int64_t*)mxGetData(prhs[6]);
+        in_rmax = (long long*)mxGetData(prhs[6]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument rmax");
 
@@ -3241,17 +3241,17 @@ EXTERN_C void cg_coord_general_write_MeX(int nlhs, mxArray *plhs[],
     in_m_numdim = _get_numeric_scalar_int32(prhs[8]);
 
     if (mxIsInt64(prhs[9]) || mxIsUint64(prhs[9]))
-        in_m_dims = (int64_t*)mxGetData(prhs[9]);
+        in_m_dims = (long long*)mxGetData(prhs[9]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_dims");
 
     if (mxIsInt64(prhs[10]) || mxIsUint64(prhs[10]))
-        in_m_rmin = (int64_t*)mxGetData(prhs[10]);
+        in_m_rmin = (long long*)mxGetData(prhs[10]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_rmin");
 
     if (mxIsInt64(prhs[11]) || mxIsUint64(prhs[11]))
-        in_m_rmax = (int64_t*)mxGetData(prhs[11]);
+        in_m_rmax = (long long*)mxGetData(prhs[11]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_rmax");
 
@@ -3322,7 +3322,7 @@ EXTERN_C void cg_nsections_MeX(int nlhs, mxArray *plhs[],
  * [io_SectionName, out_type, out_start, out_end, out_nbndry, out_parent_flag, ierr] = cg_section_read(in_file_number, in_B, in_Z, in_S, io_SectionName)
  *
  * The original C interface is
- * int cg_section_read(int file_number, int B, int Z, int S, char * SectionName, CG_ElementType_t * type, int64_t * start, int64_t * end, int * nbndry, int * parent_flag);
+ * int cg_section_read(int file_number, int B, int Z, int S, char * SectionName, CG_ElementType_t * type, long long * start, long long * end, int * nbndry, int * parent_flag);
  */
 EXTERN_C void cg_section_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -3332,8 +3332,8 @@ EXTERN_C void cg_section_read_MeX(int nlhs, mxArray *plhs[],
     int in_S;
     char * io_SectionName;
     CG_ElementType_t out_type;
-    int64_t out_start;
-    int64_t out_end;
+    long long out_start;
+    long long out_end;
     int out_nbndry;
     int out_parent_flag;
     int ierr;
@@ -3375,11 +3375,11 @@ EXTERN_C void cg_section_read_MeX(int nlhs, mxArray *plhs[],
     *(int*)mxGetData(plhs[1]) = out_type;
     if (nlhs > 1) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(int64_t*)mxGetData(plhs[2]) = out_start;
+        *(long long*)mxGetData(plhs[2]) = out_start;
     }
     if (nlhs > 2) {
         plhs[3] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(int64_t*)mxGetData(plhs[3]) = out_end;
+        *(long long*)mxGetData(plhs[3]) = out_end;
     }
     if (nlhs > 3) {
         plhs[4] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -3399,7 +3399,7 @@ EXTERN_C void cg_section_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_elements_read(in_file_number, in_B, in_Z, in_S, io_elements, io_parent_data)
  *
  * The original C interface is
- * int cg_elements_read(int file_number, int B, int Z, int S, int64_t * elements, int64_t * parent_data);
+ * int cg_elements_read(int file_number, int B, int Z, int S, long long * elements, long long * parent_data);
  */
 EXTERN_C void cg_elements_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -3407,8 +3407,8 @@ EXTERN_C void cg_elements_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    int64_t * io_elements;
-    int64_t * io_parent_data;
+    long long * io_elements;
+    long long * io_parent_data;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -3433,12 +3433,12 @@ EXTERN_C void cg_elements_read_MeX(int nlhs, mxArray *plhs[],
     in_S = _get_numeric_scalar_int32(prhs[3]);
 
     if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-        io_elements = (int64_t*)mxGetData(prhs[4]);
+        io_elements = (long long*)mxGetData(prhs[4]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument elements");
 
     if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-        io_parent_data = (int64_t*)mxGetData(prhs[5]);
+        io_parent_data = (long long*)mxGetData(prhs[5]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument parent_data");
 
@@ -3456,7 +3456,7 @@ EXTERN_C void cg_elements_read_MeX(int nlhs, mxArray *plhs[],
  * [out_S, ierr] = cg_section_write(in_file_number, in_B, in_Z, in_SectionName, in_type, in_start, in_end, in_nbndry, in_elements)
  *
  * The original C interface is
- * int cg_section_write(int file_number, int B, int Z, const char * SectionName, CG_ElementType_t type, int64_t start, int64_t end, int nbndry, const int64_t * elements, int * S);
+ * int cg_section_write(int file_number, int B, int Z, const char * SectionName, CG_ElementType_t type, long long start, long long end, int nbndry, const long long * elements, int * S);
  */
 EXTERN_C void cg_section_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -3465,10 +3465,10 @@ EXTERN_C void cg_section_write_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     char * in_SectionName;
     CG_ElementType_t in_type;
-    int64_t in_start;
-    int64_t in_end;
+    long long in_start;
+    long long in_end;
     int in_nbndry;
-    int64_t * in_elements;
+    long long * in_elements;
     int out_S;
     int ierr;
 
@@ -3508,7 +3508,7 @@ EXTERN_C void cg_section_write_MeX(int nlhs, mxArray *plhs[],
     in_nbndry = _get_numeric_scalar_int32(prhs[7]);
 
     if (mxIsInt64(prhs[8]) || mxIsUint64(prhs[8]))
-        in_elements = (int64_t*)mxGetData(prhs[8]);
+        in_elements = (long long*)mxGetData(prhs[8]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument elements");
 
@@ -3533,7 +3533,7 @@ EXTERN_C void cg_section_write_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_parent_data_write(in_file_number, in_B, in_Z, in_S, in_parent_data)
  *
  * The original C interface is
- * int cg_parent_data_write(int file_number, int B, int Z, int S, const int64_t * parent_data);
+ * int cg_parent_data_write(int file_number, int B, int Z, int S, const long long * parent_data);
  */
 EXTERN_C void cg_parent_data_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -3541,7 +3541,7 @@ EXTERN_C void cg_parent_data_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    int64_t * in_parent_data;
+    long long * in_parent_data;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -3566,7 +3566,7 @@ EXTERN_C void cg_parent_data_write_MeX(int nlhs, mxArray *plhs[],
     in_S = _get_numeric_scalar_int32(prhs[3]);
 
     if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-        in_parent_data = (int64_t*)mxGetData(prhs[4]);
+        in_parent_data = (long long*)mxGetData(prhs[4]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument parent_data");
 
@@ -3619,7 +3619,7 @@ EXTERN_C void cg_npe_MeX(int nlhs, mxArray *plhs[],
  * [out_ElementDataSize, ierr] = cg_ElementDataSize(in_file_number, in_B, in_Z, in_S)
  *
  * The original C interface is
- * int cg_ElementDataSize(int file_number, int B, int Z, int S, int64_t * ElementDataSize);
+ * int cg_ElementDataSize(int file_number, int B, int Z, int S, long long * ElementDataSize);
  */
 EXTERN_C void cg_ElementDataSize_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -3627,7 +3627,7 @@ EXTERN_C void cg_ElementDataSize_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    int64_t out_ElementDataSize;
+    long long out_ElementDataSize;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -3658,7 +3658,7 @@ EXTERN_C void cg_ElementDataSize_MeX(int nlhs, mxArray *plhs[],
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-    *(int64_t*)mxGetData(plhs[0]) = out_ElementDataSize;
+    *(long long*)mxGetData(plhs[0]) = out_ElementDataSize;
     if (nlhs > 1) {
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
@@ -3669,7 +3669,7 @@ EXTERN_C void cg_ElementDataSize_MeX(int nlhs, mxArray *plhs[],
  * [out_S, ierr] = cg_section_partial_write(in_file_number, in_B, in_Z, in_SectionName, in_type, in_start, in_end, in_nbndry)
  *
  * The original C interface is
- * int cg_section_partial_write(int file_number, int B, int Z, const char * SectionName, CG_ElementType_t type, int64_t start, int64_t end, int nbndry, int * S);
+ * int cg_section_partial_write(int file_number, int B, int Z, const char * SectionName, CG_ElementType_t type, long long start, long long end, int nbndry, int * S);
  */
 EXTERN_C void cg_section_partial_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -3678,8 +3678,8 @@ EXTERN_C void cg_section_partial_write_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     char * in_SectionName;
     CG_ElementType_t in_type;
-    int64_t in_start;
-    int64_t in_end;
+    long long in_start;
+    long long in_end;
     int in_nbndry;
     int out_S;
     int ierr;
@@ -3740,7 +3740,7 @@ EXTERN_C void cg_section_partial_write_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_elements_partial_write(in_fn, in_B, in_Z, in_S, in_start, in_end, in_elements)
  *
  * The original C interface is
- * int cg_elements_partial_write(int fn, int B, int Z, int S, int64_t start, int64_t end, const int64_t * elements);
+ * int cg_elements_partial_write(int fn, int B, int Z, int S, long long start, long long end, const long long * elements);
  */
 EXTERN_C void cg_elements_partial_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -3748,9 +3748,9 @@ EXTERN_C void cg_elements_partial_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    int64_t in_start;
-    int64_t in_end;
-    int64_t * in_elements;
+    long long in_start;
+    long long in_end;
+    long long * in_elements;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -3783,7 +3783,7 @@ EXTERN_C void cg_elements_partial_write_MeX(int nlhs, mxArray *plhs[],
     in_end = _get_numeric_scalar_int64(prhs[5]);
 
     if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        in_elements = (int64_t*)mxGetData(prhs[6]);
+        in_elements = (long long*)mxGetData(prhs[6]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument elements");
 
@@ -3801,7 +3801,7 @@ EXTERN_C void cg_elements_partial_write_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_parent_data_partial_write(in_fn, in_B, in_Z, in_S, in_start, in_end, in_ParentData)
  *
  * The original C interface is
- * int cg_parent_data_partial_write(int fn, int B, int Z, int S, int64_t start, int64_t end, const int64_t * ParentData);
+ * int cg_parent_data_partial_write(int fn, int B, int Z, int S, long long start, long long end, const long long * ParentData);
  */
 EXTERN_C void cg_parent_data_partial_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -3809,9 +3809,9 @@ EXTERN_C void cg_parent_data_partial_write_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    int64_t in_start;
-    int64_t in_end;
-    int64_t * in_ParentData;
+    long long in_start;
+    long long in_end;
+    long long * in_ParentData;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -3844,7 +3844,7 @@ EXTERN_C void cg_parent_data_partial_write_MeX(int nlhs, mxArray *plhs[],
     in_end = _get_numeric_scalar_int64(prhs[5]);
 
     if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        in_ParentData = (int64_t*)mxGetData(prhs[6]);
+        in_ParentData = (long long*)mxGetData(prhs[6]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument ParentData");
 
@@ -3862,7 +3862,7 @@ EXTERN_C void cg_parent_data_partial_write_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_elements_partial_read(in_file_number, in_B, in_Z, in_S, in_start, in_end, io_elements, io_parent_data)
  *
  * The original C interface is
- * int cg_elements_partial_read(int file_number, int B, int Z, int S, int64_t start, int64_t end, int64_t * elements, int64_t * parent_data);
+ * int cg_elements_partial_read(int file_number, int B, int Z, int S, long long start, long long end, long long * elements, long long * parent_data);
  */
 EXTERN_C void cg_elements_partial_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -3870,10 +3870,10 @@ EXTERN_C void cg_elements_partial_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    int64_t in_start;
-    int64_t in_end;
-    int64_t * io_elements;
-    int64_t * io_parent_data;
+    long long in_start;
+    long long in_end;
+    long long * io_elements;
+    long long * io_parent_data;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -3906,12 +3906,12 @@ EXTERN_C void cg_elements_partial_read_MeX(int nlhs, mxArray *plhs[],
     in_end = _get_numeric_scalar_int64(prhs[5]);
 
     if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        io_elements = (int64_t*)mxGetData(prhs[6]);
+        io_elements = (long long*)mxGetData(prhs[6]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument elements");
 
     if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-        io_parent_data = (int64_t*)mxGetData(prhs[7]);
+        io_parent_data = (long long*)mxGetData(prhs[7]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument parent_data");
 
@@ -3929,7 +3929,7 @@ EXTERN_C void cg_elements_partial_read_MeX(int nlhs, mxArray *plhs[],
  * [out_ElementDataSize, ierr] = cg_ElementPartialSize(in_file_number, in_B, in_Z, in_S, in_start, in_end)
  *
  * The original C interface is
- * int cg_ElementPartialSize(int file_number, int B, int Z, int S, int64_t start, int64_t end, int64_t * ElementDataSize);
+ * int cg_ElementPartialSize(int file_number, int B, int Z, int S, long long start, long long end, long long * ElementDataSize);
  */
 EXTERN_C void cg_ElementPartialSize_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -3937,9 +3937,9 @@ EXTERN_C void cg_ElementPartialSize_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    int64_t in_start;
-    int64_t in_end;
-    int64_t out_ElementDataSize;
+    long long in_start;
+    long long in_end;
+    long long out_ElementDataSize;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -3978,7 +3978,7 @@ EXTERN_C void cg_ElementPartialSize_MeX(int nlhs, mxArray *plhs[],
 
     /******** Process output arguments ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-    *(int64_t*)mxGetData(plhs[0]) = out_ElementDataSize;
+    *(long long*)mxGetData(plhs[0]) = out_ElementDataSize;
     if (nlhs > 1) {
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
@@ -4197,7 +4197,7 @@ EXTERN_C void cg_sol_write_MeX(int nlhs, mxArray *plhs[],
  * [out_data_dim, ierr] = cg_sol_size(in_fn, in_B, in_Z, in_S, io_dim_vals)
  *
  * The original C interface is
- * int cg_sol_size(int fn, int B, int Z, int S, int * data_dim, int64_t * dim_vals);
+ * int cg_sol_size(int fn, int B, int Z, int S, int * data_dim, long long * dim_vals);
  */
 EXTERN_C void cg_sol_size_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -4206,7 +4206,7 @@ EXTERN_C void cg_sol_size_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_S;
     int out_data_dim;
-    int64_t * io_dim_vals;
+    long long * io_dim_vals;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -4231,7 +4231,7 @@ EXTERN_C void cg_sol_size_MeX(int nlhs, mxArray *plhs[],
     in_S = _get_numeric_scalar_int32(prhs[3]);
 
     if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-        io_dim_vals = (int64_t*)mxGetData(prhs[4]);
+        io_dim_vals = (long long*)mxGetData(prhs[4]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument dim_vals");
 
@@ -4253,7 +4253,7 @@ EXTERN_C void cg_sol_size_MeX(int nlhs, mxArray *plhs[],
  * [out_ptset_type, out_npnts, ierr] = cg_sol_ptset_info(in_fn, in_B, in_Z, in_S)
  *
  * The original C interface is
- * int cg_sol_ptset_info(int fn, int B, int Z, int S, CG_PointSetType_t * ptset_type, int64_t * npnts);
+ * int cg_sol_ptset_info(int fn, int B, int Z, int S, CG_PointSetType_t * ptset_type, long long * npnts);
  */
 EXTERN_C void cg_sol_ptset_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -4262,7 +4262,7 @@ EXTERN_C void cg_sol_ptset_info_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_S;
     CG_PointSetType_t out_ptset_type;
-    int64_t out_npnts;
+    long long out_npnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -4296,7 +4296,7 @@ EXTERN_C void cg_sol_ptset_info_MeX(int nlhs, mxArray *plhs[],
     *(int*)mxGetData(plhs[0]) = out_ptset_type;
     if (nlhs > 1) {
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(int64_t*)mxGetData(plhs[1]) = out_npnts;
+        *(long long*)mxGetData(plhs[1]) = out_npnts;
     }
     if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -4308,7 +4308,7 @@ EXTERN_C void cg_sol_ptset_info_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_sol_ptset_read(in_fn, in_B, in_Z, in_S, io_pnts)
  *
  * The original C interface is
- * int cg_sol_ptset_read(int fn, int B, int Z, int S, int64_t * pnts);
+ * int cg_sol_ptset_read(int fn, int B, int Z, int S, long long * pnts);
  */
 EXTERN_C void cg_sol_ptset_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -4316,7 +4316,7 @@ EXTERN_C void cg_sol_ptset_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    int64_t * io_pnts;
+    long long * io_pnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -4341,7 +4341,7 @@ EXTERN_C void cg_sol_ptset_read_MeX(int nlhs, mxArray *plhs[],
     in_S = _get_numeric_scalar_int32(prhs[3]);
 
     if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-        io_pnts = (int64_t*)mxGetData(prhs[4]);
+        io_pnts = (long long*)mxGetData(prhs[4]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
@@ -4359,7 +4359,7 @@ EXTERN_C void cg_sol_ptset_read_MeX(int nlhs, mxArray *plhs[],
  * [out_S, ierr] = cg_sol_ptset_write(in_fn, in_B, in_Z, in_solname, in_location, in_ptset_type, in_npnts, in_pnts)
  *
  * The original C interface is
- * int cg_sol_ptset_write(int fn, int B, int Z, const char * solname, CG_GridLocation_t location, CG_PointSetType_t ptset_type, int64_t npnts, const int64_t * pnts, int * S);
+ * int cg_sol_ptset_write(int fn, int B, int Z, const char * solname, CG_GridLocation_t location, CG_PointSetType_t ptset_type, long long npnts, const long long * pnts, int * S);
  */
 EXTERN_C void cg_sol_ptset_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -4369,8 +4369,8 @@ EXTERN_C void cg_sol_ptset_write_MeX(int nlhs, mxArray *plhs[],
     char * in_solname;
     CG_GridLocation_t in_location;
     CG_PointSetType_t in_ptset_type;
-    int64_t in_npnts;
-    int64_t * in_pnts;
+    long long in_npnts;
+    long long * in_pnts;
     int out_S;
     int ierr;
 
@@ -4406,7 +4406,7 @@ EXTERN_C void cg_sol_ptset_write_MeX(int nlhs, mxArray *plhs[],
     in_npnts = _get_numeric_scalar_int64(prhs[6]);
 
     if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-        in_pnts = (int64_t*)mxGetData(prhs[7]);
+        in_pnts = (long long*)mxGetData(prhs[7]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
@@ -4543,7 +4543,7 @@ EXTERN_C void cg_field_info_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_field_read(in_fn, in_B, in_Z, in_S, in_fieldname, in_type, in_rmin, in_rmax, io_field_ptr)
  *
  * The original C interface is
- * int cg_field_read(int fn, int B, int Z, int S, const char * fieldname, CG_DataType_t type, const int64_t * rmin, const int64_t * rmax, void * field_ptr);
+ * int cg_field_read(int fn, int B, int Z, int S, const char * fieldname, CG_DataType_t type, const long long * rmin, const long long * rmax, void * field_ptr);
  */
 EXTERN_C void cg_field_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -4553,8 +4553,8 @@ EXTERN_C void cg_field_read_MeX(int nlhs, mxArray *plhs[],
     int in_S;
     char * in_fieldname;
     CG_DataType_t in_type;
-    int64_t * in_rmin;
-    int64_t * in_rmax;
+    long long * in_rmin;
+    long long * in_rmax;
     void * io_field_ptr;
     int ierr;
 
@@ -4586,12 +4586,12 @@ EXTERN_C void cg_field_read_MeX(int nlhs, mxArray *plhs[],
     in_type = _get_numeric_scalar_int32(prhs[5]);
 
     if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        in_rmin = (int64_t*)mxGetData(prhs[6]);
+        in_rmin = (long long*)mxGetData(prhs[6]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument rmin");
 
     if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-        in_rmax = (int64_t*)mxGetData(prhs[7]);
+        in_rmax = (long long*)mxGetData(prhs[7]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument rmax");
 
@@ -4613,7 +4613,7 @@ EXTERN_C void cg_field_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_field_general_read(in_fn, in_B, in_Z, in_S, in_fieldname, in_s_rmin, in_s_rmax, in_m_type, in_m_numdim, in_m_dimvals, in_m_rmin, in_m_rmax, io_field_ptr)
  *
  * The original C interface is
- * int cg_field_general_read(int fn, int B, int Z, int S, const char * fieldname, const int64_t * s_rmin, const int64_t * s_rmax, CG_DataType_t m_type, int m_numdim, const int64_t * m_dimvals, const int64_t * m_rmin, const int64_t * m_rmax, void * field_ptr);
+ * int cg_field_general_read(int fn, int B, int Z, int S, const char * fieldname, const long long * s_rmin, const long long * s_rmax, CG_DataType_t m_type, int m_numdim, const long long * m_dimvals, const long long * m_rmin, const long long * m_rmax, void * field_ptr);
  */
 EXTERN_C void cg_field_general_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -4622,13 +4622,13 @@ EXTERN_C void cg_field_general_read_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_S;
     char * in_fieldname;
-    int64_t * in_s_rmin;
-    int64_t * in_s_rmax;
+    long long * in_s_rmin;
+    long long * in_s_rmax;
     CG_DataType_t in_m_type;
     int in_m_numdim;
-    int64_t * in_m_dimvals;
-    int64_t * in_m_rmin;
-    int64_t * in_m_rmax;
+    long long * in_m_dimvals;
+    long long * in_m_rmin;
+    long long * in_m_rmax;
     void * io_field_ptr;
     int ierr;
 
@@ -4656,12 +4656,12 @@ EXTERN_C void cg_field_general_read_MeX(int nlhs, mxArray *plhs[],
     in_fieldname = _mxGetString(prhs[4], NULL);
 
     if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-        in_s_rmin = (int64_t*)mxGetData(prhs[5]);
+        in_s_rmin = (long long*)mxGetData(prhs[5]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument s_rmin");
 
     if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        in_s_rmax = (int64_t*)mxGetData(prhs[6]);
+        in_s_rmax = (long long*)mxGetData(prhs[6]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument s_rmax");
 
@@ -4674,17 +4674,17 @@ EXTERN_C void cg_field_general_read_MeX(int nlhs, mxArray *plhs[],
     in_m_numdim = _get_numeric_scalar_int32(prhs[8]);
 
     if (mxIsInt64(prhs[9]) || mxIsUint64(prhs[9]))
-        in_m_dimvals = (int64_t*)mxGetData(prhs[9]);
+        in_m_dimvals = (long long*)mxGetData(prhs[9]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_dimvals");
 
     if (mxIsInt64(prhs[10]) || mxIsUint64(prhs[10]))
-        in_m_rmin = (int64_t*)mxGetData(prhs[10]);
+        in_m_rmin = (long long*)mxGetData(prhs[10]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_rmin");
 
     if (mxIsInt64(prhs[11]) || mxIsUint64(prhs[11]))
-        in_m_rmax = (int64_t*)mxGetData(prhs[11]);
+        in_m_rmax = (long long*)mxGetData(prhs[11]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_rmax");
 
@@ -4824,7 +4824,7 @@ EXTERN_C void cg_field_write_MeX(int nlhs, mxArray *plhs[],
  * [out_F, ierr] = cg_field_partial_write(in_fn, in_B, in_Z, in_S, in_type, in_fieldname, in_rmin, in_rmax, in_field_ptr)
  *
  * The original C interface is
- * int cg_field_partial_write(int fn, int B, int Z, int S, CG_DataType_t type, const char * fieldname, const int64_t * rmin, const int64_t * rmax, const void * field_ptr, int * F);
+ * int cg_field_partial_write(int fn, int B, int Z, int S, CG_DataType_t type, const char * fieldname, const long long * rmin, const long long * rmax, const void * field_ptr, int * F);
  */
 EXTERN_C void cg_field_partial_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -4834,8 +4834,8 @@ EXTERN_C void cg_field_partial_write_MeX(int nlhs, mxArray *plhs[],
     int in_S;
     CG_DataType_t in_type;
     char * in_fieldname;
-    int64_t * in_rmin;
-    int64_t * in_rmax;
+    long long * in_rmin;
+    long long * in_rmax;
     const void * in_field_ptr;
     int out_F;
     int ierr;
@@ -4868,12 +4868,12 @@ EXTERN_C void cg_field_partial_write_MeX(int nlhs, mxArray *plhs[],
     in_fieldname = _mxGetString(prhs[5], NULL);
 
     if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        in_rmin = (int64_t*)mxGetData(prhs[6]);
+        in_rmin = (long long*)mxGetData(prhs[6]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument rmin");
 
     if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-        in_rmax = (int64_t*)mxGetData(prhs[7]);
+        in_rmax = (long long*)mxGetData(prhs[7]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument rmax");
 
@@ -4899,7 +4899,7 @@ EXTERN_C void cg_field_partial_write_MeX(int nlhs, mxArray *plhs[],
  * [out_F, ierr] = cg_field_general_write(in_fn, in_B, in_Z, in_S, in_fieldname, in_s_type, in_rmin, in_rmax, in_m_type, in_m_numdim, in_m_dims, in_m_rmin, in_m_rmax, in_field_ptr)
  *
  * The original C interface is
- * int cg_field_general_write(int fn, int B, int Z, int S, const char * fieldname, CG_DataType_t s_type, const int64_t * rmin, const int64_t * rmax, CG_DataType_t m_type, int m_numdim, const int64_t * m_dims, const int64_t * m_rmin, const int64_t * m_rmax, const void * field_ptr, int * F);
+ * int cg_field_general_write(int fn, int B, int Z, int S, const char * fieldname, CG_DataType_t s_type, const long long * rmin, const long long * rmax, CG_DataType_t m_type, int m_numdim, const long long * m_dims, const long long * m_rmin, const long long * m_rmax, const void * field_ptr, int * F);
  */
 EXTERN_C void cg_field_general_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -4909,13 +4909,13 @@ EXTERN_C void cg_field_general_write_MeX(int nlhs, mxArray *plhs[],
     int in_S;
     char * in_fieldname;
     CG_DataType_t in_s_type;
-    int64_t * in_rmin;
-    int64_t * in_rmax;
+    long long * in_rmin;
+    long long * in_rmax;
     CG_DataType_t in_m_type;
     int in_m_numdim;
-    int64_t * in_m_dims;
-    int64_t * in_m_rmin;
-    int64_t * in_m_rmax;
+    long long * in_m_dims;
+    long long * in_m_rmin;
+    long long * in_m_rmax;
     const void * in_field_ptr;
     int out_F;
     int ierr;
@@ -4948,12 +4948,12 @@ EXTERN_C void cg_field_general_write_MeX(int nlhs, mxArray *plhs[],
     in_s_type = _get_numeric_scalar_int32(prhs[5]);
 
     if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        in_rmin = (int64_t*)mxGetData(prhs[6]);
+        in_rmin = (long long*)mxGetData(prhs[6]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument rmin");
 
     if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-        in_rmax = (int64_t*)mxGetData(prhs[7]);
+        in_rmax = (long long*)mxGetData(prhs[7]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument rmax");
 
@@ -4966,17 +4966,17 @@ EXTERN_C void cg_field_general_write_MeX(int nlhs, mxArray *plhs[],
     in_m_numdim = _get_numeric_scalar_int32(prhs[9]);
 
     if (mxIsInt64(prhs[10]) || mxIsUint64(prhs[10]))
-        in_m_dims = (int64_t*)mxGetData(prhs[10]);
+        in_m_dims = (long long*)mxGetData(prhs[10]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_dims");
 
     if (mxIsInt64(prhs[11]) || mxIsUint64(prhs[11]))
-        in_m_rmin = (int64_t*)mxGetData(prhs[11]);
+        in_m_rmin = (long long*)mxGetData(prhs[11]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_rmin");
 
     if (mxIsInt64(prhs[12]) || mxIsUint64(prhs[12]))
-        in_m_rmax = (int64_t*)mxGetData(prhs[12]);
+        in_m_rmax = (long long*)mxGetData(prhs[12]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_rmax");
 
@@ -5047,7 +5047,7 @@ EXTERN_C void cg_nsubregs_MeX(int nlhs, mxArray *plhs[],
  * [io_regname, out_dimension, out_location, out_ptset_type, out_npnts, out_bcname_len, out_gcname_len, ierr] = cg_subreg_info(in_fn, in_B, in_Z, in_S, io_regname)
  *
  * The original C interface is
- * int cg_subreg_info(int fn, int B, int Z, int S, char * regname, int * dimension, CG_GridLocation_t * location, CG_PointSetType_t * ptset_type, int64_t * npnts, int * bcname_len, int * gcname_len);
+ * int cg_subreg_info(int fn, int B, int Z, int S, char * regname, int * dimension, CG_GridLocation_t * location, CG_PointSetType_t * ptset_type, long long * npnts, int * bcname_len, int * gcname_len);
  */
 EXTERN_C void cg_subreg_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -5059,7 +5059,7 @@ EXTERN_C void cg_subreg_info_MeX(int nlhs, mxArray *plhs[],
     int out_dimension;
     CG_GridLocation_t out_location;
     CG_PointSetType_t out_ptset_type;
-    int64_t out_npnts;
+    long long out_npnts;
     int out_bcname_len;
     int out_gcname_len;
     int ierr;
@@ -5109,7 +5109,7 @@ EXTERN_C void cg_subreg_info_MeX(int nlhs, mxArray *plhs[],
     }
     if (nlhs > 3) {
         plhs[4] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(int64_t*)mxGetData(plhs[4]) = out_npnts;
+        *(long long*)mxGetData(plhs[4]) = out_npnts;
     }
     if (nlhs > 4) {
         plhs[5] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -5129,7 +5129,7 @@ EXTERN_C void cg_subreg_info_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_subreg_ptset_read(in_fn, in_B, in_Z, in_S, io_pnts)
  *
  * The original C interface is
- * int cg_subreg_ptset_read(int fn, int B, int Z, int S, int64_t * pnts);
+ * int cg_subreg_ptset_read(int fn, int B, int Z, int S, long long * pnts);
  */
 EXTERN_C void cg_subreg_ptset_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -5137,7 +5137,7 @@ EXTERN_C void cg_subreg_ptset_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    int64_t * io_pnts;
+    long long * io_pnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -5162,7 +5162,7 @@ EXTERN_C void cg_subreg_ptset_read_MeX(int nlhs, mxArray *plhs[],
     in_S = _get_numeric_scalar_int32(prhs[3]);
 
     if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-        io_pnts = (int64_t*)mxGetData(prhs[4]);
+        io_pnts = (long long*)mxGetData(prhs[4]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
@@ -5284,7 +5284,7 @@ EXTERN_C void cg_subreg_gcname_read_MeX(int nlhs, mxArray *plhs[],
  * [out_S, ierr] = cg_subreg_ptset_write(in_fn, in_B, in_Z, in_regname, in_dimension, in_location, in_ptset_type, in_npnts, in_pnts)
  *
  * The original C interface is
- * int cg_subreg_ptset_write(int fn, int B, int Z, const char * regname, int dimension, CG_GridLocation_t location, CG_PointSetType_t ptset_type, int64_t npnts, const int64_t * pnts, int * S);
+ * int cg_subreg_ptset_write(int fn, int B, int Z, const char * regname, int dimension, CG_GridLocation_t location, CG_PointSetType_t ptset_type, long long npnts, const long long * pnts, int * S);
  */
 EXTERN_C void cg_subreg_ptset_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -5295,8 +5295,8 @@ EXTERN_C void cg_subreg_ptset_write_MeX(int nlhs, mxArray *plhs[],
     int in_dimension;
     CG_GridLocation_t in_location;
     CG_PointSetType_t in_ptset_type;
-    int64_t in_npnts;
-    int64_t * in_pnts;
+    long long in_npnts;
+    long long * in_pnts;
     int out_S;
     int ierr;
 
@@ -5336,7 +5336,7 @@ EXTERN_C void cg_subreg_ptset_write_MeX(int nlhs, mxArray *plhs[],
     in_npnts = _get_numeric_scalar_int64(prhs[7]);
 
     if (mxIsInt64(prhs[8]) || mxIsUint64(prhs[8]))
-        in_pnts = (int64_t*)mxGetData(prhs[8]);
+        in_pnts = (long long*)mxGetData(prhs[8]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
@@ -5764,7 +5764,7 @@ EXTERN_C void cg_nholes_MeX(int nlhs, mxArray *plhs[],
  * [io_holename, out_location, out_ptset_type, out_nptsets, out_npnts, ierr] = cg_hole_info(in_fn, in_B, in_Z, in_Ii, io_holename)
  *
  * The original C interface is
- * int cg_hole_info(int fn, int B, int Z, int Ii, char * holename, CG_GridLocation_t * location, CG_PointSetType_t * ptset_type, int * nptsets, int64_t * npnts);
+ * int cg_hole_info(int fn, int B, int Z, int Ii, char * holename, CG_GridLocation_t * location, CG_PointSetType_t * ptset_type, int * nptsets, long long * npnts);
  */
 EXTERN_C void cg_hole_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -5776,7 +5776,7 @@ EXTERN_C void cg_hole_info_MeX(int nlhs, mxArray *plhs[],
     CG_GridLocation_t out_location;
     CG_PointSetType_t out_ptset_type;
     int out_nptsets;
-    int64_t out_npnts;
+    long long out_npnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -5824,7 +5824,7 @@ EXTERN_C void cg_hole_info_MeX(int nlhs, mxArray *plhs[],
     }
     if (nlhs > 3) {
         plhs[4] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(int64_t*)mxGetData(plhs[4]) = out_npnts;
+        *(long long*)mxGetData(plhs[4]) = out_npnts;
     }
     if (nlhs > 4) {
         plhs[5] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -5836,7 +5836,7 @@ EXTERN_C void cg_hole_info_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_hole_read(in_fn, in_B, in_Z, in_Ii, io_pnts)
  *
  * The original C interface is
- * int cg_hole_read(int fn, int B, int Z, int Ii, int64_t * pnts);
+ * int cg_hole_read(int fn, int B, int Z, int Ii, long long * pnts);
  */
 EXTERN_C void cg_hole_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -5844,7 +5844,7 @@ EXTERN_C void cg_hole_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_Ii;
-    int64_t * io_pnts;
+    long long * io_pnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -5869,7 +5869,7 @@ EXTERN_C void cg_hole_read_MeX(int nlhs, mxArray *plhs[],
     in_Ii = _get_numeric_scalar_int32(prhs[3]);
 
     if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-        io_pnts = (int64_t*)mxGetData(prhs[4]);
+        io_pnts = (long long*)mxGetData(prhs[4]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
@@ -5937,7 +5937,7 @@ EXTERN_C void cg_hole_id_MeX(int nlhs, mxArray *plhs[],
  * [out_Ii, ierr] = cg_hole_write(in_fn, in_B, in_Z, in_holename, in_location, in_ptset_type, in_nptsets, in_npnts, in_pnts)
  *
  * The original C interface is
- * int cg_hole_write(int fn, int B, int Z, const char * holename, CG_GridLocation_t location, CG_PointSetType_t ptset_type, int nptsets, int64_t npnts, const int64_t * pnts, int * Ii);
+ * int cg_hole_write(int fn, int B, int Z, const char * holename, CG_GridLocation_t location, CG_PointSetType_t ptset_type, int nptsets, long long npnts, const long long * pnts, int * Ii);
  */
 EXTERN_C void cg_hole_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -5948,8 +5948,8 @@ EXTERN_C void cg_hole_write_MeX(int nlhs, mxArray *plhs[],
     CG_GridLocation_t in_location;
     CG_PointSetType_t in_ptset_type;
     int in_nptsets;
-    int64_t in_npnts;
-    int64_t * in_pnts;
+    long long in_npnts;
+    long long * in_pnts;
     int out_Ii;
     int ierr;
 
@@ -5989,7 +5989,7 @@ EXTERN_C void cg_hole_write_MeX(int nlhs, mxArray *plhs[],
     in_npnts = _get_numeric_scalar_int64(prhs[7]);
 
     if (mxIsInt64(prhs[8]) || mxIsUint64(prhs[8]))
-        in_pnts = (int64_t*)mxGetData(prhs[8]);
+        in_pnts = (long long*)mxGetData(prhs[8]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
@@ -6059,7 +6059,7 @@ EXTERN_C void cg_nconns_MeX(int nlhs, mxArray *plhs[],
  * [io_connectname, io_donorname, out_location, out_type, out_ptset_type, out_npnts, out_donor_zonetype, out_donor_ptset_type, out_donor_datatype, out_ndata_donor, ierr] = cg_conn_info(in_file_number, in_B, in_Z, in_Ii, io_connectname, io_donorname)
  *
  * The original C interface is
- * int cg_conn_info(int file_number, int B, int Z, int Ii, char * connectname, CG_GridLocation_t * location, CG_GridConnectivityType_t * type, CG_PointSetType_t * ptset_type, int64_t * npnts, char * donorname, CG_ZoneType_t * donor_zonetype, CG_PointSetType_t * donor_ptset_type, CG_DataType_t * donor_datatype, int64_t * ndata_donor);
+ * int cg_conn_info(int file_number, int B, int Z, int Ii, char * connectname, CG_GridLocation_t * location, CG_GridConnectivityType_t * type, CG_PointSetType_t * ptset_type, long long * npnts, char * donorname, CG_ZoneType_t * donor_zonetype, CG_PointSetType_t * donor_ptset_type, CG_DataType_t * donor_datatype, long long * ndata_donor);
  */
 EXTERN_C void cg_conn_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -6071,12 +6071,12 @@ EXTERN_C void cg_conn_info_MeX(int nlhs, mxArray *plhs[],
     CG_GridLocation_t out_location;
     CG_GridConnectivityType_t out_type;
     CG_PointSetType_t out_ptset_type;
-    int64_t out_npnts;
+    long long out_npnts;
     char * io_donorname;
     CG_ZoneType_t out_donor_zonetype;
     CG_PointSetType_t out_donor_ptset_type;
     CG_DataType_t out_donor_datatype;
-    int64_t out_ndata_donor;
+    long long out_ndata_donor;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -6128,7 +6128,7 @@ EXTERN_C void cg_conn_info_MeX(int nlhs, mxArray *plhs[],
     }
     if (nlhs > 3) {
         plhs[5] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(int64_t*)mxGetData(plhs[5]) = out_npnts;
+        *(long long*)mxGetData(plhs[5]) = out_npnts;
     }
     if (nlhs > 4) {
         plhs[6] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -6144,7 +6144,7 @@ EXTERN_C void cg_conn_info_MeX(int nlhs, mxArray *plhs[],
     }
     if (nlhs > 7) {
         plhs[9] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(int64_t*)mxGetData(plhs[9]) = out_ndata_donor;
+        *(long long*)mxGetData(plhs[9]) = out_ndata_donor;
     }
     if (nlhs > 8) {
         plhs[10] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -6156,7 +6156,7 @@ EXTERN_C void cg_conn_info_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_conn_read(in_file_number, in_B, in_Z, in_Ii, in_donor_datatype, io_pnts, io_donor_data)
  *
  * The original C interface is
- * int cg_conn_read(int file_number, int B, int Z, int Ii, int64_t * pnts, CG_DataType_t donor_datatype, int64_t * donor_data);
+ * int cg_conn_read(int file_number, int B, int Z, int Ii, long long * pnts, CG_DataType_t donor_datatype, long long * donor_data);
  */
 EXTERN_C void cg_conn_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -6164,9 +6164,9 @@ EXTERN_C void cg_conn_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_Ii;
-    int64_t * io_pnts;
+    long long * io_pnts;
     CG_DataType_t in_donor_datatype;
-    int64_t * io_donor_data;
+    long long * io_donor_data;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -6195,12 +6195,12 @@ EXTERN_C void cg_conn_read_MeX(int nlhs, mxArray *plhs[],
     in_donor_datatype = _get_numeric_scalar_int32(prhs[4]);
 
     if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-        io_pnts = (int64_t*)mxGetData(prhs[5]);
+        io_pnts = (long long*)mxGetData(prhs[5]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
     if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        io_donor_data = (int64_t*)mxGetData(prhs[6]);
+        io_donor_data = (long long*)mxGetData(prhs[6]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument donor_data");
 
@@ -6268,7 +6268,7 @@ EXTERN_C void cg_conn_id_MeX(int nlhs, mxArray *plhs[],
  * [out_Ii, ierr] = cg_conn_write(in_file_number, in_B, in_Z, in_connectname, in_location, in_type, in_ptset_type, in_npnts, in_pnts, in_donorname, in_donor_zonetype, in_donor_ptset_type, in_donor_datatype, in_ndata_donor, in_donor_data)
  *
  * The original C interface is
- * int cg_conn_write(int file_number, int B, int Z, const char * connectname, CG_GridLocation_t location, CG_GridConnectivityType_t type, CG_PointSetType_t ptset_type, int64_t npnts, const int64_t * pnts, const char * donorname, CG_ZoneType_t donor_zonetype, CG_PointSetType_t donor_ptset_type, CG_DataType_t donor_datatype, int64_t ndata_donor, const int64_t * donor_data, int * Ii);
+ * int cg_conn_write(int file_number, int B, int Z, const char * connectname, CG_GridLocation_t location, CG_GridConnectivityType_t type, CG_PointSetType_t ptset_type, long long npnts, const long long * pnts, const char * donorname, CG_ZoneType_t donor_zonetype, CG_PointSetType_t donor_ptset_type, CG_DataType_t donor_datatype, long long ndata_donor, const long long * donor_data, int * Ii);
  */
 EXTERN_C void cg_conn_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -6279,14 +6279,14 @@ EXTERN_C void cg_conn_write_MeX(int nlhs, mxArray *plhs[],
     CG_GridLocation_t in_location;
     CG_GridConnectivityType_t in_type;
     CG_PointSetType_t in_ptset_type;
-    int64_t in_npnts;
-    int64_t * in_pnts;
+    long long in_npnts;
+    long long * in_pnts;
     char * in_donorname;
     CG_ZoneType_t in_donor_zonetype;
     CG_PointSetType_t in_donor_ptset_type;
     CG_DataType_t in_donor_datatype;
-    int64_t in_ndata_donor;
-    int64_t * in_donor_data;
+    long long in_ndata_donor;
+    long long * in_donor_data;
     int out_Ii;
     int ierr;
 
@@ -6326,7 +6326,7 @@ EXTERN_C void cg_conn_write_MeX(int nlhs, mxArray *plhs[],
     in_npnts = _get_numeric_scalar_int64(prhs[7]);
 
     if (mxIsInt64(prhs[8]) || mxIsUint64(prhs[8]))
-        in_pnts = (int64_t*)mxGetData(prhs[8]);
+        in_pnts = (long long*)mxGetData(prhs[8]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
@@ -6349,7 +6349,7 @@ EXTERN_C void cg_conn_write_MeX(int nlhs, mxArray *plhs[],
     in_ndata_donor = _get_numeric_scalar_int64(prhs[13]);
 
     if (mxIsInt64(prhs[14]) || mxIsUint64(prhs[14]))
-        in_donor_data = (int64_t*)mxGetData(prhs[14]);
+        in_donor_data = (long long*)mxGetData(prhs[14]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument donor_data");
 
@@ -6375,7 +6375,7 @@ EXTERN_C void cg_conn_write_MeX(int nlhs, mxArray *plhs[],
  * [out_Ii, ierr] = cg_conn_write_short(in_file_number, in_B, in_Z, in_connectname, in_location, in_type, in_ptset_type, in_npnts, in_pnts, in_donorname)
  *
  * The original C interface is
- * int cg_conn_write_short(int file_number, int B, int Z, const char * connectname, CG_GridLocation_t location, CG_GridConnectivityType_t type, CG_PointSetType_t ptset_type, int64_t npnts, const int64_t * pnts, const char * donorname, int * Ii);
+ * int cg_conn_write_short(int file_number, int B, int Z, const char * connectname, CG_GridLocation_t location, CG_GridConnectivityType_t type, CG_PointSetType_t ptset_type, long long npnts, const long long * pnts, const char * donorname, int * Ii);
  */
 EXTERN_C void cg_conn_write_short_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -6386,8 +6386,8 @@ EXTERN_C void cg_conn_write_short_MeX(int nlhs, mxArray *plhs[],
     CG_GridLocation_t in_location;
     CG_GridConnectivityType_t in_type;
     CG_PointSetType_t in_ptset_type;
-    int64_t in_npnts;
-    int64_t * in_pnts;
+    long long in_npnts;
+    long long * in_pnts;
     char * in_donorname;
     int out_Ii;
     int ierr;
@@ -6428,7 +6428,7 @@ EXTERN_C void cg_conn_write_short_MeX(int nlhs, mxArray *plhs[],
     in_npnts = _get_numeric_scalar_int64(prhs[7]);
 
     if (mxIsInt64(prhs[8]) || mxIsUint64(prhs[8]))
-        in_pnts = (int64_t*)mxGetData(prhs[8]);
+        in_pnts = (long long*)mxGetData(prhs[8]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
@@ -6456,7 +6456,7 @@ EXTERN_C void cg_conn_write_short_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_conn_read_short(in_file_number, in_B, in_Z, in_Ii, io_pnts)
  *
  * The original C interface is
- * int cg_conn_read_short(int file_number, int B, int Z, int Ii, int64_t * pnts);
+ * int cg_conn_read_short(int file_number, int B, int Z, int Ii, long long * pnts);
  */
 EXTERN_C void cg_conn_read_short_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -6464,7 +6464,7 @@ EXTERN_C void cg_conn_read_short_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_Ii;
-    int64_t * io_pnts;
+    long long * io_pnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -6489,7 +6489,7 @@ EXTERN_C void cg_conn_read_short_MeX(int nlhs, mxArray *plhs[],
     in_Ii = _get_numeric_scalar_int32(prhs[3]);
 
     if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-        io_pnts = (int64_t*)mxGetData(prhs[4]);
+        io_pnts = (long long*)mxGetData(prhs[4]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
@@ -6552,7 +6552,7 @@ EXTERN_C void cg_n1to1_MeX(int nlhs, mxArray *plhs[],
  * [io_connectname, io_donorname, ierr] = cg_1to1_read(in_fn, in_B, in_Z, in_Ii, io_connectname, io_donorname, io_range, io_donor_range, io_transform)
  *
  * The original C interface is
- * int cg_1to1_read(int fn, int B, int Z, int Ii, char * connectname, char * donorname, int64_t * range, int64_t * donor_range, int * transform);
+ * int cg_1to1_read(int fn, int B, int Z, int Ii, char * connectname, char * donorname, long long * range, long long * donor_range, int * transform);
  */
 EXTERN_C void cg_1to1_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -6562,8 +6562,8 @@ EXTERN_C void cg_1to1_read_MeX(int nlhs, mxArray *plhs[],
     int in_Ii;
     char * io_connectname;
     char * io_donorname;
-    int64_t * io_range;
-    int64_t * io_donor_range;
+    long long * io_range;
+    long long * io_donor_range;
     int * io_transform;
     int ierr;
 
@@ -6595,14 +6595,14 @@ EXTERN_C void cg_1to1_read_MeX(int nlhs, mxArray *plhs[],
     if (mxGetNumberOfElements(prhs[6]) < (int) (6) || _n_dims(prhs[6]) > 1)
         mexErrMsgTxt("Error in dimension of argument range");
     if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        io_range = (int64_t*)mxGetData(prhs[6]);
+        io_range = (long long*)mxGetData(prhs[6]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument range");
 
     if (mxGetNumberOfElements(prhs[7]) < (int) (6) || _n_dims(prhs[7]) > 1)
         mexErrMsgTxt("Error in dimension of argument donor_range");
     if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-        io_donor_range = (int64_t*)mxGetData(prhs[7]);
+        io_donor_range = (long long*)mxGetData(prhs[7]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument donor_range");
 
@@ -6683,7 +6683,7 @@ EXTERN_C void cg_1to1_id_MeX(int nlhs, mxArray *plhs[],
  * [out_Ii, ierr] = cg_1to1_write(in_fn, in_B, in_Z, in_connectname, in_donorname, in_range, in_donor_range, in_transform)
  *
  * The original C interface is
- * int cg_1to1_write(int fn, int B, int Z, const char * connectname, const char * donorname, const int64_t * range, const int64_t * donor_range, const int * transform, int * Ii);
+ * int cg_1to1_write(int fn, int B, int Z, const char * connectname, const char * donorname, const long long * range, const long long * donor_range, const int * transform, int * Ii);
  */
 EXTERN_C void cg_1to1_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -6692,8 +6692,8 @@ EXTERN_C void cg_1to1_write_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     char * in_connectname;
     char * in_donorname;
-    int64_t * in_range;
-    int64_t * in_donor_range;
+    long long * in_range;
+    long long * in_donor_range;
     int * in_transform;
     int out_Ii;
     int ierr;
@@ -6720,12 +6720,12 @@ EXTERN_C void cg_1to1_write_MeX(int nlhs, mxArray *plhs[],
     in_donorname = _mxGetString(prhs[4], NULL);
 
     if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-        in_range = (int64_t*)mxGetData(prhs[5]);
+        in_range = (long long*)mxGetData(prhs[5]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument range");
 
     if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        in_donor_range = (int64_t*)mxGetData(prhs[6]);
+        in_donor_range = (long long*)mxGetData(prhs[6]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument donor_range");
 
@@ -6845,7 +6845,7 @@ EXTERN_C void cg_nbocos_MeX(int nlhs, mxArray *plhs[],
  * [io_boconame, out_bocotype, out_ptset_type, out_npnts, out_NormalListSize, out_NormalDataType, out_ndataset, ierr] = cg_boco_info(in_fn, in_B, in_Z, in_BC, io_boconame, io_NormalIndex)
  *
  * The original C interface is
- * int cg_boco_info(int fn, int B, int Z, int BC, char * boconame, CG_BCType_t * bocotype, CG_PointSetType_t * ptset_type, int64_t * npnts, int * NormalIndex, int64_t * NormalListSize, CG_DataType_t * NormalDataType, int * ndataset);
+ * int cg_boco_info(int fn, int B, int Z, int BC, char * boconame, CG_BCType_t * bocotype, CG_PointSetType_t * ptset_type, long long * npnts, int * NormalIndex, long long * NormalListSize, CG_DataType_t * NormalDataType, int * ndataset);
  */
 EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -6856,9 +6856,9 @@ EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
     char * io_boconame;
     CG_BCType_t out_bocotype;
     CG_PointSetType_t out_ptset_type;
-    int64_t out_npnts;
+    long long out_npnts;
     int * io_NormalIndex;
-    int64_t out_NormalListSize;
+    long long out_NormalListSize;
     CG_DataType_t out_NormalDataType;
     int out_ndataset;
     int ierr;
@@ -6909,11 +6909,11 @@ EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
     }
     if (nlhs > 2) {
         plhs[3] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(int64_t*)mxGetData(plhs[3]) = out_npnts;
+        *(long long*)mxGetData(plhs[3]) = out_npnts;
     }
     if (nlhs > 3) {
         plhs[4] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(int64_t*)mxGetData(plhs[4]) = out_NormalListSize;
+        *(long long*)mxGetData(plhs[4]) = out_NormalListSize;
     }
     if (nlhs > 4) {
         plhs[5] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -6933,7 +6933,7 @@ EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_boco_read(in_fn, in_B, in_Z, in_BC, io_pnts, io_NormalList)
  *
  * The original C interface is
- * int cg_boco_read(int fn, int B, int Z, int BC, int64_t * pnts, void * NormalList);
+ * int cg_boco_read(int fn, int B, int Z, int BC, long long * pnts, void * NormalList);
  */
 EXTERN_C void cg_boco_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -6941,7 +6941,7 @@ EXTERN_C void cg_boco_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_BC;
-    int64_t * io_pnts;
+    long long * io_pnts;
     void * io_NormalList;
     int ierr;
 
@@ -6967,7 +6967,7 @@ EXTERN_C void cg_boco_read_MeX(int nlhs, mxArray *plhs[],
     in_BC = _get_numeric_scalar_int32(prhs[3]);
 
     if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-        io_pnts = (int64_t*)mxGetData(prhs[4]);
+        io_pnts = (long long*)mxGetData(prhs[4]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
@@ -7036,7 +7036,7 @@ EXTERN_C void cg_boco_id_MeX(int nlhs, mxArray *plhs[],
  * [out_BC, ierr] = cg_boco_write(in_file_number, in_B, in_Z, in_boconame, in_bocotype, in_ptset_type, in_npnts, in_pnts)
  *
  * The original C interface is
- * int cg_boco_write(int file_number, int B, int Z, const char * boconame, CG_BCType_t bocotype, CG_PointSetType_t ptset_type, int64_t npnts, const int64_t * pnts, int * BC);
+ * int cg_boco_write(int file_number, int B, int Z, const char * boconame, CG_BCType_t bocotype, CG_PointSetType_t ptset_type, long long npnts, const long long * pnts, int * BC);
  */
 EXTERN_C void cg_boco_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -7046,8 +7046,8 @@ EXTERN_C void cg_boco_write_MeX(int nlhs, mxArray *plhs[],
     char * in_boconame;
     CG_BCType_t in_bocotype;
     CG_PointSetType_t in_ptset_type;
-    int64_t in_npnts;
-    int64_t * in_pnts;
+    long long in_npnts;
+    long long * in_pnts;
     int out_BC;
     int ierr;
 
@@ -7083,7 +7083,7 @@ EXTERN_C void cg_boco_write_MeX(int nlhs, mxArray *plhs[],
     in_npnts = _get_numeric_scalar_int64(prhs[6]);
 
     if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-        in_pnts = (int64_t*)mxGetData(prhs[7]);
+        in_pnts = (long long*)mxGetData(prhs[7]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
@@ -7729,7 +7729,7 @@ EXTERN_C void cg_discrete_write_MeX(int nlhs, mxArray *plhs[],
  * [out_data_dim, ierr] = cg_discrete_size(in_fn, in_B, in_Z, in_D, io_dim_vals)
  *
  * The original C interface is
- * int cg_discrete_size(int fn, int B, int Z, int D, int * data_dim, int64_t * dim_vals);
+ * int cg_discrete_size(int fn, int B, int Z, int D, int * data_dim, long long * dim_vals);
  */
 EXTERN_C void cg_discrete_size_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -7738,7 +7738,7 @@ EXTERN_C void cg_discrete_size_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_D;
     int out_data_dim;
-    int64_t * io_dim_vals;
+    long long * io_dim_vals;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -7763,7 +7763,7 @@ EXTERN_C void cg_discrete_size_MeX(int nlhs, mxArray *plhs[],
     in_D = _get_numeric_scalar_int32(prhs[3]);
 
     if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-        io_dim_vals = (int64_t*)mxGetData(prhs[4]);
+        io_dim_vals = (long long*)mxGetData(prhs[4]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument dim_vals");
 
@@ -7785,7 +7785,7 @@ EXTERN_C void cg_discrete_size_MeX(int nlhs, mxArray *plhs[],
  * [out_ptset_type, out_npnts, ierr] = cg_discrete_ptset_info(in_fn, in_B, in_Z, in_D)
  *
  * The original C interface is
- * int cg_discrete_ptset_info(int fn, int B, int Z, int D, CG_PointSetType_t * ptset_type, int64_t * npnts);
+ * int cg_discrete_ptset_info(int fn, int B, int Z, int D, CG_PointSetType_t * ptset_type, long long * npnts);
  */
 EXTERN_C void cg_discrete_ptset_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -7794,7 +7794,7 @@ EXTERN_C void cg_discrete_ptset_info_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_D;
     CG_PointSetType_t out_ptset_type;
-    int64_t out_npnts;
+    long long out_npnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -7828,7 +7828,7 @@ EXTERN_C void cg_discrete_ptset_info_MeX(int nlhs, mxArray *plhs[],
     *(int*)mxGetData(plhs[0]) = out_ptset_type;
     if (nlhs > 1) {
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(int64_t*)mxGetData(plhs[1]) = out_npnts;
+        *(long long*)mxGetData(plhs[1]) = out_npnts;
     }
     if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -7840,7 +7840,7 @@ EXTERN_C void cg_discrete_ptset_info_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_discrete_ptset_read(in_fn, in_B, in_Z, in_D, io_pnts)
  *
  * The original C interface is
- * int cg_discrete_ptset_read(int fn, int B, int Z, int D, int64_t * pnts);
+ * int cg_discrete_ptset_read(int fn, int B, int Z, int D, long long * pnts);
  */
 EXTERN_C void cg_discrete_ptset_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -7848,7 +7848,7 @@ EXTERN_C void cg_discrete_ptset_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_D;
-    int64_t * io_pnts;
+    long long * io_pnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -7873,7 +7873,7 @@ EXTERN_C void cg_discrete_ptset_read_MeX(int nlhs, mxArray *plhs[],
     in_D = _get_numeric_scalar_int32(prhs[3]);
 
     if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-        io_pnts = (int64_t*)mxGetData(prhs[4]);
+        io_pnts = (long long*)mxGetData(prhs[4]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
@@ -7891,7 +7891,7 @@ EXTERN_C void cg_discrete_ptset_read_MeX(int nlhs, mxArray *plhs[],
  * [out_D, ierr] = cg_discrete_ptset_write(in_fn, in_B, in_Z, in_discrete_name, in_location, in_ptset_type, in_npnts, in_pnts)
  *
  * The original C interface is
- * int cg_discrete_ptset_write(int fn, int B, int Z, const char * discrete_name, CG_GridLocation_t location, CG_PointSetType_t ptset_type, int64_t npnts, const int64_t * pnts, int * D);
+ * int cg_discrete_ptset_write(int fn, int B, int Z, const char * discrete_name, CG_GridLocation_t location, CG_PointSetType_t ptset_type, long long npnts, const long long * pnts, int * D);
  */
 EXTERN_C void cg_discrete_ptset_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -7901,8 +7901,8 @@ EXTERN_C void cg_discrete_ptset_write_MeX(int nlhs, mxArray *plhs[],
     char * in_discrete_name;
     CG_GridLocation_t in_location;
     CG_PointSetType_t in_ptset_type;
-    int64_t in_npnts;
-    int64_t * in_pnts;
+    long long in_npnts;
+    long long * in_pnts;
     int out_D;
     int ierr;
 
@@ -7938,7 +7938,7 @@ EXTERN_C void cg_discrete_ptset_write_MeX(int nlhs, mxArray *plhs[],
     in_npnts = _get_numeric_scalar_int64(prhs[6]);
 
     if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-        in_pnts = (int64_t*)mxGetData(prhs[7]);
+        in_pnts = (long long*)mxGetData(prhs[7]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
@@ -10056,7 +10056,7 @@ EXTERN_C void cg_narrays_MeX(int nlhs, mxArray *plhs[],
  * [io_ArrayName, out_DataType, out_DataDimension, ierr] = cg_array_info(in_A, io_ArrayName, io_DimensionVector)
  *
  * The original C interface is
- * int cg_array_info(int A, char * ArrayName, CG_DataType_t * DataType, int * DataDimension, int64_t * DimensionVector);
+ * int cg_array_info(int A, char * ArrayName, CG_DataType_t * DataType, int * DataDimension, long long * DimensionVector);
  */
 EXTERN_C void cg_array_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
@@ -10064,7 +10064,7 @@ EXTERN_C void cg_array_info_MeX(int nlhs, mxArray *plhs[],
     char * io_ArrayName;
     CG_DataType_t out_DataType;
     int out_DataDimension;
-    int64_t * io_DimensionVector;
+    long long * io_DimensionVector;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -10081,7 +10081,7 @@ EXTERN_C void cg_array_info_MeX(int nlhs, mxArray *plhs[],
     if (mxGetNumberOfElements(prhs[2]) < (int) (3) || _n_dims(prhs[2]) > 1)
         mexErrMsgTxt("Error in dimension of argument DimensionVector");
     if (mxIsInt64(prhs[2]) || mxIsUint64(prhs[2]))
-        io_DimensionVector = (int64_t*)mxGetData(prhs[2]);
+        io_DimensionVector = (long long*)mxGetData(prhs[2]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument DimensionVector");
 
@@ -10180,18 +10180,18 @@ EXTERN_C void cg_array_read_as_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_array_general_read(in_A, in_s_rmin, in_s_rmax, in_m_type, in_m_numdim, in_m_dimvals, in_m_rmin, in_m_rmax, io_data)
  *
  * The original C interface is
- * int cg_array_general_read(int A, const int64_t * s_rmin, const int64_t * s_rmax, CG_DataType_t m_type, int m_numdim, const int64_t * m_dimvals, const int64_t * m_rmin, const int64_t * m_rmax, void * data);
+ * int cg_array_general_read(int A, const long long * s_rmin, const long long * s_rmax, CG_DataType_t m_type, int m_numdim, const long long * m_dimvals, const long long * m_rmin, const long long * m_rmax, void * data);
  */
 EXTERN_C void cg_array_general_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     int in_A;
-    int64_t * in_s_rmin;
-    int64_t * in_s_rmax;
+    long long * in_s_rmin;
+    long long * in_s_rmax;
     CG_DataType_t in_m_type;
     int in_m_numdim;
-    int64_t * in_m_dimvals;
-    int64_t * in_m_rmin;
-    int64_t * in_m_rmax;
+    long long * in_m_dimvals;
+    long long * in_m_rmin;
+    long long * in_m_rmax;
     void * io_data;
     int ierr;
 
@@ -10205,12 +10205,12 @@ EXTERN_C void cg_array_general_read_MeX(int nlhs, mxArray *plhs[],
     in_A = _get_numeric_scalar_int32(prhs[0]);
 
     if (mxIsInt64(prhs[1]) || mxIsUint64(prhs[1]))
-        in_s_rmin = (int64_t*)mxGetData(prhs[1]);
+        in_s_rmin = (long long*)mxGetData(prhs[1]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument s_rmin");
 
     if (mxIsInt64(prhs[2]) || mxIsUint64(prhs[2]))
-        in_s_rmax = (int64_t*)mxGetData(prhs[2]);
+        in_s_rmax = (long long*)mxGetData(prhs[2]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument s_rmax");
 
@@ -10223,17 +10223,17 @@ EXTERN_C void cg_array_general_read_MeX(int nlhs, mxArray *plhs[],
     in_m_numdim = _get_numeric_scalar_int32(prhs[4]);
 
     if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-        in_m_dimvals = (int64_t*)mxGetData(prhs[5]);
+        in_m_dimvals = (long long*)mxGetData(prhs[5]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_dimvals");
 
     if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        in_m_rmin = (int64_t*)mxGetData(prhs[6]);
+        in_m_rmin = (long long*)mxGetData(prhs[6]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_rmin");
 
     if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-        in_m_rmax = (int64_t*)mxGetData(prhs[7]);
+        in_m_rmax = (long long*)mxGetData(prhs[7]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_rmax");
 
@@ -10252,14 +10252,14 @@ EXTERN_C void cg_array_general_read_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_array_write(in_ArrayName, in_DataType, in_DataDimension, in_DimensionVector, in_Data)
  *
  * The original C interface is
- * int cg_array_write(const char * ArrayName, CG_DataType_t DataType, int DataDimension, const int64_t * DimensionVector, const void * Data);
+ * int cg_array_write(const char * ArrayName, CG_DataType_t DataType, int DataDimension, const long long * DimensionVector, const void * Data);
  */
 EXTERN_C void cg_array_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     char * in_ArrayName;
     CG_DataType_t in_DataType;
     int in_DataDimension;
-    int64_t * in_DimensionVector;
+    long long * in_DimensionVector;
     const void * in_Data;
     int ierr;
 
@@ -10281,7 +10281,7 @@ EXTERN_C void cg_array_write_MeX(int nlhs, mxArray *plhs[],
     if (mxGetNumberOfElements(prhs[3]) < (int) (in_DataDimension) || _n_dims(prhs[3]) > 1)
         mexErrMsgTxt("Error in dimension of argument DimensionVector");
     if (mxIsInt64(prhs[3]) || mxIsUint64(prhs[3]))
-        in_DimensionVector = (int64_t*)mxGetData(prhs[3]);
+        in_DimensionVector = (long long*)mxGetData(prhs[3]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument DimensionVector");
 
@@ -10303,21 +10303,21 @@ EXTERN_C void cg_array_write_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_array_general_write(in_arrayname, in_s_type, in_s_numdim, in_s_dimvals, in_s_rmin, in_s_rmax, in_m_type, in_m_numdim, in_m_dimvals, in_m_rmin, in_m_rmax, in_data)
  *
  * The original C interface is
- * int cg_array_general_write(const char * arrayname, CG_DataType_t s_type, int s_numdim, const int64_t * s_dimvals, const int64_t * s_rmin, const int64_t * s_rmax, CG_DataType_t m_type, int m_numdim, const int64_t * m_dimvals, const int64_t * m_rmin, const int64_t * m_rmax, const void * data);
+ * int cg_array_general_write(const char * arrayname, CG_DataType_t s_type, int s_numdim, const long long * s_dimvals, const long long * s_rmin, const long long * s_rmax, CG_DataType_t m_type, int m_numdim, const long long * m_dimvals, const long long * m_rmin, const long long * m_rmax, const void * data);
  */
 EXTERN_C void cg_array_general_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     char * in_arrayname;
     CG_DataType_t in_s_type;
     int in_s_numdim;
-    int64_t * in_s_dimvals;
-    int64_t * in_s_rmin;
-    int64_t * in_s_rmax;
+    long long * in_s_dimvals;
+    long long * in_s_rmin;
+    long long * in_s_rmax;
     CG_DataType_t in_m_type;
     int in_m_numdim;
-    int64_t * in_m_dimvals;
-    int64_t * in_m_rmin;
-    int64_t * in_m_rmax;
+    long long * in_m_dimvals;
+    long long * in_m_rmin;
+    long long * in_m_rmax;
     const void * in_data;
     int ierr;
 
@@ -10337,17 +10337,17 @@ EXTERN_C void cg_array_general_write_MeX(int nlhs, mxArray *plhs[],
     in_s_numdim = _get_numeric_scalar_int32(prhs[2]);
 
     if (mxIsInt64(prhs[3]) || mxIsUint64(prhs[3]))
-        in_s_dimvals = (int64_t*)mxGetData(prhs[3]);
+        in_s_dimvals = (long long*)mxGetData(prhs[3]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument s_dimvals");
 
     if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-        in_s_rmin = (int64_t*)mxGetData(prhs[4]);
+        in_s_rmin = (long long*)mxGetData(prhs[4]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument s_rmin");
 
     if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-        in_s_rmax = (int64_t*)mxGetData(prhs[5]);
+        in_s_rmax = (long long*)mxGetData(prhs[5]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument s_rmax");
 
@@ -10360,17 +10360,17 @@ EXTERN_C void cg_array_general_write_MeX(int nlhs, mxArray *plhs[],
     in_m_numdim = _get_numeric_scalar_int32(prhs[7]);
 
     if (mxIsInt64(prhs[8]) || mxIsUint64(prhs[8]))
-        in_m_dimvals = (int64_t*)mxGetData(prhs[8]);
+        in_m_dimvals = (long long*)mxGetData(prhs[8]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_dimvals");
 
     if (mxIsInt64(prhs[9]) || mxIsUint64(prhs[9]))
-        in_m_rmin = (int64_t*)mxGetData(prhs[9]);
+        in_m_rmin = (long long*)mxGetData(prhs[9]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_rmin");
 
     if (mxIsInt64(prhs[10]) || mxIsUint64(prhs[10]))
-        in_m_rmax = (int64_t*)mxGetData(prhs[10]);
+        in_m_rmax = (long long*)mxGetData(prhs[10]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument m_rmax");
 
@@ -11455,12 +11455,12 @@ EXTERN_C void cg_ordinal_write_MeX(int nlhs, mxArray *plhs[],
  * [out_ptset_type, out_npnts, ierr] = cg_ptset_info()
  *
  * The original C interface is
- * int cg_ptset_info(CG_PointSetType_t * ptset_type, int64_t * npnts);
+ * int cg_ptset_info(CG_PointSetType_t * ptset_type, long long * npnts);
  */
 EXTERN_C void cg_ptset_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     CG_PointSetType_t out_ptset_type;
-    int64_t out_npnts;
+    long long out_npnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -11477,7 +11477,7 @@ EXTERN_C void cg_ptset_info_MeX(int nlhs, mxArray *plhs[],
     *(int*)mxGetData(plhs[0]) = out_ptset_type;
     if (nlhs > 1) {
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(int64_t*)mxGetData(plhs[1]) = out_npnts;
+        *(long long*)mxGetData(plhs[1]) = out_npnts;
     }
     if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
@@ -11489,13 +11489,13 @@ EXTERN_C void cg_ptset_info_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_ptset_write(in_ptset_type, in_npnts, in_pnts)
  *
  * The original C interface is
- * int cg_ptset_write(CG_PointSetType_t ptset_type, int64_t npnts, const int64_t * pnts);
+ * int cg_ptset_write(CG_PointSetType_t ptset_type, long long npnts, const long long * pnts);
  */
 EXTERN_C void cg_ptset_write_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     CG_PointSetType_t in_ptset_type;
-    int64_t in_npnts;
-    int64_t * in_pnts;
+    long long in_npnts;
+    long long * in_pnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -11512,7 +11512,7 @@ EXTERN_C void cg_ptset_write_MeX(int nlhs, mxArray *plhs[],
     in_npnts = _get_numeric_scalar_int64(prhs[1]);
 
     if (mxIsInt64(prhs[2]) || mxIsUint64(prhs[2]))
-        in_pnts = (int64_t*)mxGetData(prhs[2]);
+        in_pnts = (long long*)mxGetData(prhs[2]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 
@@ -11530,11 +11530,11 @@ EXTERN_C void cg_ptset_write_MeX(int nlhs, mxArray *plhs[],
  * ierr = cg_ptset_read(io_pnts)
  *
  * The original C interface is
- * int cg_ptset_read(int64_t * pnts);
+ * int cg_ptset_read(long long * pnts);
  */
 EXTERN_C void cg_ptset_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
-    int64_t * io_pnts;
+    long long * io_pnts;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -11543,7 +11543,7 @@ EXTERN_C void cg_ptset_read_MeX(int nlhs, mxArray *plhs[],
 
     /******** Obtain input and/or inout arguments ********/
     if (mxIsInt64(prhs[0]) || mxIsUint64(prhs[0]))
-        io_pnts = (int64_t*)mxGetData(prhs[0]);
+        io_pnts = (long long*)mxGetData(prhs[0]);
     else
         mexErrMsgTxt("Expecting 64-bit integer matrix for argument pnts");
 

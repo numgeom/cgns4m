@@ -16,7 +16,7 @@ function [io_pnts, ierr] = cg_conn_read_short(in_file_number, in_B, in_Z, in_Ii,
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_conn_read_short(int file_number, int B, int Z, int Ii, int64_t * pnts);
+% int cg_conn_read_short(int file_number, int B, int Z, int Ii, long long * pnts);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %

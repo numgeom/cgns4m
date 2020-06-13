@@ -19,7 +19,7 @@ function [out_S, ierr] = cg_section_write(in_file_number, in_B, in_Z, in_Section
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_section_write(int file_number, int B, int Z, const char * SectionName, CG_ElementType_t type, int64_t start, int64_t end, int nbndry, const int64_t * elements, int * S);
+% int cg_section_write(int file_number, int B, int Z, const char * SectionName, CG_ElementType_t type, long long start, long long end, int nbndry, const long long * elements, int * S);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
