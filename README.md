@@ -4,6 +4,10 @@
 
 **CGNS4m**, formerly known as **mexCGNS**, allows you to access virtually all the functionalities provided by the serial API of [the mid-level library](https://cgns.github.io/CGNS_docs_current/midlevel/) of [CGNS](https://cgns.github.io) (a.k.a. `cgnslib`) with the convenience of MATLAB or GNU Octave. It also provides two high-level functions `readcgns` and `writecgns` for reading and writing mesh files with node-based or cell-centered data. These high-level functions are entirely written in MATLAB, so you can adapt for your purpose, without writing a single line of C code or a makefile.
 
+| master | devel_v3.4.1 | barebone |
+|---------------|--------------|-----------------|
+| [![Build Status](https://travis-ci.org/meshkit/cgns4m.svg?branch=master)](https://travis-ci.org/meshkit/cgns4m) | [![Build Status](https://travis-ci.org/meshkit/cgns4m.svg?branch=devel_v3.4.1)](https://travis-ci.org/meshkit/cgns4m)  | [![Build Status](https://travis-ci.org/meshkit/cgns4m.svg?branch=barebone)](https://travis-ci.org/meshkit/cgns4m)    |
+
 ## Copyright and license
 
 The copyright of CGNS4m belongs to Stony Brook University. CGNS is distributed free of charge under the CGNS License, the same as `cgnslib`.
