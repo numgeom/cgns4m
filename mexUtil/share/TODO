@@ -1,4 +1,0 @@
-1. Need to change c2mex to support #undef. 
-2. Fix bug in c2mex when processing /*%ignore */
-3. Add support for size_t in codegen_c2mex.pl.
-

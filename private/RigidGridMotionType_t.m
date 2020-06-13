@@ -1,6 +1,6 @@
-%% Enumeration type RigidGridMotionType_t with values:
+%% Enumeration type CG_RigidGridMotionType_t with values:
 %%
-%          RigidGridMotionTypeNull:                0
-%   RigidGridMotionTypeUserDefined:                1
-%                     ConstantRate:                2
-%                     VariableRate:                3
+%       CG_RigidGridMotionTypeNull:                0
+% CG_RigidGridMotionTypeUserDefined:                1
+%                  CG_ConstantRate:                2
+%                  CG_VariableRate:                3

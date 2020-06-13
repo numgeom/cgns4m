@@ -9,23 +9,30 @@ function [io_coord, ierr] = cg_coord_read(in_fn, in_B, in_Z, in_coordname, in_ty
 %               Z: 32-bit integer (int32), scalar
 %       coordname: character string
 %            type: 32-bit integer (int32), scalar
-%            rmin: 64-bit or 32-bit integer (platform dependent), array
-%            rmax: 64-bit or 32-bit integer (platform dependent), array
+%            rmin: 64-bit integer (int64), array
+%            rmax: 64-bit integer (int64), array
 %
-% In&Out argument (required as output; also required as input if specified; type is auto-casted):
+% In&Out argument (required as output; type is auto-casted):
 %           coord: dynamic type based on type  (also required as input)
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_coord_read( int fn, int B, int Z, const char * coordname, CG_DataType_t type, const ptrdiff_t * rmin, const ptrdiff_t * rmax, void * coord);
+% int cg_coord_read(int fn, int B, int Z, const char * coordname, CG_DataType_t type, const long long * rmin, const long long * rmax, void * coord);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 8); 
+if ( nargout < 1 || nargin < 8)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_coordname = char(in_coordname);
+in_type = int32(in_type);
+in_rmin = int64(in_rmin);
+in_rmax = int64(in_rmax);
 
 % Perform dynamic type casting
 datatype = in_type;
@@ -46,9 +53,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(67), in_fn, in_B, in_Z, in_coordname, in_type, in_rmin, in_rmax, io_coord);
-
-% Perform dynamic type casting
-if datatype==5 % CG_Character
-    io_coord = char(io_coord(1:end-1));
-end
+ierr = cgnslib_mex(int32(67), in_fn, in_B, in_Z, in_coordname, in_type, in_rmin, in_rmax, io_coord);

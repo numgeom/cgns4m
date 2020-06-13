@@ -1,6 +1,6 @@
-%% Enumeration type ZoneType_t with values:
+%% Enumeration type CG_ZoneType_t with values:
 %%
-%                     ZoneTypeNull:                0
-%              ZoneTypeUserDefined:                1
-%                       Structured:                2
-%                     Unstructured:                3
+%                  CG_ZoneTypeNull:                0
+%           CG_ZoneTypeUserDefined:                1
+%                    CG_Structured:                2
+%                  CG_Unstructured:                3

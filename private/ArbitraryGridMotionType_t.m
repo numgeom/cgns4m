@@ -1,6 +1,6 @@
-%% Enumeration type ArbitraryGridMotionType_t with values:
+%% Enumeration type CG_ArbitraryGridMotionType_t with values:
 %%
-%      ArbitraryGridMotionTypeNull:                0
-% ArbitraryGridMotionTypeUserDefined:                1
-%                 NonDeformingGrid:                2
-%                    DeformingGrid:                3
+%   CG_ArbitraryGridMotionTypeNull:                0
+% CG_ArbitraryGridMotionTypeUserDefined:                1
+%              CG_NonDeformingGrid:                2
+%                 CG_DeformingGrid:                3

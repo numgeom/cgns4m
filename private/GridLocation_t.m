@@ -1,11 +1,11 @@
-%% Enumeration type GridLocation_t with values:
+%% Enumeration type CG_GridLocation_t with values:
 %%
-%                 GridLocationNull:                0
-%          GridLocationUserDefined:                1
-%                           Vertex:                2
-%                       CellCenter:                3
-%                       FaceCenter:                4
-%                      IFaceCenter:                5
-%                      JFaceCenter:                6
-%                      KFaceCenter:                7
-%                       EdgeCenter:                8
+%              CG_GridLocationNull:                0
+%       CG_GridLocationUserDefined:                1
+%                        CG_Vertex:                2
+%                    CG_CellCenter:                3
+%                    CG_FaceCenter:                4
+%                   CG_IFaceCenter:                5
+%                   CG_JFaceCenter:                6
+%                   CG_KFaceCenter:                7
+%                    CG_EdgeCenter:                8

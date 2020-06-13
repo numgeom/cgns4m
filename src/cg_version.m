@@ -3,7 +3,7 @@ function [out_FileVersion, ierr] = cg_version(in_fn)
 %
 % [FileVersion, ierr] = cg_version(fn)
 %
-% Input argument (required; type is auto-casted): 
+% Input argument (required; type is auto-casted):
 %              fn: 32-bit integer (int32), scalar
 %
 % Output arguments (optional):
@@ -11,13 +11,14 @@ function [out_FileVersion, ierr] = cg_version(in_fn)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_version( int fn, float * FileVersion);
+% int cg_version(int fn, float * FileVersion);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/fileops.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/fileops.html">online documentation</a>.
 %
-if (nargin < 1); 
+if (nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
 
 % Invoke the actual MEX-function.
-[out_FileVersion, ierr] =  cgnslib_mex(int32(3), in_fn);
+[out_FileVersion, ierr] = cgnslib_mex(int32(3), in_fn);

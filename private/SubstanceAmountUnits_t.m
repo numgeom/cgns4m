@@ -1,8 +1,8 @@
-%% Enumeration type SubstanceAmountUnits_t with values:
+%% Enumeration type CG_SubstanceAmountUnits_t with values:
 %%
-%         SubstanceAmountUnitsNull:                0
-%  SubstanceAmountUnitsUserDefined:                1
-%                             Mole:                2
-%                         Entities:                3
-%                StandardCubicFoot:                4
-%               StandardCubicMeter:                5
+%      CG_SubstanceAmountUnitsNull:                0
+% CG_SubstanceAmountUnitsUserDefined:                1
+%                          CG_Mole:                2
+%                      CG_Entities:                3
+%             CG_StandardCubicFoot:                4
+%            CG_StandardCubicMeter:                5

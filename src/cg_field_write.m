@@ -17,13 +17,19 @@ function [out_F, ierr] = cg_field_write(in_fn, in_B, in_Z, in_S, in_type, in_fie
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_field_write( int fn, int B, int Z, int S, CG_DataType_t type, const char * fieldname, const void * field_ptr, int * F);
+% int cg_field_write(int fn, int B, int Z, int S, CG_DataType_t type, const char * fieldname, const void * field_ptr, int * F);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %
-if (nargin < 7); 
+if (nargin < 7)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_S = int32(in_S);
+in_type = int32(in_type);
+in_fieldname = char(in_fieldname);
 
 % Perform dynamic type casting
 datatype = in_type;
@@ -44,4 +50,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_F, ierr] =  cgnslib_mex(int32(95), in_fn, in_B, in_Z, in_S, in_type, in_fieldname, in_field_ptr);
+[out_F, ierr] = cgnslib_mex(int32(95), in_fn, in_B, in_Z, in_S, in_type, in_fieldname, in_field_ptr);

@@ -16,13 +16,18 @@ function [out_C, ierr] = cg_coord_write(in_fn, in_B, in_Z, in_type, in_coordname
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_coord_write( int fn, int B, int Z, CG_DataType_t type, const char * coordname, const void * coord_ptr, int * C);
+% int cg_coord_write(int fn, int B, int Z, CG_DataType_t type, const char * coordname, const void * coord_ptr, int * C);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
-if (nargin < 6); 
+if (nargin < 6)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_type = int32(in_type);
+in_coordname = char(in_coordname);
 
 % Perform dynamic type casting
 datatype = in_type;
@@ -43,4 +48,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_C, ierr] =  cgnslib_mex(int32(69), in_fn, in_B, in_Z, in_type, in_coordname, in_coord_ptr);
+[out_C, ierr] = cgnslib_mex(int32(69), in_fn, in_B, in_Z, in_type, in_coordname, in_coord_ptr);

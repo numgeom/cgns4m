@@ -1,9 +1,9 @@
-%% Enumeration type LengthUnits_t with values:
+%% Enumeration type CG_LengthUnits_t with values:
 %%
-%                  LengthUnitsNull:                0
-%           LengthUnitsUserDefined:                1
-%                            Meter:                2
-%                       Centimeter:                3
-%                       Millimeter:                4
-%                             Foot:                5
-%                             Inch:                6
+%               CG_LengthUnitsNull:                0
+%        CG_LengthUnitsUserDefined:                1
+%                         CG_Meter:                2
+%                    CG_Centimeter:                3
+%                    CG_Millimeter:                4
+%                          CG_Foot:                5
+%                          CG_Inch:                6

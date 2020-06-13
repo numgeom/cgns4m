@@ -1,6 +1,6 @@
-%% Enumeration type AngleUnits_t with values:
+%% Enumeration type CG_AngleUnits_t with values:
 %%
-%                   AngleUnitsNull:                0
-%            AngleUnitsUserDefined:                1
-%                           Degree:                2
-%                           Radian:                3
+%                CG_AngleUnitsNull:                0
+%         CG_AngleUnitsUserDefined:                1
+%                        CG_Degree:                2
+%                        CG_Radian:                3

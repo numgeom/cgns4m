@@ -1,5 +1,5 @@
-%% Enumeration type TimeUnits_t with values:
+%% Enumeration type CG_TimeUnits_t with values:
 %%
-%                    TimeUnitsNull:                0
-%             TimeUnitsUserDefined:                1
-%                           Second:                2
+%                 CG_TimeUnitsNull:                0
+%          CG_TimeUnitsUserDefined:                1
+%                        CG_Second:                2

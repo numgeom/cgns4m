@@ -3,31 +3,32 @@ function [io_nbases, ierr] = cg_nbases(in_fn, io_nbases)
 %
 % [nbases, ierr] = cg_nbases(fn, nbases)
 %
-% Input argument (required; type is auto-casted): 
+% Input argument (required; type is auto-casted):
 %              fn: 32-bit integer (int32), scalar
 %
-% In&Out argument (required as output; also required as input if specified; type is auto-casted):
+% In&Out argument (required as output; type is auto-casted):
 %          nbases: 32-bit integer (int32), array  (also required as input)
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_nbases( int fn, int * nbases);
+% int cg_nbases(int fn, int * nbases);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 2); 
+if ( nargout < 1 || nargin < 2)
     error('Incorrect number of input or output arguments.');
 end
-basetype='int32';
-if ~isa(io_nbases,basetype);
-    io_nbases=int32(io_nbases);
-elseif ~isempty(io_nbases);
+in_fn = int32(in_fn);
+basetype = 'int32';
+if ~isa(io_nbases,basetype)
+    io_nbases = cast(io_nbases, basetype);
+elseif ~isempty(io_nbases)
     % Write to it to avoid sharing memory with other variables
     t=io_nbases(1); io_nbases(1)=t;
 end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(40), in_fn, io_nbases);
+ierr = cgnslib_mex(int32(40), in_fn, io_nbases);

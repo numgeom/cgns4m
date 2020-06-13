@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-# Copyright (c) 2008 Xiangmin Jiao, Stony Brook University.
+# Copyright (c) 2008--2020 Xiangmin Jiao, Stony Brook University.
 #
 # Based on matwrap, Copyright (c) 1997 Gary R. Holt.
 # This software is distributed under the terms of the
@@ -12,7 +12,7 @@ require 5.006;
 # Determine include path
 $dir = $0;
 $dir =~ s/(.+\/)?(\w+)$/$1/;
-$incdir = "${dir}share";
+$incdir = "${dir}";
 push @INC, $incdir;
 
 require "codegen_cmex.pl";
@@ -37,7 +37,7 @@ $default_retname = "ret";    # Default name for return value
 @brace_strs = ();            # Where we store strings surrounded by braces
                              # which we removed.
 
-@function_names = ();        # Names of functions 
+@function_names = ();        # Names of functions
 
 %functions = ();             # The prototype, etc., of each global
                              # function, indexed by function name.  Elements
@@ -45,8 +45,8 @@ $default_retname = "ret";    # Default name for return value
                              # for more details).
 
 @basic_type_keywords = (
-    qw(short long signed unsigned
-      float double int char const ptrdiff_t)
+    qw(short long signed unsigned float double int char const ptrdiff_t size_t
+       int64_t uint64_t int32_t uint32_t int16_t uint16_t uint8_t uint8_t)
 );
 @basic_types{@basic_type_keywords} = @basic_type_keywords;
 
@@ -158,7 +158,7 @@ sub write_files_separate {
     foreach ( @function_names ) {        # Now wrap all the global functions.
         my $faa = $functions{$_};
 
-        next if ( $faa->{external});
+        next if ( $faa->{external} );
 
         if ( length($outfile) == 0 ) {
             if ( @{ faa->{inouts} } > 0
@@ -211,7 +211,7 @@ sub write_files_merged {
         cmex::print_matlab_code($faa, $func_id);
     }
 
-    if ( $withextern) {
+    if ( $withextern ) {
         $ccode .= "#include \"${outfilebase}_mex_ext.c\"\n\n";
     }
 
@@ -241,14 +241,14 @@ sub atoi {
 #
 sub get_prototype {
      local ($faa) = @_;    # Access the argument.
-     
+
      my @funcargs = map{
         my $arg = $faa->{args}{$_};    # Access this argument.
-         
+
         { $arg->{type} . " " . $_}
     } @{ $faa->{argnames} };
-    
-     my $prototype = "$faa->{returns} $faa->{name}( "
+
+     my $prototype = "$faa->{returns} $faa->{name}("
           . join( ", ", @funcargs ) . ");";
 }
 
@@ -283,7 +283,7 @@ sub parse_str {
     s@CGNS_ENUM[VTD]\s*\(\s*(\w+)\s*\)@CG_$1@g;
 
     # Remove CGNSDLL
-    s@CGNSDLL@@g;
+    s@CGNSDLL\s+@@g;
 
     # Protect :// in url in /*%...*/
     s@/\*(%\s*url \w+)(://)(.*)\*/@\n$1:%%$3@g;
@@ -319,7 +319,7 @@ sub parse_str {
           "\01$#strings\02";    # Leave a different tag.
       }
   }xeg;
-  
+
     #
     # Now parse the typedefs in the file. We look for enum, typeder, etc.
     #
@@ -354,7 +354,7 @@ sub parse_str {
     # Check whether default_strlen is specified
     s{%default_strlen\s+(\w+)\s*\n}{
         $default_strlen = atoi($1);  # Set default strlen.
-        $default_strlen > 1 or $default_strlen = 1; 
+        $default_strlen > 1 or $default_strlen = 1;
         "";                    # String.
     }eg;
 
@@ -384,7 +384,7 @@ sub parse_str {
     # Look for function declarations:
     #
     1 while s{
-	    (?:^|\G|[;\}\06])           # Match beginning of statement (end of last).
+	    (?:^|\G|[;\}\n])            # Match beginning of statement (end of last).
 	    \s*                         # Whitespace between statements.
 	    (\w[\w<>\s\*\&]*?)?         # The return type of the function.
 	    (\w+)\s*                    # The name of the function.
@@ -404,7 +404,7 @@ sub parse_str {
                 defined($fdef) and $functions{$fname} = $fdef and push(@function_names, $fname);
                 # If it wasn't a static function, remember it.
             }
-            
+
 	    '';			# Just remove the whole statement.
 	}xeg;
 
@@ -454,8 +454,8 @@ sub parse_function {
         if (/^\s*%\s*ignore\s*$/) {    # Don't wrap this function?
             return undef;              # Quit now.
         }
-     
-        1 while s{(\([^()]*\))}{    
+
+        1 while s{(\([^()]*\))}{
                                       # Save parenthesized sub-expressions
         push(@paren_expr, $1);
         "\01$#paren_expr\02"; }eg;    # Replace it with a tag.
@@ -566,7 +566,7 @@ s/^\s*\%\s*(input|inout|output|typecast)\s+(\w+(?:\s*\01\d+\02)?)\s*,\s*(.*)/%$1
 
      #
      # If there's an extra '*' on the end of a type we recognize, we assume that
-     # we pass it by reference and put a & in front of the variable.
+     # we pass it by reference and put an & in front of the variable.
      #
         if ( $argtype =~ /^(.*?)\s*\*$/ && is_basic_type($1) ) {
             $argtype = $1;      # Strip off the trailing *.
@@ -575,7 +575,7 @@ s/^\s*\%\s*(input|inout|output|typecast)\s+(\w+(?:\s*\01\d+\02)?)\s*,\s*(.*)/%$1
                 $decl->{source} = "output";
             }
             else {
-                if ( $decl->{type} =~ /^(.*?)\s*const\s+.*\*$/ ) {
+                if ($decl->{type} =~ /^(.*?)\s*const\s+.*\*$/ ) {
                     $decl->{source} = "input";    #Jim: Mark it as input
                 }
                 else {
@@ -590,7 +590,7 @@ s/^\s*\%\s*(input|inout|output|typecast)\s+(\w+(?:\s*\01\d+\02)?)\s*,\s*(.*)/%$1
         else {
             $decl->{pass_by_pointer_reference} =
               0;    # Don't put & in front of call.
-            if ( $decl->{type} eq "void *" ) {
+            if ($decl->{type} eq "void *" ) {
                 $withcast = 1;
                 $decl->{source} = "inout";    #Jim: Mark it as inout
             }
@@ -646,7 +646,7 @@ s/^\s*\%\s*(input|inout|output|typecast)\s+(\w+(?:\s*\01\d+\02)?)\s*,\s*(.*)/%$1
                 $arg->{rawdimension} =~ s/\((.+)\)/$1/g;
                 $arg->{rawdimension} =~ s/\01(\d+)\02/$paren_expr[$1]/g;
                 $arg->{rawdimension} =~ s/\s//g;
-                
+
                 $arg->{basic_type} =~ s/\s*\*$//
 
                   # If this was declared as a pointer, change
@@ -693,7 +693,7 @@ s/^\s*\%\s*(input|inout|output|typecast)\s+(\w+(?:\s*\01\d+\02)?)\s*,\s*(.*)/%$1
             $arg->{rawcast} = $2;
             $arg->{rawcast} =~ s/\01(\d+)\02/$paren_expr[$1]/g;
             $arg->{rawcast} =~ s/\s//g;
-            
+
         }
         elsif (/^\s*%\s*rename\s+(\w+)\s*$/)
         {    # Name of function in scripting language?
@@ -829,7 +829,7 @@ s/^\s*\%\s*(input|inout|output|typecast)\s+(\w+(?:\s*\01\d+\02)?)\s*,\s*(.*)/%$1
     # Now form the list of input/output/inout arguments in order, removing
     # dimensional arguments:
     #
-    my ( @inputs, @inouts, @outputs );    # Array of argument names that will be
+    my ( @inputs, @inouts, @iostrs, @outputs );    # Array of argument names that will be
                                           # the input/inout/output variables.
 
     foreach $argname (@argnames) {
@@ -850,14 +850,15 @@ s/^\s*\%\s*(input|inout|output|typecast)\s+(\w+(?:\s*\01\d+\02)?)\s*,\s*(.*)/%$1
         }
         elsif ( $args{$argname}{source} eq 'inout' ) {
             push( @inouts, $argname );
+            if ( $args{$argname}{basic_type} eq 'char' ) {
+                push( @iostrs, $argname );
+            }
         }
         elsif ( $args{$argname}{source} eq 'output' ) {
             push( @outputs, $argname );
         }
         else {
-            die(
-"internal error, invalid argument source '$args{$argname}{source}'"
-            );
+            die("internal error, invalid argument source '$args{$argname}{source}'");
         }
     }
 
@@ -882,15 +883,13 @@ s/^\s*\%\s*(input|inout|output|typecast)\s+(\w+(?:\s*\01\d+\02)?)\s*,\s*(.*)/%$1
                 my $casto = $args{$var};
 
                 if ( !defined($casto) || $casto->{source} eq 'output' ) {
-                    die(
-'Arguments to type cast must be input/inout arguments of current function.'
-                    );
+                    die('Arguments to type cast must be input/inout arguments of current function.');
                 }
 
                 $vars[$argcount++] = $casto->{c_var_name};
             }
             $args{$_}{cast} = $funcname . "(" . join(", ", @vars) . ")";
-        } 
+        }
         elsif ( $cast =~ /\w+/ ) {
             if ( !defined( $typemap{$cast} ) ) {
                 if ( !defined($casto) || $casto->{source} eq 'output' ) {
@@ -929,6 +928,7 @@ s/^\s*\%\s*(input|inout|output|typecast)\s+(\w+(?:\s*\01\d+\02)?)\s*,\s*(.*)/%$1
             static      => $static_flag,
             inputs      => \@inputs,
             inouts      => \@inouts,
+            iostrs      => \@iostrs,
             outputs     => \@outputs,
             returns     => $ftype,
             args        => \%args,
@@ -1068,9 +1068,9 @@ sub dump_function {
     printf(
         "%s  [%s] = %s(%s)\n",
         $indent_str,
-        join( ", ", @{ $faa->{outputs} }, @{ $faa->{inouts} } ),
+        join( ", ", @{ $faa->{inouts} }, @{ $faa->{outputs} }),
         $faa->{script_name} || $faa->{name},
-        join( ", ", @{ $faa->{inputs} }, @{ $faa->{inouts} } )
+        join( ", ", @{ $faa->{inputs} }, @{ $faa->{inouts} })
     );
 
     foreach ( @{ $faa->{outputs} }, @{ $faa->{inouts} }, @{ $faa->{inputs} } ) {
@@ -1140,7 +1140,7 @@ sub parse_enum {
     }
 
     my $count = 0;
-    my $key; 
+    my $key;
     my $val;
     foreach (@vars) {
         next unless ( $_ ne "" );
@@ -1212,18 +1212,19 @@ sub parse_for_typedefs {
         $enumdef .= ($enumdef eq ""?"":",") . $1;
         "";                    # String.
     }eg;
+
     $enumdef =~ s/\s//g;
     my @vars = split( /,/, $enumdef );
     $enumdef = "";
 
     $found = 0;
-    s{#define\s+(\w+)\s+([\d\.\+\-]+)\s*\n}{
+    s{#define\s+(\w+\s+[\d\.\+\-]+)\s*\n}{
          foreach my $var (@vars) {
-            if ($1 eq $var) {
-                $enumdef .= ($enumdef eq ""?"":",") . $var . "=" . $2;
+            if ( $1 =~ m/(${var}\w+)\s+([\d\.\+\-]+)/ ) {
+                $enumdef .= ($enumdef eq ""?"":",") . $1 . "=" . $2;
 
                 $found++;
-                $enummap{$var} = $2;
+                $enummap{$1} = $2;
                 last;
             }
          }
@@ -1232,7 +1233,7 @@ sub parse_for_typedefs {
 
     if ( $found < @vars ) {
         foreach my $var (@vars) {
-            unless ( defined( $enummap{$var} ) ) {
+            unless ( $var !~ /^\w+$/ || defined( $enummap{$var} ) ) {
                 print STDERR "Warning: Constant value for $var was not found.";
             }
         }
@@ -1303,7 +1304,7 @@ sub parse_for_typedefs {
 #
 sub obtain_typecast {
     my ( $expr, $varname ) = @_;
-    
+
     my $mstr;
 
     $mstr = "\n% Perform dynamic type casting\n";
@@ -1325,7 +1326,7 @@ sub obtain_typecast {
         $mstr .= "        error('Unknown data type %d', $expr);\n";
         $mstr .= "end\n\n";
     }
-    
+
     $mstr;
 }
 
@@ -1334,7 +1335,7 @@ sub obtain_typecast {
 #
 sub obtain_typecast_string {
     my ( $expr, $varname ) = @_;
-    
+
     my $mstr;
 
     $mstr = "\n% Perform dynamic type casting\n";
@@ -1348,7 +1349,7 @@ sub obtain_typecast_string {
             }
         }
     }
-    
+
     $mstr;
 }
 

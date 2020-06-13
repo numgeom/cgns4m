@@ -1,10 +1,10 @@
-%% Enumeration type GoverningEquationsType_t with values:
+%% Enumeration type CG_GoverningEquationsType_t with values:
 %%
-%           GoverningEquationsNull:                0
-%    GoverningEquationsUserDefined:                1
-%                    FullPotential:                2
-%                            Euler:                3
-%                        NSLaminar:                4
-%                      NSTurbulent:                5
-%          NSLaminarIncompressible:                6
-%        NSTurbulentIncompressible:                7
+%        CG_GoverningEquationsNull:                0
+% CG_GoverningEquationsUserDefined:                1
+%                 CG_FullPotential:                2
+%                         CG_Euler:                3
+%                     CG_NSLaminar:                4
+%                   CG_NSTurbulent:                5
+%       CG_NSLaminarIncompressible:                6
+%     CG_NSTurbulentIncompressible:                7

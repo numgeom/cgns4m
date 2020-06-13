@@ -1,6 +1,6 @@
-%% Enumeration type SimulationType_t with values:
+%% Enumeration type CG_SimulationType_t with values:
 %%
-%               SimulationTypeNull:                0
-%        SimulationTypeUserDefined:                1
-%                     TimeAccurate:                2
-%                  NonTimeAccurate:                3
+%            CG_SimulationTypeNull:                0
+%     CG_SimulationTypeUserDefined:                1
+%                  CG_TimeAccurate:                2
+%               CG_NonTimeAccurate:                3

@@ -1,5 +1,5 @@
-%% Enumeration type WallFunctionType_t with values:
+%% Enumeration type CG_WallFunctionType_t with values:
 %%
-%             WallFunctionTypeNull:                0
-%      WallFunctionTypeUserDefined:                1
-%                          Generic:                2
+%          CG_WallFunctionTypeNull:                0
+%   CG_WallFunctionTypeUserDefined:                1
+%                       CG_Generic:                2

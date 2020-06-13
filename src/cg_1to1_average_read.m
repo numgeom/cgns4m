@@ -14,13 +14,17 @@ function [out_AverageInterfaceType, ierr] = cg_1to1_average_read(in_file_number,
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_1to1_average_read( int file_number, int B, int Z, int I, CG_AverageInterfaceType_t * AverageInterfaceType);
+% int cg_1to1_average_read(int file_number, int B, int Z, int I, CG_AverageInterfaceType_t * AverageInterfaceType);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
-if (nargin < 4); 
+if (nargin < 4)
     error('Incorrect number of input or output arguments.');
 end
+in_file_number = int32(in_file_number);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_I = int32(in_I);
 
 % Invoke the actual MEX-function.
-[out_AverageInterfaceType, ierr] =  cgnslib_mex(int32(178), in_file_number, in_B, in_Z, in_I);
+[out_AverageInterfaceType, ierr] = cgnslib_mex(int32(178), in_file_number, in_B, in_Z, in_I);

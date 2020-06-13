@@ -10,17 +10,22 @@ function ierr = cg_conn_average_write(in_file_number, in_B, in_Z, in_I, in_Avera
 %               I: 32-bit integer (int32), scalar
 %    AverageInterfaceType: 32-bit integer (int32), scalar
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_conn_average_write( int file_number, int B, int Z, int I, CG_AverageInterfaceType_t AverageInterfaceType);
+% int cg_conn_average_write(int file_number, int B, int Z, int I, CG_AverageInterfaceType_t AverageInterfaceType);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
-if (nargin < 5); 
+if (nargin < 5)
     error('Incorrect number of input or output arguments.');
 end
+in_file_number = int32(in_file_number);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_I = int32(in_I);
+in_AverageInterfaceType = int32(in_AverageInterfaceType);
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(176), in_file_number, in_B, in_Z, in_I, in_AverageInterfaceType);
+ierr = cgnslib_mex(int32(176), in_file_number, in_B, in_Z, in_I, in_AverageInterfaceType);

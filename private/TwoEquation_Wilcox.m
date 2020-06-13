@@ -1,3 +1,3 @@
 function val = TwoEquation_Wilcox
-%% Value 18 of enumeration type ModelType_t
+%% Value 18 of enumeration type CG_ModelType_t
 val = int32(18);

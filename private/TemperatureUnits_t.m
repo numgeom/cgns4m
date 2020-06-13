@@ -1,8 +1,8 @@
-%% Enumeration type TemperatureUnits_t with values:
+%% Enumeration type CG_TemperatureUnits_t with values:
 %%
-%             TemperatureUnitsNull:                0
-%      TemperatureUnitsUserDefined:                1
-%                           Kelvin:                2
-%                          Celsius:                3
-%                          Rankine:                4
-%                       Fahrenheit:                5
+%          CG_TemperatureUnitsNull:                0
+%   CG_TemperatureUnitsUserDefined:                1
+%                        CG_Kelvin:                2
+%                       CG_Celsius:                3
+%                       CG_Rankine:                4
+%                    CG_Fahrenheit:                5

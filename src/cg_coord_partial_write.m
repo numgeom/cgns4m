@@ -9,8 +9,8 @@ function [out_C, ierr] = cg_coord_partial_write(in_fn, in_B, in_Z, in_type, in_c
 %               Z: 32-bit integer (int32), scalar
 %            type: 32-bit integer (int32), scalar
 %       coordname: character string
-%            rmin: 64-bit or 32-bit integer (platform dependent), array
-%            rmax: 64-bit or 32-bit integer (platform dependent), array
+%            rmin: 64-bit integer (int64), array
+%            rmax: 64-bit integer (int64), array
 %       coord_ptr: dynamic type based on type
 %
 % Output arguments (optional):
@@ -18,13 +18,20 @@ function [out_C, ierr] = cg_coord_partial_write(in_fn, in_B, in_Z, in_type, in_c
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_coord_partial_write( int fn, int B, int Z, CG_DataType_t type, const char * coordname, const ptrdiff_t * rmin, const ptrdiff_t * rmax, const void * coord_ptr, int * C);
+% int cg_coord_partial_write(int fn, int B, int Z, CG_DataType_t type, const char * coordname, const long long * rmin, const long long * rmax, const void * coord_ptr, int * C);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
-if (nargin < 8); 
+if (nargin < 8)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_type = int32(in_type);
+in_coordname = char(in_coordname);
+in_rmin = int64(in_rmin);
+in_rmax = int64(in_rmax);
 
 % Perform dynamic type casting
 datatype = in_type;
@@ -45,4 +52,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_C, ierr] =  cgnslib_mex(int32(70), in_fn, in_B, in_Z, in_type, in_coordname, in_rmin, in_rmax, in_coord_ptr);
+[out_C, ierr] = cgnslib_mex(int32(70), in_fn, in_B, in_Z, in_type, in_coordname, in_rmin, in_rmax, in_coord_ptr);

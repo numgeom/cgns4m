@@ -1,8 +1,8 @@
-%% Enumeration type MassUnits_t with values:
+%% Enumeration type CG_MassUnits_t with values:
 %%
-%                    MassUnitsNull:                0
-%             MassUnitsUserDefined:                1
-%                         Kilogram:                2
-%                             Gram:                3
-%                             Slug:                4
-%                        PoundMass:                5
+%                 CG_MassUnitsNull:                0
+%          CG_MassUnitsUserDefined:                1
+%                      CG_Kilogram:                2
+%                          CG_Gram:                3
+%                          CG_Slug:                4
+%                     CG_PoundMass:                5

@@ -1,12 +1,12 @@
 /*
  * This file was created manually for MATLAB & Octave from 
- * cgnslib_3.1/cgnslib.h by Xiangmin Jiao. 
+ * cgnslib_3.4.1/cgnslib.h by Xiangmin Jiao. 
  * For bug reports, email jiao@ams.sunysb.edu.
  */
 
 #include "c2mex.h"   /* This includes "mex.h". */
 
-#include "cgnslib_3.1/cgnslib.h"
+#include "cgnslib.h"
 #include <string.h>
 #include <assert.h>
 

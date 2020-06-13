@@ -1,11 +1,11 @@
-%% Enumeration type PointSetType_t with values:
+%% Enumeration type CG_PointSetType_t with values:
 %%
-%                 PointSetTypeNull:                0
-%          PointSetTypeUserDefined:                1
-%                        PointList:                2
-%                   PointListDonor:                3
-%                       PointRange:                4
-%                  PointRangeDonor:                5
-%                     ElementRange:                6
-%                      ElementList:                7
-%                    CellListDonor:                8
+%              CG_PointSetTypeNull:                0
+%       CG_PointSetTypeUserDefined:                1
+%                     CG_PointList:                2
+%                CG_PointListDonor:                3
+%                    CG_PointRange:                4
+%               CG_PointRangeDonor:                5
+%                  CG_ElementRange:                6
+%                   CG_ElementList:                7
+%                 CG_CellListDonor:                8

@@ -1,3 +1,3 @@
 function val = SubstanceAmountUnitsNull
-%% Value 0 of enumeration type SubstanceAmountUnits_t
+%% Value 0 of enumeration type CG_SubstanceAmountUnits_t
 val = int32(0);

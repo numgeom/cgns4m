@@ -1,27 +1,26 @@
-function ierr = cg_goto(varargin)
+function ret = cg_goto(in_file_number, in_B, in_int )
 % Gateway function for C function cg_goto.
 %
-% ierr = cg_goto(file_number, B, varargin)
+% ret = cg_goto(file_number, B, int )
 %
 % Input arguments (required; type is auto-casted):
 %     file_number: 32-bit integer (int32), scalar
 %               B: 32-bit integer (int32), scalar
-%        varargin: pairs of character string ('CGNS_NodeLabel' or
-%                  'CGNS_NodeName') and integer (index or 0). 
-%                  Unlike the native CGNS interface, the arguments need
-%                  not end with a character string 'end', because this
-%                  function would append 'end' automatically.
-%    Note: This function currently support only up to depth 4. To
-%    access a node with a deeper depth, use cg_gopath.
+%            int : unsupported type, scalar
 %
-% Output argument (optional): 
-%            ierr: 32-bit integer (int32), scalar
+% Output argument (optional):
+%             ret: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_goto( int file_number, int B, ..., "end");
+% int cg_goto(int file_number, int B, ... int );
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/navigating.html">online documentation</a>.
-% 
-% See also cg_gopath, cg_gorel, cg_where.
+% For detail, see the documentation of the original function.
+if (nargin < 3)
+    error('Incorrect number of input or output arguments.');
+end
+in_file_number = int32(in_file_number);
+in_B = int32(in_B);
+in_int  = unknown(in_int );
 
-ierr = cgnslib_mex(MEX_CG_GOTO,varargin{:});
+% Invoke the actual MEX-function.
+ret = cgnslib_mex(int32(167), in_file_number, in_B, in_int );

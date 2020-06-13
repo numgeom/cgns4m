@@ -3,7 +3,7 @@ function [out_EquationDimension, out_GoverningEquationsFlag, out_GasModelFlag, o
 %
 % [EquationDimension, GoverningEquationsFlag, GasModelFlag, ViscosityModelFlag, ThermalConductivityModelFlag, TurbulenceClosureFlag, TurbulenceModelFlag, ierr] = cg_equationset_read()
 %
-% Input argument (required; type is auto-casted): 
+% Input argument (required; type is auto-casted):
 %
 % Output arguments (optional):
 %    EquationDimension: 32-bit integer (int32), scalar
@@ -16,10 +16,10 @@ function [out_EquationDimension, out_GoverningEquationsFlag, out_GasModelFlag, o
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_equationset_read( int * EquationDimension, int * GoverningEquationsFlag, int * GasModelFlag, int * ViscosityModelFlag, int * ThermalConductivityModelFlag, int * TurbulenceClosureFlag, int * TurbulenceModelFlag);
+% int cg_equationset_read(int * EquationDimension, int * GoverningEquationsFlag, int * GasModelFlag, int * ViscosityModelFlag, int * ThermalConductivityModelFlag, int * TurbulenceClosureFlag, int * TurbulenceModelFlag);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
 %
 
 % Invoke the actual MEX-function.
-[out_EquationDimension, out_GoverningEquationsFlag, out_GasModelFlag, out_ViscosityModelFlag, out_ThermalConductivityModelFlag, out_TurbulenceClosureFlag, out_TurbulenceModelFlag, ierr] =  cgnslib_mex(int32(188));
+[out_EquationDimension, out_GoverningEquationsFlag, out_GasModelFlag, out_ViscosityModelFlag, out_ThermalConductivityModelFlag, out_TurbulenceClosureFlag, out_TurbulenceModelFlag, ierr] = cgnslib_mex(int32(188));

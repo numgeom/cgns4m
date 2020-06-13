@@ -1,9 +1,9 @@
-%% Enumeration type DataClass_t with values:
+%% Enumeration type CG_DataClass_t with values:
 %%
-%                    DataClassNull:                0
-%             DataClassUserDefined:                1
-%                      Dimensional:                2
-%          NormalizedByDimensional:                3
-%   NormalizedByUnknownDimensional:                4
-%          NondimensionalParameter:                5
-%            DimensionlessConstant:                6
+%                 CG_DataClassNull:                0
+%          CG_DataClassUserDefined:                1
+%                   CG_Dimensional:                2
+%       CG_NormalizedByDimensional:                3
+% CG_NormalizedByUnknownDimensional:                4
+%       CG_NondimensionalParameter:                5
+%         CG_DimensionlessConstant:                6

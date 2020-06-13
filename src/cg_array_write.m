@@ -7,20 +7,24 @@ function ierr = cg_array_write(in_ArrayName, in_DataType, in_DataDimension, in_D
 %       ArrayName: character string
 %        DataType: 32-bit integer (int32), scalar
 %    DataDimension: 32-bit integer (int32), scalar
-%    DimensionVector: 64-bit or 32-bit integer (platform dependent), len=DataDimension
+%    DimensionVector: 64-bit integer (int64), len=DataDimension
 %            Data: dynamic type based on DataType
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_array_write( const char * ArrayName, CG_DataType_t DataType, int DataDimension, const ptrdiff_t * DimensionVector, const void * Data);
+% int cg_array_write(const char * ArrayName, CG_DataType_t DataType, int DataDimension, const long long * DimensionVector, const void * Data);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
-if (nargin < 5); 
+if (nargin < 5)
     error('Incorrect number of input or output arguments.');
 end
+in_ArrayName = char(in_ArrayName);
+in_DataType = int32(in_DataType);
+in_DataDimension = int32(in_DataDimension);
+in_DimensionVector = int64(in_DimensionVector);
 
 % Perform dynamic type casting
 datatype = in_DataType;
@@ -41,4 +45,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(202), in_ArrayName, in_DataType, in_DataDimension, in_DimensionVector, in_Data);
+ierr = cgnslib_mex(int32(202), in_ArrayName, in_DataType, in_DataDimension, in_DimensionVector, in_Data);

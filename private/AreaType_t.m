@@ -1,6 +1,6 @@
-%% Enumeration type AreaType_t with values:
+%% Enumeration type CG_AreaType_t with values:
 %%
-%                     AreaTypeNull:                0
-%              AreaTypeUserDefined:                1
-%                        BleedArea:                2
-%                      CaptureArea:                3
+%                  CG_AreaTypeNull:                0
+%           CG_AreaTypeUserDefined:                1
+%                     CG_BleedArea:                2
+%                   CG_CaptureArea:                3

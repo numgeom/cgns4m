@@ -13,17 +13,25 @@ function ierr = cg_unitsfull_write(in_mass, in_length, in_time, in_temperature, 
 %          amount: 32-bit integer (int32), scalar
 %       intensity: 32-bit integer (int32), scalar
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_unitsfull_write( CG_MassUnits_t mass, CG_LengthUnits_t length, CG_TimeUnits_t time, CG_TemperatureUnits_t temperature, CG_AngleUnits_t angle, CG_ElectricCurrentUnits_t current, CG_SubstanceAmountUnits_t amount, CG_LuminousIntensityUnits_t intensity);
+% int cg_unitsfull_write(CG_MassUnits_t mass, CG_LengthUnits_t length, CG_TimeUnits_t time, CG_TemperatureUnits_t temperature, CG_AngleUnits_t angle, CG_ElectricCurrentUnits_t current, CG_SubstanceAmountUnits_t amount, CG_LuminousIntensityUnits_t intensity);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
-if (nargin < 8); 
+if (nargin < 8)
     error('Incorrect number of input or output arguments.');
 end
+in_mass = int32(in_mass);
+in_length = int32(in_length);
+in_time = int32(in_time);
+in_temperature = int32(in_temperature);
+in_angle = int32(in_angle);
+in_current = int32(in_current);
+in_amount = int32(in_amount);
+in_intensity = int32(in_intensity);
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(218), in_mass, in_length, in_time, in_temperature, in_angle, in_current, in_amount, in_intensity);
+ierr = cgnslib_mex(int32(218), in_mass, in_length, in_time, in_temperature, in_angle, in_current, in_amount, in_intensity);

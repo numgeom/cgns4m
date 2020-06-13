@@ -1,7 +1,7 @@
-%% Enumeration type GridConnectivityType_t with values:
+%% Enumeration type CG_GridConnectivityType_t with values:
 %%
-%         GridConnectivityTypeNull:                0
-%  GridConnectivityTypeUserDefined:                1
-%                          Overset:                2
-%                         Abutting:                3
-%                     Abutting1to1:                4
+%      CG_GridConnectivityTypeNull:                0
+% CG_GridConnectivityTypeUserDefined:                1
+%                       CG_Overset:                2
+%                      CG_Abutting:                3
+%                  CG_Abutting1to1:                4

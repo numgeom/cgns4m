@@ -9,8 +9,8 @@ function [out_I, ierr] = cg_1to1_write(in_fn, in_B, in_Z, in_connectname, in_don
 %               Z: 32-bit integer (int32), scalar
 %     connectname: character string
 %       donorname: character string
-%           range: 64-bit or 32-bit integer (platform dependent), array
-%     donor_range: 64-bit or 32-bit integer (platform dependent), array
+%           range: 64-bit integer (int64), array
+%     donor_range: 64-bit integer (int64), array
 %       transform: 32-bit integer (int32), array
 %
 % Output arguments (optional):
@@ -18,13 +18,21 @@ function [out_I, ierr] = cg_1to1_write(in_fn, in_B, in_Z, in_connectname, in_don
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_1to1_write( int fn, int B, int Z, const char * connectname, const char * donorname, const ptrdiff_t * range, const ptrdiff_t * donor_range, const int * transform, int * I);
+% int cg_1to1_write(int fn, int B, int Z, const char * connectname, const char * donorname, const long long * range, const long long * donor_range, const int * transform, int * I);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
-if (nargin < 8); 
+if (nargin < 8)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_connectname = char(in_connectname);
+in_donorname = char(in_donorname);
+in_range = int64(in_range);
+in_donor_range = int64(in_donor_range);
+in_transform = int32(in_transform);
 
 % Invoke the actual MEX-function.
-[out_I, ierr] =  cgnslib_mex(int32(125), in_fn, in_B, in_Z, in_connectname, in_donorname, in_range, in_donor_range, in_transform);
+[out_I, ierr] = cgnslib_mex(int32(125), in_fn, in_B, in_Z, in_connectname, in_donorname, in_range, in_donor_range, in_transform);

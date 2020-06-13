@@ -14,13 +14,17 @@ function [out_hole_id, ierr] = cg_hole_id(in_fn, in_B, in_Z, in_I)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_hole_id( int fn, int B, int Z, int I, double * hole_id);
+% int cg_hole_id(int fn, int B, int Z, int I, double * hole_id);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
-if (nargin < 4); 
+if (nargin < 4)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_I = int32(in_I);
 
 % Invoke the actual MEX-function.
-[out_hole_id, ierr] =  cgnslib_mex(int32(113), in_fn, in_B, in_Z, in_I);
+[out_hole_id, ierr] = cgnslib_mex(int32(113), in_fn, in_B, in_Z, in_I);

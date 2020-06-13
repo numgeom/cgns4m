@@ -8,26 +8,29 @@ function [io_zitername, ierr] = cg_ziter_read(in_file_number, in_B, in_Z, io_zit
 %               B: 32-bit integer (int32), scalar
 %               Z: 32-bit integer (int32), scalar
 %
-% In&Out argument (required as output; also required as input if specified; type is auto-casted):
-%       zitername: character string with default length 32 
+% In&Out argument (required as output; type is auto-casted):
+%       zitername: character string with default length 32  (optional as input)
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_ziter_read( int file_number, int B, int Z, char * zitername);
+% int cg_ziter_read(int file_number, int B, int Z, char * zitername);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/timedep.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/timedep.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 3); 
+if ( nargout < 1 || nargin < 3)
     error('Incorrect number of input or output arguments.');
 end
+in_file_number = int32(in_file_number);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
 if nargin<4
     io_zitername=char(zeros(1,32));
 elseif length(io_zitername)<32
     %% Enlarge the array if necessary;
     io_zitername=char([io_zitername zeros(1,32-length(io_zitername))]);
-elseif ~isa(io_zitername,'char');
+elseif ~isa(io_zitername,'char')
     io_zitername=char(io_zitername);
 else
     % Write to it to avoid sharing memory with other variables
@@ -36,4 +39,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr =  cgnslib_mex(int32(159), in_file_number, in_B, in_Z, io_zitername);
+[io_zitername, ierr] = cgnslib_mex(int32(159), in_file_number, in_B, in_Z, io_zitername);

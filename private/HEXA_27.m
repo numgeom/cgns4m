@@ -1,3 +1,3 @@
 function val = HEXA_27
-%% Value 19 of enumeration type ElementType_t
+%% Value 19 of enumeration type CG_ElementType_t
 val = int32(19);

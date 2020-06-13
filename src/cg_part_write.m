@@ -15,13 +15,18 @@ function [out_P, ierr] = cg_part_write(in_file_number, in_B, in_F, in_G, in_part
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_part_write( int file_number, int B, int F, int G, const char * part_name, int * P);
+% int cg_part_write(int file_number, int B, int F, int G, const char * part_name, int * P);
 %
-% For detail, see <a href="http://www.grc.nasa.gov/WWW/cgns/CGNS_docs_current/midlevel/families.html">online documentation</a>.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/families.html">online documentation</a>.
 %
-if (nargin < 5); 
+if (nargin < 5)
     error('Incorrect number of input or output arguments.');
 end
+in_file_number = int32(in_file_number);
+in_B = int32(in_B);
+in_F = int32(in_F);
+in_G = int32(in_G);
+in_part_name = char(in_part_name);
 
 % Invoke the actual MEX-function.
-[out_P, ierr] =  cgnslib_mex(int32(61), in_file_number, in_B, in_F, in_G, in_part_name);
+[out_P, ierr] = cgnslib_mex(int32(61), in_file_number, in_B, in_F, in_G, in_part_name);

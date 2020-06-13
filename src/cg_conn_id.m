@@ -14,12 +14,16 @@ function [out_conn_id, ierr] = cg_conn_id(in_fn, in_B, in_Z, in_I)
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_conn_id( int fn, int B, int Z, int I, double * conn_id);
+% int cg_conn_id(int fn, int B, int Z, int I, double * conn_id);
 %
 % For detail, see the documentation of the original function.
-if (nargin < 4); 
+if (nargin < 4)
     error('Incorrect number of input or output arguments.');
 end
+in_fn = int32(in_fn);
+in_B = int32(in_B);
+in_Z = int32(in_Z);
+in_I = int32(in_I);
 
 % Invoke the actual MEX-function.
-[out_conn_id, ierr] =  cgnslib_mex(int32(118), in_fn, in_B, in_Z, in_I);
+[out_conn_id, ierr] = cgnslib_mex(int32(118), in_fn, in_B, in_Z, in_I);

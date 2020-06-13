@@ -1,3 +1,3 @@
 function val = AverageAll
-%% Value 2 of enumeration type AverageInterfaceType_t
+%% Value 2 of enumeration type CG_AverageInterfaceType_t
 val = int32(2);

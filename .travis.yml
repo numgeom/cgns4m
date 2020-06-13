@@ -1,0 +1,14 @@
+os: linux
+dist: bionic
+sudo: required
+language: C
+
+before_install:
+# Install Octave
+  - sudo apt-get update -q
+  - sudo apt-get install -y perl octave liboctave-dev
+
+script:
+# Test generating code and rebuild in Octave
+  - ./mexUtil/codegen.sh
+  - octave --eval "startup_cgns4m; build_cgns4m -force"

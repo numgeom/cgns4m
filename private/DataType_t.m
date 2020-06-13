@@ -1,9 +1,9 @@
-%% Enumeration type DataType_t with values:
+%% Enumeration type CG_DataType_t with values:
 %%
-%                     DataTypeNull:                0
-%              DataTypeUserDefined:                1
-%                          Integer:                2
-%                       RealSingle:                3
-%                       RealDouble:                4
-%                        Character:                5
-%                      LongInteger:                6
+%                  CG_DataTypeNull:                0
+%           CG_DataTypeUserDefined:                1
+%                       CG_Integer:                2
+%                    CG_RealSingle:                3
+%                    CG_RealDouble:                4
+%                     CG_Character:                5
+%                   CG_LongInteger:                6
