@@ -51,7 +51,7 @@ Third-party contributions to CGNS4m are welcome. If you have developed an extens
 ### Regenerating CGNS4m source
 Most of the C and MATLAB source codes of CGNS4m were generated automatically from the annotated `cgnslib.h` using `c2mex`, a Perl program that extended `matwrap` developed by Gary R. Holt. A few gateway functions were written by hand and are contained in `cgnslib_mex_ext.c`. Do not edit the auto-generated C and MATLAB code by hand.
 
-CGNS4m enables 64-bit integer support by default. To regenerate CGNS4m with  32-bit integer support only, edit `cgnslib_3.4.1/` and change
+CGNS4m enables 64-bit integer support by default. To regenerate CGNS4m with  32-bit integer support only, edit `src/cgnstypes.h` and change
 ```
 #define CG_BUILD_64BIT  1
 ```
@@ -59,10 +59,10 @@ to
 ```
 #define CG_BUILD_64BIT  0
 ```
-and edit `cgnslib_3.4.1/cgnslib.h` and change
+and edit `src/cgnslib.h` and change
 ```
 #if defined(C2MEX) && defined(CG_BUILD_64BIT)
-    typedef int64_t cgsize_t;
+    typedef long long cgsize_t;
 #endif
 ```
 to
@@ -78,4 +78,8 @@ to regenerate the MATLAB and C codes.
 To compile cgns4m from scratch, run `build_cgns4m` or `build_cgns4m -force` after running `startup_cgns4m`. Note that for MATLAB on Microsoft Windows, CGNS4m requires [Microsoft Visual Studio](https://visualstudio.microsoft.com/) (the free community edition suffices). After installing Visual Studio, just run `mex -setup` in MATLAB to choose Visual C++ as the compiler.
 
 ### Updating CGNS4m to another CGNS version
-You can generate CGNS4m for a different version of `cgnslib`, copy its source code into the `cgnslib_<version>` directory, and merge the annotation in `cgnslib_3.4.1/cgnslib.h` into `cgnslib_<version>/cgnslib.h`. Finally, modify `mexUtil/codegen.sh` and `mexUtil/build_cgns4m.sh` to use this new cgnslib directory, and run `codegen.sh` in `bash` and `build_cgns4m` in MATLAB/Octave. Note that CGNS4m does not use any of the build mechanism of `cgnslib`, so you can safely remove its cmake and makefiles.
+You can generate CGNS4m for a different version of `cgnslib` (3.1.x or later).  To do this, please follow these steps:
+1. Checkout the [barebone branch](https://github.com/meshkit/cgns4m/tree/barebone) of cgns4m.
+2. Download a new copy of `cgnslib.h` for the desired version from https://github.com/CGNS/cgns. Merge the c2mex annotations in `src/cgnslib.h` into the downloaded `cgnslib.h`, and then copy the merged file to overwrite `src/cgnslib.h`.
+3. Change CGNS_VERSION in `mexUtil/codegen.sh` and `mexUtil/build_cgns4m.sh` to use this new cgnslib version.
+4. Delete the old `cgnslib_mex.mex*` files. Run `./mexUtil/codegen.sh` in `bash` and `startup_cgns4m` in MATLAB/Octave.
