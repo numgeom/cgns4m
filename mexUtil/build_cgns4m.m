@@ -126,7 +126,7 @@ disp(['Building CGNS4m with HDF5 library ' HDF_VERSION '.']);
 cgnsfiles = addprefix(cgnsfiles, [SRCDIR '/']);
 
 if isoctave
-    command = ['mkoctfile --mex -g -ImexUtil -Isrc -I. -I' SRCDIR ' -I' SRCDIR '/adf ' ...
+    command = ['mkoctfile --mex -ImexUtil -Isrc -I. -I' SRCDIR ' -I' SRCDIR '/adf ' ...
         hdf5inc ' -o ' mexfile ' src/cgnslib_mex.c ' cgnsfiles hdf5lib];
     
     disp(command); fflush(1);
@@ -143,7 +143,7 @@ if isoctave
         error('Error during compilation: %s.', lasterr); %#ok<*LERR>
     end
 else % MATLAB
-    command = ['mex -g -ImexUtil -Isrc -I. -I' SRCDIR ' -I' SRCDIR '/adf ' ...
+    command = ['mex -ImexUtil -Isrc -I. -I' SRCDIR ' -I' SRCDIR '/adf ' ...
         hdf5inc ' -output ' mexfile ' src/cgnslib_mex.c ' cgnsfiles hdf5lib];
     
     try
