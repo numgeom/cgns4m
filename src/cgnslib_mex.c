@@ -7615,90 +7615,9 @@ EXTERN_C void cg_nbocos_MeX(int nlhs, mxArray *plhs[],
     }
 }
 
-/* Gateway function
- * [out_boconame, out_bocotype, out_ptset_type, out_npnts, out_NormalListSize, out_NormalDataType, out_ndataset, ierr] = cg_boco_info(in_fn, in_B, in_Z, in_BC, io_NormalIndex)
- *
- * The original C interface is
- * int cg_boco_info(int fn, int B, int Z, int BC, char * boconame, CG_BCType_t * bocotype, CG_PointSetType_t * ptset_type, long long * npnts, int * NormalIndex, long long * NormalListSize, CG_DataType_t * NormalDataType, int * ndataset);
- */
-EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[]) {
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int in_BC;
-    char out_boconame[33];
-    CG_BCType_t out_bocotype;
-    CG_PointSetType_t out_ptset_type;
-    long long out_npnts;
-    int * io_NormalIndex;
-    long long out_NormalListSize;
-    CG_DataType_t out_NormalDataType;
-    int out_ndataset;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/
-    if (nlhs > 8 || nrhs != 5)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input and inout arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument BC");
-    in_BC = _get_numeric_scalar_int32(prhs[3]);
-
-    if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
-        io_NormalIndex = (int*)mxGetData(prhs[4]);
-    else
-        mexErrMsgTxt("Expecting 32-bit integer matrix for argument NormalIndex");
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_boco_info(in_fn, in_B, in_Z, in_BC, out_boconame, &out_bocotype, &out_ptset_type, &out_npnts, io_NormalIndex, &out_NormalListSize, &out_NormalDataType, &out_ndataset);
-
-
-    /******** Process output scalars and strings ********/
-    plhs[0] = mxCreateString(out_boconame);
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = out_bocotype;
-    }
-    if (nlhs > 2) {
-        plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[2]) = out_ptset_type;
-    }
-    if (nlhs > 3) {
-        plhs[3] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(long long*)mxGetData(plhs[3]) = out_npnts;
-    }
-    if (nlhs > 4) {
-        plhs[4] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(long long*)mxGetData(plhs[4]) = out_NormalListSize;
-    }
-    if (nlhs > 5) {
-        plhs[5] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[5]) = out_NormalDataType;
-    }
-    if (nlhs > 6) {
-        plhs[6] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[6]) = out_ndataset;
-    }
-    if (nlhs > 7) {
-        plhs[7] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[7]) = ierr;
-    }
-}
+/* External gateway function */
+EXTERN void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
+    int nrhs, const mxArray *prhs[]);
 
 /* Gateway function
  * ierr = cg_boco_read(in_fn, in_B, in_Z, in_BC, io_pnts, io_NormalList)

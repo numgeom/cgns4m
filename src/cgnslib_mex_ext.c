@@ -1,6 +1,6 @@
 /*
- * This file was created manually for MATLAB & Octave from 
- * cgnslib.h by Xiangmin Jiao. 
+ * This file was created manually for MATLAB & Octave from
+ * cgnslib.h by Xiangmin Jiao.
  * For bug reports, email jiao@ams.sunysb.edu.
  */
 
@@ -20,13 +20,99 @@
   #define EXTERN_C
 #endif
 
-/* Gateway function 
+
+/* Gateway function
+ * [out_boconame, out_bocotype, out_ptset_type, out_npnts, out_NormalListSize, out_NormalDataType, out_ndataset, ierr] = cg_boco_info(in_fn, in_B, in_Z, in_BC, io_NormalIndex)
+ *
+ * The original C interface is
+ * int cg_boco_info(int fn, int B, int Z, int BC, char * boconame, CG_BCType_t * bocotype, CG_PointSetType_t * ptset_type, long long * npnts, int * NormalIndex, long long * NormalListSize, CG_DataType_t * NormalDataType, int * ndataset);
+ */
+EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
+    int nrhs, const mxArray *prhs[]) {
+    int in_fn;
+    int in_B;
+    int in_Z;
+    int in_BC;
+    char out_boconame[33];
+    CG_BCType_t out_bocotype;
+    CG_PointSetType_t out_ptset_type;
+    long long out_npnts;
+    int * io_NormalIndex;
+    long long out_NormalListSize;
+    CG_DataType_t out_NormalDataType;
+    int out_ndataset;
+    int ierr;
+
+    /******** Check number of input and output arguments. ********/
+    if (nlhs > 8 || nrhs != 5)
+        mexErrMsgTxt("Wrong number of arguments to function ");
+
+    /******** Obtain input and inout arguments ********/
+    if (_n_dims(prhs[0]) > 0)
+        mexErrMsgTxt("Error in dimension of argument fn");
+    in_fn = _get_numeric_scalar_int32(prhs[0]);
+
+    if (_n_dims(prhs[1]) > 0)
+        mexErrMsgTxt("Error in dimension of argument B");
+    in_B = _get_numeric_scalar_int32(prhs[1]);
+
+    if (_n_dims(prhs[2]) > 0)
+        mexErrMsgTxt("Error in dimension of argument Z");
+    in_Z = _get_numeric_scalar_int32(prhs[2]);
+
+    if (_n_dims(prhs[3]) > 0)
+        mexErrMsgTxt("Error in dimension of argument BC");
+    in_BC = _get_numeric_scalar_int32(prhs[3]);
+
+    if (mxIsInt32(prhs[4]) || mxIsUint32(prhs[4]))
+        io_NormalIndex = (int*)mxGetData(prhs[4]);
+    else
+        mexErrMsgTxt("Expecting 32-bit integer matrix for argument NormalIndex");
+
+
+    /******** Invoke computational function ********/
+    ierr = cg_boco_info(in_fn, in_B, in_Z, in_BC, out_boconame, &out_bocotype, &out_ptset_type, &out_npnts, io_NormalIndex, &out_NormalListSize, &out_NormalDataType, &out_ndataset);
+
+
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_boconame);
+    if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_bocotype;
+    }
+    if (nlhs > 2) {
+        plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[2]) = out_ptset_type;
+    }
+    if (nlhs > 3) {
+        plhs[3] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
+        *(long long*)mxGetData(plhs[3]) = out_npnts;
+    }
+    if (nlhs > 4) {
+        plhs[4] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
+        *(long long*)mxGetData(plhs[4]) = out_NormalListSize;
+    }
+    if (nlhs > 5) {
+        plhs[5] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[5]) = out_NormalDataType;
+    }
+    if (nlhs > 6) {
+        plhs[6] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[6]) = out_ndataset;
+    }
+    if (nlhs > 7) {
+        plhs[7] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[7]) = ierr;
+    }
+}
+
+/* Gateway function
  * [out_connectname, out_zonename, out_donorname, out_range, out_donor_range, out_transform, ierr] = cg_1to1_read_global(in_fn, in_B)
  *
- * The original C interface is 
+ * The original C interface is
  * int cg_1to1_read_global( int fn, int B, char ** connectname, char ** zonename, char ** donorname, int ** range, int ** donor_range, int ** transform);
  */
-EXTERN_C void cg_1to1_read_global_MeX(int nlhs, mxArray *plhs[], 
+EXTERN_C void cg_1to1_read_global_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
     int in_fn;
@@ -36,7 +122,7 @@ EXTERN_C void cg_1to1_read_global_MeX(int nlhs, mxArray *plhs[],
     cgsize_t *buf_cgsize, **ptr_range, **ptr_donor_range;
     int ierr, i, n1to1;
 
-    /******** Check number of input and output arguments. ********/ 
+    /******** Check number of input and output arguments. ********/
     if (nlhs > 7 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
@@ -76,7 +162,7 @@ EXTERN_C void cg_1to1_read_global_MeX(int nlhs, mxArray *plhs[],
     }
 
     /******** Invoke computational function ********/
-    ierr = cg_1to1_read_global(in_fn, in_B, ptr_connectname, ptr_zonename, ptr_donorname, 
+    ierr = cg_1to1_read_global(in_fn, in_B, ptr_connectname, ptr_zonename, ptr_donorname,
                                ptr_range, ptr_donor_range, ptr_transform);
 
     /******** Process output arguments ********/
@@ -140,13 +226,13 @@ EXTERN_C void cg_1to1_read_global_MeX(int nlhs, mxArray *plhs[],
     mxFree( ptr_donor_range);
 }
 
-/* Gateway function 
+/* Gateway function
  * [out_file_number, out_B, out_depth, out_label, out_num, ierr] = cg_where
  *
- * The original C interface is 
+ * The original C interface is
  * int cg_where( int * file_number, int * B, int * depth, char ** label, int * num);
  */
-EXTERN_C void cg_where_MeX(int nlhs, mxArray *plhs[], 
+EXTERN_C void cg_where_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
     int out_file_number;
@@ -156,7 +242,7 @@ EXTERN_C void cg_where_MeX(int nlhs, mxArray *plhs[],
     int out_num[CG_MAX_GOTO_DEPTH];
     int i,ierr;
 
-    /******** Check number of input and output arguments. ********/ 
+    /******** Check number of input and output arguments. ********/
     if (nlhs > 6 || nrhs != 0)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
@@ -198,13 +284,13 @@ EXTERN_C void cg_where_MeX(int nlhs, mxArray *plhs[],
     }
 }
 
-/* Gateway function 
+/* Gateway function
  * ierr = cg_goto(file_number, B, varargin)
  *
- * The original C interface is 
+ * The original C interface is
  * int cg_goto( int file_number, int B, ..., "end");
  */
-EXTERN_C void cg_goto_MeX(int nlhs, mxArray *plhs[], 
+EXTERN_C void cg_goto_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
 #define MAX_DEPTH 4
@@ -215,11 +301,11 @@ EXTERN_C void cg_goto_MeX(int nlhs, mxArray *plhs[],
     int   ierr;
     int   i, index, depth = (nrhs-2)/2;
 
-    /******** Check number of input and output arguments. ********/ 
+    /******** Check number of input and output arguments. ********/
     if (nlhs > 1 || nrhs < 2 || depth>MAX_DEPTH)
         mexErrMsgTxt("Wrong number of arguments to function.");
 
-    /******** If the number of input is odd, check whether end with "end". ********/ 
+    /******** If the number of input is odd, check whether end with "end". ********/
     if (nrhs % 2 == 1 && mxGetNumberOfElements(prhs[nrhs-1])) {
         char *endmark = _mxGetString(prhs[nrhs-1], NULL);
         if ( !strcmp(endmark, "end")) {
@@ -241,7 +327,7 @@ EXTERN_C void cg_goto_MeX(int nlhs, mxArray *plhs[],
     index=2;
     for (i=0; i<depth; ++i) {
         in_labels[i] = _mxGetString(prhs[index++], NULL);
-        
+
         if (_n_dims(prhs[index]) > 0)
             mexErrMsgTxt("Error in dimension of an index argument in varargin");
         in_indices[i] =  _get_numeric_scalar_int32(prhs[index++]);
@@ -249,20 +335,20 @@ EXTERN_C void cg_goto_MeX(int nlhs, mxArray *plhs[],
 
     /******** Invoke computational function ********/
     switch (depth) {
-    case 0: 
+    case 0:
         ierr = cg_goto(in_file_number, in_B, NULL); break;
     case 1:
         ierr = cg_goto(in_file_number, in_B, in_labels[0], in_indices[0], NULL); break;
     case 2:
-        ierr = cg_goto(in_file_number, in_B, in_labels[0], in_indices[0], 
+        ierr = cg_goto(in_file_number, in_B, in_labels[0], in_indices[0],
                        in_labels[1], in_indices[1],  NULL); break;
     case 3:
-        ierr = cg_goto(in_file_number, in_B, in_labels[0], in_indices[0], 
-                       in_labels[1], in_indices[1], in_labels[2], in_indices[2], 
+        ierr = cg_goto(in_file_number, in_B, in_labels[0], in_indices[0],
+                       in_labels[1], in_indices[1], in_labels[2], in_indices[2],
                        NULL); break;
     case 4:
-        ierr = cg_goto(in_file_number, in_B, in_labels[0], in_indices[0], 
-                       in_labels[1], in_indices[1], in_labels[2], in_indices[2], 
+        ierr = cg_goto(in_file_number, in_B, in_labels[0], in_indices[0],
+                       in_labels[1], in_indices[1], in_labels[2], in_indices[2],
                        in_labels[3], in_indices[3], NULL); break;
     default:
         assert(0); /* It should never reach here */
@@ -278,13 +364,13 @@ EXTERN_C void cg_goto_MeX(int nlhs, mxArray *plhs[],
     *(int*)mxGetData(plhs[0]) = ierr;
 }
 
-/* Gateway function 
+/* Gateway function
  * ierr = cg_gorel(file_number, varargin)
  *
- * The original C interface is 
+ * The original C interface is
  * int cg_gorel( int file_number, ..., "end");
  */
-EXTERN_C void cg_gorel_MeX(int nlhs, mxArray *plhs[], 
+EXTERN_C void cg_gorel_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[])
 {
 #define MAX_DEPTH 4
@@ -294,11 +380,11 @@ EXTERN_C void cg_gorel_MeX(int nlhs, mxArray *plhs[],
     int   ierr;
     int   i, index, depth = (nrhs-1)/2;
 
-    /******** Check number of input and output arguments. ********/ 
+    /******** Check number of input and output arguments. ********/
     if (nlhs > 1 || nrhs < 1 || depth>MAX_DEPTH)
         mexErrMsgTxt("Wrong number of arguments to function.");
 
-    /******** If the number of input is odd, check whether end with "end". ********/ 
+    /******** If the number of input is odd, check whether end with "end". ********/
     if (nrhs % 2 == 0 && mxGetNumberOfElements(prhs[nrhs-1])) {
         char *endmark = _mxGetString(prhs[nrhs-1], NULL);
         if ( !strcmp(endmark, "end")) {
@@ -316,7 +402,7 @@ EXTERN_C void cg_gorel_MeX(int nlhs, mxArray *plhs[],
     index=1;
     for (i=0; i<depth; ++i) {
         in_labels[i] = _mxGetString(prhs[index++], NULL);
-        
+
         if (_n_dims(prhs[index]) > 0)
             mexErrMsgTxt("Error in dimension of an index argument in varargin");
         in_indices[i] =  _get_numeric_scalar_int32(prhs[index++]);
@@ -324,20 +410,20 @@ EXTERN_C void cg_gorel_MeX(int nlhs, mxArray *plhs[],
 
     /******** Invoke computational function ********/
     switch (depth) {
-    case 0: 
+    case 0:
         ierr = cg_gorel(in_file_number, "end"); break;
     case 1:
         ierr = cg_gorel(in_file_number, in_labels[0], in_indices[0], "end"); break;
     case 2:
-        ierr = cg_gorel(in_file_number, in_labels[0], in_indices[0], 
+        ierr = cg_gorel(in_file_number, in_labels[0], in_indices[0],
                         in_labels[1], in_indices[1],  "end"); break;
     case 3:
-        ierr = cg_gorel(in_file_number, in_labels[0], in_indices[0], 
-                        in_labels[1], in_indices[1], in_labels[2], in_indices[2], 
+        ierr = cg_gorel(in_file_number, in_labels[0], in_indices[0],
+                        in_labels[1], in_indices[1], in_labels[2], in_indices[2],
                         "end"); break;
     case 4:
-        ierr = cg_gorel(in_file_number, in_labels[0], in_indices[0], 
-                        in_labels[1], in_indices[1], in_labels[2], in_indices[2], 
+        ierr = cg_gorel(in_file_number, in_labels[0], in_indices[0],
+                        in_labels[1], in_indices[1], in_labels[2], in_indices[2],
                         in_labels[3], in_indices[3], "end"); break;
     default:
         assert(0); /* It should never reach here */
@@ -353,13 +439,13 @@ EXTERN_C void cg_gorel_MeX(int nlhs, mxArray *plhs[],
     *(int*)mxGetData(plhs[0]) = ierr;
 }
 
-/* Gateway function 
- * ierr = cg_golist(in_file_number, in_B, in_depth, in_label, in_num) 
+/* Gateway function
+ * ierr = cg_golist(in_file_number, in_B, in_depth, in_label, in_num)
  *
- * The original C interface is 
+ * The original C interface is
  * int cg_golist( int file_number, int B, int depth, char ** label, int * num);
  */
-EXTERN_C void cg_golist_MeX(int nlhs, mxArray *plhs[], int nrhs, 
+EXTERN_C void cg_golist_MeX(int nlhs, mxArray *plhs[], int nrhs,
     const mxArray *prhs[])
 {
     int in_file_number;
@@ -369,7 +455,7 @@ EXTERN_C void cg_golist_MeX(int nlhs, mxArray *plhs[], int nrhs,
     int * in_num;
     int ierr;
 
-    /******** Check number of input and output arguments. ********/ 
+    /******** Check number of input and output arguments. ********/
     if (nlhs > 1 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 

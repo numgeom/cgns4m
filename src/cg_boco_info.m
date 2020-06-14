@@ -1,4 +1,4 @@
-function [io_NormalIndex, out_boconame, out_bocotype, out_ptset_type, out_npnts, out_NormalListSize, out_NormalDataType, out_ndataset, ierr] = cg_boco_info(in_fn, in_B, in_Z, in_BC, io_NormalIndex)
+function [out_boconame, out_bocotype, out_ptset_type, out_npnts, io_NormalIndex, out_NormalListSize, out_NormalDataType, out_ndataset, ierr] = cg_boco_info(in_fn, in_B, in_Z, in_BC, io_NormalIndex)
 % Gateway function for C function cg_boco_info.
 %
 % [NormalIndex, boconame, bocotype, ptset_type, npnts, NormalListSize, NormalDataType, ndataset, ierr] = cg_boco_info(fn, B, Z, BC, NormalIndex)
@@ -9,18 +9,16 @@ function [io_NormalIndex, out_boconame, out_bocotype, out_ptset_type, out_npnts,
 %               Z: 32-bit integer (int32), scalar
 %              BC: 32-bit integer (int32), scalar
 %
-% In&Out argument (required as output; type is auto-casted):
-%     NormalIndex: 32-bit integer (int32), array  (must be preallocated at input)
-%
-% Output arguments (optional):
-%        boconame: character string
-%        bocotype: 32-bit integer (int32), scalar
-%      ptset_type: 32-bit integer (int32), scalar
-%           npnts: 64-bit integer (int64), scalar
-%    NormalListSize: 64-bit integer (int64), scalar
-%    NormalDataType: 32-bit integer (int32), scalar
-%        ndataset: 32-bit integer (int32), scalar
-%            ierr: 32-bit integer (int32), scalar
+% Output arguments:
+%        boconame: character string (required)
+%        bocotype: 32-bit integer (int32), scalar (required)
+%      ptset_type: 32-bit integer (int32), scalar (required)
+%           npnts: 64-bit integer (int64), scalar (required)
+%     NormalIndex: 32-bit integer (int32), array  (required; must be preallocated at input)
+%    NormalListSize: 64-bit integer (int64), scalar (optional)
+%    NormalDataType: 32-bit integer (int32), scalar (optional)
+%        ndataset: 32-bit integer (int32), scalar (optional)
+%            ierr: 32-bit integer (int32), scalar (optional)
 %
 % The original C function is:
 % int cg_boco_info(int fn, int B, int Z, int BC, char * boconame, CG_BCType_t * bocotype, CG_PointSetType_t * ptset_type, long long * npnts, int * NormalIndex, long long * NormalListSize, CG_DataType_t * NormalDataType, int * ndataset);

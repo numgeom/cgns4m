@@ -1504,6 +1504,7 @@ CGNSDLL int cg_boco_info(int fn, int B, int Z, int BC, char *boconame,
 	CGNS_ENUMT(BCType_t) *bocotype, CGNS_ENUMT(PointSetType_t) *ptset_type,
  	cgsize_t *npnts, int *NormalIndex, cgsize_t *NormalListSize,
  	CGNS_ENUMT(DataType_t) *NormalDataType, int *ndataset);
+/*%external */
 /*%inout NormalIndex */
 /*%output boconame(33),bocotype,ptset_type,npnts,NormalListSize,NormalDataType,ndataset */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/bc.html */
