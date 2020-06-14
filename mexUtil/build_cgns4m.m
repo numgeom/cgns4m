@@ -3,7 +3,7 @@ function build_cgns4m(force)
 %
 % See also startup_cgns4m.
 
-CGNS_VERSION = '3.4.1';
+CGNS_VERSION = '4.1.1';
 SRCDIR = ['cgnslib_' CGNS_VERSION];
 oldpwd = pwd;
 cgns4m_root = fileparts(which('startup_cgns4m.m'));
@@ -126,7 +126,7 @@ disp(['Building CGNS4m with HDF5 library ' HDF_VERSION '.']);
 cgnsfiles = addprefix(cgnsfiles, [SRCDIR '/']);
 
 if isoctave
-    command = ['mkoctfile --mex -ImexUtil -Isrc -I. -I' SRCDIR ' -I' SRCDIR '/adf ' ...
+    command = ['mkoctfile --mex -g -ImexUtil -Isrc -I. -I' SRCDIR ' -I' SRCDIR '/adf ' ...
         hdf5inc ' -o ' mexfile ' src/cgnslib_mex.c ' cgnsfiles hdf5lib];
     
     disp(command); fflush(1);
@@ -143,7 +143,7 @@ if isoctave
         error('Error during compilation: %s.', lasterr); %#ok<*LERR>
     end
 else % MATLAB
-    command = ['mex -O -ImexUtil -Isrc -I. -I' SRCDIR ' -I' SRCDIR '/adf ' ...
+    command = ['mex -g -ImexUtil -Isrc -I. -I' SRCDIR ' -I' SRCDIR '/adf ' ...
         hdf5inc ' -output ' mexfile ' src/cgnslib_mex.c ' cgnsfiles hdf5lib];
     
     try
@@ -162,17 +162,23 @@ end
 % Perform testing
 if isoctave
     rehash;
-    success=test('readcgns');
+    mtest = @test;
 else
     rehash('path');
-    success=mtest('readcgns');
 end
 
-if success==0
-    fprintf(2,'\nThere seems to be some error in building CGNS4m.\n');
-else
-    disp('CGNS4m was built successfully.');
-    if ~force && exist(HDF_VERSION, 'dir')
-        rmdir(HDF_VERSION, 's');
+if ~force
+    disp('Running tests.');
+    success=mtest('readcgns');
+    if ~success
+        disp('CGNS4m was built but some tests have failed.');
+    else
+        disp('CGNS4m was built and tested successfully.');
+        if exist(HDF_VERSION, 'dir')
+            rmdir(HDF_VERSION, 's');
+        end
     end
+else
+    disp('CGNS4m was built successfully but not yet tested.');
+    disp('You should test it by running mtest(''readcgns'').');
 end

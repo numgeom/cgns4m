@@ -1,5 +1,5 @@
 function writecgns(file_name, ps, elems, typestr, var_nodes, var_cells)
-% Write out a structured or unstructured mesh with node/cell-centered values in CGNS format.
+% Write out a structured or unstructured mesh with node/cell-centered values to CGNS file.
 %
 % WRITECGNS(FILENAME, XS, ELEMS, TYPESTR, VAR_NODES, VAR_CELLS)
 %
@@ -11,9 +11,9 @@ function writecgns(file_name, ps, elems, typestr, var_nodes, var_cells)
 %   XS is nxd array containing nodal coordinates, where d is the dimension
 %       of the space (in general d is 2 or 3).
 %
-%   ELEMS is mxd. For a regular unstructured mesh, m is the number
-%       of elements, and d is the number of vertices per element. For
-%       a mesh with mixed types of elements, where each element is
+%   ELEMS (unstructured mesh) is mxd. For a regular unstructured mesh, m 
+%       is the number of elements, and d is the number of vertices per element.
+%       For a mesh with mixed types of elements, where each element is
 %       given by first listing the number of vertices per element and then
 %       the vertex IDs within the element, so d is 1 and m is the element
 %       data size. For example, a mesh with a triangle, a quadrilateral,
@@ -213,7 +213,7 @@ else % Unstructured
         % get elems_type from elems
         [type, icelldim] = get_elemtype(size(elems,2), typestr, elems);
         if type == MIXED
-            [elems,nelems] = convert_mixed_elements(elems, icelldim);
+            [elems,nelems,offsets] = convert_mixed_elements(elems, icelldim);
         end
     end
 
@@ -249,11 +249,18 @@ else % Unstructured
             RealDouble,'CoordinateZ',ps(:,3)); chk_error(ierr);
     end
 
-    % Write element connectivity. We must permute elems, but we don't need to
-    % cast the data type to integer explicitly (MEX function does it for us).
-    [index_sec, ierr] = cg_section_write(index_file,index_base,index_zone,'Elements', ...
-        type, 1, nelems, 0, elems'); chk_error(ierr);
-
+    if type == MIXED && exist('cg_poly_section_write', 'file')
+      % Write element connectivity. We must permute elems, but we don't need to
+      % cast the data type to integer explicitly (MEX function does it for us).
+      [index_sec, ierr] = cg_poly_section_write(index_file,index_base,index_zone,'Elements', ...
+          type, 1, nelems, 0, elems', offsets); chk_error(ierr);
+    else
+      % Write element connectivity. We must permute elems, but we don't need to
+      % cast the data type to integer explicitly (MEX function does it for us).
+      [index_sec, ierr] = cg_section_write(index_file,index_base,index_zone,'Elements', ...
+          type, 1, nelems, 0, elems'); chk_error(ierr);
+    end
+  
     % get number of variables
     if isempty(var_nodes)
         n_vn = 0;
@@ -326,7 +333,7 @@ for ii=1:length(fldlist)
             [index_field,ierr] = cg_field_write(index_file, index_base, ...
                 index_zone, index_sol, type, varname, arr); chk_error(ierr);
         elseif ncol==2
-            % For naming convention, see http://www.grc.nasa.gov/WWW/cgns/sids/dataname.html
+            % For naming convention, see https://cgns.github.io/CGNS_docs_current/sids/dataname.html
             suffix = ['X';'Y']; % Vector
 
             for jj=1:ncol
@@ -343,7 +350,7 @@ for ii=1:length(fldlist)
             [index_field,ierr] = cg_field_write(index_file, index_base, ...
                 index_zone, index_sol, type, varname, arr); chk_error(ierr);
         elseif ncol<=3 || ncol==6
-            % For naming convention, see http://www.grc.nasa.gov/WWW/cgns/sids/dataname.html
+            % For naming convention, see https://cgns.github.io/CGNS_docs_current/sids/dataname.html
             if ncol<=3  % Vector
                 suffix = ['X';'Y';'Z'];
             else        % Tensor
@@ -390,7 +397,7 @@ for ii=1:length(fldlist)
         [index_field,ierr] = cg_field_write(index_file, index_base, ...
             index_zone, index_sol, type, varname, arr); chk_error(ierr);
     elseif ncol<=3 || ncol==6
-        % For naming convention, see http://www.grc.nasa.gov/WWW/cgns/sids/dataname.html
+        % For naming convention, see https://cgns.github.io/CGNS_docs_current/sids/dataname.html
         if ncol<=3  % Vector
             suffix = ['X';'Y';'Z'];
         else        % Tensor
@@ -498,10 +505,11 @@ switch (npe)
 end
 end
 
-function [elems,nelems] = convert_mixed_elements(elems, dim)
+function [elems,nelems,offsets] = convert_mixed_elements(elems, dim)
 % Convert from the number of vertices per element into
 % element_type in the connecitvity table.
 es = size(elems,1);
+offsets = zeros(es+1,1);
 
 ii=1;
 nelems = 0;
@@ -526,6 +534,7 @@ if dim==2
 
         ii = ii + nvpe + 1;
         nelems = nelems + 1;
+        offsets(nelems+1) = ii - 1;
     end
 else
     % Convert 3-D elements
@@ -560,8 +569,11 @@ else
         end
         ii = ii + nvpe + 1;
         nelems = nelems + 1;
+        offsets(nelems+1) = ii - 1;
     end
 end
+
+offsets = offsets(1:nelems+1);
 end
 
 function chk_error(ierr)
