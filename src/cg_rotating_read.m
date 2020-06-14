@@ -6,8 +6,8 @@ function [io_rot_rate, io_rot_center, ierr] = cg_rotating_read(io_rot_rate, io_r
 % Input argument (required; type is auto-casted):
 %
 % In&Out arguments (required as output; type is auto-casted):
-%        rot_rate: single-precision (single), array  (also required as input)
-%      rot_center: single-precision (single), array  (also required as input)
+%        rot_rate: single-precision (single), array  (must be preallocated at input)
+%      rot_center: single-precision (single), array  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -24,7 +24,7 @@ basetype = 'single';
 if ~isa(io_rot_rate,basetype)
     io_rot_rate = cast(io_rot_rate, basetype);
 elseif ~isempty(io_rot_rate)
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_rot_rate(1); io_rot_rate(1)=t;
 end
 
@@ -32,7 +32,7 @@ basetype = 'single';
 if ~isa(io_rot_center,basetype)
     io_rot_center = cast(io_rot_center, basetype);
 elseif ~isempty(io_rot_center)
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_rot_center(1); io_rot_center(1)=t;
 end
 

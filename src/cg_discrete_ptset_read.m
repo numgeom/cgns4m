@@ -10,7 +10,7 @@ function [io_pnts, ierr] = cg_discrete_ptset_read(in_fn, in_B, in_Z, in_D, io_pn
 %               D: 32-bit integer (int32), scalar
 %
 % In&Out argument (required as output; type is auto-casted):
-%            pnts: 64-bit integer (int64), array  (also required as input)
+%            pnts: 64-bit integer (int64), array  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -31,7 +31,7 @@ basetype = 'int64';
 if ~isa(io_pnts,basetype)
     io_pnts = cast(io_pnts, basetype);
 elseif ~isempty(io_pnts)
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_pnts(1); io_pnts(1)=t;
 end
 

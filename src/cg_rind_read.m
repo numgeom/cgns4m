@@ -6,7 +6,7 @@ function [io_RindData, ierr] = cg_rind_read(io_RindData)
 % Input argument (required; type is auto-casted):
 %
 % In&Out argument (required as output; type is auto-casted):
-%        RindData: 32-bit integer (int32), array  (also required as input)
+%        RindData: 32-bit integer (int32), array  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -23,7 +23,7 @@ basetype = 'int32';
 if ~isa(io_RindData,basetype)
     io_RindData = cast(io_RindData, basetype);
 elseif ~isempty(io_RindData)
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_RindData(1); io_RindData(1)=t;
 end
 
