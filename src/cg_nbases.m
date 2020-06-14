@@ -7,7 +7,7 @@ function [io_nbases, ierr] = cg_nbases(in_fn, io_nbases)
 %              fn: 32-bit integer (int32), scalar
 %
 % In&Out argument (required as output; type is auto-casted):
-%          nbases: 32-bit integer (int32), array  (also required as input)
+%          nbases: 32-bit integer (int32), array  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -25,7 +25,7 @@ basetype = 'int32';
 if ~isa(io_nbases,basetype)
     io_nbases = cast(io_nbases, basetype);
 elseif ~isempty(io_nbases)
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_nbases(1); io_nbases(1)=t;
 end
 

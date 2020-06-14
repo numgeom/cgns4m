@@ -46,7 +46,7 @@ perl -i -pe 's/\@BUILDHDF5\@/1/g;' \
        -e 's/\@FORTRAN_\w+\@/0/;' src/cgnstypes.h
 
 # generate M files and cgnslib_mex.c file
-./mexUtil/c2mex -debug -outdir src src/cgnslib.h
+./mexUtil/c2mex -outdir src src/cgnslib.h
 
 # Copy src/CG_*.m to private/ and strip out CG_ prefix in the file name...
 mkdir -p private

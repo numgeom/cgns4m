@@ -10,8 +10,8 @@ function [io_pnts, io_NormalList, ierr] = cg_boco_read(in_fn, in_B, in_Z, in_BC,
 %              BC: 32-bit integer (int32), scalar
 %
 % In&Out arguments (required as output; type is auto-casted):
-%            pnts: 64-bit integer (int64), array  (also required as input)
-%      NormalList: dynamic type based on cgns_get_boco_type(fn,B,Z,BC)  (also required as input)
+%            pnts: 64-bit integer (int64), array  (must be preallocated at input)
+%      NormalList: dynamic type based on cgns_get_boco_type(fn,B,Z,BC)  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -46,11 +46,16 @@ switch (datatype)
         error('Unknown data type %d', cgns_get_boco_type(in_fn, in_B, in_Z, in_BC));
 end
 
+if ~isempty(io_NormalList)
+    % Write to it to unshare memory with other variables
+    t=io_NormalList(1); io_NormalList(1)=t;
+end
+
 basetype = 'int64';
 if ~isa(io_pnts,basetype)
     io_pnts = cast(io_pnts, basetype);
 elseif ~isempty(io_pnts)
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_pnts(1); io_pnts(1)=t;
 end
 

@@ -8,7 +8,7 @@ function [io_gravity_vector, ierr] = cg_gravity_read(in_file_number, in_B, io_gr
 %               B: 32-bit integer (int32), scalar
 %
 % In&Out argument (required as output; type is auto-casted):
-%    gravity_vector: single-precision (single), array  (also required as input)
+%    gravity_vector: single-precision (single), array  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -27,7 +27,7 @@ basetype = 'single';
 if ~isa(io_gravity_vector,basetype)
     io_gravity_vector = cast(io_gravity_vector, basetype);
 elseif ~isempty(io_gravity_vector)
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_gravity_vector(1); io_gravity_vector(1)=t;
 end
 

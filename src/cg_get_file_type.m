@@ -7,7 +7,7 @@ function [io_file_type, ierr] = cg_get_file_type(in_fn, io_file_type)
 %              fn: 32-bit integer (int32), scalar
 %
 % In&Out argument (required as output; type is auto-casted):
-%       file_type: 32-bit integer (int32), array  (also required as input)
+%       file_type: 32-bit integer (int32), array  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -25,7 +25,7 @@ basetype = 'int32';
 if ~isa(io_file_type,basetype)
     io_file_type = cast(io_file_type, basetype);
 elseif ~isempty(io_file_type)
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_file_type(1); io_file_type(1)=t;
 end
 

@@ -778,6 +778,7 @@ CGNSDLL int cg_nbases(int fn, int *nbases);
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/structural.html */
 CGNSDLL int cg_base_read(int file_number, int B, char *basename,
 	int *cell_dim, int *phys_dim);
+/*%output basename(33),cell_dim,phys_dim */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/structural.html */
 /*%output cell_dim,phys_dim */
 
@@ -800,7 +801,7 @@ CGNSDLL int cg_nzones(int fn, int B, int *nzones);
 /*%output nzones */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/structural.html */
 CGNSDLL int cg_zone_read(int fn, int B, int Z, char *zonename, cgsize_t *size);
-/*%output size(9) */
+/*%output zonename(33),size(9) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/structural.html */
 CGNSDLL int cg_zone_type(int file_number, int B, int Z,
 	CGNS_ENUMT(ZoneType_t) *type);
@@ -828,7 +829,7 @@ CGNSDLL int cg_nfamilies(int file_number, int B, int *nfamilies);
 
 CGNSDLL int cg_family_read(int file_number, int B, int F,
 	char *family_name, int *nboco, int *ngeos);
-/*%output nboco, ngeos*/
+/*%output family_name(33), nboco, ngeos*/
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/families.html */
 
 CGNSDLL int cg_family_write(int file_number, int B, const char * family_name,
@@ -841,6 +842,7 @@ CGNSDLL int cg_family_write(int file_number, int B, const char * family_name,
 \* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 CGNSDLL int cg_famname_read(char *family_name);
+/*%output family_name(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/families.html */
 
 CGNSDLL int cg_famname_write(const char * family_name);
@@ -866,8 +868,8 @@ CGNSDLL int cg_fambc_write(int file_number, int B, int F,
 \* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 CGNSDLL int cg_geo_read(int file_number, int B, int F, int G, char *geo_name,
-	char **geo_file, char *CAD_name, int *npart);
-/*%output npart */
+    char **geo_file, char *CAD_name, int *npart);
+/*%output geo_name(33),geo_file,CAD_name(33),npart */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/families.html */
 
 CGNSDLL int cg_geo_write(int file_number, int B, int F, const char * geo_name,
@@ -881,6 +883,7 @@ CGNSDLL int cg_geo_write(int file_number, int B, int F, const char * geo_name,
 
 CGNSDLL int cg_part_read(int file_number, int B, int F, int G, int P,
 	char *part_name);
+/*%output part_name(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/families.html */
 CGNSDLL int cg_part_write(int file_number, int B, int F, int G,
 	const char * part_name, int *P);
@@ -896,6 +899,7 @@ CGNSDLL int cg_ngrids(int file_number, int B, int Z, int *ngrids);
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/grid.html */
 
 CGNSDLL int cg_grid_read(int file_number, int B, int Z, int G, char *gridname);
+/*%output gridname(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/grid.html */
 
 CGNSDLL int cg_grid_write(int file_number, int B, int Z,
@@ -913,7 +917,7 @@ CGNSDLL int cg_ncoords(int fn, int B, int Z, int *ncoords);
 
 CGNSDLL int cg_coord_info(int fn, int B, int Z, int C,
 	CGNS_ENUMT(DataType_t) *type, char *coordname);
-/*%output type */
+/*%output type,coordname(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/grid.html */
 
 CGNSDLL int cg_coord_read(int fn, int B, int Z, const char * coordname,
@@ -925,6 +929,8 @@ CGNSDLL int cg_coord_read(int fn, int B, int Z, const char * coordname,
 
 CGNSDLL int cg_coord_id(int fn, int B, int Z, int C, double *coord_id);
 /*%output coord_id */
+/*%url https://cgns.github.io/CGNS_docs_current/midlevel/grid.html */
+
 CGNSDLL int cg_coord_write(int fn, int B, int Z,
 	CGNS_ENUMT(DataType_t) type, const char * coordname,
  	const void * coord_ptr, int *C);
@@ -954,7 +960,7 @@ CGNSDLL int cg_nsections(int file_number, int B, int Z, int *nsections);
 CGNSDLL int cg_section_read(int file_number, int B, int Z, int S,
 	char *SectionName,  CGNS_ENUMT(ElementType_t) *type,
 	cgsize_t *start, cgsize_t *end, int *nbndry, int *parent_flag);
-/*%output type,start,end,nbndry,parent_flag */
+/*%output SectionName(33),type,start,end,nbndry,parent_flag */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/grid.html */
 
 CGNSDLL int cg_elements_read(int file_number, int B, int Z, int S,
@@ -1017,7 +1023,7 @@ CGNSDLL int cg_nsols(int fn, int B, int Z, int *nsols);
 
 CGNSDLL int cg_sol_info(int fn, int B, int Z, int S, char *solname,
 	CGNS_ENUMT(GridLocation_t) *location);
-/*%output location */
+/*%output solname(33),location */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/solution.html */
 
 CGNSDLL int cg_sol_id(int fn, int B, int Z,int S, double *sol_id);
@@ -1057,7 +1063,7 @@ CGNSDLL int cg_nfields(int fn, int B, int Z, int S, int *nfields);
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/solution.html */
 CGNSDLL int cg_field_info(int fn,int B,int Z,int S, int F,
 	CGNS_ENUMT(DataType_t) *type, char *fieldname);
-/*%output type */
+/*%output type,fieldname(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/solution.html */
 
 CGNSDLL int cg_field_read(int fn, int B, int Z, int S, const char *fieldname,
@@ -1099,13 +1105,15 @@ CGNSDLL int cg_subreg_info(int fn, int B, int Z, int S, char *regname,
 	int *dimension, CGNS_ENUMT(GridLocation_t) *location,
 	CGNS_ENUMT(PointSetType_t) *ptset_type, cgsize_t *npnts,
 	int *bcname_len, int *gcname_len);
-/*%output dimension, location, ptset_type, npnts, bcname_len, gcname_len */
+/*%output regname(33), dimension, location, ptset_type, npnts, bcname_len, gcname_len */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/solution.html */
 CGNSDLL int cg_subreg_ptset_read(int fn, int B, int Z, int S, cgsize_t *pnts);
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/solution.html */
 CGNSDLL int cg_subreg_bcname_read(int fn, int B, int Z, int S, char *bcname);
+/*%output bcname(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/solution.html */
 CGNSDLL int cg_subreg_gcname_read(int fn, int B, int Z, int S, char *gcname);
+/*%output gcname(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/solution.html */
 CGNSDLL int cg_subreg_ptset_write(int fn, int B, int Z, const char *regname,
 	int dimension, CGNS_ENUMT(GridLocation_t) location,
@@ -1130,6 +1138,7 @@ CGNSDLL int cg_nzconns(int fn, int B, int Z, int *nzconns);
 /*%output nzconns */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/timedep.html */
 CGNSDLL int cg_zconn_read(int fn, int B, int Z, int C, char *name);
+/*%output name(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/timedep.html */
 CGNSDLL int cg_zconn_write(int fn, int B, int Z, const char *name, int *C);
 /*%output C */
@@ -1151,7 +1160,7 @@ CGNSDLL int cg_nholes(int fn, int B, int Z, int *nholes);
 CGNSDLL int cg_hole_info(int fn, int B, int Z, int I, char *holename,
 	CGNS_ENUMT(GridLocation_t) *location,  CGNS_ENUMT(PointSetType_t) *ptset_type,
 	int *nptsets, cgsize_t *npnts);
-/*%output location, ptset_type, nptsets, npnts */
+/*%output holename(33), location, ptset_type, nptsets, npnts */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html */
 
 CGNSDLL int cg_hole_read(int fn, int B, int Z, int I, cgsize_t *pnts);
@@ -1185,7 +1194,7 @@ CGNSDLL int cg_conn_info(int file_number, int B, int Z, int I,
 	CGNS_ENUMT(PointSetType_t) *donor_ptset_type,
         CGNS_ENUMT(DataType_t) *donor_datatype,
         cgsize_t *ndata_donor);
-/*%output location,type,ptset_type,npnts,donor_zonetype,donor_ptset_type,donor_datatype,ndata_donor*/
+/*%output connectname(33),location,type,ptset_type,npnts,donorname(33),donor_zonetype,donor_ptset_type,donor_datatype,ndata_donor*/
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html */
 
 CGNSDLL int cg_conn_read(int file_number, int B, int Z, int I, cgsize_t *pnts,
@@ -1231,7 +1240,7 @@ CGNSDLL int cg_n1to1(int fn, int B, int Z, int *n1to1);
 
 CGNSDLL int cg_1to1_read(int fn, int B, int Z, int I, char *connectname,
 	char *donorname, cgsize_t *range, cgsize_t *donor_range, int *transform);
-/*%output range(6), donor_range(6), transform(3) */
+/*%output connectname(33), donorname(33), range(6), donor_range(6), transform(3) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html */
 
 CGNSDLL int cg_1to1_id(int fn, int B, int Z, int I, double *one21_id);
@@ -1273,7 +1282,9 @@ CGNSDLL int cg_boco_info(int fn, int B, int Z, int BC, char *boconame,
 	CGNS_ENUMT(BCType_t) *bocotype, CGNS_ENUMT(PointSetType_t) *ptset_type,
  	cgsize_t *npnts, int *NormalIndex, cgsize_t *NormalListSize,
  	CGNS_ENUMT(DataType_t) *NormalDataType, int *ndataset);
-/*%output bocotype,ptset_type,npnts,NormalListSize,NormalDataType,ndataset */
+/*%external */
+/*%inout NormalIndex */
+/*%output boconame(33),bocotype,ptset_type,npnts,NormalListSize,NormalDataType,ndataset */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/bc.html */
 
 CGNSDLL int cg_boco_read(int fn, int B, int Z, int BC, cgsize_t *pnts,
@@ -1311,7 +1322,7 @@ CGNSDLL int cg_boco_gridlocation_write(int file_number, int B, int Z,
 
 CGNSDLL int cg_dataset_read(int fn, int B, int Z, int BC, int DS, char *name,
 	CGNS_ENUMT(BCType_t) *BCType, int *DirichletFlag, int *NeumannFlag);
-/*%output BCType,DirichletFlag,NeumannFlag */
+/*%output name(33), BCType,DirichletFlag,NeumannFlag */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/bc.html */
 
 CGNSDLL int cg_dataset_write(int file_number, int B, int Z, int BC,
@@ -1333,7 +1344,7 @@ CGNSDLL int cg_bcdataset_info(int *n_dataset);
 
 CGNSDLL int cg_bcdataset_read(int index, char *name,
 	CGNS_ENUMT(BCType_t) *BCType, int *DirichletFlag, int *NeumannFlag);
-/*%output BCType,DirichletFlag,NeumannFlag */
+/*%output name(33), BCType,DirichletFlag,NeumannFlag */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/bc.html */
 
 
@@ -1355,6 +1366,7 @@ CGNSDLL int cg_ndiscrete(int file_number, int B, int Z, int *ndiscrete);
 
 CGNSDLL int cg_discrete_read(int file_number, int B, int Z, int D,
 	char *discrete_name);
+/*%output discrete_name(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/solution.html */
 CGNSDLL int cg_discrete_write(int file_number, int B, int Z,
 	const char * discrete_name, int *D);
@@ -1363,7 +1375,8 @@ CGNSDLL int cg_discrete_write(int file_number, int B, int Z,
 
 CGNSDLL int cg_discrete_size(int fn, int B, int Z, int D,
 	int *data_dim, cgsize_t *dim_vals);
-/*%output data_dim, dim_vals(:) */
+/*%output data_dim */
+/*%inout dim_vals */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/solution.html */
 
 CGNSDLL int cg_discrete_ptset_info(int fn, int B, int Z, int D,
@@ -1392,7 +1405,7 @@ CGNSDLL int cg_n_rigid_motions(int file_number, int B, int Z,
 
 CGNSDLL int cg_rigid_motion_read(int file_number, int B, int Z, int R,
 	char *name, CGNS_ENUMT(RigidGridMotionType_t) *type);
-/*%output type */
+/*%output name(33),type */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/timedep.html */
 
 CGNSDLL int cg_rigid_motion_write(int file_number, int B, int Z,
@@ -1412,7 +1425,7 @@ CGNSDLL int cg_n_arbitrary_motions(int file_number, int B, int Z,
 
 CGNSDLL int cg_arbitrary_motion_read(int file_number, int B, int Z, int A,
 	char *name, CGNS_ENUMT(ArbitraryGridMotionType_t) *type);
-/*%output type */
+/*%output name(33), type */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/timedep.html */
 
 CGNSDLL int cg_arbitrary_motion_write(int file_number, int B, int Z,
@@ -1440,7 +1453,7 @@ CGNSDLL int cg_simulation_type_write(int file_number, int B,
 \* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 CGNSDLL int cg_biter_read(int file_number, int B, char *bitername, int *nsteps);
-/*%output nsteps */
+/*%output bitername(33),nsteps */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/timedep.html */
 
 CGNSDLL int cg_biter_write(int file_number, int B, const char * bitername, int nsteps);
@@ -1451,6 +1464,7 @@ CGNSDLL int cg_biter_write(int file_number, int B, const char * bitername, int n
 \* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 CGNSDLL int cg_ziter_read(int file_number, int B, int Z, char *zitername);
+/*%output zitername(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/timedep.html */
 CGNSDLL int cg_ziter_write(int file_number, int B, int Z, const char * zitername);
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/timedep.html */
@@ -1470,6 +1484,7 @@ CGNSDLL int cg_gravity_write(int file_number, int B, float const *gravity_vector
 
 CGNSDLL int cg_axisym_read(int file_number, int B, float *ref_point,
 	float *axis);
+/*%output ref_point(2),axis(2) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/grid.html */
 
 CGNSDLL int cg_axisym_write(int file_number, int B, float const *ref_point,
@@ -1503,7 +1518,7 @@ CGNSDLL int cg_bc_wallfunction_write(int file_number, int B, int Z, int BC,
 
 CGNSDLL int cg_bc_area_read(int file_number, int B, int Z, int BC,
 	CGNS_ENUMT(AreaType_t) *AreaType, float *SurfaceArea, char *RegionName);
-/*%output AreaType,SurfaceArea */
+/*%output AreaType,SurfaceArea,RegionName(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/bc.html */
 CGNSDLL int cg_bc_area_write(int file_number, int B, int Z, int BC,
 	CGNS_ENUMT(AreaType_t) AreaType, float SurfaceArea, const char *RegionName);
@@ -1582,6 +1597,7 @@ CGNSDLL int cg_where(int *file_number, int *B, int *depth, char **label,
 \* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 CGNSDLL int cg_convergence_read(int *iterations, char **NormDefinitions);
+/*%output iterations, NormDefinitions(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html */
 
 CGNSDLL int cg_convergence_write(int iterations, const char * NormDefinitions);
@@ -1592,6 +1608,7 @@ CGNSDLL int cg_convergence_write(int iterations, const char * NormDefinitions);
 \* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 CGNSDLL int cg_state_read(char **StateDescription);
+/*%output StateDescription */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html */
 CGNSDLL int cg_state_write(const char * StateDescription);
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html */
@@ -1662,18 +1679,14 @@ CGNSDLL int cg_narrays(int *narrays);
 CGNSDLL int cg_array_info(int A, char *ArrayName,
 	CGNS_ENUMT(DataType_t) *DataType,
 	int *DataDimension, cgsize_t *DimensionVector);
-/*%output DataType, DataDimension */
-/*%inout DimensionVector(3) */
+/*%output ArrayName(33), DataType, DataDimension, DimensionVector(3) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/physical.html */
-
-CGNSDLL int cg_array_read(int A, void *Data);
-/*%typecast Data:cgns_get_array_type(A) */
+CGNSDLL int cg_array_read(int A, void *data);
+/*%typecast data:cgns_get_array_type(A) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/physical.html */
-
-CGNSDLL int cg_array_read_as(int A, CGNS_ENUMT(DataType_t) type, void *Data);
-/*%typecast Data:type */
+CGNSDLL int cg_array_read_as(int A, CGNS_ENUMT(DataType_t) type, void *data);
+/*%typecast data:type */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/physical.html */
-
 CGNSDLL int cg_array_write(const char * ArrayName,
 	CGNS_ENUMT(DataType_t) DataType, int DataDimension,
 	const cgsize_t * DimensionVector, const void * Data);
@@ -1691,6 +1704,7 @@ CGNSDLL int cg_nuser_data(int *nuser_data);
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html */
 
 CGNSDLL int cg_user_data_read(int Index, char *user_data_name);
+/*%output user_data_name(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html */
 CGNSDLL int cg_user_data_write(const char * user_data_name);
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html */
@@ -1702,8 +1716,8 @@ CGNSDLL int cg_user_data_write(const char * user_data_name);
 CGNSDLL int cg_nintegrals(int *nintegrals);
 /*%output nintegrals */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html */
-
 CGNSDLL int cg_integral_read(int IntegralDataIndex, char *IntegralDataName);
+/*%output IntegralDataName(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html */
 CGNSDLL int cg_integral_write(const char * IntegralDataName);
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html */
@@ -1726,6 +1740,7 @@ CGNSDLL int cg_ndescriptors(int *ndescriptors);
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/descriptor.html */
 
 CGNSDLL int cg_descriptor_read(int descr_no, char *descr_name, char **descr_text);
+/*%output descr_name(33),descr_text */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/descriptor.html */
 
 CGNSDLL int cg_descriptor_write(const char * descr_name, const char * descr_text);
@@ -1876,6 +1891,7 @@ CGNSDLL int cg_is_link(int *path_length);
 /*url https://cgns.github.io/CGNS_docs_current/midlevel/links.html */
 
 CGNSDLL int cg_link_read(char **filename, char **link_path);
+/*%output filename,link_path */
 /*url https://cgns.github.io/CGNS_docs_current/midlevel/links.html */
 CGNSDLL int cg_link_write(const char * nodename, const char * filename,
 	const char * name_in_file);

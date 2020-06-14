@@ -6,7 +6,7 @@ function [io_diffusion_model, ierr] = cg_diffusion_read(io_diffusion_model)
 % Input argument (required; type is auto-casted):
 %
 % In&Out argument (required as output; type is auto-casted):
-%    diffusion_model: 32-bit integer (int32), array  (also required as input)
+%    diffusion_model: 32-bit integer (int32), array  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -23,7 +23,7 @@ basetype = 'int32';
 if ~isa(io_diffusion_model,basetype)
     io_diffusion_model = cast(io_diffusion_model, basetype);
 elseif ~isempty(io_diffusion_model)
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_diffusion_model(1); io_diffusion_model(1)=t;
 end
 

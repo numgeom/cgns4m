@@ -45,7 +45,7 @@ EXTERN_C void cg_is_cgns_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_filename = _mxGetString(prhs[0], NULL);
 
 
@@ -56,7 +56,7 @@ EXTERN_C void cg_is_cgns_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_filename);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_file_type;
     if (nlhs > 1) {
@@ -82,7 +82,7 @@ EXTERN_C void cg_open_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_filename = _mxGetString(prhs[0], NULL);
 
     if (_n_dims(prhs[1]) > 0)
@@ -97,7 +97,7 @@ EXTERN_C void cg_open_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_filename);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_fn;
     if (nlhs > 1) {
@@ -122,7 +122,7 @@ EXTERN_C void cg_version_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -132,7 +132,7 @@ EXTERN_C void cg_version_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_version(in_fn, &out_FileVersion);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxSINGLE_CLASS, mxREAL);
     *(float*)mxGetData(plhs[0]) = out_FileVersion;
     if (nlhs > 1) {
@@ -156,7 +156,7 @@ EXTERN_C void cg_close_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -166,7 +166,7 @@ EXTERN_C void cg_close_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_close(in_fn);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -189,7 +189,7 @@ EXTERN_C void cg_save_as_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -212,7 +212,7 @@ EXTERN_C void cg_save_as_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_filename);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -232,7 +232,7 @@ EXTERN_C void cg_set_file_type_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_type");
     in_file_type = _get_numeric_scalar_int32(prhs[0]);
@@ -242,7 +242,7 @@ EXTERN_C void cg_set_file_type_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_set_file_type(in_file_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -263,7 +263,7 @@ EXTERN_C void cg_get_file_type_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -278,7 +278,7 @@ EXTERN_C void cg_get_file_type_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_get_file_type(in_fn, io_file_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -299,7 +299,7 @@ EXTERN_C void cg_root_id_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -309,7 +309,7 @@ EXTERN_C void cg_root_id_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_root_id(in_fn, &out_rootid);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxDOUBLE_CLASS, mxREAL);
     *(double*)mxGetData(plhs[0]) = out_rootid;
     if (nlhs > 1) {
@@ -334,7 +334,7 @@ EXTERN_C void cg_get_cgio_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -344,7 +344,7 @@ EXTERN_C void cg_get_cgio_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_get_cgio(in_fn, &out_cgio_num);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_cgio_num;
     if (nlhs > 1) {
@@ -369,7 +369,7 @@ EXTERN_C void cg_configure_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument what");
     in_what = _get_numeric_scalar_int32(prhs[0]);
@@ -380,7 +380,7 @@ EXTERN_C void cg_configure_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_configure(in_what, in_value);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -400,7 +400,7 @@ EXTERN_C void cg_set_compress_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument compress");
     in_compress = _get_numeric_scalar_int32(prhs[0]);
@@ -410,7 +410,7 @@ EXTERN_C void cg_set_compress_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_set_compress(in_compress);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -435,7 +435,7 @@ EXTERN_C void cg_get_compress_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_get_compress(&out_compress);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_compress;
     if (nlhs > 1) {
@@ -459,7 +459,7 @@ EXTERN_C void cg_set_path_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_path = _mxGetString(prhs[0], NULL);
 
 
@@ -470,7 +470,7 @@ EXTERN_C void cg_set_path_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_path);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -490,7 +490,7 @@ EXTERN_C void cg_add_path_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_path = _mxGetString(prhs[0], NULL);
 
 
@@ -501,7 +501,7 @@ EXTERN_C void cg_add_path_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_path);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -521,7 +521,7 @@ EXTERN_C void cg_MassUnitsName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -531,7 +531,7 @@ EXTERN_C void cg_MassUnitsName_MeX(int nlhs, mxArray *plhs[],
     name = cg_MassUnitsName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -550,7 +550,7 @@ EXTERN_C void cg_LengthUnitsName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -560,7 +560,7 @@ EXTERN_C void cg_LengthUnitsName_MeX(int nlhs, mxArray *plhs[],
     name = cg_LengthUnitsName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -579,7 +579,7 @@ EXTERN_C void cg_TimeUnitsName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -589,7 +589,7 @@ EXTERN_C void cg_TimeUnitsName_MeX(int nlhs, mxArray *plhs[],
     name = cg_TimeUnitsName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -608,7 +608,7 @@ EXTERN_C void cg_TemperatureUnitsName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -618,7 +618,7 @@ EXTERN_C void cg_TemperatureUnitsName_MeX(int nlhs, mxArray *plhs[],
     name = cg_TemperatureUnitsName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -637,7 +637,7 @@ EXTERN_C void cg_AngleUnitsName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -647,7 +647,7 @@ EXTERN_C void cg_AngleUnitsName_MeX(int nlhs, mxArray *plhs[],
     name = cg_AngleUnitsName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -666,7 +666,7 @@ EXTERN_C void cg_ElectricCurrentUnitsName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -676,7 +676,7 @@ EXTERN_C void cg_ElectricCurrentUnitsName_MeX(int nlhs, mxArray *plhs[],
     name = cg_ElectricCurrentUnitsName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -695,7 +695,7 @@ EXTERN_C void cg_SubstanceAmountUnitsName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -705,7 +705,7 @@ EXTERN_C void cg_SubstanceAmountUnitsName_MeX(int nlhs, mxArray *plhs[],
     name = cg_SubstanceAmountUnitsName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -724,7 +724,7 @@ EXTERN_C void cg_LuminousIntensityUnitsName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -734,7 +734,7 @@ EXTERN_C void cg_LuminousIntensityUnitsName_MeX(int nlhs, mxArray *plhs[],
     name = cg_LuminousIntensityUnitsName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -753,7 +753,7 @@ EXTERN_C void cg_DataClassName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -763,7 +763,7 @@ EXTERN_C void cg_DataClassName_MeX(int nlhs, mxArray *plhs[],
     name = cg_DataClassName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -782,7 +782,7 @@ EXTERN_C void cg_GridLocationName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -792,7 +792,7 @@ EXTERN_C void cg_GridLocationName_MeX(int nlhs, mxArray *plhs[],
     name = cg_GridLocationName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -811,7 +811,7 @@ EXTERN_C void cg_BCDataTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -821,7 +821,7 @@ EXTERN_C void cg_BCDataTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_BCDataTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -840,7 +840,7 @@ EXTERN_C void cg_GridConnectivityTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -850,7 +850,7 @@ EXTERN_C void cg_GridConnectivityTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_GridConnectivityTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -869,7 +869,7 @@ EXTERN_C void cg_PointSetTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -879,7 +879,7 @@ EXTERN_C void cg_PointSetTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_PointSetTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -898,7 +898,7 @@ EXTERN_C void cg_GoverningEquationsTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -908,7 +908,7 @@ EXTERN_C void cg_GoverningEquationsTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_GoverningEquationsTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -927,7 +927,7 @@ EXTERN_C void cg_ModelTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -937,7 +937,7 @@ EXTERN_C void cg_ModelTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_ModelTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -956,7 +956,7 @@ EXTERN_C void cg_BCTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -966,7 +966,7 @@ EXTERN_C void cg_BCTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_BCTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -985,7 +985,7 @@ EXTERN_C void cg_DataTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -995,7 +995,7 @@ EXTERN_C void cg_DataTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_DataTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -1014,7 +1014,7 @@ EXTERN_C void cg_ElementTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -1024,7 +1024,7 @@ EXTERN_C void cg_ElementTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_ElementTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -1043,7 +1043,7 @@ EXTERN_C void cg_ZoneTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -1053,7 +1053,7 @@ EXTERN_C void cg_ZoneTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_ZoneTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -1072,7 +1072,7 @@ EXTERN_C void cg_RigidGridMotionTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -1082,7 +1082,7 @@ EXTERN_C void cg_RigidGridMotionTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_RigidGridMotionTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -1101,7 +1101,7 @@ EXTERN_C void cg_ArbitraryGridMotionTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -1111,7 +1111,7 @@ EXTERN_C void cg_ArbitraryGridMotionTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_ArbitraryGridMotionTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -1130,7 +1130,7 @@ EXTERN_C void cg_SimulationTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -1140,7 +1140,7 @@ EXTERN_C void cg_SimulationTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_SimulationTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -1159,7 +1159,7 @@ EXTERN_C void cg_WallFunctionTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -1169,7 +1169,7 @@ EXTERN_C void cg_WallFunctionTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_WallFunctionTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -1188,7 +1188,7 @@ EXTERN_C void cg_AreaTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -1198,7 +1198,7 @@ EXTERN_C void cg_AreaTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_AreaTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -1217,7 +1217,7 @@ EXTERN_C void cg_AverageInterfaceTypeName_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -1227,7 +1227,7 @@ EXTERN_C void cg_AverageInterfaceTypeName_MeX(int nlhs, mxArray *plhs[],
     name = cg_AverageInterfaceTypeName(in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(name);
 }
 
@@ -1247,7 +1247,7 @@ EXTERN_C void cg_nbases_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -1262,13 +1262,13 @@ EXTERN_C void cg_nbases_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nbases(in_fn, io_nbases);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
 
 /* Gateway function
- * [io_basename, out_cell_dim, out_phys_dim, ierr] = cg_base_read(in_file_number, in_B, io_basename)
+ * [out_basename, out_cell_dim, out_phys_dim, ierr] = cg_base_read(in_file_number, in_B)
  *
  * The original C interface is
  * int cg_base_read(int file_number, int B, char * basename, int * cell_dim, int * phys_dim);
@@ -1277,16 +1277,16 @@ EXTERN_C void cg_base_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     int in_file_number;
     int in_B;
-    char * io_basename;
+    char out_basename[33];
     int out_cell_dim;
     int out_phys_dim;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 4 || nrhs != 3)
+    if (nlhs > 4 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -1295,25 +1295,22 @@ EXTERN_C void cg_base_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument B");
     in_B = _get_numeric_scalar_int32(prhs[1]);
 
-    io_basename = _mxGetString(prhs[2], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_base_read(in_file_number, in_B, io_basename, &out_cell_dim, &out_phys_dim);
+    ierr = cg_base_read(in_file_number, in_B, out_basename, &out_cell_dim, &out_phys_dim);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_basename);
-    _mxFreeString(io_basename);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_cell_dim;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_basename);
     if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_cell_dim;
+    }
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = out_phys_dim;
     }
-    if (nlhs > 2) {
+    if (nlhs > 3) {
         plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[3]) = ierr;
     }
@@ -1336,7 +1333,7 @@ EXTERN_C void cg_base_id_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -1350,7 +1347,7 @@ EXTERN_C void cg_base_id_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_base_id(in_fn, in_B, &out_base_id);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxDOUBLE_CLASS, mxREAL);
     *(double*)mxGetData(plhs[0]) = out_base_id;
     if (nlhs > 1) {
@@ -1378,7 +1375,7 @@ EXTERN_C void cg_base_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -1401,7 +1398,7 @@ EXTERN_C void cg_base_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_basename);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_B;
     if (nlhs > 1) {
@@ -1427,7 +1424,7 @@ EXTERN_C void cg_cell_dim_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -1441,7 +1438,7 @@ EXTERN_C void cg_cell_dim_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_cell_dim(in_fn, in_B, &out_cell_dim);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_cell_dim;
     if (nlhs > 1) {
@@ -1467,7 +1464,7 @@ EXTERN_C void cg_nzones_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -1481,7 +1478,7 @@ EXTERN_C void cg_nzones_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nzones(in_fn, in_B, &out_nzones);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_nzones;
     if (nlhs > 1) {
@@ -1491,7 +1488,7 @@ EXTERN_C void cg_nzones_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_zonename, ierr] = cg_zone_read(in_fn, in_B, in_Z, io_zonename, io_size)
+ * [out_zonename, out_size, ierr] = cg_zone_read(in_fn, in_B, in_Z)
  *
  * The original C interface is
  * int cg_zone_read(int fn, int B, int Z, char * zonename, long long * size);
@@ -1501,15 +1498,15 @@ EXTERN_C void cg_zone_read_MeX(int nlhs, mxArray *plhs[],
     int in_fn;
     int in_B;
     int in_Z;
-    char * io_zonename;
-    long long * io_size;
+    char out_zonename[33];
+    long long * out_size;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 2 || nrhs != 5)
+    if (nlhs > 3 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -1522,27 +1519,21 @@ EXTERN_C void cg_zone_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument Z");
     in_Z = _get_numeric_scalar_int32(prhs[2]);
 
-    io_zonename = _mxGetString(prhs[3], NULL);
-
-    if (mxGetNumberOfElements(prhs[4]) < (int) (9) || _n_dims(prhs[4]) > 1)
-        mexErrMsgTxt("Error in dimension of argument size");
-    if (mxIsInt64(prhs[4]) || mxIsUint64(prhs[4]))
-        io_size = (long long*)mxGetData(prhs[4]);
-    else
-        mexErrMsgTxt("Expecting 64-bit integer matrix for argument size");
+    /******** Obtain fixed-size output arrays ********/
+    plhs[1] = mxCreateNumericMatrix(9,1,mxINT64_CLASS, mxREAL);
+    out_size = mxGetData(plhs[1]);
 
 
     /******** Invoke computational function ********/
-    ierr = cg_zone_read(in_fn, in_B, in_Z, io_zonename, io_size);
+    ierr = cg_zone_read(in_fn, in_B, in_Z, out_zonename, out_size);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_zonename);
-    _mxFreeString(io_zonename);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_zonename);
+    if (nlhs > 1) {
+        plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[2]) = ierr;
+    }
 }
 
 /* Gateway function
@@ -1563,7 +1554,7 @@ EXTERN_C void cg_zone_type_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -1581,7 +1572,7 @@ EXTERN_C void cg_zone_type_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_zone_type(in_file_number, in_B, in_Z, &out_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_type;
     if (nlhs > 1) {
@@ -1608,7 +1599,7 @@ EXTERN_C void cg_zone_id_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -1626,7 +1617,7 @@ EXTERN_C void cg_zone_id_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_zone_id(in_fn, in_B, in_Z, &out_zone_id);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxDOUBLE_CLASS, mxREAL);
     *(double*)mxGetData(plhs[0]) = out_zone_id;
     if (nlhs > 1) {
@@ -1655,7 +1646,7 @@ EXTERN_C void cg_zone_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -1685,7 +1676,7 @@ EXTERN_C void cg_zone_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_zonename);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_Z;
     if (nlhs > 1) {
@@ -1695,7 +1686,7 @@ EXTERN_C void cg_zone_write_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * ierr = cg_index_dim(in_fn, in_B, in_Z, io_index_dim)
+ * [out_index_dim, ierr] = cg_index_dim(in_fn, in_B, in_Z)
  *
  * The original C interface is
  * int cg_index_dim(int fn, int B, int Z, int * index_dim);
@@ -1705,14 +1696,14 @@ EXTERN_C void cg_index_dim_MeX(int nlhs, mxArray *plhs[],
     int in_fn;
     int in_B;
     int in_Z;
-    int * io_index_dim;
+    int * out_index_dim;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 1 || nrhs != 4)
+    if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -1725,21 +1716,18 @@ EXTERN_C void cg_index_dim_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument Z");
     in_Z = _get_numeric_scalar_int32(prhs[2]);
 
-    if (mxGetNumberOfElements(prhs[3]) < (int) (3) || _n_dims(prhs[3]) > 1)
-        mexErrMsgTxt("Error in dimension of argument index_dim");
-    if (mxIsInt32(prhs[3]) || mxIsUint32(prhs[3]))
-        io_index_dim = (int*)mxGetData(prhs[3]);
-    else
-        mexErrMsgTxt("Expecting 32-bit integer matrix for argument index_dim");
+    /******** Obtain fixed-size output arrays ********/
+    plhs[0] = mxCreateNumericMatrix(3,1,mxINT32_CLASS, mxREAL);
+    out_index_dim = mxGetData(plhs[0]);
 
 
     /******** Invoke computational function ********/
-    ierr = cg_index_dim(in_fn, in_B, in_Z, io_index_dim);
+    ierr = cg_index_dim(in_fn, in_B, in_Z, out_index_dim);
 
 
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[1]) = ierr;
 }
 
 /* Gateway function
@@ -1759,7 +1747,7 @@ EXTERN_C void cg_nfamilies_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -1773,7 +1761,7 @@ EXTERN_C void cg_nfamilies_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nfamilies(in_file_number, in_B, &out_nfamilies);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_nfamilies;
     if (nlhs > 1) {
@@ -1783,7 +1771,7 @@ EXTERN_C void cg_nfamilies_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_family_name, out_nboco, out_ngeos, ierr] = cg_family_read(in_file_number, in_B, in_F, io_family_name)
+ * [out_family_name, out_nboco, out_ngeos, ierr] = cg_family_read(in_file_number, in_B, in_F)
  *
  * The original C interface is
  * int cg_family_read(int file_number, int B, int F, char * family_name, int * nboco, int * ngeos);
@@ -1793,16 +1781,16 @@ EXTERN_C void cg_family_read_MeX(int nlhs, mxArray *plhs[],
     int in_file_number;
     int in_B;
     int in_F;
-    char * io_family_name;
+    char out_family_name[33];
     int out_nboco;
     int out_ngeos;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 4 || nrhs != 4)
+    if (nlhs > 4 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -1815,25 +1803,22 @@ EXTERN_C void cg_family_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument F");
     in_F = _get_numeric_scalar_int32(prhs[2]);
 
-    io_family_name = _mxGetString(prhs[3], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_family_read(in_file_number, in_B, in_F, io_family_name, &out_nboco, &out_ngeos);
+    ierr = cg_family_read(in_file_number, in_B, in_F, out_family_name, &out_nboco, &out_ngeos);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_family_name);
-    _mxFreeString(io_family_name);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_nboco;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_family_name);
     if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_nboco;
+    }
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = out_ngeos;
     }
-    if (nlhs > 2) {
+    if (nlhs > 3) {
         plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[3]) = ierr;
     }
@@ -1857,7 +1842,7 @@ EXTERN_C void cg_family_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -1876,7 +1861,7 @@ EXTERN_C void cg_family_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_family_name);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_F;
     if (nlhs > 1) {
@@ -1886,35 +1871,31 @@ EXTERN_C void cg_family_write_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_family_name, ierr] = cg_famname_read(io_family_name)
+ * [out_family_name, ierr] = cg_famname_read()
  *
  * The original C interface is
  * int cg_famname_read(char * family_name);
  */
 EXTERN_C void cg_famname_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
-    char * io_family_name;
+    char out_family_name[33];
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 2 || nrhs != 1)
+    if (nlhs > 2 || nrhs != 0)
         mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input and/or inout arguments ********/
-    io_family_name = _mxGetString(prhs[0], NULL);
 
 
     /******** Invoke computational function ********/
-    ierr = cg_famname_read(io_family_name);
+    ierr = cg_famname_read(out_family_name);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_family_name);
-    _mxFreeString(io_family_name);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_family_name);
+    if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = ierr;
+    }
 }
 
 /* Gateway function
@@ -1932,7 +1913,7 @@ EXTERN_C void cg_famname_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_family_name = _mxGetString(prhs[0], NULL);
 
 
@@ -1943,7 +1924,7 @@ EXTERN_C void cg_famname_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_family_name);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -1968,7 +1949,7 @@ EXTERN_C void cg_fambc_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 3 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -1996,7 +1977,7 @@ EXTERN_C void cg_fambc_read_MeX(int nlhs, mxArray *plhs[],
     plhs[0] = mxCreateString(io_fambc_name);
     _mxFreeString(io_fambc_name);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[1]) = out_bocotype;
     if (nlhs > 1) {
@@ -2025,7 +2006,7 @@ EXTERN_C void cg_fambc_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -2052,7 +2033,7 @@ EXTERN_C void cg_fambc_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_fambc_name);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_BC;
     if (nlhs > 1) {
@@ -2062,7 +2043,7 @@ EXTERN_C void cg_fambc_write_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_geo_name, io_CAD_name, out_geo_file, out_npart, ierr] = cg_geo_read(in_file_number, in_B, in_F, in_G, io_geo_name, io_CAD_name)
+ * [out_geo_name, out_geo_file, out_CAD_name, out_npart, ierr] = cg_geo_read(in_file_number, in_B, in_F, in_G)
  *
  * The original C interface is
  * int cg_geo_read(int file_number, int B, int F, int G, char * geo_name, char ** geo_file, char * CAD_name, int * npart);
@@ -2073,17 +2054,17 @@ EXTERN_C void cg_geo_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_F;
     int in_G;
-    char * io_geo_name;
+    char out_geo_name[33];
     char * out_geo_file;
-    char * io_CAD_name;
+    char out_CAD_name[33];
     int out_npart;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 5 || nrhs != 6)
+    if (nlhs > 5 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -2100,30 +2081,26 @@ EXTERN_C void cg_geo_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument G");
     in_G = _get_numeric_scalar_int32(prhs[3]);
 
-    io_geo_name = _mxGetString(prhs[4], NULL);
-
-    io_CAD_name = _mxGetString(prhs[5], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_geo_read(in_file_number, in_B, in_F, in_G, io_geo_name, &out_geo_file, io_CAD_name, &out_npart);
+    ierr = cg_geo_read(in_file_number, in_B, in_F, in_G, out_geo_name, &out_geo_file, out_CAD_name, &out_npart);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_geo_name);
-    _mxFreeString(io_geo_name);
-    plhs[1] = mxCreateString(io_CAD_name);
-    _mxFreeString(io_CAD_name);
-
-    /******** Process output arguments ********/
-    plhs[2] = mxCreateString(out_geo_file);
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_geo_name);
+    if (nlhs > 1) {
+        plhs[1] = mxCreateString(out_geo_file);
+    }
     cg_free(out_geo_file);
 
-    if (nlhs > 1) {
+    if (nlhs > 2) {
+        plhs[2] = mxCreateString(out_CAD_name);
+    }
+    if (nlhs > 3) {
         plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[3]) = out_npart;
     }
-    if (nlhs > 2) {
+    if (nlhs > 4) {
         plhs[4] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[4]) = ierr;
     }
@@ -2150,7 +2127,7 @@ EXTERN_C void cg_geo_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -2179,7 +2156,7 @@ EXTERN_C void cg_geo_write_MeX(int nlhs, mxArray *plhs[],
     _mxFreeString(in_filename);
     _mxFreeString(in_CADname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_G;
     if (nlhs > 1) {
@@ -2189,7 +2166,7 @@ EXTERN_C void cg_geo_write_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_part_name, ierr] = cg_part_read(in_file_number, in_B, in_F, in_G, in_P, io_part_name)
+ * [out_part_name, ierr] = cg_part_read(in_file_number, in_B, in_F, in_G, in_P)
  *
  * The original C interface is
  * int cg_part_read(int file_number, int B, int F, int G, int P, char * part_name);
@@ -2201,14 +2178,14 @@ EXTERN_C void cg_part_read_MeX(int nlhs, mxArray *plhs[],
     int in_F;
     int in_G;
     int in_P;
-    char * io_part_name;
+    char out_part_name[33];
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 2 || nrhs != 6)
+    if (nlhs > 2 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -2229,20 +2206,17 @@ EXTERN_C void cg_part_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument P");
     in_P = _get_numeric_scalar_int32(prhs[4]);
 
-    io_part_name = _mxGetString(prhs[5], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_part_read(in_file_number, in_B, in_F, in_G, in_P, io_part_name);
+    ierr = cg_part_read(in_file_number, in_B, in_F, in_G, in_P, out_part_name);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_part_name);
-    _mxFreeString(io_part_name);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_part_name);
+    if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = ierr;
+    }
 }
 
 /* Gateway function
@@ -2265,7 +2239,7 @@ EXTERN_C void cg_part_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -2292,7 +2266,7 @@ EXTERN_C void cg_part_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_part_name);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_P;
     if (nlhs > 1) {
@@ -2319,7 +2293,7 @@ EXTERN_C void cg_ngrids_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -2337,7 +2311,7 @@ EXTERN_C void cg_ngrids_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_ngrids(in_file_number, in_B, in_Z, &out_ngrids);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_ngrids;
     if (nlhs > 1) {
@@ -2347,7 +2321,7 @@ EXTERN_C void cg_ngrids_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_gridname, ierr] = cg_grid_read(in_file_number, in_B, in_Z, in_G, io_gridname)
+ * [out_gridname, ierr] = cg_grid_read(in_file_number, in_B, in_Z, in_G)
  *
  * The original C interface is
  * int cg_grid_read(int file_number, int B, int Z, int G, char * gridname);
@@ -2358,14 +2332,14 @@ EXTERN_C void cg_grid_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_G;
-    char * io_gridname;
+    char out_gridname[33];
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 2 || nrhs != 5)
+    if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -2382,20 +2356,17 @@ EXTERN_C void cg_grid_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument G");
     in_G = _get_numeric_scalar_int32(prhs[3]);
 
-    io_gridname = _mxGetString(prhs[4], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_grid_read(in_file_number, in_B, in_Z, in_G, io_gridname);
+    ierr = cg_grid_read(in_file_number, in_B, in_Z, in_G, out_gridname);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_gridname);
-    _mxFreeString(io_gridname);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_gridname);
+    if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = ierr;
+    }
 }
 
 /* Gateway function
@@ -2417,7 +2388,7 @@ EXTERN_C void cg_grid_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -2440,7 +2411,7 @@ EXTERN_C void cg_grid_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_zcoorname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_G;
     if (nlhs > 1) {
@@ -2467,7 +2438,7 @@ EXTERN_C void cg_ncoords_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -2485,7 +2456,7 @@ EXTERN_C void cg_ncoords_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_ncoords(in_fn, in_B, in_Z, &out_ncoords);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_ncoords;
     if (nlhs > 1) {
@@ -2495,7 +2466,7 @@ EXTERN_C void cg_ncoords_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_coordname, out_type, ierr] = cg_coord_info(in_fn, in_B, in_Z, in_C, io_coordname)
+ * [out_type, out_coordname, ierr] = cg_coord_info(in_fn, in_B, in_Z, in_C)
  *
  * The original C interface is
  * int cg_coord_info(int fn, int B, int Z, int C, CG_DataType_t * type, char * coordname);
@@ -2507,14 +2478,14 @@ EXTERN_C void cg_coord_info_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_C;
     CG_DataType_t out_type;
-    char * io_coordname;
+    char out_coordname[33];
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 3 || nrhs != 5)
+    if (nlhs > 3 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -2531,21 +2502,18 @@ EXTERN_C void cg_coord_info_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument C");
     in_C = _get_numeric_scalar_int32(prhs[3]);
 
-    io_coordname = _mxGetString(prhs[4], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_coord_info(in_fn, in_B, in_Z, in_C, &out_type, io_coordname);
+    ierr = cg_coord_info(in_fn, in_B, in_Z, in_C, &out_type, out_coordname);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_coordname);
-    _mxFreeString(io_coordname);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_type;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[0]) = out_type;
     if (nlhs > 1) {
+        plhs[1] = mxCreateString(out_coordname);
+    }
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = ierr;
     }
@@ -2573,7 +2541,7 @@ EXTERN_C void cg_coord_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 8)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -2611,7 +2579,7 @@ EXTERN_C void cg_coord_read_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_coordname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -2635,7 +2603,7 @@ EXTERN_C void cg_coord_id_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -2657,7 +2625,7 @@ EXTERN_C void cg_coord_id_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_coord_id(in_fn, in_B, in_Z, in_C, &out_coord_id);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxDOUBLE_CLASS, mxREAL);
     *(double*)mxGetData(plhs[0]) = out_coord_id;
     if (nlhs > 1) {
@@ -2687,7 +2655,7 @@ EXTERN_C void cg_coord_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -2715,7 +2683,7 @@ EXTERN_C void cg_coord_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_coordname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_C;
     if (nlhs > 1) {
@@ -2747,7 +2715,7 @@ EXTERN_C void cg_coord_partial_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 8)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -2785,7 +2753,7 @@ EXTERN_C void cg_coord_partial_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_coordname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_C;
     if (nlhs > 1) {
@@ -2812,7 +2780,7 @@ EXTERN_C void cg_nsections_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -2830,7 +2798,7 @@ EXTERN_C void cg_nsections_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nsections(in_file_number, in_B, in_Z, &out_nsections);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_nsections;
     if (nlhs > 1) {
@@ -2840,7 +2808,7 @@ EXTERN_C void cg_nsections_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_SectionName, out_type, out_start, out_end, out_nbndry, out_parent_flag, ierr] = cg_section_read(in_file_number, in_B, in_Z, in_S, io_SectionName)
+ * [out_SectionName, out_type, out_start, out_end, out_nbndry, out_parent_flag, ierr] = cg_section_read(in_file_number, in_B, in_Z, in_S)
  *
  * The original C interface is
  * int cg_section_read(int file_number, int B, int Z, int S, char * SectionName, CG_ElementType_t * type, long long * start, long long * end, int * nbndry, int * parent_flag);
@@ -2851,7 +2819,7 @@ EXTERN_C void cg_section_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    char * io_SectionName;
+    char out_SectionName[33];
     CG_ElementType_t out_type;
     long long out_start;
     long long out_end;
@@ -2860,10 +2828,10 @@ EXTERN_C void cg_section_read_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 7 || nrhs != 5)
+    if (nlhs > 7 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -2880,37 +2848,34 @@ EXTERN_C void cg_section_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument S");
     in_S = _get_numeric_scalar_int32(prhs[3]);
 
-    io_SectionName = _mxGetString(prhs[4], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_section_read(in_file_number, in_B, in_Z, in_S, io_SectionName, &out_type, &out_start, &out_end, &out_nbndry, &out_parent_flag);
+    ierr = cg_section_read(in_file_number, in_B, in_Z, in_S, out_SectionName, &out_type, &out_start, &out_end, &out_nbndry, &out_parent_flag);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_SectionName);
-    _mxFreeString(io_SectionName);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_type;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_SectionName);
     if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_type;
+    }
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
         *(long long*)mxGetData(plhs[2]) = out_start;
     }
-    if (nlhs > 2) {
+    if (nlhs > 3) {
         plhs[3] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
         *(long long*)mxGetData(plhs[3]) = out_end;
     }
-    if (nlhs > 3) {
+    if (nlhs > 4) {
         plhs[4] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[4]) = out_nbndry;
     }
-    if (nlhs > 4) {
+    if (nlhs > 5) {
         plhs[5] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[5]) = out_parent_flag;
     }
-    if (nlhs > 5) {
+    if (nlhs > 6) {
         plhs[6] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[6]) = ierr;
     }
@@ -2936,7 +2901,7 @@ EXTERN_C void cg_elements_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -2968,7 +2933,7 @@ EXTERN_C void cg_elements_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_elements_read(in_file_number, in_B, in_Z, in_S, io_elements, io_parent_data);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -2997,7 +2962,7 @@ EXTERN_C void cg_section_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 9)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -3041,7 +3006,7 @@ EXTERN_C void cg_section_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_SectionName);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_S;
     if (nlhs > 1) {
@@ -3069,7 +3034,7 @@ EXTERN_C void cg_parent_data_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -3096,7 +3061,7 @@ EXTERN_C void cg_parent_data_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_parent_data_write(in_file_number, in_B, in_Z, in_S, in_parent_data);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -3117,7 +3082,7 @@ EXTERN_C void cg_npe_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[0]);
@@ -3127,7 +3092,7 @@ EXTERN_C void cg_npe_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_npe(in_type, &out_npe);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_npe;
     if (nlhs > 1) {
@@ -3155,7 +3120,7 @@ EXTERN_C void cg_ElementDataSize_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -3177,7 +3142,7 @@ EXTERN_C void cg_ElementDataSize_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_ElementDataSize(in_file_number, in_B, in_Z, in_S, &out_ElementDataSize);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
     *(long long*)mxGetData(plhs[0]) = out_ElementDataSize;
     if (nlhs > 1) {
@@ -3209,7 +3174,7 @@ EXTERN_C void cg_section_partial_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 8)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -3248,7 +3213,7 @@ EXTERN_C void cg_section_partial_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_SectionName);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_S;
     if (nlhs > 1) {
@@ -3278,7 +3243,7 @@ EXTERN_C void cg_elements_partial_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 7)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -3313,7 +3278,7 @@ EXTERN_C void cg_elements_partial_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_elements_partial_write(in_fn, in_B, in_Z, in_S, in_start, in_end, in_elements);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -3339,7 +3304,7 @@ EXTERN_C void cg_parent_data_partial_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 7)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -3374,7 +3339,7 @@ EXTERN_C void cg_parent_data_partial_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_parent_data_partial_write(in_fn, in_B, in_Z, in_S, in_start, in_end, in_ParentData);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -3401,7 +3366,7 @@ EXTERN_C void cg_elements_partial_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 8)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -3441,7 +3406,7 @@ EXTERN_C void cg_elements_partial_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_elements_partial_read(in_file_number, in_B, in_Z, in_S, in_start, in_end, io_elements, io_parent_data);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -3467,7 +3432,7 @@ EXTERN_C void cg_ElementPartialSize_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -3497,7 +3462,7 @@ EXTERN_C void cg_ElementPartialSize_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_ElementPartialSize(in_file_number, in_B, in_Z, in_S, in_start, in_end, &out_ElementDataSize);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
     *(long long*)mxGetData(plhs[0]) = out_ElementDataSize;
     if (nlhs > 1) {
@@ -3524,7 +3489,7 @@ EXTERN_C void cg_nsols_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -3542,7 +3507,7 @@ EXTERN_C void cg_nsols_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nsols(in_fn, in_B, in_Z, &out_nsols);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_nsols;
     if (nlhs > 1) {
@@ -3552,7 +3517,7 @@ EXTERN_C void cg_nsols_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_solname, out_location, ierr] = cg_sol_info(in_fn, in_B, in_Z, in_S, io_solname)
+ * [out_solname, out_location, ierr] = cg_sol_info(in_fn, in_B, in_Z, in_S)
  *
  * The original C interface is
  * int cg_sol_info(int fn, int B, int Z, int S, char * solname, CG_GridLocation_t * location);
@@ -3563,15 +3528,15 @@ EXTERN_C void cg_sol_info_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    char * io_solname;
+    char out_solname[33];
     CG_GridLocation_t out_location;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 3 || nrhs != 5)
+    if (nlhs > 3 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -3588,21 +3553,18 @@ EXTERN_C void cg_sol_info_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument S");
     in_S = _get_numeric_scalar_int32(prhs[3]);
 
-    io_solname = _mxGetString(prhs[4], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_sol_info(in_fn, in_B, in_Z, in_S, io_solname, &out_location);
+    ierr = cg_sol_info(in_fn, in_B, in_Z, in_S, out_solname, &out_location);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_solname);
-    _mxFreeString(io_solname);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_location;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_solname);
     if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_location;
+    }
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = ierr;
     }
@@ -3627,7 +3589,7 @@ EXTERN_C void cg_sol_id_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -3649,7 +3611,7 @@ EXTERN_C void cg_sol_id_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_sol_id(in_fn, in_B, in_Z, in_S, &out_sol_id);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxDOUBLE_CLASS, mxREAL);
     *(double*)mxGetData(plhs[0]) = out_sol_id;
     if (nlhs > 1) {
@@ -3678,7 +3640,7 @@ EXTERN_C void cg_sol_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -3705,7 +3667,7 @@ EXTERN_C void cg_sol_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_solname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_S;
     if (nlhs > 1) {
@@ -3734,7 +3696,7 @@ EXTERN_C void cg_sol_size_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -3761,7 +3723,7 @@ EXTERN_C void cg_sol_size_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_sol_size(in_fn, in_B, in_Z, in_S, &out_data_dim, io_dim_vals);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_data_dim;
     if (nlhs > 1) {
@@ -3790,7 +3752,7 @@ EXTERN_C void cg_sol_ptset_info_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 3 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -3812,7 +3774,7 @@ EXTERN_C void cg_sol_ptset_info_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_sol_ptset_info(in_fn, in_B, in_Z, in_S, &out_ptset_type, &out_npnts);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_ptset_type;
     if (nlhs > 1) {
@@ -3844,7 +3806,7 @@ EXTERN_C void cg_sol_ptset_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -3871,7 +3833,7 @@ EXTERN_C void cg_sol_ptset_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_sol_ptset_read(in_fn, in_B, in_Z, in_S, io_pnts);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -3899,7 +3861,7 @@ EXTERN_C void cg_sol_ptset_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 8)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -3939,7 +3901,7 @@ EXTERN_C void cg_sol_ptset_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_solname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_S;
     if (nlhs > 1) {
@@ -3967,7 +3929,7 @@ EXTERN_C void cg_nfields_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -3989,7 +3951,7 @@ EXTERN_C void cg_nfields_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nfields(in_fn, in_B, in_Z, in_S, &out_nfields);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_nfields;
     if (nlhs > 1) {
@@ -3999,7 +3961,7 @@ EXTERN_C void cg_nfields_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_fieldname, out_type, ierr] = cg_field_info(in_fn, in_B, in_Z, in_S, in_F, io_fieldname)
+ * [out_type, out_fieldname, ierr] = cg_field_info(in_fn, in_B, in_Z, in_S, in_F)
  *
  * The original C interface is
  * int cg_field_info(int fn, int B, int Z, int S, int F, CG_DataType_t * type, char * fieldname);
@@ -4012,14 +3974,14 @@ EXTERN_C void cg_field_info_MeX(int nlhs, mxArray *plhs[],
     int in_S;
     int in_F;
     CG_DataType_t out_type;
-    char * io_fieldname;
+    char out_fieldname[33];
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 3 || nrhs != 6)
+    if (nlhs > 3 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4040,21 +4002,18 @@ EXTERN_C void cg_field_info_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument F");
     in_F = _get_numeric_scalar_int32(prhs[4]);
 
-    io_fieldname = _mxGetString(prhs[5], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_field_info(in_fn, in_B, in_Z, in_S, in_F, &out_type, io_fieldname);
+    ierr = cg_field_info(in_fn, in_B, in_Z, in_S, in_F, &out_type, out_fieldname);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_fieldname);
-    _mxFreeString(io_fieldname);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_type;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[0]) = out_type;
     if (nlhs > 1) {
+        plhs[1] = mxCreateString(out_fieldname);
+    }
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = ierr;
     }
@@ -4083,7 +4042,7 @@ EXTERN_C void cg_field_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 9)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4125,7 +4084,7 @@ EXTERN_C void cg_field_read_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_fieldname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -4150,7 +4109,7 @@ EXTERN_C void cg_field_id_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4176,7 +4135,7 @@ EXTERN_C void cg_field_id_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_field_id(in_fn, in_B, in_Z, in_S, in_F, &out_field_id);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxDOUBLE_CLASS, mxREAL);
     *(double*)mxGetData(plhs[0]) = out_field_id;
     if (nlhs > 1) {
@@ -4207,7 +4166,7 @@ EXTERN_C void cg_field_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 7)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4239,7 +4198,7 @@ EXTERN_C void cg_field_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_fieldname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_F;
     if (nlhs > 1) {
@@ -4272,7 +4231,7 @@ EXTERN_C void cg_field_partial_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 9)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4314,7 +4273,7 @@ EXTERN_C void cg_field_partial_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_fieldname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_F;
     if (nlhs > 1) {
@@ -4341,7 +4300,7 @@ EXTERN_C void cg_nsubregs_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4359,7 +4318,7 @@ EXTERN_C void cg_nsubregs_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nsubregs(in_fn, in_B, in_Z, &out_nsubreg);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_nsubreg;
     if (nlhs > 1) {
@@ -4369,7 +4328,7 @@ EXTERN_C void cg_nsubregs_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_regname, out_dimension, out_location, out_ptset_type, out_npnts, out_bcname_len, out_gcname_len, ierr] = cg_subreg_info(in_fn, in_B, in_Z, in_S, io_regname)
+ * [out_regname, out_dimension, out_location, out_ptset_type, out_npnts, out_bcname_len, out_gcname_len, ierr] = cg_subreg_info(in_fn, in_B, in_Z, in_S)
  *
  * The original C interface is
  * int cg_subreg_info(int fn, int B, int Z, int S, char * regname, int * dimension, CG_GridLocation_t * location, CG_PointSetType_t * ptset_type, long long * npnts, int * bcname_len, int * gcname_len);
@@ -4380,7 +4339,7 @@ EXTERN_C void cg_subreg_info_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    char * io_regname;
+    char out_regname[33];
     int out_dimension;
     CG_GridLocation_t out_location;
     CG_PointSetType_t out_ptset_type;
@@ -4390,10 +4349,10 @@ EXTERN_C void cg_subreg_info_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 8 || nrhs != 5)
+    if (nlhs > 8 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4410,41 +4369,38 @@ EXTERN_C void cg_subreg_info_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument S");
     in_S = _get_numeric_scalar_int32(prhs[3]);
 
-    io_regname = _mxGetString(prhs[4], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_subreg_info(in_fn, in_B, in_Z, in_S, io_regname, &out_dimension, &out_location, &out_ptset_type, &out_npnts, &out_bcname_len, &out_gcname_len);
+    ierr = cg_subreg_info(in_fn, in_B, in_Z, in_S, out_regname, &out_dimension, &out_location, &out_ptset_type, &out_npnts, &out_bcname_len, &out_gcname_len);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_regname);
-    _mxFreeString(io_regname);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_dimension;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_regname);
     if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_dimension;
+    }
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = out_location;
     }
-    if (nlhs > 2) {
+    if (nlhs > 3) {
         plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[3]) = out_ptset_type;
     }
-    if (nlhs > 3) {
+    if (nlhs > 4) {
         plhs[4] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
         *(long long*)mxGetData(plhs[4]) = out_npnts;
     }
-    if (nlhs > 4) {
+    if (nlhs > 5) {
         plhs[5] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[5]) = out_bcname_len;
     }
-    if (nlhs > 5) {
+    if (nlhs > 6) {
         plhs[6] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[6]) = out_gcname_len;
     }
-    if (nlhs > 6) {
+    if (nlhs > 7) {
         plhs[7] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[7]) = ierr;
     }
@@ -4469,7 +4425,7 @@ EXTERN_C void cg_subreg_ptset_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4496,13 +4452,13 @@ EXTERN_C void cg_subreg_ptset_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_subreg_ptset_read(in_fn, in_B, in_Z, in_S, io_pnts);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
 
 /* Gateway function
- * [io_bcname, ierr] = cg_subreg_bcname_read(in_fn, in_B, in_Z, in_S, io_bcname)
+ * [out_bcname, ierr] = cg_subreg_bcname_read(in_fn, in_B, in_Z, in_S)
  *
  * The original C interface is
  * int cg_subreg_bcname_read(int fn, int B, int Z, int S, char * bcname);
@@ -4513,14 +4469,14 @@ EXTERN_C void cg_subreg_bcname_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    char * io_bcname;
+    char out_bcname[33];
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 2 || nrhs != 5)
+    if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4537,24 +4493,21 @@ EXTERN_C void cg_subreg_bcname_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument S");
     in_S = _get_numeric_scalar_int32(prhs[3]);
 
-    io_bcname = _mxGetString(prhs[4], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_subreg_bcname_read(in_fn, in_B, in_Z, in_S, io_bcname);
+    ierr = cg_subreg_bcname_read(in_fn, in_B, in_Z, in_S, out_bcname);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_bcname);
-    _mxFreeString(io_bcname);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_bcname);
+    if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = ierr;
+    }
 }
 
 /* Gateway function
- * [io_gcname, ierr] = cg_subreg_gcname_read(in_fn, in_B, in_Z, in_S, io_gcname)
+ * [out_gcname, ierr] = cg_subreg_gcname_read(in_fn, in_B, in_Z, in_S)
  *
  * The original C interface is
  * int cg_subreg_gcname_read(int fn, int B, int Z, int S, char * gcname);
@@ -4565,14 +4518,14 @@ EXTERN_C void cg_subreg_gcname_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_S;
-    char * io_gcname;
+    char out_gcname[33];
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 2 || nrhs != 5)
+    if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4589,20 +4542,17 @@ EXTERN_C void cg_subreg_gcname_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument S");
     in_S = _get_numeric_scalar_int32(prhs[3]);
 
-    io_gcname = _mxGetString(prhs[4], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_subreg_gcname_read(in_fn, in_B, in_Z, in_S, io_gcname);
+    ierr = cg_subreg_gcname_read(in_fn, in_B, in_Z, in_S, out_gcname);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_gcname);
-    _mxFreeString(io_gcname);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_gcname);
+    if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = ierr;
+    }
 }
 
 /* Gateway function
@@ -4629,7 +4579,7 @@ EXTERN_C void cg_subreg_ptset_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 9)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4673,7 +4623,7 @@ EXTERN_C void cg_subreg_ptset_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_regname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_S;
     if (nlhs > 1) {
@@ -4703,7 +4653,7 @@ EXTERN_C void cg_subreg_bcname_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4733,7 +4683,7 @@ EXTERN_C void cg_subreg_bcname_write_MeX(int nlhs, mxArray *plhs[],
     _mxFreeString(in_regname);
     _mxFreeString(in_bcname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_S;
     if (nlhs > 1) {
@@ -4763,7 +4713,7 @@ EXTERN_C void cg_subreg_gcname_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4793,7 +4743,7 @@ EXTERN_C void cg_subreg_gcname_write_MeX(int nlhs, mxArray *plhs[],
     _mxFreeString(in_regname);
     _mxFreeString(in_gcname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_S;
     if (nlhs > 1) {
@@ -4820,7 +4770,7 @@ EXTERN_C void cg_nzconns_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4838,7 +4788,7 @@ EXTERN_C void cg_nzconns_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nzconns(in_fn, in_B, in_Z, &out_nzconns);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_nzconns;
     if (nlhs > 1) {
@@ -4848,7 +4798,7 @@ EXTERN_C void cg_nzconns_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_name, ierr] = cg_zconn_read(in_fn, in_B, in_Z, in_C, io_name)
+ * [out_name, ierr] = cg_zconn_read(in_fn, in_B, in_Z, in_C)
  *
  * The original C interface is
  * int cg_zconn_read(int fn, int B, int Z, int C, char * name);
@@ -4859,14 +4809,14 @@ EXTERN_C void cg_zconn_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_C;
-    char * io_name;
+    char out_name[33];
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 2 || nrhs != 5)
+    if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4883,20 +4833,17 @@ EXTERN_C void cg_zconn_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument C");
     in_C = _get_numeric_scalar_int32(prhs[3]);
 
-    io_name = _mxGetString(prhs[4], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_zconn_read(in_fn, in_B, in_Z, in_C, io_name);
+    ierr = cg_zconn_read(in_fn, in_B, in_Z, in_C, out_name);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_name);
-    _mxFreeString(io_name);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_name);
+    if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = ierr;
+    }
 }
 
 /* Gateway function
@@ -4918,7 +4865,7 @@ EXTERN_C void cg_zconn_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4941,7 +4888,7 @@ EXTERN_C void cg_zconn_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_name);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_C;
     if (nlhs > 1) {
@@ -4968,7 +4915,7 @@ EXTERN_C void cg_zconn_get_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -4986,7 +4933,7 @@ EXTERN_C void cg_zconn_get_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_zconn_get(in_fn, in_B, in_Z, &out_C);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_C;
     if (nlhs > 1) {
@@ -5013,7 +4960,7 @@ EXTERN_C void cg_zconn_set_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -5035,7 +4982,7 @@ EXTERN_C void cg_zconn_set_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_zconn_set(in_fn, in_B, in_Z, in_C);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -5058,7 +5005,7 @@ EXTERN_C void cg_nholes_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -5076,7 +5023,7 @@ EXTERN_C void cg_nholes_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nholes(in_fn, in_B, in_Z, &out_nholes);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_nholes;
     if (nlhs > 1) {
@@ -5086,7 +5033,7 @@ EXTERN_C void cg_nholes_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_holename, out_location, out_ptset_type, out_nptsets, out_npnts, ierr] = cg_hole_info(in_fn, in_B, in_Z, in_I, io_holename)
+ * [out_holename, out_location, out_ptset_type, out_nptsets, out_npnts, ierr] = cg_hole_info(in_fn, in_B, in_Z, in_I)
  *
  * The original C interface is
  * int cg_hole_info(int fn, int B, int Z, int I, char * holename, CG_GridLocation_t * location, CG_PointSetType_t * ptset_type, int * nptsets, long long * npnts);
@@ -5097,7 +5044,7 @@ EXTERN_C void cg_hole_info_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_I;
-    char * io_holename;
+    char out_holename[33];
     CG_GridLocation_t out_location;
     CG_PointSetType_t out_ptset_type;
     int out_nptsets;
@@ -5105,10 +5052,10 @@ EXTERN_C void cg_hole_info_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 6 || nrhs != 5)
+    if (nlhs > 6 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -5125,33 +5072,30 @@ EXTERN_C void cg_hole_info_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument I");
     in_I = _get_numeric_scalar_int32(prhs[3]);
 
-    io_holename = _mxGetString(prhs[4], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_hole_info(in_fn, in_B, in_Z, in_I, io_holename, &out_location, &out_ptset_type, &out_nptsets, &out_npnts);
+    ierr = cg_hole_info(in_fn, in_B, in_Z, in_I, out_holename, &out_location, &out_ptset_type, &out_nptsets, &out_npnts);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_holename);
-    _mxFreeString(io_holename);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_location;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_holename);
     if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_location;
+    }
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = out_ptset_type;
     }
-    if (nlhs > 2) {
+    if (nlhs > 3) {
         plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[3]) = out_nptsets;
     }
-    if (nlhs > 3) {
+    if (nlhs > 4) {
         plhs[4] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
         *(long long*)mxGetData(plhs[4]) = out_npnts;
     }
-    if (nlhs > 4) {
+    if (nlhs > 5) {
         plhs[5] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[5]) = ierr;
     }
@@ -5176,7 +5120,7 @@ EXTERN_C void cg_hole_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -5203,7 +5147,7 @@ EXTERN_C void cg_hole_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_hole_read(in_fn, in_B, in_Z, in_I, io_pnts);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -5227,7 +5171,7 @@ EXTERN_C void cg_hole_id_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -5249,7 +5193,7 @@ EXTERN_C void cg_hole_id_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_hole_id(in_fn, in_B, in_Z, in_I, &out_hole_id);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxDOUBLE_CLASS, mxREAL);
     *(double*)mxGetData(plhs[0]) = out_hole_id;
     if (nlhs > 1) {
@@ -5282,7 +5226,7 @@ EXTERN_C void cg_hole_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 9)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -5326,7 +5270,7 @@ EXTERN_C void cg_hole_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_holename);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_I;
     if (nlhs > 1) {
@@ -5353,7 +5297,7 @@ EXTERN_C void cg_nconns_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -5371,7 +5315,7 @@ EXTERN_C void cg_nconns_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nconns(in_fn, in_B, in_Z, &out_nconns);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_nconns;
     if (nlhs > 1) {
@@ -5381,7 +5325,7 @@ EXTERN_C void cg_nconns_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_connectname, io_donorname, out_location, out_type, out_ptset_type, out_npnts, out_donor_zonetype, out_donor_ptset_type, out_donor_datatype, out_ndata_donor, ierr] = cg_conn_info(in_file_number, in_B, in_Z, in_I, io_connectname, io_donorname)
+ * [out_connectname, out_location, out_type, out_ptset_type, out_npnts, out_donorname, out_donor_zonetype, out_donor_ptset_type, out_donor_datatype, out_ndata_donor, ierr] = cg_conn_info(in_file_number, in_B, in_Z, in_I)
  *
  * The original C interface is
  * int cg_conn_info(int file_number, int B, int Z, int I, char * connectname, CG_GridLocation_t * location, CG_GridConnectivityType_t * type, CG_PointSetType_t * ptset_type, long long * npnts, char * donorname, CG_ZoneType_t * donor_zonetype, CG_PointSetType_t * donor_ptset_type, CG_DataType_t * donor_datatype, long long * ndata_donor);
@@ -5392,12 +5336,12 @@ EXTERN_C void cg_conn_info_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_I;
-    char * io_connectname;
+    char out_connectname[33];
     CG_GridLocation_t out_location;
     CG_GridConnectivityType_t out_type;
     CG_PointSetType_t out_ptset_type;
     long long out_npnts;
-    char * io_donorname;
+    char out_donorname[33];
     CG_ZoneType_t out_donor_zonetype;
     CG_PointSetType_t out_donor_ptset_type;
     CG_DataType_t out_donor_datatype;
@@ -5405,10 +5349,10 @@ EXTERN_C void cg_conn_info_MeX(int nlhs, mxArray *plhs[],
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 11 || nrhs != 6)
+    if (nlhs > 11 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -5425,53 +5369,49 @@ EXTERN_C void cg_conn_info_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument I");
     in_I = _get_numeric_scalar_int32(prhs[3]);
 
-    io_connectname = _mxGetString(prhs[4], NULL);
-
-    io_donorname = _mxGetString(prhs[5], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_conn_info(in_file_number, in_B, in_Z, in_I, io_connectname, &out_location, &out_type, &out_ptset_type, &out_npnts, io_donorname, &out_donor_zonetype, &out_donor_ptset_type, &out_donor_datatype, &out_ndata_donor);
+    ierr = cg_conn_info(in_file_number, in_B, in_Z, in_I, out_connectname, &out_location, &out_type, &out_ptset_type, &out_npnts, out_donorname, &out_donor_zonetype, &out_donor_ptset_type, &out_donor_datatype, &out_ndata_donor);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_connectname);
-    _mxFreeString(io_connectname);
-    plhs[1] = mxCreateString(io_donorname);
-    _mxFreeString(io_donorname);
-
-    /******** Process output arguments ********/
-    plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[2]) = out_location;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_connectname);
     if (nlhs > 1) {
-        plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[3]) = out_type;
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_location;
     }
     if (nlhs > 2) {
-        plhs[4] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[4]) = out_ptset_type;
+        plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[2]) = out_type;
     }
     if (nlhs > 3) {
-        plhs[5] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(long long*)mxGetData(plhs[5]) = out_npnts;
+        plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[3]) = out_ptset_type;
     }
     if (nlhs > 4) {
+        plhs[4] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
+        *(long long*)mxGetData(plhs[4]) = out_npnts;
+    }
+    if (nlhs > 5) {
+        plhs[5] = mxCreateString(out_donorname);
+    }
+    if (nlhs > 6) {
         plhs[6] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[6]) = out_donor_zonetype;
     }
-    if (nlhs > 5) {
+    if (nlhs > 7) {
         plhs[7] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[7]) = out_donor_ptset_type;
     }
-    if (nlhs > 6) {
+    if (nlhs > 8) {
         plhs[8] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[8]) = out_donor_datatype;
     }
-    if (nlhs > 7) {
+    if (nlhs > 9) {
         plhs[9] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
         *(long long*)mxGetData(plhs[9]) = out_ndata_donor;
     }
-    if (nlhs > 8) {
+    if (nlhs > 10) {
         plhs[10] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[10]) = ierr;
     }
@@ -5498,7 +5438,7 @@ EXTERN_C void cg_conn_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 7)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -5534,7 +5474,7 @@ EXTERN_C void cg_conn_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_conn_read(in_file_number, in_B, in_Z, in_I, io_pnts, in_donor_datatype, io_donor_data);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -5558,7 +5498,7 @@ EXTERN_C void cg_conn_id_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -5580,7 +5520,7 @@ EXTERN_C void cg_conn_id_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_conn_id(in_fn, in_B, in_Z, in_I, &out_conn_id);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxDOUBLE_CLASS, mxREAL);
     *(double*)mxGetData(plhs[0]) = out_conn_id;
     if (nlhs > 1) {
@@ -5619,7 +5559,7 @@ EXTERN_C void cg_conn_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 15)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -5687,7 +5627,7 @@ EXTERN_C void cg_conn_write_MeX(int nlhs, mxArray *plhs[],
     _mxFreeString(in_connectname);
     _mxFreeString(in_donorname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_I;
     if (nlhs > 1) {
@@ -5721,7 +5661,7 @@ EXTERN_C void cg_conn_write_short_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 10)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -5768,7 +5708,7 @@ EXTERN_C void cg_conn_write_short_MeX(int nlhs, mxArray *plhs[],
     _mxFreeString(in_connectname);
     _mxFreeString(in_donorname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_I;
     if (nlhs > 1) {
@@ -5796,7 +5736,7 @@ EXTERN_C void cg_conn_read_short_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -5823,7 +5763,7 @@ EXTERN_C void cg_conn_read_short_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_conn_read_short(in_file_number, in_B, in_Z, in_I, io_pnts);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -5846,7 +5786,7 @@ EXTERN_C void cg_n1to1_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -5864,7 +5804,7 @@ EXTERN_C void cg_n1to1_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_n1to1(in_fn, in_B, in_Z, &out_n1to1);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_n1to1;
     if (nlhs > 1) {
@@ -5874,7 +5814,7 @@ EXTERN_C void cg_n1to1_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_connectname, io_donorname, ierr] = cg_1to1_read(in_fn, in_B, in_Z, in_I, io_connectname, io_donorname, io_range, io_donor_range, io_transform)
+ * [out_connectname, out_donorname, out_range, out_donor_range, out_transform, ierr] = cg_1to1_read(in_fn, in_B, in_Z, in_I)
  *
  * The original C interface is
  * int cg_1to1_read(int fn, int B, int Z, int I, char * connectname, char * donorname, long long * range, long long * donor_range, int * transform);
@@ -5885,18 +5825,18 @@ EXTERN_C void cg_1to1_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_I;
-    char * io_connectname;
-    char * io_donorname;
-    long long * io_range;
-    long long * io_donor_range;
-    int * io_transform;
+    char out_connectname[33];
+    char out_donorname[33];
+    long long * out_range;
+    long long * out_donor_range;
+    int * out_transform;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 3 || nrhs != 9)
+    if (nlhs > 6 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -5913,45 +5853,30 @@ EXTERN_C void cg_1to1_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument I");
     in_I = _get_numeric_scalar_int32(prhs[3]);
 
-    io_connectname = _mxGetString(prhs[4], NULL);
+    /******** Obtain fixed-size output arrays ********/
+    plhs[2] = mxCreateNumericMatrix(6,1,mxINT64_CLASS, mxREAL);
+    out_range = mxGetData(plhs[2]);
 
-    io_donorname = _mxGetString(prhs[5], NULL);
+    plhs[3] = mxCreateNumericMatrix(6,1,mxINT64_CLASS, mxREAL);
+    out_donor_range = mxGetData(plhs[3]);
 
-    if (mxGetNumberOfElements(prhs[6]) < (int) (6) || _n_dims(prhs[6]) > 1)
-        mexErrMsgTxt("Error in dimension of argument range");
-    if (mxIsInt64(prhs[6]) || mxIsUint64(prhs[6]))
-        io_range = (long long*)mxGetData(prhs[6]);
-    else
-        mexErrMsgTxt("Expecting 64-bit integer matrix for argument range");
-
-    if (mxGetNumberOfElements(prhs[7]) < (int) (6) || _n_dims(prhs[7]) > 1)
-        mexErrMsgTxt("Error in dimension of argument donor_range");
-    if (mxIsInt64(prhs[7]) || mxIsUint64(prhs[7]))
-        io_donor_range = (long long*)mxGetData(prhs[7]);
-    else
-        mexErrMsgTxt("Expecting 64-bit integer matrix for argument donor_range");
-
-    if (mxGetNumberOfElements(prhs[8]) < (int) (3) || _n_dims(prhs[8]) > 1)
-        mexErrMsgTxt("Error in dimension of argument transform");
-    if (mxIsInt32(prhs[8]) || mxIsUint32(prhs[8]))
-        io_transform = (int*)mxGetData(prhs[8]);
-    else
-        mexErrMsgTxt("Expecting 32-bit integer matrix for argument transform");
+    plhs[4] = mxCreateNumericMatrix(3,1,mxINT32_CLASS, mxREAL);
+    out_transform = mxGetData(plhs[4]);
 
 
     /******** Invoke computational function ********/
-    ierr = cg_1to1_read(in_fn, in_B, in_Z, in_I, io_connectname, io_donorname, io_range, io_donor_range, io_transform);
+    ierr = cg_1to1_read(in_fn, in_B, in_Z, in_I, out_connectname, out_donorname, out_range, out_donor_range, out_transform);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_connectname);
-    _mxFreeString(io_connectname);
-    plhs[1] = mxCreateString(io_donorname);
-    _mxFreeString(io_donorname);
-
-    /******** Process output arguments ********/
-    plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[2]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_connectname);
+    if (nlhs > 1) {
+        plhs[1] = mxCreateString(out_donorname);
+    }
+    if (nlhs > 2) {
+        plhs[5] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[5]) = ierr;
+    }
 }
 
 /* Gateway function
@@ -5973,7 +5898,7 @@ EXTERN_C void cg_1to1_id_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -5995,7 +5920,7 @@ EXTERN_C void cg_1to1_id_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_1to1_id(in_fn, in_B, in_Z, in_I, &out_one21_id);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxDOUBLE_CLASS, mxREAL);
     *(double*)mxGetData(plhs[0]) = out_one21_id;
     if (nlhs > 1) {
@@ -6027,7 +5952,7 @@ EXTERN_C void cg_1to1_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 8)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -6068,7 +5993,7 @@ EXTERN_C void cg_1to1_write_MeX(int nlhs, mxArray *plhs[],
     _mxFreeString(in_connectname);
     _mxFreeString(in_donorname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_I;
     if (nlhs > 1) {
@@ -6094,7 +6019,7 @@ EXTERN_C void cg_n1to1_global_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -6108,7 +6033,7 @@ EXTERN_C void cg_n1to1_global_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_n1to1_global(in_fn, in_B, &out_n1to1_global);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_n1to1_global;
     if (nlhs > 1) {
@@ -6139,7 +6064,7 @@ EXTERN_C void cg_nbocos_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -6157,7 +6082,7 @@ EXTERN_C void cg_nbocos_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nbocos(in_fn, in_B, in_Z, &out_nbocos);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_nbocos;
     if (nlhs > 1) {
@@ -6166,93 +6091,9 @@ EXTERN_C void cg_nbocos_MeX(int nlhs, mxArray *plhs[],
     }
 }
 
-/* Gateway function
- * [io_boconame, out_bocotype, out_ptset_type, out_npnts, out_NormalListSize, out_NormalDataType, out_ndataset, ierr] = cg_boco_info(in_fn, in_B, in_Z, in_BC, io_boconame, io_NormalIndex)
- *
- * The original C interface is
- * int cg_boco_info(int fn, int B, int Z, int BC, char * boconame, CG_BCType_t * bocotype, CG_PointSetType_t * ptset_type, long long * npnts, int * NormalIndex, long long * NormalListSize, CG_DataType_t * NormalDataType, int * ndataset);
- */
-EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
-    int nrhs, const mxArray *prhs[]) {
-    int in_fn;
-    int in_B;
-    int in_Z;
-    int in_BC;
-    char * io_boconame;
-    CG_BCType_t out_bocotype;
-    CG_PointSetType_t out_ptset_type;
-    long long out_npnts;
-    int * io_NormalIndex;
-    long long out_NormalListSize;
-    CG_DataType_t out_NormalDataType;
-    int out_ndataset;
-    int ierr;
-
-    /******** Check number of input and output arguments. ********/
-    if (nlhs > 8 || nrhs != 6)
-        mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input and/or inout arguments ********/
-    if (_n_dims(prhs[0]) > 0)
-        mexErrMsgTxt("Error in dimension of argument fn");
-    in_fn = _get_numeric_scalar_int32(prhs[0]);
-
-    if (_n_dims(prhs[1]) > 0)
-        mexErrMsgTxt("Error in dimension of argument B");
-    in_B = _get_numeric_scalar_int32(prhs[1]);
-
-    if (_n_dims(prhs[2]) > 0)
-        mexErrMsgTxt("Error in dimension of argument Z");
-    in_Z = _get_numeric_scalar_int32(prhs[2]);
-
-    if (_n_dims(prhs[3]) > 0)
-        mexErrMsgTxt("Error in dimension of argument BC");
-    in_BC = _get_numeric_scalar_int32(prhs[3]);
-
-    io_boconame = _mxGetString(prhs[4], NULL);
-
-    if (mxIsInt32(prhs[5]) || mxIsUint32(prhs[5]))
-        io_NormalIndex = (int*)mxGetData(prhs[5]);
-    else
-        mexErrMsgTxt("Expecting 32-bit integer matrix for argument NormalIndex");
-
-
-    /******** Invoke computational function ********/
-    ierr = cg_boco_info(in_fn, in_B, in_Z, in_BC, io_boconame, &out_bocotype, &out_ptset_type, &out_npnts, io_NormalIndex, &out_NormalListSize, &out_NormalDataType, &out_ndataset);
-
-
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_boconame);
-    _mxFreeString(io_boconame);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_bocotype;
-    if (nlhs > 1) {
-        plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[2]) = out_ptset_type;
-    }
-    if (nlhs > 2) {
-        plhs[3] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(long long*)mxGetData(plhs[3]) = out_npnts;
-    }
-    if (nlhs > 3) {
-        plhs[4] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
-        *(long long*)mxGetData(plhs[4]) = out_NormalListSize;
-    }
-    if (nlhs > 4) {
-        plhs[5] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[5]) = out_NormalDataType;
-    }
-    if (nlhs > 5) {
-        plhs[6] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[6]) = out_ndataset;
-    }
-    if (nlhs > 6) {
-        plhs[7] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[7]) = ierr;
-    }
-}
+/* External gateway function */
+EXTERN void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
+    int nrhs, const mxArray *prhs[]);
 
 /* Gateway function
  * ierr = cg_boco_read(in_fn, in_B, in_Z, in_BC, io_pnts, io_NormalList)
@@ -6274,7 +6115,7 @@ EXTERN_C void cg_boco_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -6302,7 +6143,7 @@ EXTERN_C void cg_boco_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_boco_read(in_fn, in_B, in_Z, in_BC, io_pnts, io_NormalList);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -6326,7 +6167,7 @@ EXTERN_C void cg_boco_id_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -6348,7 +6189,7 @@ EXTERN_C void cg_boco_id_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_boco_id(in_fn, in_B, in_Z, in_BC, &out_boco_id);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxDOUBLE_CLASS, mxREAL);
     *(double*)mxGetData(plhs[0]) = out_boco_id;
     if (nlhs > 1) {
@@ -6380,7 +6221,7 @@ EXTERN_C void cg_boco_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 8)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -6420,7 +6261,7 @@ EXTERN_C void cg_boco_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_boconame);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_BC;
     if (nlhs > 1) {
@@ -6451,7 +6292,7 @@ EXTERN_C void cg_boco_normal_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 8)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -6487,7 +6328,7 @@ EXTERN_C void cg_boco_normal_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_boco_normal_write(in_file_number, in_B, in_Z, in_BC, in_NormalIndex, in_NormalListFlag, in_NormalDataType, in_NormalList);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -6511,7 +6352,7 @@ EXTERN_C void cg_boco_gridlocation_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -6533,7 +6374,7 @@ EXTERN_C void cg_boco_gridlocation_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_boco_gridlocation_read(in_file_number, in_B, in_Z, in_BC, &out_location);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_location;
     if (nlhs > 1) {
@@ -6561,7 +6402,7 @@ EXTERN_C void cg_boco_gridlocation_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -6587,13 +6428,13 @@ EXTERN_C void cg_boco_gridlocation_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_boco_gridlocation_write(in_file_number, in_B, in_Z, in_BC, in_location);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
 
 /* Gateway function
- * [io_name, out_BCType, out_DirichletFlag, out_NeumannFlag, ierr] = cg_dataset_read(in_fn, in_B, in_Z, in_BC, in_DS, io_name)
+ * [out_name, out_BCType, out_DirichletFlag, out_NeumannFlag, ierr] = cg_dataset_read(in_fn, in_B, in_Z, in_BC, in_DS)
  *
  * The original C interface is
  * int cg_dataset_read(int fn, int B, int Z, int BC, int DS, char * name, CG_BCType_t * BCType, int * DirichletFlag, int * NeumannFlag);
@@ -6605,17 +6446,17 @@ EXTERN_C void cg_dataset_read_MeX(int nlhs, mxArray *plhs[],
     int in_Z;
     int in_BC;
     int in_DS;
-    char * io_name;
+    char out_name[33];
     CG_BCType_t out_BCType;
     int out_DirichletFlag;
     int out_NeumannFlag;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 5 || nrhs != 6)
+    if (nlhs > 5 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -6636,29 +6477,26 @@ EXTERN_C void cg_dataset_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument DS");
     in_DS = _get_numeric_scalar_int32(prhs[4]);
 
-    io_name = _mxGetString(prhs[5], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_dataset_read(in_fn, in_B, in_Z, in_BC, in_DS, io_name, &out_BCType, &out_DirichletFlag, &out_NeumannFlag);
+    ierr = cg_dataset_read(in_fn, in_B, in_Z, in_BC, in_DS, out_name, &out_BCType, &out_DirichletFlag, &out_NeumannFlag);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_name);
-    _mxFreeString(io_name);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_BCType;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_name);
     if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_BCType;
+    }
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = out_DirichletFlag;
     }
-    if (nlhs > 2) {
+    if (nlhs > 3) {
         plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[3]) = out_NeumannFlag;
     }
-    if (nlhs > 3) {
+    if (nlhs > 4) {
         plhs[4] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[4]) = ierr;
     }
@@ -6685,7 +6523,7 @@ EXTERN_C void cg_dataset_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -6716,7 +6554,7 @@ EXTERN_C void cg_dataset_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_name);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_Dset;
     if (nlhs > 1) {
@@ -6742,7 +6580,7 @@ EXTERN_C void cg_bcdataset_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_name = _mxGetString(prhs[0], NULL);
 
     if (_n_dims(prhs[1]) > 0)
@@ -6761,7 +6599,7 @@ EXTERN_C void cg_bcdataset_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_name);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -6786,7 +6624,7 @@ EXTERN_C void cg_bcdataset_info_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_bcdataset_info(&out_n_dataset);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_n_dataset;
     if (nlhs > 1) {
@@ -6796,7 +6634,7 @@ EXTERN_C void cg_bcdataset_info_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_name, out_BCType, out_DirichletFlag, out_NeumannFlag, ierr] = cg_bcdataset_read(in_index, io_name)
+ * [out_name, out_BCType, out_DirichletFlag, out_NeumannFlag, ierr] = cg_bcdataset_read(in_index)
  *
  * The original C interface is
  * int cg_bcdataset_read(int index, char * name, CG_BCType_t * BCType, int * DirichletFlag, int * NeumannFlag);
@@ -6804,44 +6642,41 @@ EXTERN_C void cg_bcdataset_info_MeX(int nlhs, mxArray *plhs[],
 EXTERN_C void cg_bcdataset_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     int in_index;
-    char * io_name;
+    char out_name[33];
     CG_BCType_t out_BCType;
     int out_DirichletFlag;
     int out_NeumannFlag;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 5 || nrhs != 2)
+    if (nlhs > 5 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument index");
     in_index = _get_numeric_scalar_int32(prhs[0]);
 
-    io_name = _mxGetString(prhs[1], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_bcdataset_read(in_index, io_name, &out_BCType, &out_DirichletFlag, &out_NeumannFlag);
+    ierr = cg_bcdataset_read(in_index, out_name, &out_BCType, &out_DirichletFlag, &out_NeumannFlag);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_name);
-    _mxFreeString(io_name);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_BCType;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_name);
     if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_BCType;
+    }
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = out_DirichletFlag;
     }
-    if (nlhs > 2) {
+    if (nlhs > 3) {
         plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[3]) = out_NeumannFlag;
     }
-    if (nlhs > 3) {
+    if (nlhs > 4) {
         plhs[4] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[4]) = ierr;
     }
@@ -6867,7 +6702,7 @@ EXTERN_C void cg_bcdata_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 6)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -6897,7 +6732,7 @@ EXTERN_C void cg_bcdata_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_bcdata_write(in_file_number, in_B, in_Z, in_BC, in_Dset, in_BCDataType);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -6920,7 +6755,7 @@ EXTERN_C void cg_ndiscrete_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -6938,7 +6773,7 @@ EXTERN_C void cg_ndiscrete_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_ndiscrete(in_file_number, in_B, in_Z, &out_ndiscrete);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_ndiscrete;
     if (nlhs > 1) {
@@ -6948,7 +6783,7 @@ EXTERN_C void cg_ndiscrete_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_discrete_name, ierr] = cg_discrete_read(in_file_number, in_B, in_Z, in_D, io_discrete_name)
+ * [out_discrete_name, ierr] = cg_discrete_read(in_file_number, in_B, in_Z, in_D)
  *
  * The original C interface is
  * int cg_discrete_read(int file_number, int B, int Z, int D, char * discrete_name);
@@ -6959,14 +6794,14 @@ EXTERN_C void cg_discrete_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_D;
-    char * io_discrete_name;
+    char out_discrete_name[33];
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 2 || nrhs != 5)
+    if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -6983,20 +6818,17 @@ EXTERN_C void cg_discrete_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument D");
     in_D = _get_numeric_scalar_int32(prhs[3]);
 
-    io_discrete_name = _mxGetString(prhs[4], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_discrete_read(in_file_number, in_B, in_Z, in_D, io_discrete_name);
+    ierr = cg_discrete_read(in_file_number, in_B, in_Z, in_D, out_discrete_name);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_discrete_name);
-    _mxFreeString(io_discrete_name);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_discrete_name);
+    if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = ierr;
+    }
 }
 
 /* Gateway function
@@ -7018,7 +6850,7 @@ EXTERN_C void cg_discrete_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7041,7 +6873,7 @@ EXTERN_C void cg_discrete_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_discrete_name);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_D;
     if (nlhs > 1) {
@@ -7070,7 +6902,7 @@ EXTERN_C void cg_discrete_size_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -7097,7 +6929,7 @@ EXTERN_C void cg_discrete_size_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_discrete_size(in_fn, in_B, in_Z, in_D, &out_data_dim, io_dim_vals);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_data_dim;
     if (nlhs > 1) {
@@ -7126,7 +6958,7 @@ EXTERN_C void cg_discrete_ptset_info_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 3 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -7148,7 +6980,7 @@ EXTERN_C void cg_discrete_ptset_info_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_discrete_ptset_info(in_fn, in_B, in_Z, in_D, &out_ptset_type, &out_npnts);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_ptset_type;
     if (nlhs > 1) {
@@ -7180,7 +7012,7 @@ EXTERN_C void cg_discrete_ptset_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -7207,7 +7039,7 @@ EXTERN_C void cg_discrete_ptset_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_discrete_ptset_read(in_fn, in_B, in_Z, in_D, io_pnts);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -7235,7 +7067,7 @@ EXTERN_C void cg_discrete_ptset_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 8)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument fn");
     in_fn = _get_numeric_scalar_int32(prhs[0]);
@@ -7275,7 +7107,7 @@ EXTERN_C void cg_discrete_ptset_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_discrete_name);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_D;
     if (nlhs > 1) {
@@ -7302,7 +7134,7 @@ EXTERN_C void cg_n_rigid_motions_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7320,7 +7152,7 @@ EXTERN_C void cg_n_rigid_motions_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_n_rigid_motions(in_file_number, in_B, in_Z, &out_n_rigid_motions);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_n_rigid_motions;
     if (nlhs > 1) {
@@ -7330,7 +7162,7 @@ EXTERN_C void cg_n_rigid_motions_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_name, out_type, ierr] = cg_rigid_motion_read(in_file_number, in_B, in_Z, in_R, io_name)
+ * [out_name, out_type, ierr] = cg_rigid_motion_read(in_file_number, in_B, in_Z, in_R)
  *
  * The original C interface is
  * int cg_rigid_motion_read(int file_number, int B, int Z, int R, char * name, CG_RigidGridMotionType_t * type);
@@ -7341,15 +7173,15 @@ EXTERN_C void cg_rigid_motion_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_R;
-    char * io_name;
+    char out_name[33];
     CG_RigidGridMotionType_t out_type;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 3 || nrhs != 5)
+    if (nlhs > 3 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7366,21 +7198,18 @@ EXTERN_C void cg_rigid_motion_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument R");
     in_R = _get_numeric_scalar_int32(prhs[3]);
 
-    io_name = _mxGetString(prhs[4], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_rigid_motion_read(in_file_number, in_B, in_Z, in_R, io_name, &out_type);
+    ierr = cg_rigid_motion_read(in_file_number, in_B, in_Z, in_R, out_name, &out_type);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_name);
-    _mxFreeString(io_name);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_type;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_name);
     if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_type;
+    }
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = ierr;
     }
@@ -7406,7 +7235,7 @@ EXTERN_C void cg_rigid_motion_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7433,7 +7262,7 @@ EXTERN_C void cg_rigid_motion_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_name);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_R;
     if (nlhs > 1) {
@@ -7460,7 +7289,7 @@ EXTERN_C void cg_n_arbitrary_motions_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7478,7 +7307,7 @@ EXTERN_C void cg_n_arbitrary_motions_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_n_arbitrary_motions(in_file_number, in_B, in_Z, &out_n_arbitrary_motions);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_n_arbitrary_motions;
     if (nlhs > 1) {
@@ -7488,7 +7317,7 @@ EXTERN_C void cg_n_arbitrary_motions_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_name, out_type, ierr] = cg_arbitrary_motion_read(in_file_number, in_B, in_Z, in_A, io_name)
+ * [out_name, out_type, ierr] = cg_arbitrary_motion_read(in_file_number, in_B, in_Z, in_A)
  *
  * The original C interface is
  * int cg_arbitrary_motion_read(int file_number, int B, int Z, int A, char * name, CG_ArbitraryGridMotionType_t * type);
@@ -7499,15 +7328,15 @@ EXTERN_C void cg_arbitrary_motion_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_A;
-    char * io_name;
+    char out_name[33];
     CG_ArbitraryGridMotionType_t out_type;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 3 || nrhs != 5)
+    if (nlhs > 3 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7524,21 +7353,18 @@ EXTERN_C void cg_arbitrary_motion_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument A");
     in_A = _get_numeric_scalar_int32(prhs[3]);
 
-    io_name = _mxGetString(prhs[4], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_arbitrary_motion_read(in_file_number, in_B, in_Z, in_A, io_name, &out_type);
+    ierr = cg_arbitrary_motion_read(in_file_number, in_B, in_Z, in_A, out_name, &out_type);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_name);
-    _mxFreeString(io_name);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_type;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_name);
     if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_type;
+    }
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = ierr;
     }
@@ -7564,7 +7390,7 @@ EXTERN_C void cg_arbitrary_motion_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7591,7 +7417,7 @@ EXTERN_C void cg_arbitrary_motion_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_amotionname);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_A;
     if (nlhs > 1) {
@@ -7617,7 +7443,7 @@ EXTERN_C void cg_simulation_type_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7631,7 +7457,7 @@ EXTERN_C void cg_simulation_type_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_simulation_type_read(in_file_number, in_B, &out_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_type;
     if (nlhs > 1) {
@@ -7657,7 +7483,7 @@ EXTERN_C void cg_simulation_type_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7675,13 +7501,13 @@ EXTERN_C void cg_simulation_type_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_simulation_type_write(in_file_number, in_B, in_type);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
 
 /* Gateway function
- * [io_bitername, out_nsteps, ierr] = cg_biter_read(in_file_number, in_B, io_bitername)
+ * [out_bitername, out_nsteps, ierr] = cg_biter_read(in_file_number, in_B)
  *
  * The original C interface is
  * int cg_biter_read(int file_number, int B, char * bitername, int * nsteps);
@@ -7690,15 +7516,15 @@ EXTERN_C void cg_biter_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     int in_file_number;
     int in_B;
-    char * io_bitername;
+    char out_bitername[33];
     int out_nsteps;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 3 || nrhs != 3)
+    if (nlhs > 3 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7707,21 +7533,18 @@ EXTERN_C void cg_biter_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument B");
     in_B = _get_numeric_scalar_int32(prhs[1]);
 
-    io_bitername = _mxGetString(prhs[2], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_biter_read(in_file_number, in_B, io_bitername, &out_nsteps);
+    ierr = cg_biter_read(in_file_number, in_B, out_bitername, &out_nsteps);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_bitername);
-    _mxFreeString(io_bitername);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_nsteps;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_bitername);
     if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_nsteps;
+    }
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = ierr;
     }
@@ -7745,7 +7568,7 @@ EXTERN_C void cg_biter_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7768,13 +7591,13 @@ EXTERN_C void cg_biter_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_bitername);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
 
 /* Gateway function
- * [io_zitername, ierr] = cg_ziter_read(in_file_number, in_B, in_Z, io_zitername)
+ * [out_zitername, ierr] = cg_ziter_read(in_file_number, in_B, in_Z)
  *
  * The original C interface is
  * int cg_ziter_read(int file_number, int B, int Z, char * zitername);
@@ -7784,14 +7607,14 @@ EXTERN_C void cg_ziter_read_MeX(int nlhs, mxArray *plhs[],
     int in_file_number;
     int in_B;
     int in_Z;
-    char * io_zitername;
+    char out_zitername[33];
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 2 || nrhs != 4)
+    if (nlhs > 2 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7804,20 +7627,17 @@ EXTERN_C void cg_ziter_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument Z");
     in_Z = _get_numeric_scalar_int32(prhs[2]);
 
-    io_zitername = _mxGetString(prhs[3], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_ziter_read(in_file_number, in_B, in_Z, io_zitername);
+    ierr = cg_ziter_read(in_file_number, in_B, in_Z, out_zitername);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_zitername);
-    _mxFreeString(io_zitername);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_zitername);
+    if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = ierr;
+    }
 }
 
 /* Gateway function
@@ -7838,7 +7658,7 @@ EXTERN_C void cg_ziter_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7861,7 +7681,7 @@ EXTERN_C void cg_ziter_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_zitername);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -7883,7 +7703,7 @@ EXTERN_C void cg_gravity_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7902,7 +7722,7 @@ EXTERN_C void cg_gravity_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_gravity_read(in_file_number, in_B, io_gravity_vector);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -7924,7 +7744,7 @@ EXTERN_C void cg_gravity_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7943,13 +7763,13 @@ EXTERN_C void cg_gravity_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_gravity_write(in_file_number, in_B, in_gravity_vector);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
 
 /* Gateway function
- * ierr = cg_axisym_read(in_file_number, in_B, io_ref_point, io_axis)
+ * [out_ref_point, out_axis, ierr] = cg_axisym_read(in_file_number, in_B)
  *
  * The original C interface is
  * int cg_axisym_read(int file_number, int B, float * ref_point, float * axis);
@@ -7958,15 +7778,15 @@ EXTERN_C void cg_axisym_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     int in_file_number;
     int in_B;
-    float * io_ref_point;
-    float * io_axis;
+    float * out_ref_point;
+    float * out_axis;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 1 || nrhs != 4)
+    if (nlhs > 3 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -7975,24 +7795,21 @@ EXTERN_C void cg_axisym_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument B");
     in_B = _get_numeric_scalar_int32(prhs[1]);
 
-    if (mxIsSingle(prhs[2]))
-        io_ref_point = (float*)mxGetData(prhs[2]);
-    else
-        mexErrMsgTxt("Expecting single-precision float matrix for argument ref_point");
+    /******** Obtain fixed-size output arrays ********/
+    plhs[0] = mxCreateNumericMatrix(2,1,mxSINGLE_CLASS, mxREAL);
+    out_ref_point = mxGetData(plhs[0]);
 
-    if (mxIsSingle(prhs[3]))
-        io_axis = (float*)mxGetData(prhs[3]);
-    else
-        mexErrMsgTxt("Expecting single-precision float matrix for argument axis");
+    plhs[1] = mxCreateNumericMatrix(2,1,mxSINGLE_CLASS, mxREAL);
+    out_axis = mxGetData(plhs[1]);
 
 
     /******** Invoke computational function ********/
-    ierr = cg_axisym_read(in_file_number, in_B, io_ref_point, io_axis);
+    ierr = cg_axisym_read(in_file_number, in_B, out_ref_point, out_axis);
 
 
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[2]) = ierr;
 }
 
 /* Gateway function
@@ -8013,7 +7830,7 @@ EXTERN_C void cg_axisym_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -8037,7 +7854,7 @@ EXTERN_C void cg_axisym_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_axisym_write(in_file_number, in_B, in_ref_point, in_axis);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -8058,7 +7875,7 @@ EXTERN_C void cg_rotating_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (mxIsSingle(prhs[0]))
         io_rot_rate = (float*)mxGetData(prhs[0]);
     else
@@ -8074,7 +7891,7 @@ EXTERN_C void cg_rotating_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_rotating_read(io_rot_rate, io_rot_center);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -8095,7 +7912,7 @@ EXTERN_C void cg_rotating_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (mxIsSingle(prhs[0]))
         in_rot_rate = (float*)mxGetData(prhs[0]);
     else
@@ -8111,7 +7928,7 @@ EXTERN_C void cg_rotating_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_rotating_write(in_rot_rate, in_rot_center);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -8135,7 +7952,7 @@ EXTERN_C void cg_bc_wallfunction_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -8157,7 +7974,7 @@ EXTERN_C void cg_bc_wallfunction_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_bc_wallfunction_read(in_file_number, in_B, in_Z, in_BC, &out_WallFunctionType);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_WallFunctionType;
     if (nlhs > 1) {
@@ -8185,7 +8002,7 @@ EXTERN_C void cg_bc_wallfunction_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -8211,13 +8028,13 @@ EXTERN_C void cg_bc_wallfunction_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_bc_wallfunction_write(in_file_number, in_B, in_Z, in_BC, in_WallFunctionType);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
 
 /* Gateway function
- * [io_RegionName, out_AreaType, out_SurfaceArea, ierr] = cg_bc_area_read(in_file_number, in_B, in_Z, in_BC, io_RegionName)
+ * [out_AreaType, out_SurfaceArea, out_RegionName, ierr] = cg_bc_area_read(in_file_number, in_B, in_Z, in_BC)
  *
  * The original C interface is
  * int cg_bc_area_read(int file_number, int B, int Z, int BC, CG_AreaType_t * AreaType, float * SurfaceArea, char * RegionName);
@@ -8230,14 +8047,14 @@ EXTERN_C void cg_bc_area_read_MeX(int nlhs, mxArray *plhs[],
     int in_BC;
     CG_AreaType_t out_AreaType;
     float out_SurfaceArea;
-    char * io_RegionName;
+    char out_RegionName[33];
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 4 || nrhs != 5)
+    if (nlhs > 4 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -8254,25 +8071,22 @@ EXTERN_C void cg_bc_area_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument BC");
     in_BC = _get_numeric_scalar_int32(prhs[3]);
 
-    io_RegionName = _mxGetString(prhs[4], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_bc_area_read(in_file_number, in_B, in_Z, in_BC, &out_AreaType, &out_SurfaceArea, io_RegionName);
+    ierr = cg_bc_area_read(in_file_number, in_B, in_Z, in_BC, &out_AreaType, &out_SurfaceArea, out_RegionName);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_RegionName);
-    _mxFreeString(io_RegionName);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_AreaType;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[0]) = out_AreaType;
     if (nlhs > 1) {
-        plhs[2] = mxCreateNumericMatrix(1, 1, mxSINGLE_CLASS, mxREAL);
-        *(float*)mxGetData(plhs[2]) = out_SurfaceArea;
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxSINGLE_CLASS, mxREAL);
+        *(float*)mxGetData(plhs[1]) = out_SurfaceArea;
     }
     if (nlhs > 2) {
+        plhs[2] = mxCreateString(out_RegionName);
+    }
+    if (nlhs > 3) {
         plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[3]) = ierr;
     }
@@ -8299,7 +8113,7 @@ EXTERN_C void cg_bc_area_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 7)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -8334,13 +8148,13 @@ EXTERN_C void cg_bc_area_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_RegionName);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
 
 /* Gateway function
- * ierr = cg_conn_periodic_read(in_file_number, in_B, in_Z, in_I, io_RotationCenter, io_RotationAngle, io_Translation)
+ * [out_RotationCenter, out_RotationAngle, out_Translation, ierr] = cg_conn_periodic_read(in_file_number, in_B, in_Z, in_I)
  *
  * The original C interface is
  * int cg_conn_periodic_read(int file_number, int B, int Z, int I, float * RotationCenter, float * RotationAngle, float * Translation);
@@ -8351,16 +8165,16 @@ EXTERN_C void cg_conn_periodic_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_I;
-    float * io_RotationCenter;
-    float * io_RotationAngle;
-    float * io_Translation;
+    float * out_RotationCenter;
+    float * out_RotationAngle;
+    float * out_Translation;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 1 || nrhs != 7)
+    if (nlhs > 4 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -8377,35 +8191,24 @@ EXTERN_C void cg_conn_periodic_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument I");
     in_I = _get_numeric_scalar_int32(prhs[3]);
 
-    if (mxGetNumberOfElements(prhs[4]) < (int) (3) || _n_dims(prhs[4]) > 1)
-        mexErrMsgTxt("Error in dimension of argument RotationCenter");
-    if (mxIsSingle(prhs[4]))
-        io_RotationCenter = (float*)mxGetData(prhs[4]);
-    else
-        mexErrMsgTxt("Expecting single-precision float matrix for argument RotationCenter");
+    /******** Obtain fixed-size output arrays ********/
+    plhs[0] = mxCreateNumericMatrix(3,1,mxSINGLE_CLASS, mxREAL);
+    out_RotationCenter = mxGetData(plhs[0]);
 
-    if (mxGetNumberOfElements(prhs[5]) < (int) (3) || _n_dims(prhs[5]) > 1)
-        mexErrMsgTxt("Error in dimension of argument RotationAngle");
-    if (mxIsSingle(prhs[5]))
-        io_RotationAngle = (float*)mxGetData(prhs[5]);
-    else
-        mexErrMsgTxt("Expecting single-precision float matrix for argument RotationAngle");
+    plhs[1] = mxCreateNumericMatrix(3,1,mxSINGLE_CLASS, mxREAL);
+    out_RotationAngle = mxGetData(plhs[1]);
 
-    if (mxGetNumberOfElements(prhs[6]) < (int) (3) || _n_dims(prhs[6]) > 1)
-        mexErrMsgTxt("Error in dimension of argument Translation");
-    if (mxIsSingle(prhs[6]))
-        io_Translation = (float*)mxGetData(prhs[6]);
-    else
-        mexErrMsgTxt("Expecting single-precision float matrix for argument Translation");
+    plhs[2] = mxCreateNumericMatrix(3,1,mxSINGLE_CLASS, mxREAL);
+    out_Translation = mxGetData(plhs[2]);
 
 
     /******** Invoke computational function ********/
-    ierr = cg_conn_periodic_read(in_file_number, in_B, in_Z, in_I, io_RotationCenter, io_RotationAngle, io_Translation);
+    ierr = cg_conn_periodic_read(in_file_number, in_B, in_Z, in_I, out_RotationCenter, out_RotationAngle, out_Translation);
 
 
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[3]) = ierr;
 }
 
 /* Gateway function
@@ -8429,7 +8232,7 @@ EXTERN_C void cg_conn_periodic_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 7)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -8466,7 +8269,7 @@ EXTERN_C void cg_conn_periodic_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_conn_periodic_write(in_file_number, in_B, in_Z, in_I, in_RotationCenter, in_RotationAngle, in_Translation);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -8492,7 +8295,7 @@ EXTERN_C void cg_1to1_periodic_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 7)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -8529,13 +8332,13 @@ EXTERN_C void cg_1to1_periodic_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_1to1_periodic_write(in_file_number, in_B, in_Z, in_I, in_RotationCenter, in_RotationAngle, in_Translation);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
 
 /* Gateway function
- * ierr = cg_1to1_periodic_read(in_file_number, in_B, in_Z, in_I, io_RotationCenter, io_RotationAngle, io_Translation)
+ * [out_RotationCenter, out_RotationAngle, out_Translation, ierr] = cg_1to1_periodic_read(in_file_number, in_B, in_Z, in_I)
  *
  * The original C interface is
  * int cg_1to1_periodic_read(int file_number, int B, int Z, int I, float * RotationCenter, float * RotationAngle, float * Translation);
@@ -8546,16 +8349,16 @@ EXTERN_C void cg_1to1_periodic_read_MeX(int nlhs, mxArray *plhs[],
     int in_B;
     int in_Z;
     int in_I;
-    float * io_RotationCenter;
-    float * io_RotationAngle;
-    float * io_Translation;
+    float * out_RotationCenter;
+    float * out_RotationAngle;
+    float * out_Translation;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 1 || nrhs != 7)
+    if (nlhs > 4 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -8572,35 +8375,24 @@ EXTERN_C void cg_1to1_periodic_read_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument I");
     in_I = _get_numeric_scalar_int32(prhs[3]);
 
-    if (mxGetNumberOfElements(prhs[4]) < (int) (3) || _n_dims(prhs[4]) > 1)
-        mexErrMsgTxt("Error in dimension of argument RotationCenter");
-    if (mxIsSingle(prhs[4]))
-        io_RotationCenter = (float*)mxGetData(prhs[4]);
-    else
-        mexErrMsgTxt("Expecting single-precision float matrix for argument RotationCenter");
+    /******** Obtain fixed-size output arrays ********/
+    plhs[0] = mxCreateNumericMatrix(3,1,mxSINGLE_CLASS, mxREAL);
+    out_RotationCenter = mxGetData(plhs[0]);
 
-    if (mxGetNumberOfElements(prhs[5]) < (int) (3) || _n_dims(prhs[5]) > 1)
-        mexErrMsgTxt("Error in dimension of argument RotationAngle");
-    if (mxIsSingle(prhs[5]))
-        io_RotationAngle = (float*)mxGetData(prhs[5]);
-    else
-        mexErrMsgTxt("Expecting single-precision float matrix for argument RotationAngle");
+    plhs[1] = mxCreateNumericMatrix(3,1,mxSINGLE_CLASS, mxREAL);
+    out_RotationAngle = mxGetData(plhs[1]);
 
-    if (mxGetNumberOfElements(prhs[6]) < (int) (3) || _n_dims(prhs[6]) > 1)
-        mexErrMsgTxt("Error in dimension of argument Translation");
-    if (mxIsSingle(prhs[6]))
-        io_Translation = (float*)mxGetData(prhs[6]);
-    else
-        mexErrMsgTxt("Expecting single-precision float matrix for argument Translation");
+    plhs[2] = mxCreateNumericMatrix(3,1,mxSINGLE_CLASS, mxREAL);
+    out_Translation = mxGetData(plhs[2]);
 
 
     /******** Invoke computational function ********/
-    ierr = cg_1to1_periodic_read(in_file_number, in_B, in_Z, in_I, io_RotationCenter, io_RotationAngle, io_Translation);
+    ierr = cg_1to1_periodic_read(in_file_number, in_B, in_Z, in_I, out_RotationCenter, out_RotationAngle, out_Translation);
 
 
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[0]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[3]) = ierr;
 }
 
 /* Gateway function
@@ -8622,7 +8414,7 @@ EXTERN_C void cg_conn_average_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -8644,7 +8436,7 @@ EXTERN_C void cg_conn_average_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_conn_average_read(in_file_number, in_B, in_Z, in_I, &out_AverageInterfaceType);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_AverageInterfaceType;
     if (nlhs > 1) {
@@ -8672,7 +8464,7 @@ EXTERN_C void cg_conn_average_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -8698,7 +8490,7 @@ EXTERN_C void cg_conn_average_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_conn_average_write(in_file_number, in_B, in_Z, in_I, in_AverageInterfaceType);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -8722,7 +8514,7 @@ EXTERN_C void cg_1to1_average_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -8748,7 +8540,7 @@ EXTERN_C void cg_1to1_average_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_1to1_average_write(in_file_number, in_B, in_Z, in_I, in_AverageInterfaceType);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -8772,7 +8564,7 @@ EXTERN_C void cg_1to1_average_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 4)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -8794,7 +8586,7 @@ EXTERN_C void cg_1to1_average_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_1to1_average_read(in_file_number, in_B, in_Z, in_I, &out_AverageInterfaceType);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_AverageInterfaceType;
     if (nlhs > 1) {
@@ -8827,7 +8619,7 @@ EXTERN_C void cg_gopath_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument file_number");
     in_file_number = _get_numeric_scalar_int32(prhs[0]);
@@ -8842,7 +8634,7 @@ EXTERN_C void cg_gopath_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_path);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -8856,39 +8648,37 @@ EXTERN void cg_where_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]);
 
 /* Gateway function
- * [out_NormDefinitions, ierr] = cg_convergence_read(io_iterations)
+ * [out_iterations, out_NormDefinitions, ierr] = cg_convergence_read()
  *
  * The original C interface is
  * int cg_convergence_read(int * iterations, char ** NormDefinitions);
  */
 EXTERN_C void cg_convergence_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
-    int * io_iterations;
+    int out_iterations;
     char * out_NormDefinitions;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 2 || nrhs != 1)
+    if (nlhs > 3 || nrhs != 0)
         mexErrMsgTxt("Wrong number of arguments to function ");
-
-    /******** Obtain input and/or inout arguments ********/
-    if (mxIsInt32(prhs[0]) || mxIsUint32(prhs[0]))
-        io_iterations = (int*)mxGetData(prhs[0]);
-    else
-        mexErrMsgTxt("Expecting 32-bit integer matrix for argument iterations");
 
 
     /******** Invoke computational function ********/
-    ierr = cg_convergence_read(io_iterations, &out_NormDefinitions);
+    ierr = cg_convergence_read(&out_iterations, &out_NormDefinitions);
 
 
-    /******** Process output arguments ********/
-    plhs[0] = mxCreateString(out_NormDefinitions);
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[0]) = out_iterations;
+    if (nlhs > 1) {
+        plhs[1] = mxCreateString(out_NormDefinitions);
+    }
     cg_free(out_NormDefinitions);
 
-    if (nlhs > 1) {
-        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[1]) = ierr;
+    if (nlhs > 2) {
+        plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[2]) = ierr;
     }
 }
 
@@ -8908,7 +8698,7 @@ EXTERN_C void cg_convergence_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument iterations");
     in_iterations = _get_numeric_scalar_int32(prhs[0]);
@@ -8923,7 +8713,7 @@ EXTERN_C void cg_convergence_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_NormDefinitions);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -8948,7 +8738,7 @@ EXTERN_C void cg_state_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_state_read(&out_StateDescription);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(out_StateDescription);
     cg_free(out_StateDescription);
 
@@ -8973,7 +8763,7 @@ EXTERN_C void cg_state_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_StateDescription = _mxGetString(prhs[0], NULL);
 
 
@@ -8984,7 +8774,7 @@ EXTERN_C void cg_state_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_StateDescription);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -9015,7 +8805,7 @@ EXTERN_C void cg_equationset_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_equationset_read(&out_EquationDimension, &out_GoverningEquationsFlag, &out_GasModelFlag, &out_ViscosityModelFlag, &out_ThermalConductivityModelFlag, &out_TurbulenceClosureFlag, &out_TurbulenceModelFlag);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_EquationDimension;
     if (nlhs > 1) {
@@ -9069,7 +8859,7 @@ EXTERN_C void cg_equationset_chemistry_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_equationset_chemistry_read(&out_ThermalRelaxationFlag, &out_ChemicalKineticsFlag);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_ThermalRelaxationFlag;
     if (nlhs > 1) {
@@ -9099,7 +8889,7 @@ EXTERN_C void cg_equationset_elecmagn_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (mxIsInt32(prhs[0]) || mxIsUint32(prhs[0]))
         io_ElecFldModelFlag = (int*)mxGetData(prhs[0]);
     else
@@ -9120,7 +8910,7 @@ EXTERN_C void cg_equationset_elecmagn_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_equationset_elecmagn_read(io_ElecFldModelFlag, io_MagnFldModelFlag, io_ConductivityModelFlag);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -9140,7 +8930,7 @@ EXTERN_C void cg_equationset_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument EquationDimension");
     in_EquationDimension = _get_numeric_scalar_int32(prhs[0]);
@@ -9150,7 +8940,7 @@ EXTERN_C void cg_equationset_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_equationset_write(in_EquationDimension);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -9175,7 +8965,7 @@ EXTERN_C void cg_governing_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_governing_read(&out_EquationsType);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_EquationsType;
     if (nlhs > 1) {
@@ -9199,7 +8989,7 @@ EXTERN_C void cg_governing_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument Equationstype");
     in_Equationstype = _get_numeric_scalar_int32(prhs[0]);
@@ -9209,7 +8999,7 @@ EXTERN_C void cg_governing_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_governing_write(in_Equationstype);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -9229,7 +9019,7 @@ EXTERN_C void cg_diffusion_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (mxIsInt32(prhs[0]) || mxIsUint32(prhs[0]))
         io_diffusion_model = (int*)mxGetData(prhs[0]);
     else
@@ -9240,7 +9030,7 @@ EXTERN_C void cg_diffusion_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_diffusion_read(io_diffusion_model);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -9260,7 +9050,7 @@ EXTERN_C void cg_diffusion_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (mxIsInt32(prhs[0]) || mxIsUint32(prhs[0]))
         in_diffusion_model = (int*)mxGetData(prhs[0]);
     else
@@ -9271,7 +9061,7 @@ EXTERN_C void cg_diffusion_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_diffusion_write(in_diffusion_model);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -9292,7 +9082,7 @@ EXTERN_C void cg_model_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 2 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_ModelLabel = _mxGetString(prhs[0], NULL);
 
 
@@ -9303,7 +9093,7 @@ EXTERN_C void cg_model_read_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_ModelLabel);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_ModelType;
     if (nlhs > 1) {
@@ -9328,7 +9118,7 @@ EXTERN_C void cg_model_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_ModelLabel = _mxGetString(prhs[0], NULL);
 
     if (_n_dims(prhs[1]) > 0)
@@ -9343,7 +9133,7 @@ EXTERN_C void cg_model_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_ModelLabel);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -9368,7 +9158,7 @@ EXTERN_C void cg_narrays_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_narrays(&out_narrays);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_narrays;
     if (nlhs > 1) {
@@ -9378,7 +9168,7 @@ EXTERN_C void cg_narrays_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_ArrayName, out_DataType, out_DataDimension, ierr] = cg_array_info(in_A, io_ArrayName, io_DimensionVector)
+ * [out_ArrayName, out_DataType, out_DataDimension, out_DimensionVector, ierr] = cg_array_info(in_A)
  *
  * The original C interface is
  * int cg_array_info(int A, char * ArrayName, CG_DataType_t * DataType, int * DataDimension, long long * DimensionVector);
@@ -9386,102 +9176,96 @@ EXTERN_C void cg_narrays_MeX(int nlhs, mxArray *plhs[],
 EXTERN_C void cg_array_info_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     int in_A;
-    char * io_ArrayName;
+    char out_ArrayName[33];
     CG_DataType_t out_DataType;
     int out_DataDimension;
-    long long * io_DimensionVector;
+    long long * out_DimensionVector;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 4 || nrhs != 3)
+    if (nlhs > 5 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument A");
     in_A = _get_numeric_scalar_int32(prhs[0]);
 
-    io_ArrayName = _mxGetString(prhs[1], NULL);
-
-    if (mxGetNumberOfElements(prhs[2]) < (int) (3) || _n_dims(prhs[2]) > 1)
-        mexErrMsgTxt("Error in dimension of argument DimensionVector");
-    if (mxIsInt64(prhs[2]) || mxIsUint64(prhs[2]))
-        io_DimensionVector = (long long*)mxGetData(prhs[2]);
-    else
-        mexErrMsgTxt("Expecting 64-bit integer matrix for argument DimensionVector");
+    /******** Obtain fixed-size output arrays ********/
+    plhs[3] = mxCreateNumericMatrix(3,1,mxINT64_CLASS, mxREAL);
+    out_DimensionVector = mxGetData(plhs[3]);
 
 
     /******** Invoke computational function ********/
-    ierr = cg_array_info(in_A, io_ArrayName, &out_DataType, &out_DataDimension, io_DimensionVector);
+    ierr = cg_array_info(in_A, out_ArrayName, &out_DataType, &out_DataDimension, out_DimensionVector);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_ArrayName);
-    _mxFreeString(io_ArrayName);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = out_DataType;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_ArrayName);
     if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = out_DataType;
+    }
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = out_DataDimension;
     }
-    if (nlhs > 2) {
-        plhs[3] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[3]) = ierr;
+    if (nlhs > 3) {
+        plhs[4] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[4]) = ierr;
     }
 }
 
 /* Gateway function
- * ierr = cg_array_read(in_A, io_Data)
+ * ierr = cg_array_read(in_A, io_data)
  *
  * The original C interface is
- * int cg_array_read(int A, void * Data);
+ * int cg_array_read(int A, void * data);
  */
 EXTERN_C void cg_array_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     int in_A;
-    void * io_Data;
+    void * io_data;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
     if (nlhs > 1 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument A");
     in_A = _get_numeric_scalar_int32(prhs[0]);
 
-    io_Data = mxGetData(prhs[1]);
+    io_data = mxGetData(prhs[1]);
 
     /******** Invoke computational function ********/
-    ierr = cg_array_read(in_A, io_Data);
+    ierr = cg_array_read(in_A, io_data);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
 
 /* Gateway function
- * ierr = cg_array_read_as(in_A, in_type, io_Data)
+ * ierr = cg_array_read_as(in_A, in_type, io_data)
  *
  * The original C interface is
- * int cg_array_read_as(int A, CG_DataType_t type, void * Data);
+ * int cg_array_read_as(int A, CG_DataType_t type, void * data);
  */
 EXTERN_C void cg_array_read_as_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     int in_A;
     CG_DataType_t in_type;
-    void * io_Data;
+    void * io_data;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
     if (nlhs > 1 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument A");
     in_A = _get_numeric_scalar_int32(prhs[0]);
@@ -9490,13 +9274,13 @@ EXTERN_C void cg_array_read_as_MeX(int nlhs, mxArray *plhs[],
         mexErrMsgTxt("Error in dimension of argument type");
     in_type = _get_numeric_scalar_int32(prhs[1]);
 
-    io_Data = mxGetData(prhs[2]);
+    io_data = mxGetData(prhs[2]);
 
     /******** Invoke computational function ********/
-    ierr = cg_array_read_as(in_A, in_type, io_Data);
+    ierr = cg_array_read_as(in_A, in_type, io_data);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -9520,7 +9304,7 @@ EXTERN_C void cg_array_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_DataDimension = _get_numeric_scalar_int32(prhs[2]);
     in_ArrayName = _mxGetString(prhs[0], NULL);
 
@@ -9547,7 +9331,7 @@ EXTERN_C void cg_array_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_ArrayName);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -9572,7 +9356,7 @@ EXTERN_C void cg_nuser_data_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nuser_data(&out_nuser_data);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_nuser_data;
     if (nlhs > 1) {
@@ -9582,7 +9366,7 @@ EXTERN_C void cg_nuser_data_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_user_data_name, ierr] = cg_user_data_read(in_Index, io_user_data_name)
+ * [out_user_data_name, ierr] = cg_user_data_read(in_Index)
  *
  * The original C interface is
  * int cg_user_data_read(int Index, char * user_data_name);
@@ -9590,32 +9374,29 @@ EXTERN_C void cg_nuser_data_MeX(int nlhs, mxArray *plhs[],
 EXTERN_C void cg_user_data_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     int in_Index;
-    char * io_user_data_name;
+    char out_user_data_name[33];
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 2 || nrhs != 2)
+    if (nlhs > 2 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument Index");
     in_Index = _get_numeric_scalar_int32(prhs[0]);
 
-    io_user_data_name = _mxGetString(prhs[1], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_user_data_read(in_Index, io_user_data_name);
+    ierr = cg_user_data_read(in_Index, out_user_data_name);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_user_data_name);
-    _mxFreeString(io_user_data_name);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_user_data_name);
+    if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = ierr;
+    }
 }
 
 /* Gateway function
@@ -9633,7 +9414,7 @@ EXTERN_C void cg_user_data_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_user_data_name = _mxGetString(prhs[0], NULL);
 
 
@@ -9644,7 +9425,7 @@ EXTERN_C void cg_user_data_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_user_data_name);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -9669,7 +9450,7 @@ EXTERN_C void cg_nintegrals_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nintegrals(&out_nintegrals);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_nintegrals;
     if (nlhs > 1) {
@@ -9679,7 +9460,7 @@ EXTERN_C void cg_nintegrals_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_IntegralDataName, ierr] = cg_integral_read(in_IntegralDataIndex, io_IntegralDataName)
+ * [out_IntegralDataName, ierr] = cg_integral_read(in_IntegralDataIndex)
  *
  * The original C interface is
  * int cg_integral_read(int IntegralDataIndex, char * IntegralDataName);
@@ -9687,32 +9468,29 @@ EXTERN_C void cg_nintegrals_MeX(int nlhs, mxArray *plhs[],
 EXTERN_C void cg_integral_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     int in_IntegralDataIndex;
-    char * io_IntegralDataName;
+    char out_IntegralDataName[33];
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 2 || nrhs != 2)
+    if (nlhs > 2 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument IntegralDataIndex");
     in_IntegralDataIndex = _get_numeric_scalar_int32(prhs[0]);
 
-    io_IntegralDataName = _mxGetString(prhs[1], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_integral_read(in_IntegralDataIndex, io_IntegralDataName);
+    ierr = cg_integral_read(in_IntegralDataIndex, out_IntegralDataName);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_IntegralDataName);
-    _mxFreeString(io_IntegralDataName);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-    *(int*)mxGetData(plhs[1]) = ierr;
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_IntegralDataName);
+    if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = ierr;
+    }
 }
 
 /* Gateway function
@@ -9730,7 +9508,7 @@ EXTERN_C void cg_integral_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_IntegralDataName = _mxGetString(prhs[0], NULL);
 
 
@@ -9741,7 +9519,7 @@ EXTERN_C void cg_integral_write_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_IntegralDataName);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -9761,7 +9539,7 @@ EXTERN_C void cg_rind_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (mxIsInt32(prhs[0]) || mxIsUint32(prhs[0]))
         io_RindData = (int*)mxGetData(prhs[0]);
     else
@@ -9772,7 +9550,7 @@ EXTERN_C void cg_rind_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_rind_read(io_RindData);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -9792,7 +9570,7 @@ EXTERN_C void cg_rind_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (mxIsInt32(prhs[0]) || mxIsUint32(prhs[0]))
         in_RindData = (int*)mxGetData(prhs[0]);
     else
@@ -9803,7 +9581,7 @@ EXTERN_C void cg_rind_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_rind_write(in_RindData);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -9828,7 +9606,7 @@ EXTERN_C void cg_ndescriptors_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_ndescriptors(&out_ndescriptors);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_ndescriptors;
     if (nlhs > 1) {
@@ -9838,7 +9616,7 @@ EXTERN_C void cg_ndescriptors_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [io_descr_name, out_descr_text, ierr] = cg_descriptor_read(in_descr_no, io_descr_name)
+ * [out_descr_name, out_descr_text, ierr] = cg_descriptor_read(in_descr_no)
  *
  * The original C interface is
  * int cg_descriptor_read(int descr_no, char * descr_name, char ** descr_text);
@@ -9846,35 +9624,32 @@ EXTERN_C void cg_ndescriptors_MeX(int nlhs, mxArray *plhs[],
 EXTERN_C void cg_descriptor_read_MeX(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
     int in_descr_no;
-    char * io_descr_name;
+    char out_descr_name[33];
     char * out_descr_text;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 3 || nrhs != 2)
+    if (nlhs > 3 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument descr_no");
     in_descr_no = _get_numeric_scalar_int32(prhs[0]);
 
-    io_descr_name = _mxGetString(prhs[1], NULL);
-
 
     /******** Invoke computational function ********/
-    ierr = cg_descriptor_read(in_descr_no, io_descr_name, &out_descr_text);
+    ierr = cg_descriptor_read(in_descr_no, out_descr_name, &out_descr_text);
 
 
-    /******** Copy back inout strings ********/
-    plhs[0] = mxCreateString(io_descr_name);
-    _mxFreeString(io_descr_name);
-
-    /******** Process output arguments ********/
-    plhs[1] = mxCreateString(out_descr_text);
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateString(out_descr_name);
+    if (nlhs > 1) {
+        plhs[1] = mxCreateString(out_descr_text);
+    }
     cg_free(out_descr_text);
 
-    if (nlhs > 1) {
+    if (nlhs > 2) {
         plhs[2] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[2]) = ierr;
     }
@@ -9896,7 +9671,7 @@ EXTERN_C void cg_descriptor_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_descr_name = _mxGetString(prhs[0], NULL);
 
     in_descr_text = _mxGetString(prhs[1], NULL);
@@ -9910,7 +9685,7 @@ EXTERN_C void cg_descriptor_write_MeX(int nlhs, mxArray *plhs[],
     _mxFreeString(in_descr_name);
     _mxFreeString(in_descr_text);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -9935,7 +9710,7 @@ EXTERN_C void cg_nunits_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nunits(&out_nunits);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_nunits;
     if (nlhs > 1) {
@@ -9968,7 +9743,7 @@ EXTERN_C void cg_units_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_units_read(&out_mass, &out_length, &out_time, &out_temperature, &out_angle);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_mass;
     if (nlhs > 1) {
@@ -10012,7 +9787,7 @@ EXTERN_C void cg_units_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument mass");
     in_mass = _get_numeric_scalar_int32(prhs[0]);
@@ -10038,7 +9813,7 @@ EXTERN_C void cg_units_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_units_write(in_mass, in_length, in_time, in_temperature, in_angle);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10070,7 +9845,7 @@ EXTERN_C void cg_unitsfull_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_unitsfull_read(&out_mass, &out_length, &out_time, &out_temperature, &out_angle, &out_current, &out_amount, &out_intensity);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_mass;
     if (nlhs > 1) {
@@ -10129,7 +9904,7 @@ EXTERN_C void cg_unitsfull_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 8)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument mass");
     in_mass = _get_numeric_scalar_int32(prhs[0]);
@@ -10167,7 +9942,7 @@ EXTERN_C void cg_unitsfull_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_unitsfull_write(in_mass, in_length, in_time, in_temperature, in_angle, in_current, in_amount, in_intensity);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10192,7 +9967,7 @@ EXTERN_C void cg_exponents_info_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_exponents_info(&out_DataType);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_DataType;
     if (nlhs > 1) {
@@ -10216,7 +9991,7 @@ EXTERN_C void cg_nexponents_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (mxIsInt32(prhs[0]) || mxIsUint32(prhs[0]))
         io_numexp = (int*)mxGetData(prhs[0]);
     else
@@ -10227,7 +10002,7 @@ EXTERN_C void cg_nexponents_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_nexponents(io_numexp);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10247,14 +10022,14 @@ EXTERN_C void cg_exponents_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     io_exponents = mxGetData(prhs[0]);
 
     /******** Invoke computational function ********/
     ierr = cg_exponents_read(io_exponents);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10275,7 +10050,7 @@ EXTERN_C void cg_exponents_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument DataType");
     in_DataType = _get_numeric_scalar_int32(prhs[0]);
@@ -10286,7 +10061,7 @@ EXTERN_C void cg_exponents_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_exponents_write(in_DataType, in_exponents);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10306,14 +10081,14 @@ EXTERN_C void cg_expfull_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     io_exponents = mxGetData(prhs[0]);
 
     /******** Invoke computational function ********/
     ierr = cg_expfull_read(io_exponents);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10334,7 +10109,7 @@ EXTERN_C void cg_expfull_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument DataType");
     in_DataType = _get_numeric_scalar_int32(prhs[0]);
@@ -10345,7 +10120,7 @@ EXTERN_C void cg_expfull_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_expfull_write(in_DataType, in_exponents);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10370,7 +10145,7 @@ EXTERN_C void cg_conversion_info_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_conversion_info(&out_DataType);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_DataType;
     if (nlhs > 1) {
@@ -10394,14 +10169,14 @@ EXTERN_C void cg_conversion_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     io_ConversionFactors = mxGetData(prhs[0]);
 
     /******** Invoke computational function ********/
     ierr = cg_conversion_read(io_ConversionFactors);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10422,7 +10197,7 @@ EXTERN_C void cg_conversion_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 2)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument DataType");
     in_DataType = _get_numeric_scalar_int32(prhs[0]);
@@ -10433,7 +10208,7 @@ EXTERN_C void cg_conversion_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_conversion_write(in_DataType, in_ConversionFactors);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10458,7 +10233,7 @@ EXTERN_C void cg_dataclass_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_dataclass_read(&out_dataclass);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_dataclass;
     if (nlhs > 1) {
@@ -10482,7 +10257,7 @@ EXTERN_C void cg_dataclass_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument dataclass");
     in_dataclass = _get_numeric_scalar_int32(prhs[0]);
@@ -10492,7 +10267,7 @@ EXTERN_C void cg_dataclass_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_dataclass_write(in_dataclass);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10517,7 +10292,7 @@ EXTERN_C void cg_gridlocation_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_gridlocation_read(&out_GridLocation);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_GridLocation;
     if (nlhs > 1) {
@@ -10541,7 +10316,7 @@ EXTERN_C void cg_gridlocation_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument GridLocation");
     in_GridLocation = _get_numeric_scalar_int32(prhs[0]);
@@ -10551,7 +10326,7 @@ EXTERN_C void cg_gridlocation_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_gridlocation_write(in_GridLocation);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10576,7 +10351,7 @@ EXTERN_C void cg_ordinal_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_ordinal_read(&out_Ordinal);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_Ordinal;
     if (nlhs > 1) {
@@ -10600,7 +10375,7 @@ EXTERN_C void cg_ordinal_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument Ordinal");
     in_Ordinal = _get_numeric_scalar_int32(prhs[0]);
@@ -10610,7 +10385,7 @@ EXTERN_C void cg_ordinal_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_ordinal_write(in_Ordinal);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10636,7 +10411,7 @@ EXTERN_C void cg_ptset_info_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_ptset_info(&out_ptset_type, &out_npnts);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_ptset_type;
     if (nlhs > 1) {
@@ -10666,7 +10441,7 @@ EXTERN_C void cg_ptset_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (_n_dims(prhs[0]) > 0)
         mexErrMsgTxt("Error in dimension of argument ptset_type");
     in_ptset_type = _get_numeric_scalar_int32(prhs[0]);
@@ -10685,7 +10460,7 @@ EXTERN_C void cg_ptset_write_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_ptset_write(in_ptset_type, in_npnts, in_pnts);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10705,7 +10480,7 @@ EXTERN_C void cg_ptset_read_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     if (mxIsInt64(prhs[0]) || mxIsUint64(prhs[0]))
         io_pnts = (long long*)mxGetData(prhs[0]);
     else
@@ -10716,7 +10491,7 @@ EXTERN_C void cg_ptset_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_ptset_read(io_pnts);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10741,7 +10516,7 @@ EXTERN_C void cg_is_link_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_is_link(&out_path_length);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = out_path_length;
     if (nlhs > 1) {
@@ -10771,7 +10546,7 @@ EXTERN_C void cg_link_read_MeX(int nlhs, mxArray *plhs[],
     ierr = cg_link_read(&out_filename, &out_link_path);
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(out_filename);
     cg_free(out_filename);
 
@@ -10803,7 +10578,7 @@ EXTERN_C void cg_link_write_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 3)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_nodename = _mxGetString(prhs[0], NULL);
 
     in_filename = _mxGetString(prhs[1], NULL);
@@ -10820,7 +10595,7 @@ EXTERN_C void cg_link_write_MeX(int nlhs, mxArray *plhs[],
     _mxFreeString(in_filename);
     _mxFreeString(in_name_in_file);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10840,7 +10615,7 @@ EXTERN_C void cg_delete_node_MeX(int nlhs, mxArray *plhs[],
     if (nlhs > 1 || nrhs != 1)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
-    /******** Obtain input and/or inout arguments ********/
+    /******** Obtain input and inout arguments ********/
     in_node_name = _mxGetString(prhs[0], NULL);
 
 
@@ -10851,7 +10626,7 @@ EXTERN_C void cg_delete_node_MeX(int nlhs, mxArray *plhs[],
     /******** Free up input buffers. ********/
     _mxFreeString(in_node_name);
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
     *(int*)mxGetData(plhs[0]) = ierr;
 }
@@ -10875,7 +10650,7 @@ EXTERN_C void cg_get_error_MeX(int nlhs, mxArray *plhs[],
     msg = cg_get_error();
 
 
-    /******** Process output arguments ********/
+    /******** Process output scalars and strings ********/
     plhs[0] = mxCreateString(msg);
 }
 

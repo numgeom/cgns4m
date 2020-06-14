@@ -13,7 +13,7 @@ function [io_coord, ierr] = cg_coord_read(in_fn, in_B, in_Z, in_coordname, in_ty
 %            rmax: 64-bit integer (int64), array
 %
 % In&Out argument (required as output; type is auto-casted):
-%           coord: dynamic type based on type  (also required as input)
+%           coord: dynamic type based on type  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -49,6 +49,11 @@ switch (datatype)
         io_coord = int64(io_coord);
     otherwise
         error('Unknown data type %d', in_type);
+end
+
+if ~isempty(io_coord)
+    % Write to it to unshare memory with other variables
+    t=io_coord(1); io_coord(1)=t;
 end
 
 

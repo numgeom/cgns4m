@@ -36,7 +36,7 @@ elseif length(io_fambc_name)<32
 elseif ~isa(io_fambc_name,'char')
     io_fambc_name=char(io_fambc_name);
 else
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_fambc_name(1); io_fambc_name(1)=t;
 end
 

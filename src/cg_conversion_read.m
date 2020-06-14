@@ -6,7 +6,7 @@ function [io_ConversionFactors, ierr] = cg_conversion_read(io_ConversionFactors)
 % Input argument (required; type is auto-casted):
 %
 % In&Out argument (required as output; type is auto-casted):
-%    ConversionFactors: dynamic type based on cg_conversion_info()  (also required as input)
+%    ConversionFactors: dynamic type based on cg_conversion_info()  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -35,6 +35,11 @@ switch (datatype)
         io_ConversionFactors = int64(io_ConversionFactors);
     otherwise
         error('Unknown data type %d', cg_conversion_info());
+end
+
+if ~isempty(io_ConversionFactors)
+    % Write to it to unshare memory with other variables
+    t=io_ConversionFactors(1); io_ConversionFactors(1)=t;
 end
 
 

@@ -16,7 +16,8 @@ function [out_coord_id, ierr] = cg_coord_id(in_fn, in_B, in_Z, in_C)
 % The original C function is:
 % int cg_coord_id(int fn, int B, int Z, int C, double * coord_id);
 %
-% For detail, see the documentation of the original function.
+% For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
+%
 if (nargin < 4)
     error('Incorrect number of input or output arguments.');
 end

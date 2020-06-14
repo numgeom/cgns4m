@@ -1,19 +1,19 @@
-function [io_Data, ierr] = cg_array_read(in_A, io_Data)
+function [io_data, ierr] = cg_array_read(in_A, io_data)
 % Gateway function for C function cg_array_read.
 %
-% [Data, ierr] = cg_array_read(A, Data)
+% [data, ierr] = cg_array_read(A, data)
 %
 % Input argument (required; type is auto-casted):
 %               A: 32-bit integer (int32), scalar
 %
 % In&Out argument (required as output; type is auto-casted):
-%            Data: dynamic type based on cgns_get_array_type(A)  (also required as input)
+%            data: dynamic type based on cgns_get_array_type(A)  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
-% int cg_array_read(int A, void * Data);
+% int cg_array_read(int A, void * data);
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
@@ -26,19 +26,24 @@ in_A = int32(in_A);
 datatype = cgns_get_array_type(in_A);
 switch (datatype)
     case 2 % CG_Integer
-        io_Data = int32(io_Data);
+        io_data = int32(io_data);
     case 3 % CG_RealSingle
-        io_Data = single(io_Data);
+        io_data = single(io_data);
     case 4 % CG_RealDouble
-        io_Data = double(io_Data);
+        io_data = double(io_data);
     case 5 % CG_Character
-        io_Data = [int8(io_Data), int8(zeros(1,1))];
+        io_data = [int8(io_data), int8(zeros(1,1))];
     case 6 % CG_LongInteger
-        io_Data = int64(io_Data);
+        io_data = int64(io_data);
     otherwise
         error('Unknown data type %d', cgns_get_array_type(in_A));
 end
 
+if ~isempty(io_data)
+    % Write to it to unshare memory with other variables
+    t=io_data(1); io_data(1)=t;
+end
+
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(200), in_A, io_Data);
+ierr = cgnslib_mex(int32(200), in_A, io_data);
