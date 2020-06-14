@@ -33,7 +33,7 @@
  * ------------------------------------------------------------------------- */
 
 /************
- * This file is based on cgnslib.h in the cgnslib_1.4.1 distribution.
+ * This file is based on cgnslib.h in the cgnslib_4.1.1 distribution.
  *
  * It is funcationally identical to the file in the official CGNS
  * distribution, except for the annotations added for C2mex.
@@ -1667,7 +1667,7 @@ CGNSDLL int cg_biter_write(int file_number, int B, const char * bitername, int n
 \* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 CGNSDLL int cg_ziter_read(int file_number, int B, int Z, char *zitername);
-/*%output zitername */
+/*%output zitername(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/timedep.html */
 CGNSDLL int cg_ziter_write(int file_number, int B, int Z, const char * zitername);
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/timedep.html */
@@ -1799,7 +1799,7 @@ CGNSDLL int cg_where(int *file_number, int *B, int *depth, char **label,
 \* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 CGNSDLL int cg_convergence_read(int *iterations, char **NormDefinitions);
-/*%output iterations, NormDefinitions */
+/*%output iterations, NormDefinitions(33) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html */
 CGNSDLL int cg_convergence_write(int iterations, const char * NormDefinitions);
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/auxiliary.html */

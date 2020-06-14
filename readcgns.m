@@ -280,19 +280,22 @@ elseif (zonetype == 3) % Unstructured
     elems = zeros(npe, num_elems);  % Element connectivity is permuted in CGNS
     parent_data = [];
 
-    if itype==CG_MIXED
+    if itype==CG_MIXED && exist('cg_poly_elements_read', 'file')
       offsets = elems;
       [elems, offsets, parent_data, ierr] = cg_poly_elements_read(index_file,index_base,index_zone,...
           index_sect,elems, offsets, parent_data); chk_error(ierr);
       % change leading type to number of nodes for
       % every element in the element connectivity
       elems = elems';                 % Permute the connectivity back
-      element_type = elems(1);
-      elems = inverse_mixed_elements(elems);
     else
       [elems, parent_data,ierr] = cg_elements_read(index_file,index_base,index_zone,...
           index_sect,elems,parent_data);       chk_error(ierr);
       elems = elems';                 % Permute the connectivity back
+    end
+
+    if itype==CG_MIXED
+        element_type = elems(1);
+        elems = inverse_mixed_elements(elems);
     end
 
     nelems = number_of_elements(elems);    % number of elements (MIXED element type)
