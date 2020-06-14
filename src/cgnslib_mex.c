@@ -7616,7 +7616,7 @@ EXTERN_C void cg_nbocos_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
- * [out_boconame, out_bocotype, out_ptset_type, out_npnts, out_NormalDataType, out_ndataset, ierr] = cg_boco_info(in_fn, in_B, in_Z, in_BC, io_NormalIndex, io_NormalListSize)
+ * [out_boconame, out_bocotype, out_ptset_type, out_npnts, out_NormalListSize, out_NormalDataType, out_ndataset, ierr] = cg_boco_info(in_fn, in_B, in_Z, in_BC, io_NormalIndex)
  *
  * The original C interface is
  * int cg_boco_info(int fn, int B, int Z, int BC, char * boconame, CG_BCType_t * bocotype, CG_PointSetType_t * ptset_type, long long * npnts, int * NormalIndex, long long * NormalListSize, CG_DataType_t * NormalDataType, int * ndataset);
@@ -7632,13 +7632,13 @@ EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
     CG_PointSetType_t out_ptset_type;
     long long out_npnts;
     int * io_NormalIndex;
-    long long * io_NormalListSize;
+    long long out_NormalListSize;
     CG_DataType_t out_NormalDataType;
     int out_ndataset;
     int ierr;
 
     /******** Check number of input and output arguments. ********/
-    if (nlhs > 7 || nrhs != 6)
+    if (nlhs > 8 || nrhs != 5)
         mexErrMsgTxt("Wrong number of arguments to function ");
 
     /******** Obtain input and inout arguments ********/
@@ -7663,14 +7663,9 @@ EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
     else
         mexErrMsgTxt("Expecting 32-bit integer matrix for argument NormalIndex");
 
-    if (mxIsInt64(prhs[5]) || mxIsUint64(prhs[5]))
-        io_NormalListSize = (long long*)mxGetData(prhs[5]);
-    else
-        mexErrMsgTxt("Expecting 64-bit integer matrix for argument NormalListSize");
-
 
     /******** Invoke computational function ********/
-    ierr = cg_boco_info(in_fn, in_B, in_Z, in_BC, out_boconame, &out_bocotype, &out_ptset_type, &out_npnts, io_NormalIndex, io_NormalListSize, &out_NormalDataType, &out_ndataset);
+    ierr = cg_boco_info(in_fn, in_B, in_Z, in_BC, out_boconame, &out_bocotype, &out_ptset_type, &out_npnts, io_NormalIndex, &out_NormalListSize, &out_NormalDataType, &out_ndataset);
 
 
     /******** Process output scalars and strings ********/
@@ -7688,16 +7683,20 @@ EXTERN_C void cg_boco_info_MeX(int nlhs, mxArray *plhs[],
         *(long long*)mxGetData(plhs[3]) = out_npnts;
     }
     if (nlhs > 4) {
-        plhs[4] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[4]) = out_NormalDataType;
+        plhs[4] = mxCreateNumericMatrix(1, 1, mxINT64_CLASS, mxREAL);
+        *(long long*)mxGetData(plhs[4]) = out_NormalListSize;
     }
     if (nlhs > 5) {
         plhs[5] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[5]) = out_ndataset;
+        *(int*)mxGetData(plhs[5]) = out_NormalDataType;
     }
     if (nlhs > 6) {
         plhs[6] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
-        *(int*)mxGetData(plhs[6]) = ierr;
+        *(int*)mxGetData(plhs[6]) = out_ndataset;
+    }
+    if (nlhs > 7) {
+        plhs[7] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[7]) = ierr;
     }
 }
 
