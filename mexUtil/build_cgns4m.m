@@ -4,6 +4,10 @@ function build_cgns4m(force)
 % See also startup_cgns4m.
 
 CGNS_VERSION = '3.1.4';
+if isoctave
+    warning('CGNS v3.1.4 does not support HDF5 1.10. Please use v3.4.1 or later to avoid runtime errors.');
+end
+
 SRCDIR = ['cgnslib_' CGNS_VERSION];
 oldpwd = pwd;
 cgns4m_root = fileparts(which('startup_cgns4m.m'));
