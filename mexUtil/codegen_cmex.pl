@@ -909,7 +909,8 @@ sub make_output_ptr {
         $retstr .=
           (     "    $arg->{mat_expr_out} = mxCreateNumericMatrix($len,1,"
               . "mx" . uc( matlab_typename( $arg->{basic_type} ) ) . "_CLASS, mxREAL);\n"
-          );    
+              . "    $arg->{c_var_name} = mxGetData($arg->{mat_expr_out});\n"
+          );
     } else {
         die("$::progname: can't handle scalar/matrix output of type '$type'\n");
     }
@@ -1005,7 +1006,7 @@ sub put_val_scalar {
     if ( exists( $typemap_put_scalar{$argtype} ) )
     {                                  # Do we understand this type?
         return &{ $typemap_put_scalar{$argtype} }( $arg, $arg->{mat_expr_out} );
-    } 
+    }
     else {                           # Unrecognized type?
         die("$::progname: don't understand scalar output type '$argtype'\n");
     }

@@ -1560,6 +1560,7 @@ EXTERN_C void cg_zone_read_MeX(int nlhs, mxArray *plhs[],
 
     /******** Obtain fixed-size output arrays ********/
     plhs[1] = mxCreateNumericMatrix(9,1,mxINT64_CLASS, mxREAL);
+    out_size = mxGetData(plhs[1]);
 
 
     /******** Invoke computational function ********/
@@ -1756,6 +1757,7 @@ EXTERN_C void cg_index_dim_MeX(int nlhs, mxArray *plhs[],
 
     /******** Obtain fixed-size output arrays ********/
     plhs[0] = mxCreateNumericMatrix(3,1,mxINT32_CLASS, mxREAL);
+    out_index_dim = mxGetData(plhs[0]);
 
 
     /******** Invoke computational function ********/
@@ -7377,10 +7379,13 @@ EXTERN_C void cg_1to1_read_MeX(int nlhs, mxArray *plhs[],
 
     /******** Obtain fixed-size output arrays ********/
     plhs[2] = mxCreateNumericMatrix(6,1,mxINT64_CLASS, mxREAL);
+    out_range = mxGetData(plhs[2]);
 
     plhs[3] = mxCreateNumericMatrix(6,1,mxINT64_CLASS, mxREAL);
+    out_donor_range = mxGetData(plhs[3]);
 
     plhs[4] = mxCreateNumericMatrix(3,1,mxINT32_CLASS, mxREAL);
+    out_transform = mxGetData(plhs[4]);
 
 
     /******** Invoke computational function ********/
@@ -9399,8 +9404,10 @@ EXTERN_C void cg_axisym_read_MeX(int nlhs, mxArray *plhs[],
 
     /******** Obtain fixed-size output arrays ********/
     plhs[0] = mxCreateNumericMatrix(2,1,mxSINGLE_CLASS, mxREAL);
+    out_ref_point = mxGetData(plhs[0]);
 
     plhs[1] = mxCreateNumericMatrix(2,1,mxSINGLE_CLASS, mxREAL);
+    out_axis = mxGetData(plhs[1]);
 
 
     /******** Invoke computational function ********/
@@ -9793,10 +9800,13 @@ EXTERN_C void cg_conn_periodic_read_MeX(int nlhs, mxArray *plhs[],
 
     /******** Obtain fixed-size output arrays ********/
     plhs[0] = mxCreateNumericMatrix(3,1,mxSINGLE_CLASS, mxREAL);
+    out_RotationCenter = mxGetData(plhs[0]);
 
     plhs[1] = mxCreateNumericMatrix(3,1,mxSINGLE_CLASS, mxREAL);
+    out_RotationAngle = mxGetData(plhs[1]);
 
     plhs[2] = mxCreateNumericMatrix(3,1,mxSINGLE_CLASS, mxREAL);
+    out_Translation = mxGetData(plhs[2]);
 
 
     /******** Invoke computational function ********/
@@ -9974,10 +9984,13 @@ EXTERN_C void cg_1to1_periodic_read_MeX(int nlhs, mxArray *plhs[],
 
     /******** Obtain fixed-size output arrays ********/
     plhs[0] = mxCreateNumericMatrix(3,1,mxSINGLE_CLASS, mxREAL);
+    out_RotationCenter = mxGetData(plhs[0]);
 
     plhs[1] = mxCreateNumericMatrix(3,1,mxSINGLE_CLASS, mxREAL);
+    out_RotationAngle = mxGetData(plhs[1]);
 
     plhs[2] = mxCreateNumericMatrix(3,1,mxSINGLE_CLASS, mxREAL);
+    out_Translation = mxGetData(plhs[2]);
 
 
     /******** Invoke computational function ********/
@@ -10787,6 +10800,7 @@ EXTERN_C void cg_array_info_MeX(int nlhs, mxArray *plhs[],
 
     /******** Obtain fixed-size output arrays ********/
     plhs[3] = mxCreateNumericMatrix(3,1,mxINT64_CLASS, mxREAL);
+    out_DimensionVector = mxGetData(plhs[3]);
 
 
     /******** Invoke computational function ********/

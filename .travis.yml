@@ -11,4 +11,4 @@ before_install:
 script:
 # Test generating code and rebuild in Octave
   - ./mexUtil/codegen.sh
-  - octave --eval "startup_cgns4m; build_cgns4m -force"
+  - octave --eval "startup_cgns4m; build_cgns4m -force; test readcgns"

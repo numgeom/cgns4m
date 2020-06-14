@@ -162,6 +162,7 @@ end
 % Perform testing
 if isoctave
     rehash;
+    mtest = @test;
 else
     rehash('path');
 end

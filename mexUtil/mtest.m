@@ -77,11 +77,6 @@
 
 function [ret1__, ret2__, ret3__, ret4__] = mtest (name__, flag__, fid__)
 
-if isoctave
-    [ret1__, ret2__, ret3__, ret4__] = test (name__, flag__, fid__);
-    return;
-end
-
 %% information from test will be introduced by 'key'
 persistent signal_fail__;
 persistent signal_empty__;
