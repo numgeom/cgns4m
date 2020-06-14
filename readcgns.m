@@ -84,9 +84,7 @@ end
 
 % Get dimension of element(icelldim) and vertex(iphysdim)
 index_base=1;  %assume there is only one base
-basename = char(zeros(1,32));
-[basename,icelldim,iphysdim,ierr] = cg_base_read(index_file,index_base,...
-    basename); chk_error(ierr);
+[basename,icelldim,iphysdim,ierr] = cg_base_read(index_file,index_base); chk_error(ierr);
 assert(~isempty(deblank(basename)))
 
 % Get zone type */
@@ -105,10 +103,7 @@ if (zonetype == 2) % Structured
 
     % Get zone size (and name - although not needed here) */
     index_zone=1;  % assume there is only one zone
-    size = zeros(1,9);
-    zonename = char(zeros(1,32));
-    [zonename,size,ierr] = cg_zone_read(index_file,index_base,index_zone, ...
-        zonename, size); chk_error(ierr);
+    [zonename,size,ierr] = cg_zone_read(index_file,index_base,index_zone); chk_error(ierr);
     assert(~isempty(deblank(zonename)))
 
     % Define the range of vertices
@@ -185,18 +180,15 @@ if (zonetype == 2) % Structured
     before_struct = struct('field_name',[],'datatype',[],'location',[],'index_sol',[]);
     index_struct = 1;
     for index_sol =1:n_sol
-        solname = char(zeros(1,32));
         [solname, location, ierr] = cg_sol_info(index_file, index_base,...
-            index_zone,index_sol,solname); chk_error(ierr);
+            index_zone,index_sol); chk_error(ierr);
 
         [n_fields,ierr] = cg_nfields(index_file, index_base, ...
             index_zone,index_sol); chk_error(ierr);
         assert(~isempty(deblank(solname)))
         for index_field = 1:n_fields
-            field_name = char(zeros(1,32));
-
             [field_name, datatype, ierr] = cg_field_info(index_file, index_base, ...
-                index_zone, index_sol, index_field,field_name); chk_error(ierr);
+                index_zone, index_sol, index_field); chk_error(ierr);
             assert(~isempty(deblank(field_name)))
 
             %field_name including '-' and deblank the trailing blank
@@ -249,10 +241,7 @@ elseif (zonetype == 3) % Unstructured
 
     % Get zone size (and name - although not needed here) */
     index_zone=1;  % assume there is only one zone
-    size = zeros(1,9);
-    zonename = char(zeros(1,32));
-    [zonename,size,ierr] = cg_zone_read(index_file,index_base,index_zone, ...
-        zonename, size); chk_error(ierr);
+    [zonename,size,ierr] = cg_zone_read(index_file,index_base,index_zone); chk_error(ierr);
     assert(~isempty(deblank(zonename)))
 
     % Define the range of vertices
@@ -273,9 +262,9 @@ elseif (zonetype == 3) % Unstructured
 
     % Get element connectivity and element type
     index_sect = 1;    % assume there is only one section
-    sectionname = char(zeros(1,32));
+
     [sectionname,itype,istart,iend, nbndry, pflag, ierr] = cg_section_read(index_file, ...
-        index_base,index_zone,index_sect,sectionname); chk_error(ierr); %#ok<*ASGLU>
+        index_base,index_zone,index_sect); chk_error(ierr); %#ok<*ASGLU>
     assert(~isempty(deblank(sectionname)))
 
     % Define the range of elements
@@ -290,15 +279,22 @@ elseif (zonetype == 3) % Unstructured
     num_elems = size_ielem / npe;   % number of elements (except for MIXED)
     elems = zeros(npe, num_elems);  % Element connectivity is permuted in CGNS
     parent_data = [];
-    [elems, parent_data,ierr] = cg_elements_read(index_file,index_base,index_zone,...
-        index_sect,elems,parent_data); chk_error(ierr);
-    elems = elems';                 % Permute the connectivity back
 
-    element_type = elems(1);
-    % If element type is MIXED, change leading type to number of nodes for
-    % every element in the element connectivity
+    if itype==CG_MIXED && exist('cg_poly_elements_read', 'file')
+      offsets = elems;
+      [elems, offsets, parent_data, ierr] = cg_poly_elements_read(index_file,index_base,index_zone,...
+          index_sect,elems, offsets, parent_data); chk_error(ierr);
+      % change leading type to number of nodes for
+      % every element in the element connectivity
+      elems = elems';                 % Permute the connectivity back
+    else
+      [elems, parent_data,ierr] = cg_elements_read(index_file,index_base,index_zone,...
+          index_sect,elems,parent_data);       chk_error(ierr);
+      elems = elems';                 % Permute the connectivity back
+    end
 
-    if (itype == MIXED)
+    if itype==CG_MIXED
+        element_type = elems(1);
         elems = inverse_mixed_elements(elems);
     end
 
@@ -339,18 +335,15 @@ elseif (zonetype == 3) % Unstructured
     before_struct = struct('field_name',[],'datatype',[],'location',[],'index_sol',[]);
     index_struct = 1;
     for index_sol =1:n_sol
-        solname = char(zeros(1,32));
         [solname, location,ierr] = cg_sol_info(index_file, index_base,...
-            index_zone,index_sol,solname); chk_error(ierr);
+            index_zone,index_sol); chk_error(ierr);
 
         [n_fields,ierr] = cg_nfields(index_file, index_base, ...
             index_zone,index_sol); chk_error(ierr);
         assert(~isempty(deblank(solname)))
         for index_field = 1:n_fields
-            field_name = char(zeros(1,32));
-
-            [field_name , datatype,ierr] = cg_field_info(index_file, index_base, ...
-                index_zone, index_sol, index_field,field_name); chk_error(ierr);
+            [datatype,field_name,ierr] = cg_field_info(index_file, index_base, ...
+                index_zone, index_sol, index_field); chk_error(ierr);
             assert(~isempty(deblank(field_name)))
 
             %field_name including '-' and deblank the trailing blank
@@ -795,7 +788,7 @@ end
 function elems = inverse_mixed_elements(elems)
 % Convert from element_type in the connectivity table into the number of
 % vertices per element.
-es = size(elems,1);
+es = length(elems);
 
 ii=1;
 nelems = 0;

@@ -14,7 +14,7 @@ function [io_data, ierr] = cg_array_general_read(in_A, in_s_rmin, in_s_rmax, in_
 %          m_rmax: 64-bit integer (int64), array
 %
 % In&Out argument (required as output; type is auto-casted):
-%            data: dynamic type based on m_type  (also required as input)
+%            data: dynamic type based on m_type  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -51,6 +51,11 @@ switch (datatype)
         io_data = int64(io_data);
     otherwise
         error('Unknown data type %d', in_m_type);
+end
+
+if ~isempty(io_data)
+    % Write to it to unshare memory with other variables
+    t=io_data(1); io_data(1)=t;
 end
 
 

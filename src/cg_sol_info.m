@@ -1,7 +1,7 @@
-function [io_solname, out_location, ierr] = cg_sol_info(in_fn, in_B, in_Z, in_S, io_solname)
+function [out_solname, out_location, ierr] = cg_sol_info(in_fn, in_B, in_Z, in_S)
 % Gateway function for C function cg_sol_info.
 %
-% [solname, location, ierr] = cg_sol_info(fn, B, Z, S, solname)
+% [solname, location, ierr] = cg_sol_info(fn, B, Z, S)
 %
 % Input arguments (required; type is auto-casted):
 %              fn: 32-bit integer (int32), scalar
@@ -9,10 +9,8 @@ function [io_solname, out_location, ierr] = cg_sol_info(in_fn, in_B, in_Z, in_S,
 %               Z: 32-bit integer (int32), scalar
 %               S: 32-bit integer (int32), scalar
 %
-% In&Out argument (required as output; type is auto-casted):
-%         solname: character string with default length 32  (optional as input)
-%
 % Output arguments (optional):
+%         solname: character string
 %        location: 32-bit integer (int32), scalar
 %            ierr: 32-bit integer (int32), scalar
 %
@@ -21,25 +19,13 @@ function [io_solname, out_location, ierr] = cg_sol_info(in_fn, in_B, in_Z, in_S,
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 4)
+if (nargin < 4)
     error('Incorrect number of input or output arguments.');
 end
 in_fn = int32(in_fn);
 in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_S = int32(in_S);
-if nargin<5
-    io_solname=char(zeros(1,32));
-elseif length(io_solname)<32
-    %% Enlarge the array if necessary;
-    io_solname=char([io_solname zeros(1,32-length(io_solname))]);
-elseif ~isa(io_solname,'char')
-    io_solname=char(io_solname);
-else
-    % Write to it to avoid sharing memory with other variables
-    t=io_solname(1); io_solname(1)=t;
-end
-
 
 % Invoke the actual MEX-function.
-[io_solname, out_location, ierr] = cgnslib_mex(int32(93), in_fn, in_B, in_Z, in_S, io_solname);
+[out_solname, out_location, ierr] = cgnslib_mex(int32(93), in_fn, in_B, in_Z, in_S);

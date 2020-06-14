@@ -1,15 +1,13 @@
-function [io_descr_name, out_descr_text, ierr] = cg_descriptor_read(in_descr_no, io_descr_name)
+function [out_descr_name, out_descr_text, ierr] = cg_descriptor_read(in_descr_no)
 % Gateway function for C function cg_descriptor_read.
 %
-% [descr_name, descr_text, ierr] = cg_descriptor_read(descr_no, descr_name)
+% [descr_name, descr_text, ierr] = cg_descriptor_read(descr_no)
 %
 % Input argument (required; type is auto-casted):
 %        descr_no: 32-bit integer (int32), scalar
 %
-% In&Out argument (required as output; type is auto-casted):
-%      descr_name: character string with default length 32  (optional as input)
-%
 % Output arguments (optional):
+%      descr_name: character string
 %      descr_text: character string
 %            ierr: 32-bit integer (int32), scalar
 %
@@ -22,22 +20,10 @@ function [io_descr_name, out_descr_text, ierr] = cg_descriptor_read(in_descr_no,
 % NOTE: Some buffer space for out char(s) was allocated by C function
 % cg_descriptor_read, and the MEX function has deallocated the buffer by
 % calling cg_free.
-if ( nargout < 1 || nargin < 1)
+if (nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
 in_descr_no = int32(in_descr_no);
-if nargin<2
-    io_descr_name=char(zeros(1,32));
-elseif length(io_descr_name)<32
-    %% Enlarge the array if necessary;
-    io_descr_name=char([io_descr_name zeros(1,32-length(io_descr_name))]);
-elseif ~isa(io_descr_name,'char')
-    io_descr_name=char(io_descr_name);
-else
-    % Write to it to avoid sharing memory with other variables
-    t=io_descr_name(1); io_descr_name(1)=t;
-end
-
 
 % Invoke the actual MEX-function.
-[io_descr_name, out_descr_text, ierr] = cgnslib_mex(int32(225), in_descr_no, io_descr_name);
+[out_descr_name, out_descr_text, ierr] = cgnslib_mex(int32(225), in_descr_no);

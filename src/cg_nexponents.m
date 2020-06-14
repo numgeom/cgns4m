@@ -6,7 +6,7 @@ function [io_numexp, ierr] = cg_nexponents(io_numexp)
 % Input argument (required; type is auto-casted):
 %
 % In&Out argument (required as output; type is auto-casted):
-%          numexp: 32-bit integer (int32), array  (also required as input)
+%          numexp: 32-bit integer (int32), array  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -23,7 +23,7 @@ basetype = 'int32';
 if ~isa(io_numexp,basetype)
     io_numexp = cast(io_numexp, basetype);
 elseif ~isempty(io_numexp)
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_numexp(1); io_numexp(1)=t;
 end
 
