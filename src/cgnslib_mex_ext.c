@@ -1,6 +1,6 @@
 /*
  * This file was created manually for MATLAB & Octave from 
- * cgnslib_3.4.1/cgnslib.h by Xiangmin Jiao. 
+ * cgnslib.h by Xiangmin Jiao. 
  * For bug reports, email jiao@ams.sunysb.edu.
  */
 

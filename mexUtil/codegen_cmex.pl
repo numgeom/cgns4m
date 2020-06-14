@@ -901,6 +901,15 @@ sub make_output_ptr {
           (     "    $arg->{mat_expr_out} = mxCreateNumericMatrix(1,1,"
               . "(sizeof(void*)==8)?mxUINT64_CLASS:mxUINT32_CLASS, mxREAL);\n"
           );
+    } elsif ( $arg->{dimension} > 1 ) {
+        my $len = (
+            defined( $arg->{rawdimension} )
+            ? $arg->{rawdimension}
+            : $arg->{dimension}[0] );
+        $retstr .=
+          (     "    $arg->{mat_expr_out} = mxCreateNumericMatrix($len,1,"
+              . "mx" . uc( matlab_typename( $arg->{basic_type} ) ) . "_CLASS, mxREAL);\n"
+          );    
     } else {
         die("$::progname: can't handle scalar/matrix output of type '$type'\n");
     }
@@ -996,7 +1005,8 @@ sub put_val_scalar {
     if ( exists( $typemap_put_scalar{$argtype} ) )
     {                                  # Do we understand this type?
         return &{ $typemap_put_scalar{$argtype} }( $arg, $arg->{mat_expr_out} );
-    } else {                           # Unrecognized type?
+    } 
+    else {                           # Unrecognized type?
         die("$::progname: don't understand scalar output type '$argtype'\n");
     }
 }
@@ -1021,7 +1031,8 @@ sub put_val_ptr {
 
     if ( exists( $typemap_put_ptr{$argtype} ) ) {  # Do we understand this type?
         return &{ $typemap_put_ptr{$argtype} }($arg);    # Do the conversion.
-    } else {                                             # Unrecognized type?
+    }
+     else {                                             # Unrecognized type?
         die(
 "$::progname: don't understand scalar/vector output type '$argtype'\n"
         );
@@ -1073,15 +1084,21 @@ sub wrap_function {
                 my $type;
                 if ( $arg->{type} ne "char **" ) {
 
-                    # For return type, we must preserve const modifier
-                    $type = $arg->{type};
-                    if ( $argname ne "__r_e_t__" ) {
-                        $type =~ s/\bconst\b\s*//g;
+                    if ( $arg->{basic_type} eq "char" && $arg->{source} eq "output" && $arg->{rawdimension} > 1) {
+                        # For out character strings, use buffer
+                        $retstr .= "    $arg->{basic_type} $arg->{c_var_name}\[$arg->{rawdimension}\];\n";
+                    } else {
+                        # For return type, we must preserve const modifier
+                        $type = $arg->{type};
+                        if ( $argname ne "__r_e_t__" ) {
+                            $type =~ s/\bconst\b\s*//g;
+                        }
+                        $retstr .= "    $type $arg->{c_var_name};\n";
                     }
                 } else {
                     $type = "$arg->{basic_type} *";
+                    $retstr .= "    $type $arg->{c_var_name};\n";
                 }
-                $retstr .= "    $type $arg->{c_var_name};\n";
 
                 # If len_var_name is defined, variable must be Fortran string
                 if ( defined( $arg->{fstrlen} ) ) {
@@ -1111,7 +1128,7 @@ sub wrap_function {
         $retstr .= $faa->function_argchk();    # Begin the function declaration.
 
         if ( @{ $faa->{inputs} } + @{ $faa->{inouts} } > 0 ) {
-            $retstr .= "    /******** Obtain input and/or inout arguments ********/\n";
+            $retstr .= "    /******** Obtain input and inout arguments ********/\n";
         }
 
         #
@@ -1232,6 +1249,30 @@ sub wrap_function {
 
         my $fstrlens;
 
+        if ( @{ $faa->{outarrs} } > 0 ) {
+            $retstr .= "    /******** Obtain fixed-size output arrays ********/\n";
+        }
+
+        #
+        # Now verify that the dimension of all arguments are compatible,
+        #  and get the pointer to the first argument value.
+        #
+        my $argcount = @{ $faa->{outarrs} };
+        foreach $argname ( @{ $faa->{outarrs} } ) {
+
+            $arg = $args->{$argname};    # Access the description of argument.
+            my $dim = @{ $arg->{dimension} };
+
+            # Get the minimum dimension of the argument.
+            my @conds;
+
+            $retstr .=
+                $faa->make_output_ptr($argname);    # Get a pointer to this arg.
+
+            $retstr .= "\n";    # Put an extra blank line in to make it
+                                # more readable.
+        }
+
         #
         # Now actually call the function.  Get each of the arguments in
         # a variable and then pass it off to the function:
@@ -1307,12 +1348,12 @@ sub wrap_function {
             }
         }
 
-        if ( @{ $faa->{outputs} } > 0 ) {
-            $retstr .= "\n    /******** Process output arguments ********/\n";
+        if ( @{ $faa->{outvals} } > 0 ) {
+            $retstr .= "\n    /******** Process output scalars and strings ********/\n";
         }
 
         my $count = 0;
-        foreach $argname ( @{ $faa->{outputs} } ) {
+        foreach $argname ( @{ $faa->{outvals} } ) {
 
             # We return at least one output argument.
             $arg = $args->{$argname};    # Point to description of argument.
@@ -1469,7 +1510,7 @@ sub print_matlab_code {
                 && ( $arg->{basic_type} ne "char"
                     || ( $::default_strlen == 0 ) ) )
             {
-                $required    = " (also required as input)";
+                $required    = " (must be preallocated at input)";
                 $required_in = $count;
             } else {
                 $required    = " (optional as input)";
@@ -1597,7 +1638,10 @@ sub print_matlab_code {
 
             if ( defined( $arg->{cast} ) ) {
                 # Check whether it is an argument
-                $mstr .= ::obtain_typecast( $arg->{cast}, $var_name );
+                $mstr .= ::obtain_typecast( $arg->{cast}, $var_name )
+                  . "if ~isempty($var_name)\n"
+                  . "    % Write to it to unshare memory with other variables\n"
+                  . "    t=$var_name(1); $var_name(1)=t;\nend\n\n";
             }
         }
 
@@ -1647,12 +1691,12 @@ sub print_matlab_code {
                     "if ~isa($var_name,'char')\n"
                   . "    $var_name=char($var_name);\n"
                   . "else\n"
-                  . "    % Write to it to avoid sharing memory with other variables\n"
+                  . "    % Write to it to unshare memory with other variables\n"
                   . "    t=$var_name(1); $var_name(1)=t;\nend\n\n";
             } elsif ( $arg->{basic_type} eq "void *" ) {
                 $mstr .=
                     "if ~isempty($var_name)\n"
-                  . "    % Write to it to avoid sharing memory with other variables\n"
+                  . "    % Write to it to unshare memory with other variables\n"
                   . "    t=$var_name(1); $var_name(1)=t;\nend\n\n";
             } else {
                 my $basetype = matlab_typename( $arg->{basic_type} );
@@ -1697,7 +1741,7 @@ sub print_matlab_code {
                     "if ~isa($var_name,basetype)\n"
                   . "    $var_name = cast($var_name, basetype);\n"
                   . "elseif ~isempty($var_name)\n"
-                  . "    % Write to it to avoid sharing memory with other variables\n"
+                  . "    % Write to it to unshare memory with other variables\n"
                   . "    t=$var_name(1); $var_name(1)=t;\nend\n\n";
             }
         }
