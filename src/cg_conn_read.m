@@ -11,8 +11,8 @@ function [io_pnts, io_donor_data, ierr] = cg_conn_read(in_file_number, in_B, in_
 %    donor_datatype: 32-bit integer (int32), scalar
 %
 % In&Out arguments (required as output; type is auto-casted):
-%            pnts: 64-bit integer (int64), array  (also required as input)
-%      donor_data: dynamic type based on donor_datatype  (also required as input)
+%            pnts: 64-bit integer (int64), array  (must be preallocated at input)
+%      donor_data: dynamic type based on donor_datatype  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -48,11 +48,16 @@ switch (datatype)
         error('Unknown data type %d', in_donor_datatype);
 end
 
+if ~isempty(io_donor_data)
+    % Write to it to unshare memory with other variables
+    t=io_donor_data(1); io_donor_data(1)=t;
+end
+
 basetype = 'int64';
 if ~isa(io_pnts,basetype)
     io_pnts = cast(io_pnts, basetype);
 elseif ~isempty(io_pnts)
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_pnts(1); io_pnts(1)=t;
 end
 

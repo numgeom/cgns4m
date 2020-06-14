@@ -7,7 +7,7 @@ function [io_data, ierr] = cg_array_read(in_A, io_data)
 %               A: 32-bit integer (int32), scalar
 %
 % In&Out argument (required as output; type is auto-casted):
-%            data: dynamic type based on cgns_get_array_type(A)  (also required as input)
+%            data: dynamic type based on cgns_get_array_type(A)  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -37,6 +37,11 @@ switch (datatype)
         io_data = int64(io_data);
     otherwise
         error('Unknown data type %d', cgns_get_array_type(in_A));
+end
+
+if ~isempty(io_data)
+    % Write to it to unshare memory with other variables
+    t=io_data(1); io_data(1)=t;
 end
 
 

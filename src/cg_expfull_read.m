@@ -6,7 +6,7 @@ function [io_exponents, ierr] = cg_expfull_read(io_exponents)
 % Input argument (required; type is auto-casted):
 %
 % In&Out argument (required as output; type is auto-casted):
-%       exponents: dynamic type based on cg_exponents_info()  (also required as input)
+%       exponents: dynamic type based on cg_exponents_info()  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -35,6 +35,11 @@ switch (datatype)
         io_exponents = int64(io_exponents);
     otherwise
         error('Unknown data type %d', cg_exponents_info());
+end
+
+if ~isempty(io_exponents)
+    % Write to it to unshare memory with other variables
+    t=io_exponents(1); io_exponents(1)=t;
 end
 
 

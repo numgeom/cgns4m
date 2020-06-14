@@ -18,7 +18,7 @@ function [io_field_ptr, ierr] = cg_field_general_read(in_fn, in_B, in_Z, in_S, i
 %          m_rmax: 64-bit integer (int64), array
 %
 % In&Out argument (required as output; type is auto-casted):
-%       field_ptr: dynamic type based on m_type  (also required as input)
+%       field_ptr: dynamic type based on m_type  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -59,6 +59,11 @@ switch (datatype)
         io_field_ptr = int64(io_field_ptr);
     otherwise
         error('Unknown data type %d', in_m_type);
+end
+
+if ~isempty(io_field_ptr)
+    % Write to it to unshare memory with other variables
+    t=io_field_ptr(1); io_field_ptr(1)=t;
 end
 
 
