@@ -625,7 +625,7 @@ s/^\s*\%\s*(input|inout|output|typecast)\s+(\w+(?:\s*\01\d+\02)?)\s*,\s*(.*)/%$1
               || die("In definition of $fname:\n  Illegal argument name $2\n");
 
             if (   $1 eq "output"
-                && ( defined($3) || $arg->{basic_type} eq "void *" )
+                && ( $arg->{basic_type} eq "void *" )
                 && $arg->{source} ne "input" )
             {
                 $arg->{source} = "inout";
@@ -829,7 +829,7 @@ s/^\s*\%\s*(input|inout|output|typecast)\s+(\w+(?:\s*\01\d+\02)?)\s*,\s*(.*)/%$1
     # Now form the list of input/output/inout arguments in order, removing
     # dimensional arguments:
     #
-    my ( @inputs, @inouts, @iostrs, @outputs );    # Array of argument names that will be
+    my ( @inputs, @inouts, @iostrs, @outvals, @outarrs, @outputs );    # Array of argument names that will be
                                           # the input/inout/output variables.
 
     foreach $argname (@argnames) {
@@ -856,6 +856,11 @@ s/^\s*\%\s*(input|inout|output|typecast)\s+(\w+(?:\s*\01\d+\02)?)\s*,\s*(.*)/%$1
         }
         elsif ( $args{$argname}{source} eq 'output' ) {
             push( @outputs, $argname );
+            if ( $args{$argname}{basic_type} ne 'char' && $args{$argname}{rawdimension} > 1 ) {
+                push( @outarrs, $argname );
+            } else {
+                push( @outvals, $argname );
+            }
         }
         else {
             die("internal error, invalid argument source '$args{$argname}{source}'");
@@ -911,6 +916,9 @@ s/^\s*\%\s*(input|inout|output|typecast)\s+(\w+(?:\s*\01\d+\02)?)\s*,\s*(.*)/%$1
             # Move return value to the end of output list
             push( @outputs, $argnames[0] );
             shift(@outputs);
+
+            push( @outvals, $argnames[0] );
+            shift(@outvals);
         }
         shift(@argnames);        # Remove the return value from the argument
         shift(@canon_args);      # list since it is handled separately.
@@ -930,6 +938,8 @@ s/^\s*\%\s*(input|inout|output|typecast)\s+(\w+(?:\s*\01\d+\02)?)\s*,\s*(.*)/%$1
             inouts      => \@inouts,
             iostrs      => \@iostrs,
             outputs     => \@outputs,
+            outvals     => \@outvals,
+            outarrs     => \@outarrs,
             returns     => $ftype,
             args        => \%args,
             argnames    => \@argnames,

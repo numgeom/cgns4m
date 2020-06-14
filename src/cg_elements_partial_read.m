@@ -12,8 +12,8 @@ function [io_elements, io_parent_data, ierr] = cg_elements_partial_read(in_file_
 %             end: 64-bit integer (int64), scalar
 %
 % In&Out arguments (required as output; type is auto-casted):
-%        elements: 64-bit integer (int64), array  (also required as input)
-%     parent_data: 64-bit integer (int64), array  (also required as input)
+%        elements: 64-bit integer (int64), array  (must be preallocated at input)
+%     parent_data: 64-bit integer (int64), array  (must be preallocated at input)
 %
 % Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
@@ -36,7 +36,7 @@ basetype = 'int64';
 if ~isa(io_elements,basetype)
     io_elements = cast(io_elements, basetype);
 elseif ~isempty(io_elements)
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_elements(1); io_elements(1)=t;
 end
 
@@ -44,7 +44,7 @@ basetype = 'int64';
 if ~isa(io_parent_data,basetype)
     io_parent_data = cast(io_parent_data, basetype);
 elseif ~isempty(io_parent_data)
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_parent_data(1); io_parent_data(1)=t;
 end
 

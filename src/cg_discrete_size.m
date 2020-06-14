@@ -10,7 +10,7 @@ function [io_dim_vals, out_data_dim, ierr] = cg_discrete_size(in_fn, in_B, in_Z,
 %               D: 32-bit integer (int32), scalar
 %
 % In&Out argument (required as output; type is auto-casted):
-%        dim_vals: 64-bit integer (int64), array  (also required as input)
+%        dim_vals: 64-bit integer (int64), array  (must be preallocated at input)
 %
 % Output arguments (optional):
 %        data_dim: 32-bit integer (int32), scalar
@@ -32,7 +32,7 @@ basetype = 'int64';
 if ~isa(io_dim_vals,basetype)
     io_dim_vals = cast(io_dim_vals, basetype);
 elseif ~isempty(io_dim_vals)
-    % Write to it to avoid sharing memory with other variables
+    % Write to it to unshare memory with other variables
     t=io_dim_vals(1); io_dim_vals(1)=t;
 end
 
