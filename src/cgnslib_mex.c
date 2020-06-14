@@ -9131,7 +9131,7 @@ EXTERN_C void cg_ziter_read_MeX(int nlhs, mxArray *plhs[],
     int in_file_number;
     int in_B;
     int in_Z;
-    char out_zitername;
+    char out_zitername[33];
     int ierr;
 
     /******** Check number of input and output arguments. ********/
@@ -9153,12 +9153,11 @@ EXTERN_C void cg_ziter_read_MeX(int nlhs, mxArray *plhs[],
 
 
     /******** Invoke computational function ********/
-    ierr = cg_ziter_read(in_file_number, in_B, in_Z, &out_zitername);
+    ierr = cg_ziter_read(in_file_number, in_B, in_Z, out_zitername);
 
 
     /******** Process output scalars and strings ********/
-    plhs[0] = mxCreateCharArray(1, scalar_dimensions);
-    *(mxChar *)mxGetData(plhs[0]) = out_zitername;
+    plhs[0] = mxCreateString(out_zitername);
     if (nlhs > 1) {
         plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
         *(int*)mxGetData(plhs[1]) = ierr;
