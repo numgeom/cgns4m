@@ -1782,7 +1782,7 @@ CGNSDLL int cg_array_info(int A, char *ArrayName,
 	CGNS_ENUMT(DataType_t) *DataType,
 	int *DataDimension, cgsize_t *DimensionVector);
 /*%output DataType, DataDimension */
-/*%inout DimensionVector(13) */
+/*%inout DimensionVector(12) */
 /*%url https://cgns.github.io/CGNS_docs_current/midlevel/physical.html */
 CGNSDLL int cg_array_read(int A, void *data);
 /*%typecast data:cgns_get_array_type(A) */
