@@ -40,3 +40,6 @@
 
 # Backups
 *.bak
+
+# System files
+.MATLABDriveTag
