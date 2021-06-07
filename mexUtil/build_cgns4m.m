@@ -43,7 +43,16 @@ cgnsfiles = ['cgnslib.c cgns_internals.c cgns_io.c cgns_error.c '...
     'adf/ADF_interface.c adf/ADF_internals.c'];
 cgnsfiles = [cgnsfiles ' adfh/ADFH.c'];
 
-if ispc
+if isoctave
+    if exist('__octave_config_info__', 'builtin')
+        octave_config_info = eval('@__octave_config_info__');
+    end
+    hdf5inc = [octave_config_info('HDF5_CPPFLAGS') ' ' ...
+              '-I' SRCDIR '/adfh -DBUILD_HDF5'];
+    hdf5lib = [octave_config_info('HDF5_LDFLAGS') ' ' ...
+               octave_config_info('HDF5_LIBS')];
+   HDF_VERSION = '';
+elseif ispc
     HDF_VERSION = 'hdf5-1.8.21';
     sys_hdfroot = ['C:\Program Files\HDF_Group\HDF5\' HDF_VERSION(6:end)];
     if ~exist([sys_hdfroot '\lib'], 'dir')
@@ -68,15 +77,6 @@ if ispc
     hdf5lib = ['"' sys_hdfroot '\lib\libhdf5.lib" "' ...
         sys_hdfroot '\lib\libszip.lib" "' ...
         sys_hdfroot '\lib\libzlib.lib"'];
-elseif isoctave
-    if exist('__octave_config_info__', 'builtin')
-        octave_config_info = eval('@__octave_config_info__');
-    end
-    hdf5inc = [octave_config_info('HDF5_CPPFLAGS') ' ' ...
-              '-I' SRCDIR '/adfh -DBUILD_HDF5'];
-    hdf5lib = [octave_config_info('HDF5_LDFLAGS') ' ' ...
-               octave_config_info('HDF5_LIBS')];
-   HDF_VERSION = '';
 else
     % Try to the same version as MATLAB's built-in version
     [major, minor, release] = H5.get_libversion();
