@@ -31,4 +31,4 @@ in_dimension = int32(in_dimension);
 in_gcname = char(in_gcname);
 
 % Invoke the actual MEX-function.
-[out_S, ierr] = cgnslib_mex(int32(133), in_fn, in_B, in_Z, in_regname, in_dimension, in_gcname);
+[out_S, ierr] = cgnslib_mex(int32(141), in_fn, in_B, in_Z, in_regname, in_dimension, in_gcname);

@@ -20,4 +20,4 @@ end
 in_diffusion_model = int32(in_diffusion_model);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(224), in_diffusion_model);
+ierr = cgnslib_mex(int32(232), in_diffusion_model);

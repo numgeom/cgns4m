@@ -29,4 +29,4 @@ in_Z = int32(in_Z);
 in_BC = int32(in_BC);
 
 % Invoke the actual MEX-function.
-[out_AreaType, out_SurfaceArea, out_RegionName, ierr] = cgnslib_mex(int32(198), in_file_number, in_B, in_Z, in_BC);
+[out_AreaType, out_SurfaceArea, out_RegionName, ierr] = cgnslib_mex(int32(206), in_file_number, in_B, in_Z, in_BC);

@@ -24,4 +24,4 @@ in_B = int32(in_B);
 in_gravity_vector = single(in_gravity_vector);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(191), in_file_number, in_B, in_gravity_vector);
+ierr = cgnslib_mex(int32(199), in_file_number, in_B, in_gravity_vector);

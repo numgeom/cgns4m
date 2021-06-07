@@ -36,4 +36,4 @@ in_Z = int32(in_Z);
 in_Ii = int32(in_Ii);
 
 % Invoke the actual MEX-function.
-[out_connectname, out_location, out_type, out_ptset_type, out_npnts, out_donorname, out_donor_zonetype, out_donor_ptset_type, out_donor_datatype, out_ndata_donor, ierr] = cgnslib_mex(int32(145), in_file_number, in_B, in_Z, in_Ii);
+[out_connectname, out_location, out_type, out_ptset_type, out_npnts, out_donorname, out_donor_zonetype, out_donor_ptset_type, out_donor_datatype, out_ndata_donor, ierr] = cgnslib_mex(int32(153), in_file_number, in_B, in_Z, in_Ii);

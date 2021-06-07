@@ -42,6 +42,10 @@ switch (datatype)
         io_NormalList = [int8(io_NormalList), int8(zeros(1,1))];
     case 6 % CG_LongInteger
         io_NormalList = int64(io_NormalList);
+    case 7 % CG_ComplexSingle
+        io_NormalList = complex64(io_NormalList);
+    case 8 % CG_ComplexDouble
+        io_NormalList = complex128(io_NormalList);
     otherwise
         error('Unknown data type %d', cgns_get_boco_type(in_fn, in_B, in_Z, in_BC));
 end
@@ -61,4 +65,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(159), in_fn, in_B, in_Z, in_BC, io_pnts, io_NormalList);
+ierr = cgnslib_mex(int32(167), in_fn, in_B, in_Z, in_BC, io_pnts, io_NormalList);

@@ -26,4 +26,4 @@ end
 in_descr_no = int32(in_descr_no);
 
 % Invoke the actual MEX-function.
-[out_descr_name, out_descr_text, ierr] = cgnslib_mex(int32(243), in_descr_no);
+[out_descr_name, out_descr_text, ierr] = cgnslib_mex(int32(251), in_descr_no);

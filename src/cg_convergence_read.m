@@ -21,4 +21,4 @@ function [out_iterations, out_NormDefinitions, ierr] = cg_convergence_read()
 % calling cg_free.
 
 % Invoke the actual MEX-function.
-[out_iterations, out_NormDefinitions, ierr] = cgnslib_mex(int32(213));
+[out_iterations, out_NormDefinitions, ierr] = cgnslib_mex(int32(221));

@@ -27,4 +27,4 @@ in_Z = int32(in_Z);
 in_S = int32(in_S);
 
 % Invoke the actual MEX-function.
-[out_nfields, ierr] = cgnslib_mex(int32(118), in_fn, in_B, in_Z, in_S);
+[out_nfields, ierr] = cgnslib_mex(int32(126), in_fn, in_B, in_Z, in_S);

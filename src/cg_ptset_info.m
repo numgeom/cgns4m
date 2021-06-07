@@ -17,4 +17,4 @@ function [out_ptset_type, out_npnts, ierr] = cg_ptset_info()
 %
 
 % Invoke the actual MEX-function.
-[out_ptset_type, out_npnts, ierr] = cgnslib_mex(int32(265));
+[out_ptset_type, out_npnts, ierr] = cgnslib_mex(int32(273));

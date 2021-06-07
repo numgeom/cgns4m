@@ -24,4 +24,4 @@ in_B = int32(in_B);
 in_type = int32(in_type);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(185), in_file_number, in_B, in_type);
+ierr = cgnslib_mex(int32(193), in_file_number, in_B, in_type);

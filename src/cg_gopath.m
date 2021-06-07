@@ -22,4 +22,4 @@ in_file_number = int32(in_file_number);
 in_path = char(in_path);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(210), in_file_number, in_path);
+ierr = cgnslib_mex(int32(218), in_file_number, in_path);

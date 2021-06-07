@@ -16,4 +16,4 @@ function [out_nunits, ierr] = cg_nunits()
 %
 
 % Invoke the actual MEX-function.
-[out_nunits, ierr] = cgnslib_mex(int32(245));
+[out_nunits, ierr] = cgnslib_mex(int32(253));

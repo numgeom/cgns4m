@@ -24,4 +24,4 @@ in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 
 % Invoke the actual MEX-function.
-[out_bitername, out_nsteps, ierr] = cgnslib_mex(int32(186), in_file_number, in_B);
+[out_bitername, out_nsteps, ierr] = cgnslib_mex(int32(194), in_file_number, in_B);

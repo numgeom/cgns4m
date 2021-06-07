@@ -24,4 +24,4 @@ end
 in_index = int32(in_index);
 
 % Invoke the actual MEX-function.
-[out_name, out_BCType, out_DirichletFlag, out_NeumannFlag, ierr] = cgnslib_mex(int32(169), in_index);
+[out_name, out_BCType, out_DirichletFlag, out_NeumannFlag, ierr] = cgnslib_mex(int32(177), in_index);

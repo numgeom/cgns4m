@@ -57,6 +57,10 @@ switch (datatype)
         io_field_ptr = [int8(io_field_ptr), int8(zeros(1,1))];
     case 6 % CG_LongInteger
         io_field_ptr = int64(io_field_ptr);
+    case 7 % CG_ComplexSingle
+        io_field_ptr = complex64(io_field_ptr);
+    case 8 % CG_ComplexDouble
+        io_field_ptr = complex128(io_field_ptr);
     otherwise
         error('Unknown data type %d', in_m_type);
 end
@@ -68,4 +72,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(121), in_fn, in_B, in_Z, in_S, in_fieldname, in_s_rmin, in_s_rmax, in_m_type, in_m_numdim, in_m_dimvals, in_m_rmin, in_m_rmax, io_field_ptr);
+ierr = cgnslib_mex(int32(129), in_fn, in_B, in_Z, in_S, in_fieldname, in_s_rmin, in_s_rmax, in_m_type, in_m_numdim, in_m_dimvals, in_m_rmin, in_m_rmax, io_field_ptr);

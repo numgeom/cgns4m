@@ -33,6 +33,10 @@ switch (datatype)
         in_value = [int8(in_value), int8(zeros(1,1))];
     case 6 % CG_LongInteger
         in_value = int64(in_value);
+    case 7 % CG_ComplexSingle
+        in_value = complex64(in_value);
+    case 8 % CG_ComplexDouble
+        in_value = complex128(in_value);
     otherwise
         error('Unknown data type %d', cgns_configure_type(in_what));
 end

@@ -20,4 +20,4 @@ end
 in_node_name = char(in_node_name);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(271), in_node_name);
+ierr = cgnslib_mex(int32(279), in_node_name);

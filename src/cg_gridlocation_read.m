@@ -16,4 +16,4 @@ function [out_GridLocation, ierr] = cg_gridlocation_read()
 %
 
 % Invoke the actual MEX-function.
-[out_GridLocation, ierr] = cgnslib_mex(int32(261));
+[out_GridLocation, ierr] = cgnslib_mex(int32(269));

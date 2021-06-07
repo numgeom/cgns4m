@@ -28,4 +28,4 @@ in_temperature = int32(in_temperature);
 in_angle = int32(in_angle);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(247), in_mass, in_length, in_time, in_temperature, in_angle);
+ierr = cgnslib_mex(int32(255), in_mass, in_length, in_time, in_temperature, in_angle);

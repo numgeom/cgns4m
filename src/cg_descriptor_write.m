@@ -22,4 +22,4 @@ in_descr_name = char(in_descr_name);
 in_descr_text = char(in_descr_text);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(244), in_descr_name, in_descr_text);
+ierr = cgnslib_mex(int32(252), in_descr_name, in_descr_text);

@@ -55,6 +55,10 @@ switch (datatype)
         io_coord_ptr = [int8(io_coord_ptr), int8(zeros(1,1))];
     case 6 % CG_LongInteger
         io_coord_ptr = int64(io_coord_ptr);
+    case 7 % CG_ComplexSingle
+        io_coord_ptr = complex64(io_coord_ptr);
+    case 8 % CG_ComplexDouble
+        io_coord_ptr = complex128(io_coord_ptr);
     otherwise
         error('Unknown data type %d', in_m_type);
 end

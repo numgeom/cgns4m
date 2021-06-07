@@ -23,4 +23,4 @@ in_filename = char(in_filename);
 in_name_in_file = char(in_name_in_file);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(270), in_nodename, in_filename, in_name_in_file);
+ierr = cgnslib_mex(int32(278), in_nodename, in_filename, in_name_in_file);

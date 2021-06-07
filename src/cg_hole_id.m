@@ -27,4 +27,4 @@ in_Z = int32(in_Z);
 in_Ii = int32(in_Ii);
 
 % Invoke the actual MEX-function.
-[out_hole_id, ierr] = cgnslib_mex(int32(142), in_fn, in_B, in_Z, in_Ii);
+[out_hole_id, ierr] = cgnslib_mex(int32(150), in_fn, in_B, in_Z, in_Ii);

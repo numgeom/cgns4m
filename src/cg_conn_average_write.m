@@ -28,4 +28,4 @@ in_Ii = int32(in_Ii);
 in_AverageInterfaceType = int32(in_AverageInterfaceType);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(205), in_file_number, in_B, in_Z, in_Ii, in_AverageInterfaceType);
+ierr = cgnslib_mex(int32(213), in_file_number, in_B, in_Z, in_Ii, in_AverageInterfaceType);

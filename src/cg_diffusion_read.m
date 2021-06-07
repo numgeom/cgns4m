@@ -29,4 +29,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(223), io_diffusion_model);
+ierr = cgnslib_mex(int32(231), io_diffusion_model);

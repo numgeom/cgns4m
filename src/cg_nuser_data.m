@@ -16,4 +16,4 @@ function [out_nuser_data, ierr] = cg_nuser_data()
 %
 
 % Invoke the actual MEX-function.
-[out_nuser_data, ierr] = cgnslib_mex(int32(234));
+[out_nuser_data, ierr] = cgnslib_mex(int32(242));

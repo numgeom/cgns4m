@@ -50,4 +50,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(107), in_file_number, in_B, in_Z, in_S, in_start, in_end, io_elements, io_parent_data);
+ierr = cgnslib_mex(int32(111), in_file_number, in_B, in_Z, in_S, in_start, in_end, io_elements, io_parent_data);

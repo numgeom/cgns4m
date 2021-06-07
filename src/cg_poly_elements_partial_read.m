@@ -59,4 +59,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(108), in_file_number, in_B, in_Z, in_S, in_start, in_end, io_elements, io_connect_offset, io_parent_data);
+ierr = cgnslib_mex(int32(112), in_file_number, in_B, in_Z, in_S, in_start, in_end, io_elements, io_connect_offset, io_parent_data);

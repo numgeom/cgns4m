@@ -27,4 +27,4 @@ in_Z = int32(in_Z);
 in_discrete_name = char(in_discrete_name);
 
 % Invoke the actual MEX-function.
-[out_D, ierr] = cgnslib_mex(int32(173), in_file_number, in_B, in_Z, in_discrete_name);
+[out_D, ierr] = cgnslib_mex(int32(181), in_file_number, in_B, in_Z, in_discrete_name);

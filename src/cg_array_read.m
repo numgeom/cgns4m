@@ -35,6 +35,10 @@ switch (datatype)
         io_data = [int8(io_data), int8(zeros(1,1))];
     case 6 % CG_LongInteger
         io_data = int64(io_data);
+    case 7 % CG_ComplexSingle
+        io_data = complex64(io_data);
+    case 8 % CG_ComplexDouble
+        io_data = complex128(io_data);
     otherwise
         error('Unknown data type %d', cgns_get_array_type(in_A));
 end
@@ -46,4 +50,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(229), in_A, io_data);
+ierr = cgnslib_mex(int32(237), in_A, io_data);

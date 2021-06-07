@@ -23,4 +23,4 @@ in_fn = int32(in_fn);
 in_B = int32(in_B);
 
 % Invoke the actual MEX-function.
-[out_n1to1_global, ierr] = cgnslib_mex(int32(155), in_fn, in_B);
+[out_n1to1_global, ierr] = cgnslib_mex(int32(163), in_fn, in_B);

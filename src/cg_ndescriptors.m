@@ -16,4 +16,4 @@ function [out_ndescriptors, ierr] = cg_ndescriptors()
 %
 
 % Invoke the actual MEX-function.
-[out_ndescriptors, ierr] = cgnslib_mex(int32(242));
+[out_ndescriptors, ierr] = cgnslib_mex(int32(250));

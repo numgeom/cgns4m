@@ -20,4 +20,4 @@ end
 in_RindData = int32(in_RindData);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(241), in_RindData);
+ierr = cgnslib_mex(int32(249), in_RindData);

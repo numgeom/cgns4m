@@ -43,6 +43,10 @@ switch (datatype)
         io_boundingbox = [int8(io_boundingbox), int8(zeros(1,1))];
     case 6 % CG_LongInteger
         io_boundingbox = int64(io_boundingbox);
+    case 7 % CG_ComplexSingle
+        io_boundingbox = complex64(io_boundingbox);
+    case 8 % CG_ComplexDouble
+        io_boundingbox = complex128(io_boundingbox);
     otherwise
         error('Unknown data type %d', in_type);
 end

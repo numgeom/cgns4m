@@ -16,4 +16,4 @@ function [out_nintegrals, ierr] = cg_nintegrals()
 %
 
 % Invoke the actual MEX-function.
-[out_nintegrals, ierr] = cgnslib_mex(int32(237));
+[out_nintegrals, ierr] = cgnslib_mex(int32(245));

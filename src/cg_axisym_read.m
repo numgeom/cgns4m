@@ -24,4 +24,4 @@ in_file_number = int32(in_file_number);
 in_B = int32(in_B);
 
 % Invoke the actual MEX-function.
-[out_ref_point, out_axis, ierr] = cgnslib_mex(int32(192), in_file_number, in_B);
+[out_ref_point, out_axis, ierr] = cgnslib_mex(int32(200), in_file_number, in_B);

@@ -29,4 +29,4 @@ in_Z = int32(in_Z);
 in_Ii = int32(in_Ii);
 
 % Invoke the actual MEX-function.
-[out_RotationCenter, out_RotationAngle, out_Translation, ierr] = cgnslib_mex(int32(203), in_file_number, in_B, in_Z, in_Ii);
+[out_RotationCenter, out_RotationAngle, out_Translation, ierr] = cgnslib_mex(int32(211), in_file_number, in_B, in_Z, in_Ii);

@@ -25,4 +25,4 @@ in_B = int32(in_B);
 in_Z = int32(in_Z);
 
 % Invoke the actual MEX-function.
-[out_ndiscrete, ierr] = cgnslib_mex(int32(171), in_file_number, in_B, in_Z);
+[out_ndiscrete, ierr] = cgnslib_mex(int32(179), in_file_number, in_B, in_Z);

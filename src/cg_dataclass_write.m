@@ -20,4 +20,4 @@ end
 in_dataclass = int32(in_dataclass);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(260), in_dataclass);
+ierr = cgnslib_mex(int32(268), in_dataclass);

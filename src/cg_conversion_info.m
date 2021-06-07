@@ -16,4 +16,4 @@ function [out_DataType, ierr] = cg_conversion_info()
 %
 
 % Invoke the actual MEX-function.
-[out_DataType, ierr] = cgnslib_mex(int32(256));
+[out_DataType, ierr] = cgnslib_mex(int32(264));

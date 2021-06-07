@@ -20,4 +20,4 @@ end
 in_Equationstype = int32(in_Equationstype);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(222), in_Equationstype);
+ierr = cgnslib_mex(int32(230), in_Equationstype);

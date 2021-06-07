@@ -32,4 +32,4 @@ in_BC = int32(in_BC);
 in_DS = int32(in_DS);
 
 % Invoke the actual MEX-function.
-[out_name, out_BCType, out_DirichletFlag, out_NeumannFlag, ierr] = cgnslib_mex(int32(165), in_fn, in_B, in_Z, in_BC, in_DS);
+[out_name, out_BCType, out_DirichletFlag, out_NeumannFlag, ierr] = cgnslib_mex(int32(173), in_fn, in_B, in_Z, in_BC, in_DS);

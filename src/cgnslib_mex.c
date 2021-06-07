@@ -4204,6 +4204,132 @@ EXTERN_C void cg_poly_section_write_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
+ * [out_S, ierr] = cg_section_general_write(in_file_number, in_B, in_Z, in_SectionName, in_type, in_elementDataType, in_start, in_end, in_elementDataSize, in_nbndry)
+ *
+ * The original C interface is
+ * int cg_section_general_write(int file_number, int B, int Z, const char * SectionName, CG_ElementType_t type, CG_DataType_t elementDataType, long long start, long long end, long long elementDataSize, int nbndry, int * S);
+ */
+EXTERN_C void cg_section_general_write_MeX(int nlhs, mxArray *plhs[],
+    int nrhs, const mxArray *prhs[]) {
+    int in_file_number;
+    int in_B;
+    int in_Z;
+    char * in_SectionName;
+    CG_ElementType_t in_type;
+    CG_DataType_t in_elementDataType;
+    long long in_start;
+    long long in_end;
+    long long in_elementDataSize;
+    int in_nbndry;
+    int out_S;
+    int ierr;
+
+    /******** Check number of input and output arguments. ********/
+    if (nlhs > 2 || nrhs != 10)
+        mexErrMsgTxt("Wrong number of arguments to function ");
+
+    /******** Obtain input and inout arguments ********/
+    if (_n_dims(prhs[0]) > 0)
+        mexErrMsgTxt("Error in dimension of argument file_number");
+    in_file_number = _get_numeric_scalar_int32(prhs[0]);
+
+    if (_n_dims(prhs[1]) > 0)
+        mexErrMsgTxt("Error in dimension of argument B");
+    in_B = _get_numeric_scalar_int32(prhs[1]);
+
+    if (_n_dims(prhs[2]) > 0)
+        mexErrMsgTxt("Error in dimension of argument Z");
+    in_Z = _get_numeric_scalar_int32(prhs[2]);
+
+    in_SectionName = _mxGetString(prhs[3], NULL);
+
+    if (_n_dims(prhs[4]) > 0)
+        mexErrMsgTxt("Error in dimension of argument type");
+    in_type = _get_numeric_scalar_int32(prhs[4]);
+
+    if (_n_dims(prhs[5]) > 0)
+        mexErrMsgTxt("Error in dimension of argument elementDataType");
+    in_elementDataType = _get_numeric_scalar_int32(prhs[5]);
+
+    if (_n_dims(prhs[6]) > 0)
+        mexErrMsgTxt("Error in dimension of argument start");
+    in_start = _get_numeric_scalar_int64(prhs[6]);
+
+    if (_n_dims(prhs[7]) > 0)
+        mexErrMsgTxt("Error in dimension of argument end");
+    in_end = _get_numeric_scalar_int64(prhs[7]);
+
+    if (_n_dims(prhs[8]) > 0)
+        mexErrMsgTxt("Error in dimension of argument elementDataSize");
+    in_elementDataSize = _get_numeric_scalar_int64(prhs[8]);
+
+    if (_n_dims(prhs[9]) > 0)
+        mexErrMsgTxt("Error in dimension of argument nbndry");
+    in_nbndry = _get_numeric_scalar_int32(prhs[9]);
+
+
+    /******** Invoke computational function ********/
+    ierr = cg_section_general_write(in_file_number, in_B, in_Z, in_SectionName, in_type, in_elementDataType, in_start, in_end, in_elementDataSize, in_nbndry, &out_S);
+
+
+    /******** Free up input buffers. ********/
+    _mxFreeString(in_SectionName);
+
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[0]) = out_S;
+    if (nlhs > 1) {
+        plhs[1] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+        *(int*)mxGetData(plhs[1]) = ierr;
+    }
+}
+
+/* Gateway function
+ * ierr = cg_section_initialize(in_file_number, in_B, in_Z, in_S)
+ *
+ * The original C interface is
+ * int cg_section_initialize(int file_number, int B, int Z, int S);
+ */
+EXTERN_C void cg_section_initialize_MeX(int nlhs, mxArray *plhs[],
+    int nrhs, const mxArray *prhs[]) {
+    int in_file_number;
+    int in_B;
+    int in_Z;
+    int in_S;
+    int ierr;
+
+    /******** Check number of input and output arguments. ********/
+    if (nlhs > 1 || nrhs != 4)
+        mexErrMsgTxt("Wrong number of arguments to function ");
+
+    /******** Obtain input and inout arguments ********/
+    if (_n_dims(prhs[0]) > 0)
+        mexErrMsgTxt("Error in dimension of argument file_number");
+    in_file_number = _get_numeric_scalar_int32(prhs[0]);
+
+    if (_n_dims(prhs[1]) > 0)
+        mexErrMsgTxt("Error in dimension of argument B");
+    in_B = _get_numeric_scalar_int32(prhs[1]);
+
+    if (_n_dims(prhs[2]) > 0)
+        mexErrMsgTxt("Error in dimension of argument Z");
+    in_Z = _get_numeric_scalar_int32(prhs[2]);
+
+    if (_n_dims(prhs[3]) > 0)
+        mexErrMsgTxt("Error in dimension of argument S");
+    in_S = _get_numeric_scalar_int32(prhs[3]);
+
+
+    /******** Invoke computational function ********/
+    ierr = cg_section_initialize(in_file_number, in_B, in_Z, in_S);
+
+
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[0]) = ierr;
+}
+
+/* Gateway function
  * ierr = cg_parent_data_write(in_file_number, in_B, in_Z, in_S, in_parent_data)
  *
  * The original C interface is
@@ -4472,6 +4598,68 @@ EXTERN_C void cg_elements_partial_write_MeX(int nlhs, mxArray *plhs[],
 }
 
 /* Gateway function
+ * ierr = cg_elements_general_write(in_fn, in_B, in_Z, in_S, in_start, in_end, in_m_type, in_elements)
+ *
+ * The original C interface is
+ * int cg_elements_general_write(int fn, int B, int Z, int S, long long start, long long end, CG_DataType_t m_type, const void * elements);
+ */
+EXTERN_C void cg_elements_general_write_MeX(int nlhs, mxArray *plhs[],
+    int nrhs, const mxArray *prhs[]) {
+    int in_fn;
+    int in_B;
+    int in_Z;
+    int in_S;
+    long long in_start;
+    long long in_end;
+    CG_DataType_t in_m_type;
+    const void * in_elements;
+    int ierr;
+
+    /******** Check number of input and output arguments. ********/
+    if (nlhs > 1 || nrhs != 8)
+        mexErrMsgTxt("Wrong number of arguments to function ");
+
+    /******** Obtain input and inout arguments ********/
+    if (_n_dims(prhs[0]) > 0)
+        mexErrMsgTxt("Error in dimension of argument fn");
+    in_fn = _get_numeric_scalar_int32(prhs[0]);
+
+    if (_n_dims(prhs[1]) > 0)
+        mexErrMsgTxt("Error in dimension of argument B");
+    in_B = _get_numeric_scalar_int32(prhs[1]);
+
+    if (_n_dims(prhs[2]) > 0)
+        mexErrMsgTxt("Error in dimension of argument Z");
+    in_Z = _get_numeric_scalar_int32(prhs[2]);
+
+    if (_n_dims(prhs[3]) > 0)
+        mexErrMsgTxt("Error in dimension of argument S");
+    in_S = _get_numeric_scalar_int32(prhs[3]);
+
+    if (_n_dims(prhs[4]) > 0)
+        mexErrMsgTxt("Error in dimension of argument start");
+    in_start = _get_numeric_scalar_int64(prhs[4]);
+
+    if (_n_dims(prhs[5]) > 0)
+        mexErrMsgTxt("Error in dimension of argument end");
+    in_end = _get_numeric_scalar_int64(prhs[5]);
+
+    if (_n_dims(prhs[6]) > 0)
+        mexErrMsgTxt("Error in dimension of argument m_type");
+    in_m_type = _get_numeric_scalar_int32(prhs[6]);
+
+    in_elements = mxGetData(prhs[7]);
+
+    /******** Invoke computational function ********/
+    ierr = cg_elements_general_write(in_fn, in_B, in_Z, in_S, in_start, in_end, in_m_type, in_elements);
+
+
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[0]) = ierr;
+}
+
+/* Gateway function
  * ierr = cg_poly_elements_partial_write(in_fn, in_B, in_Z, in_S, in_start, in_end, in_elements, in_connect_offset)
  *
  * The original C interface is
@@ -4531,6 +4719,70 @@ EXTERN_C void cg_poly_elements_partial_write_MeX(int nlhs, mxArray *plhs[],
 
     /******** Invoke computational function ********/
     ierr = cg_poly_elements_partial_write(in_fn, in_B, in_Z, in_S, in_start, in_end, in_elements, in_connect_offset);
+
+
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[0]) = ierr;
+}
+
+/* Gateway function
+ * ierr = cg_poly_elements_general_write(in_fn, in_B, in_Z, in_S, in_start, in_end, in_m_type, in_elements, in_connect_offset)
+ *
+ * The original C interface is
+ * int cg_poly_elements_general_write(int fn, int B, int Z, int S, long long start, long long end, CG_DataType_t m_type, const void * elements, const void * connect_offset);
+ */
+EXTERN_C void cg_poly_elements_general_write_MeX(int nlhs, mxArray *plhs[],
+    int nrhs, const mxArray *prhs[]) {
+    int in_fn;
+    int in_B;
+    int in_Z;
+    int in_S;
+    long long in_start;
+    long long in_end;
+    CG_DataType_t in_m_type;
+    const void * in_elements;
+    const void * in_connect_offset;
+    int ierr;
+
+    /******** Check number of input and output arguments. ********/
+    if (nlhs > 1 || nrhs != 9)
+        mexErrMsgTxt("Wrong number of arguments to function ");
+
+    /******** Obtain input and inout arguments ********/
+    if (_n_dims(prhs[0]) > 0)
+        mexErrMsgTxt("Error in dimension of argument fn");
+    in_fn = _get_numeric_scalar_int32(prhs[0]);
+
+    if (_n_dims(prhs[1]) > 0)
+        mexErrMsgTxt("Error in dimension of argument B");
+    in_B = _get_numeric_scalar_int32(prhs[1]);
+
+    if (_n_dims(prhs[2]) > 0)
+        mexErrMsgTxt("Error in dimension of argument Z");
+    in_Z = _get_numeric_scalar_int32(prhs[2]);
+
+    if (_n_dims(prhs[3]) > 0)
+        mexErrMsgTxt("Error in dimension of argument S");
+    in_S = _get_numeric_scalar_int32(prhs[3]);
+
+    if (_n_dims(prhs[4]) > 0)
+        mexErrMsgTxt("Error in dimension of argument start");
+    in_start = _get_numeric_scalar_int64(prhs[4]);
+
+    if (_n_dims(prhs[5]) > 0)
+        mexErrMsgTxt("Error in dimension of argument end");
+    in_end = _get_numeric_scalar_int64(prhs[5]);
+
+    if (_n_dims(prhs[6]) > 0)
+        mexErrMsgTxt("Error in dimension of argument m_type");
+    in_m_type = _get_numeric_scalar_int32(prhs[6]);
+
+    in_elements = mxGetData(prhs[7]);
+    in_connect_offset = mxGetData(prhs[8]);
+
+    /******** Invoke computational function ********/
+    ierr = cg_poly_elements_general_write(in_fn, in_B, in_Z, in_S, in_start, in_end, in_m_type, in_elements, in_connect_offset);
 
 
     /******** Process output scalars and strings ********/
@@ -4732,6 +4984,256 @@ EXTERN_C void cg_poly_elements_partial_read_MeX(int nlhs, mxArray *plhs[],
 
     /******** Invoke computational function ********/
     ierr = cg_poly_elements_partial_read(in_file_number, in_B, in_Z, in_S, in_start, in_end, io_elements, io_connect_offset, io_parent_data);
+
+
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[0]) = ierr;
+}
+
+/* Gateway function
+ * ierr = cg_elements_general_read(in_file_number, in_B, in_Z, in_S, in_start, in_end, in_m_type, io_elements)
+ *
+ * The original C interface is
+ * int cg_elements_general_read(int file_number, int B, int Z, int S, long long start, long long end, CG_DataType_t m_type, void * elements);
+ */
+EXTERN_C void cg_elements_general_read_MeX(int nlhs, mxArray *plhs[],
+    int nrhs, const mxArray *prhs[]) {
+    int in_file_number;
+    int in_B;
+    int in_Z;
+    int in_S;
+    long long in_start;
+    long long in_end;
+    CG_DataType_t in_m_type;
+    void * io_elements;
+    int ierr;
+
+    /******** Check number of input and output arguments. ********/
+    if (nlhs > 1 || nrhs != 8)
+        mexErrMsgTxt("Wrong number of arguments to function ");
+
+    /******** Obtain input and inout arguments ********/
+    if (_n_dims(prhs[0]) > 0)
+        mexErrMsgTxt("Error in dimension of argument file_number");
+    in_file_number = _get_numeric_scalar_int32(prhs[0]);
+
+    if (_n_dims(prhs[1]) > 0)
+        mexErrMsgTxt("Error in dimension of argument B");
+    in_B = _get_numeric_scalar_int32(prhs[1]);
+
+    if (_n_dims(prhs[2]) > 0)
+        mexErrMsgTxt("Error in dimension of argument Z");
+    in_Z = _get_numeric_scalar_int32(prhs[2]);
+
+    if (_n_dims(prhs[3]) > 0)
+        mexErrMsgTxt("Error in dimension of argument S");
+    in_S = _get_numeric_scalar_int32(prhs[3]);
+
+    if (_n_dims(prhs[4]) > 0)
+        mexErrMsgTxt("Error in dimension of argument start");
+    in_start = _get_numeric_scalar_int64(prhs[4]);
+
+    if (_n_dims(prhs[5]) > 0)
+        mexErrMsgTxt("Error in dimension of argument end");
+    in_end = _get_numeric_scalar_int64(prhs[5]);
+
+    if (_n_dims(prhs[6]) > 0)
+        mexErrMsgTxt("Error in dimension of argument m_type");
+    in_m_type = _get_numeric_scalar_int32(prhs[6]);
+
+    io_elements = mxGetData(prhs[7]);
+
+    /******** Invoke computational function ********/
+    ierr = cg_elements_general_read(in_file_number, in_B, in_Z, in_S, in_start, in_end, in_m_type, io_elements);
+
+
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[0]) = ierr;
+}
+
+/* Gateway function
+ * ierr = cg_poly_elements_general_read(in_file_number, in_B, in_Z, in_S, in_start, in_end, in_m_type, io_elements, io_connect_offset)
+ *
+ * The original C interface is
+ * int cg_poly_elements_general_read(int file_number, int B, int Z, int S, long long start, long long end, CG_DataType_t m_type, void * elements, void * connect_offset);
+ */
+EXTERN_C void cg_poly_elements_general_read_MeX(int nlhs, mxArray *plhs[],
+    int nrhs, const mxArray *prhs[]) {
+    int in_file_number;
+    int in_B;
+    int in_Z;
+    int in_S;
+    long long in_start;
+    long long in_end;
+    CG_DataType_t in_m_type;
+    void * io_elements;
+    void * io_connect_offset;
+    int ierr;
+
+    /******** Check number of input and output arguments. ********/
+    if (nlhs > 1 || nrhs != 9)
+        mexErrMsgTxt("Wrong number of arguments to function ");
+
+    /******** Obtain input and inout arguments ********/
+    if (_n_dims(prhs[0]) > 0)
+        mexErrMsgTxt("Error in dimension of argument file_number");
+    in_file_number = _get_numeric_scalar_int32(prhs[0]);
+
+    if (_n_dims(prhs[1]) > 0)
+        mexErrMsgTxt("Error in dimension of argument B");
+    in_B = _get_numeric_scalar_int32(prhs[1]);
+
+    if (_n_dims(prhs[2]) > 0)
+        mexErrMsgTxt("Error in dimension of argument Z");
+    in_Z = _get_numeric_scalar_int32(prhs[2]);
+
+    if (_n_dims(prhs[3]) > 0)
+        mexErrMsgTxt("Error in dimension of argument S");
+    in_S = _get_numeric_scalar_int32(prhs[3]);
+
+    if (_n_dims(prhs[4]) > 0)
+        mexErrMsgTxt("Error in dimension of argument start");
+    in_start = _get_numeric_scalar_int64(prhs[4]);
+
+    if (_n_dims(prhs[5]) > 0)
+        mexErrMsgTxt("Error in dimension of argument end");
+    in_end = _get_numeric_scalar_int64(prhs[5]);
+
+    if (_n_dims(prhs[6]) > 0)
+        mexErrMsgTxt("Error in dimension of argument m_type");
+    in_m_type = _get_numeric_scalar_int32(prhs[6]);
+
+    io_elements = mxGetData(prhs[7]);
+    io_connect_offset = mxGetData(prhs[8]);
+
+    /******** Invoke computational function ********/
+    ierr = cg_poly_elements_general_read(in_file_number, in_B, in_Z, in_S, in_start, in_end, in_m_type, io_elements, io_connect_offset);
+
+
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[0]) = ierr;
+}
+
+/* Gateway function
+ * ierr = cg_parent_elements_general_read(in_file_number, in_B, in_Z, in_S, in_start, in_end, in_m_type, io_parelem)
+ *
+ * The original C interface is
+ * int cg_parent_elements_general_read(int file_number, int B, int Z, int S, long long start, long long end, CG_DataType_t m_type, void * parelem);
+ */
+EXTERN_C void cg_parent_elements_general_read_MeX(int nlhs, mxArray *plhs[],
+    int nrhs, const mxArray *prhs[]) {
+    int in_file_number;
+    int in_B;
+    int in_Z;
+    int in_S;
+    long long in_start;
+    long long in_end;
+    CG_DataType_t in_m_type;
+    void * io_parelem;
+    int ierr;
+
+    /******** Check number of input and output arguments. ********/
+    if (nlhs > 1 || nrhs != 8)
+        mexErrMsgTxt("Wrong number of arguments to function ");
+
+    /******** Obtain input and inout arguments ********/
+    if (_n_dims(prhs[0]) > 0)
+        mexErrMsgTxt("Error in dimension of argument file_number");
+    in_file_number = _get_numeric_scalar_int32(prhs[0]);
+
+    if (_n_dims(prhs[1]) > 0)
+        mexErrMsgTxt("Error in dimension of argument B");
+    in_B = _get_numeric_scalar_int32(prhs[1]);
+
+    if (_n_dims(prhs[2]) > 0)
+        mexErrMsgTxt("Error in dimension of argument Z");
+    in_Z = _get_numeric_scalar_int32(prhs[2]);
+
+    if (_n_dims(prhs[3]) > 0)
+        mexErrMsgTxt("Error in dimension of argument S");
+    in_S = _get_numeric_scalar_int32(prhs[3]);
+
+    if (_n_dims(prhs[4]) > 0)
+        mexErrMsgTxt("Error in dimension of argument start");
+    in_start = _get_numeric_scalar_int64(prhs[4]);
+
+    if (_n_dims(prhs[5]) > 0)
+        mexErrMsgTxt("Error in dimension of argument end");
+    in_end = _get_numeric_scalar_int64(prhs[5]);
+
+    if (_n_dims(prhs[6]) > 0)
+        mexErrMsgTxt("Error in dimension of argument m_type");
+    in_m_type = _get_numeric_scalar_int32(prhs[6]);
+
+    io_parelem = mxGetData(prhs[7]);
+
+    /******** Invoke computational function ********/
+    ierr = cg_parent_elements_general_read(in_file_number, in_B, in_Z, in_S, in_start, in_end, in_m_type, io_parelem);
+
+
+    /******** Process output scalars and strings ********/
+    plhs[0] = mxCreateNumericMatrix(1, 1, mxINT32_CLASS, mxREAL);
+    *(int*)mxGetData(plhs[0]) = ierr;
+}
+
+/* Gateway function
+ * ierr = cg_parent_elements_position_general_read(in_file_number, in_B, in_Z, in_S, in_start, in_end, in_m_type, io_parface)
+ *
+ * The original C interface is
+ * int cg_parent_elements_position_general_read(int file_number, int B, int Z, int S, long long start, long long end, CG_DataType_t m_type, void * parface);
+ */
+EXTERN_C void cg_parent_elements_position_general_read_MeX(int nlhs, mxArray *plhs[],
+    int nrhs, const mxArray *prhs[]) {
+    int in_file_number;
+    int in_B;
+    int in_Z;
+    int in_S;
+    long long in_start;
+    long long in_end;
+    CG_DataType_t in_m_type;
+    void * io_parface;
+    int ierr;
+
+    /******** Check number of input and output arguments. ********/
+    if (nlhs > 1 || nrhs != 8)
+        mexErrMsgTxt("Wrong number of arguments to function ");
+
+    /******** Obtain input and inout arguments ********/
+    if (_n_dims(prhs[0]) > 0)
+        mexErrMsgTxt("Error in dimension of argument file_number");
+    in_file_number = _get_numeric_scalar_int32(prhs[0]);
+
+    if (_n_dims(prhs[1]) > 0)
+        mexErrMsgTxt("Error in dimension of argument B");
+    in_B = _get_numeric_scalar_int32(prhs[1]);
+
+    if (_n_dims(prhs[2]) > 0)
+        mexErrMsgTxt("Error in dimension of argument Z");
+    in_Z = _get_numeric_scalar_int32(prhs[2]);
+
+    if (_n_dims(prhs[3]) > 0)
+        mexErrMsgTxt("Error in dimension of argument S");
+    in_S = _get_numeric_scalar_int32(prhs[3]);
+
+    if (_n_dims(prhs[4]) > 0)
+        mexErrMsgTxt("Error in dimension of argument start");
+    in_start = _get_numeric_scalar_int64(prhs[4]);
+
+    if (_n_dims(prhs[5]) > 0)
+        mexErrMsgTxt("Error in dimension of argument end");
+    in_end = _get_numeric_scalar_int64(prhs[5]);
+
+    if (_n_dims(prhs[6]) > 0)
+        mexErrMsgTxt("Error in dimension of argument m_type");
+    in_m_type = _get_numeric_scalar_int32(prhs[6]);
+
+    io_parface = mxGetData(prhs[7]);
+
+    /******** Invoke computational function ********/
+    ierr = cg_parent_elements_position_general_read(in_file_number, in_B, in_Z, in_S, in_start, in_end, in_m_type, io_parface);
 
 
     /******** Process output scalars and strings ********/
@@ -12488,181 +12990,189 @@ EXTERN_C void mexFunction(int nlhs, mxArray *plhs[],
         /* 97 */ cg_poly_elements_read_MeX,
         /* 98 */ cg_section_write_MeX,
         /* 99 */ cg_poly_section_write_MeX,
-        /* 100 */ cg_parent_data_write_MeX,
-        /* 101 */ cg_npe_MeX,
-        /* 102 */ cg_ElementDataSize_MeX,
-        /* 103 */ cg_section_partial_write_MeX,
-        /* 104 */ cg_elements_partial_write_MeX,
-        /* 105 */ cg_poly_elements_partial_write_MeX,
-        /* 106 */ cg_parent_data_partial_write_MeX,
-        /* 107 */ cg_elements_partial_read_MeX,
-        /* 108 */ cg_poly_elements_partial_read_MeX,
-        /* 109 */ cg_ElementPartialSize_MeX,
-        /* 110 */ cg_nsols_MeX,
-        /* 111 */ cg_sol_info_MeX,
-        /* 112 */ cg_sol_id_MeX,
-        /* 113 */ cg_sol_write_MeX,
-        /* 114 */ cg_sol_size_MeX,
-        /* 115 */ cg_sol_ptset_info_MeX,
-        /* 116 */ cg_sol_ptset_read_MeX,
-        /* 117 */ cg_sol_ptset_write_MeX,
-        /* 118 */ cg_nfields_MeX,
-        /* 119 */ cg_field_info_MeX,
-        /* 120 */ cg_field_read_MeX,
-        /* 121 */ cg_field_general_read_MeX,
-        /* 122 */ cg_field_id_MeX,
-        /* 123 */ cg_field_write_MeX,
-        /* 124 */ cg_field_partial_write_MeX,
-        /* 125 */ cg_field_general_write_MeX,
-        /* 126 */ cg_nsubregs_MeX,
-        /* 127 */ cg_subreg_info_MeX,
-        /* 128 */ cg_subreg_ptset_read_MeX,
-        /* 129 */ cg_subreg_bcname_read_MeX,
-        /* 130 */ cg_subreg_gcname_read_MeX,
-        /* 131 */ cg_subreg_ptset_write_MeX,
-        /* 132 */ cg_subreg_bcname_write_MeX,
-        /* 133 */ cg_subreg_gcname_write_MeX,
-        /* 134 */ cg_nzconns_MeX,
-        /* 135 */ cg_zconn_read_MeX,
-        /* 136 */ cg_zconn_write_MeX,
-        /* 137 */ cg_zconn_get_MeX,
-        /* 138 */ cg_zconn_set_MeX,
-        /* 139 */ cg_nholes_MeX,
-        /* 140 */ cg_hole_info_MeX,
-        /* 141 */ cg_hole_read_MeX,
-        /* 142 */ cg_hole_id_MeX,
-        /* 143 */ cg_hole_write_MeX,
-        /* 144 */ cg_nconns_MeX,
-        /* 145 */ cg_conn_info_MeX,
-        /* 146 */ cg_conn_read_MeX,
-        /* 147 */ cg_conn_id_MeX,
-        /* 148 */ cg_conn_write_MeX,
-        /* 149 */ cg_conn_write_short_MeX,
-        /* 150 */ cg_conn_read_short_MeX,
-        /* 151 */ cg_n1to1_MeX,
-        /* 152 */ cg_1to1_read_MeX,
-        /* 153 */ cg_1to1_id_MeX,
-        /* 154 */ cg_1to1_write_MeX,
-        /* 155 */ cg_n1to1_global_MeX,
-        /* 156 */ cg_1to1_read_global_MeX,
-        /* 157 */ cg_nbocos_MeX,
-        /* 158 */ cg_boco_info_MeX,
-        /* 159 */ cg_boco_read_MeX,
-        /* 160 */ cg_boco_id_MeX,
-        /* 161 */ cg_boco_write_MeX,
-        /* 162 */ cg_boco_normal_write_MeX,
-        /* 163 */ cg_boco_gridlocation_read_MeX,
-        /* 164 */ cg_boco_gridlocation_write_MeX,
-        /* 165 */ cg_dataset_read_MeX,
-        /* 166 */ cg_dataset_write_MeX,
-        /* 167 */ cg_bcdataset_write_MeX,
-        /* 168 */ cg_bcdataset_info_MeX,
-        /* 169 */ cg_bcdataset_read_MeX,
-        /* 170 */ cg_bcdata_write_MeX,
-        /* 171 */ cg_ndiscrete_MeX,
-        /* 172 */ cg_discrete_read_MeX,
-        /* 173 */ cg_discrete_write_MeX,
-        /* 174 */ cg_discrete_size_MeX,
-        /* 175 */ cg_discrete_ptset_info_MeX,
-        /* 176 */ cg_discrete_ptset_read_MeX,
-        /* 177 */ cg_discrete_ptset_write_MeX,
-        /* 178 */ cg_n_rigid_motions_MeX,
-        /* 179 */ cg_rigid_motion_read_MeX,
-        /* 180 */ cg_rigid_motion_write_MeX,
-        /* 181 */ cg_n_arbitrary_motions_MeX,
-        /* 182 */ cg_arbitrary_motion_read_MeX,
-        /* 183 */ cg_arbitrary_motion_write_MeX,
-        /* 184 */ cg_simulation_type_read_MeX,
-        /* 185 */ cg_simulation_type_write_MeX,
-        /* 186 */ cg_biter_read_MeX,
-        /* 187 */ cg_biter_write_MeX,
-        /* 188 */ cg_ziter_read_MeX,
-        /* 189 */ cg_ziter_write_MeX,
-        /* 190 */ cg_gravity_read_MeX,
-        /* 191 */ cg_gravity_write_MeX,
-        /* 192 */ cg_axisym_read_MeX,
-        /* 193 */ cg_axisym_write_MeX,
-        /* 194 */ cg_rotating_read_MeX,
-        /* 195 */ cg_rotating_write_MeX,
-        /* 196 */ cg_bc_wallfunction_read_MeX,
-        /* 197 */ cg_bc_wallfunction_write_MeX,
-        /* 198 */ cg_bc_area_read_MeX,
-        /* 199 */ cg_bc_area_write_MeX,
-        /* 200 */ cg_conn_periodic_read_MeX,
-        /* 201 */ cg_conn_periodic_write_MeX,
-        /* 202 */ cg_1to1_periodic_write_MeX,
-        /* 203 */ cg_1to1_periodic_read_MeX,
-        /* 204 */ cg_conn_average_read_MeX,
-        /* 205 */ cg_conn_average_write_MeX,
-        /* 206 */ cg_1to1_average_write_MeX,
-        /* 207 */ cg_1to1_average_read_MeX,
-        /* 208 */ cg_goto_MeX,
-        /* 209 */ cg_gorel_MeX,
-        /* 210 */ cg_gopath_MeX,
-        /* 211 */ cg_golist_MeX,
-        /* 212 */ cg_where_MeX,
-        /* 213 */ cg_convergence_read_MeX,
-        /* 214 */ cg_convergence_write_MeX,
-        /* 215 */ cg_state_read_MeX,
-        /* 216 */ cg_state_write_MeX,
-        /* 217 */ cg_equationset_read_MeX,
-        /* 218 */ cg_equationset_chemistry_read_MeX,
-        /* 219 */ cg_equationset_elecmagn_read_MeX,
-        /* 220 */ cg_equationset_write_MeX,
-        /* 221 */ cg_governing_read_MeX,
-        /* 222 */ cg_governing_write_MeX,
-        /* 223 */ cg_diffusion_read_MeX,
-        /* 224 */ cg_diffusion_write_MeX,
-        /* 225 */ cg_model_read_MeX,
-        /* 226 */ cg_model_write_MeX,
-        /* 227 */ cg_narrays_MeX,
-        /* 228 */ cg_array_info_MeX,
-        /* 229 */ cg_array_read_MeX,
-        /* 230 */ cg_array_read_as_MeX,
-        /* 231 */ cg_array_general_read_MeX,
-        /* 232 */ cg_array_write_MeX,
-        /* 233 */ cg_array_general_write_MeX,
-        /* 234 */ cg_nuser_data_MeX,
-        /* 235 */ cg_user_data_read_MeX,
-        /* 236 */ cg_user_data_write_MeX,
-        /* 237 */ cg_nintegrals_MeX,
-        /* 238 */ cg_integral_read_MeX,
-        /* 239 */ cg_integral_write_MeX,
-        /* 240 */ cg_rind_read_MeX,
-        /* 241 */ cg_rind_write_MeX,
-        /* 242 */ cg_ndescriptors_MeX,
-        /* 243 */ cg_descriptor_read_MeX,
-        /* 244 */ cg_descriptor_write_MeX,
-        /* 245 */ cg_nunits_MeX,
-        /* 246 */ cg_units_read_MeX,
-        /* 247 */ cg_units_write_MeX,
-        /* 248 */ cg_unitsfull_read_MeX,
-        /* 249 */ cg_unitsfull_write_MeX,
-        /* 250 */ cg_exponents_info_MeX,
-        /* 251 */ cg_nexponents_MeX,
-        /* 252 */ cg_exponents_read_MeX,
-        /* 253 */ cg_exponents_write_MeX,
-        /* 254 */ cg_expfull_read_MeX,
-        /* 255 */ cg_expfull_write_MeX,
-        /* 256 */ cg_conversion_info_MeX,
-        /* 257 */ cg_conversion_read_MeX,
-        /* 258 */ cg_conversion_write_MeX,
-        /* 259 */ cg_dataclass_read_MeX,
-        /* 260 */ cg_dataclass_write_MeX,
-        /* 261 */ cg_gridlocation_read_MeX,
-        /* 262 */ cg_gridlocation_write_MeX,
-        /* 263 */ cg_ordinal_read_MeX,
-        /* 264 */ cg_ordinal_write_MeX,
-        /* 265 */ cg_ptset_info_MeX,
-        /* 266 */ cg_ptset_write_MeX,
-        /* 267 */ cg_ptset_read_MeX,
-        /* 268 */ cg_is_link_MeX,
-        /* 269 */ cg_link_read_MeX,
-        /* 270 */ cg_link_write_MeX,
-        /* 271 */ cg_delete_node_MeX,
-        /* 272 */ cg_get_error_MeX,
-        /* 273 */ cg_error_exit_MeX,
-        /* 274 */ cg_error_print_MeX
+        /* 100 */ cg_section_general_write_MeX,
+        /* 101 */ cg_section_initialize_MeX,
+        /* 102 */ cg_parent_data_write_MeX,
+        /* 103 */ cg_npe_MeX,
+        /* 104 */ cg_ElementDataSize_MeX,
+        /* 105 */ cg_section_partial_write_MeX,
+        /* 106 */ cg_elements_partial_write_MeX,
+        /* 107 */ cg_elements_general_write_MeX,
+        /* 108 */ cg_poly_elements_partial_write_MeX,
+        /* 109 */ cg_poly_elements_general_write_MeX,
+        /* 110 */ cg_parent_data_partial_write_MeX,
+        /* 111 */ cg_elements_partial_read_MeX,
+        /* 112 */ cg_poly_elements_partial_read_MeX,
+        /* 113 */ cg_elements_general_read_MeX,
+        /* 114 */ cg_poly_elements_general_read_MeX,
+        /* 115 */ cg_parent_elements_general_read_MeX,
+        /* 116 */ cg_parent_elements_position_general_read_MeX,
+        /* 117 */ cg_ElementPartialSize_MeX,
+        /* 118 */ cg_nsols_MeX,
+        /* 119 */ cg_sol_info_MeX,
+        /* 120 */ cg_sol_id_MeX,
+        /* 121 */ cg_sol_write_MeX,
+        /* 122 */ cg_sol_size_MeX,
+        /* 123 */ cg_sol_ptset_info_MeX,
+        /* 124 */ cg_sol_ptset_read_MeX,
+        /* 125 */ cg_sol_ptset_write_MeX,
+        /* 126 */ cg_nfields_MeX,
+        /* 127 */ cg_field_info_MeX,
+        /* 128 */ cg_field_read_MeX,
+        /* 129 */ cg_field_general_read_MeX,
+        /* 130 */ cg_field_id_MeX,
+        /* 131 */ cg_field_write_MeX,
+        /* 132 */ cg_field_partial_write_MeX,
+        /* 133 */ cg_field_general_write_MeX,
+        /* 134 */ cg_nsubregs_MeX,
+        /* 135 */ cg_subreg_info_MeX,
+        /* 136 */ cg_subreg_ptset_read_MeX,
+        /* 137 */ cg_subreg_bcname_read_MeX,
+        /* 138 */ cg_subreg_gcname_read_MeX,
+        /* 139 */ cg_subreg_ptset_write_MeX,
+        /* 140 */ cg_subreg_bcname_write_MeX,
+        /* 141 */ cg_subreg_gcname_write_MeX,
+        /* 142 */ cg_nzconns_MeX,
+        /* 143 */ cg_zconn_read_MeX,
+        /* 144 */ cg_zconn_write_MeX,
+        /* 145 */ cg_zconn_get_MeX,
+        /* 146 */ cg_zconn_set_MeX,
+        /* 147 */ cg_nholes_MeX,
+        /* 148 */ cg_hole_info_MeX,
+        /* 149 */ cg_hole_read_MeX,
+        /* 150 */ cg_hole_id_MeX,
+        /* 151 */ cg_hole_write_MeX,
+        /* 152 */ cg_nconns_MeX,
+        /* 153 */ cg_conn_info_MeX,
+        /* 154 */ cg_conn_read_MeX,
+        /* 155 */ cg_conn_id_MeX,
+        /* 156 */ cg_conn_write_MeX,
+        /* 157 */ cg_conn_write_short_MeX,
+        /* 158 */ cg_conn_read_short_MeX,
+        /* 159 */ cg_n1to1_MeX,
+        /* 160 */ cg_1to1_read_MeX,
+        /* 161 */ cg_1to1_id_MeX,
+        /* 162 */ cg_1to1_write_MeX,
+        /* 163 */ cg_n1to1_global_MeX,
+        /* 164 */ cg_1to1_read_global_MeX,
+        /* 165 */ cg_nbocos_MeX,
+        /* 166 */ cg_boco_info_MeX,
+        /* 167 */ cg_boco_read_MeX,
+        /* 168 */ cg_boco_id_MeX,
+        /* 169 */ cg_boco_write_MeX,
+        /* 170 */ cg_boco_normal_write_MeX,
+        /* 171 */ cg_boco_gridlocation_read_MeX,
+        /* 172 */ cg_boco_gridlocation_write_MeX,
+        /* 173 */ cg_dataset_read_MeX,
+        /* 174 */ cg_dataset_write_MeX,
+        /* 175 */ cg_bcdataset_write_MeX,
+        /* 176 */ cg_bcdataset_info_MeX,
+        /* 177 */ cg_bcdataset_read_MeX,
+        /* 178 */ cg_bcdata_write_MeX,
+        /* 179 */ cg_ndiscrete_MeX,
+        /* 180 */ cg_discrete_read_MeX,
+        /* 181 */ cg_discrete_write_MeX,
+        /* 182 */ cg_discrete_size_MeX,
+        /* 183 */ cg_discrete_ptset_info_MeX,
+        /* 184 */ cg_discrete_ptset_read_MeX,
+        /* 185 */ cg_discrete_ptset_write_MeX,
+        /* 186 */ cg_n_rigid_motions_MeX,
+        /* 187 */ cg_rigid_motion_read_MeX,
+        /* 188 */ cg_rigid_motion_write_MeX,
+        /* 189 */ cg_n_arbitrary_motions_MeX,
+        /* 190 */ cg_arbitrary_motion_read_MeX,
+        /* 191 */ cg_arbitrary_motion_write_MeX,
+        /* 192 */ cg_simulation_type_read_MeX,
+        /* 193 */ cg_simulation_type_write_MeX,
+        /* 194 */ cg_biter_read_MeX,
+        /* 195 */ cg_biter_write_MeX,
+        /* 196 */ cg_ziter_read_MeX,
+        /* 197 */ cg_ziter_write_MeX,
+        /* 198 */ cg_gravity_read_MeX,
+        /* 199 */ cg_gravity_write_MeX,
+        /* 200 */ cg_axisym_read_MeX,
+        /* 201 */ cg_axisym_write_MeX,
+        /* 202 */ cg_rotating_read_MeX,
+        /* 203 */ cg_rotating_write_MeX,
+        /* 204 */ cg_bc_wallfunction_read_MeX,
+        /* 205 */ cg_bc_wallfunction_write_MeX,
+        /* 206 */ cg_bc_area_read_MeX,
+        /* 207 */ cg_bc_area_write_MeX,
+        /* 208 */ cg_conn_periodic_read_MeX,
+        /* 209 */ cg_conn_periodic_write_MeX,
+        /* 210 */ cg_1to1_periodic_write_MeX,
+        /* 211 */ cg_1to1_periodic_read_MeX,
+        /* 212 */ cg_conn_average_read_MeX,
+        /* 213 */ cg_conn_average_write_MeX,
+        /* 214 */ cg_1to1_average_write_MeX,
+        /* 215 */ cg_1to1_average_read_MeX,
+        /* 216 */ cg_goto_MeX,
+        /* 217 */ cg_gorel_MeX,
+        /* 218 */ cg_gopath_MeX,
+        /* 219 */ cg_golist_MeX,
+        /* 220 */ cg_where_MeX,
+        /* 221 */ cg_convergence_read_MeX,
+        /* 222 */ cg_convergence_write_MeX,
+        /* 223 */ cg_state_read_MeX,
+        /* 224 */ cg_state_write_MeX,
+        /* 225 */ cg_equationset_read_MeX,
+        /* 226 */ cg_equationset_chemistry_read_MeX,
+        /* 227 */ cg_equationset_elecmagn_read_MeX,
+        /* 228 */ cg_equationset_write_MeX,
+        /* 229 */ cg_governing_read_MeX,
+        /* 230 */ cg_governing_write_MeX,
+        /* 231 */ cg_diffusion_read_MeX,
+        /* 232 */ cg_diffusion_write_MeX,
+        /* 233 */ cg_model_read_MeX,
+        /* 234 */ cg_model_write_MeX,
+        /* 235 */ cg_narrays_MeX,
+        /* 236 */ cg_array_info_MeX,
+        /* 237 */ cg_array_read_MeX,
+        /* 238 */ cg_array_read_as_MeX,
+        /* 239 */ cg_array_general_read_MeX,
+        /* 240 */ cg_array_write_MeX,
+        /* 241 */ cg_array_general_write_MeX,
+        /* 242 */ cg_nuser_data_MeX,
+        /* 243 */ cg_user_data_read_MeX,
+        /* 244 */ cg_user_data_write_MeX,
+        /* 245 */ cg_nintegrals_MeX,
+        /* 246 */ cg_integral_read_MeX,
+        /* 247 */ cg_integral_write_MeX,
+        /* 248 */ cg_rind_read_MeX,
+        /* 249 */ cg_rind_write_MeX,
+        /* 250 */ cg_ndescriptors_MeX,
+        /* 251 */ cg_descriptor_read_MeX,
+        /* 252 */ cg_descriptor_write_MeX,
+        /* 253 */ cg_nunits_MeX,
+        /* 254 */ cg_units_read_MeX,
+        /* 255 */ cg_units_write_MeX,
+        /* 256 */ cg_unitsfull_read_MeX,
+        /* 257 */ cg_unitsfull_write_MeX,
+        /* 258 */ cg_exponents_info_MeX,
+        /* 259 */ cg_nexponents_MeX,
+        /* 260 */ cg_exponents_read_MeX,
+        /* 261 */ cg_exponents_write_MeX,
+        /* 262 */ cg_expfull_read_MeX,
+        /* 263 */ cg_expfull_write_MeX,
+        /* 264 */ cg_conversion_info_MeX,
+        /* 265 */ cg_conversion_read_MeX,
+        /* 266 */ cg_conversion_write_MeX,
+        /* 267 */ cg_dataclass_read_MeX,
+        /* 268 */ cg_dataclass_write_MeX,
+        /* 269 */ cg_gridlocation_read_MeX,
+        /* 270 */ cg_gridlocation_write_MeX,
+        /* 271 */ cg_ordinal_read_MeX,
+        /* 272 */ cg_ordinal_write_MeX,
+        /* 273 */ cg_ptset_info_MeX,
+        /* 274 */ cg_ptset_write_MeX,
+        /* 275 */ cg_ptset_read_MeX,
+        /* 276 */ cg_is_link_MeX,
+        /* 277 */ cg_link_read_MeX,
+        /* 278 */ cg_link_write_MeX,
+        /* 279 */ cg_delete_node_MeX,
+        /* 280 */ cg_get_error_MeX,
+        /* 281 */ cg_error_exit_MeX,
+        /* 282 */ cg_error_print_MeX
     };
 
     /******** Check function selector argument. ********/
@@ -12671,7 +13181,7 @@ EXTERN_C void mexFunction(int nlhs, mxArray *plhs[],
 
     func_id = *(int*)mxGetData(prhs[0]);
 
-    if (func_id < 1 || func_id > 274)
+    if (func_id < 1 || func_id > 282)
         mexErrMsgTxt("Function selector is out of bound.\n");
 
     /******** Invoke the function. ********/

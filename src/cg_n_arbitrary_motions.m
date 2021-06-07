@@ -25,4 +25,4 @@ in_B = int32(in_B);
 in_Z = int32(in_Z);
 
 % Invoke the actual MEX-function.
-[out_n_arbitrary_motions, ierr] = cgnslib_mex(int32(181), in_file_number, in_B, in_Z);
+[out_n_arbitrary_motions, ierr] = cgnslib_mex(int32(189), in_file_number, in_B, in_Z);

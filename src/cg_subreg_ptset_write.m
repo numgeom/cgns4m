@@ -37,4 +37,4 @@ in_npnts = int64(in_npnts);
 in_pnts = int64(in_pnts);
 
 % Invoke the actual MEX-function.
-[out_S, ierr] = cgnslib_mex(int32(131), in_fn, in_B, in_Z, in_regname, in_dimension, in_location, in_ptset_type, in_npnts, in_pnts);
+[out_S, ierr] = cgnslib_mex(int32(139), in_fn, in_B, in_Z, in_regname, in_dimension, in_location, in_ptset_type, in_npnts, in_pnts);

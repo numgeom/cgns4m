@@ -24,4 +24,4 @@ end
 in_A = int32(in_A);
 
 % Invoke the actual MEX-function.
-[out_ArrayName, out_DataType, out_DataDimension, out_DimensionVector, ierr] = cgnslib_mex(int32(228), in_A);
+[out_ArrayName, out_DataType, out_DataDimension, out_DimensionVector, ierr] = cgnslib_mex(int32(236), in_A);

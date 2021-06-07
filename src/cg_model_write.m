@@ -22,4 +22,4 @@ in_ModelLabel = char(in_ModelLabel);
 in_ModelType = int32(in_ModelType);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(226), in_ModelLabel, in_ModelType);
+ierr = cgnslib_mex(int32(234), in_ModelLabel, in_ModelType);

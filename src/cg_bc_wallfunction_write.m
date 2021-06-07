@@ -28,4 +28,4 @@ in_BC = int32(in_BC);
 in_WallFunctionType = int32(in_WallFunctionType);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(197), in_file_number, in_B, in_Z, in_BC, in_WallFunctionType);
+ierr = cgnslib_mex(int32(205), in_file_number, in_B, in_Z, in_BC, in_WallFunctionType);

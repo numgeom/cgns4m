@@ -7,3 +7,5 @@
 %                    CG_RealDouble:                4
 %                     CG_Character:                5
 %                   CG_LongInteger:                6
+%                 CG_ComplexSingle:                7
+%                 CG_ComplexDouble:                8

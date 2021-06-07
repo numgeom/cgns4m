@@ -32,4 +32,4 @@ in_RotationAngle = single(in_RotationAngle);
 in_Translation = single(in_Translation);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(201), in_file_number, in_B, in_Z, in_Ii, in_RotationCenter, in_RotationAngle, in_Translation);
+ierr = cgnslib_mex(int32(209), in_file_number, in_B, in_Z, in_Ii, in_RotationCenter, in_RotationAngle, in_Translation);

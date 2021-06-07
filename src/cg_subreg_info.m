@@ -33,4 +33,4 @@ in_Z = int32(in_Z);
 in_S = int32(in_S);
 
 % Invoke the actual MEX-function.
-[out_regname, out_dimension, out_location, out_ptset_type, out_npnts, out_bcname_len, out_gcname_len, ierr] = cgnslib_mex(int32(127), in_fn, in_B, in_Z, in_S);
+[out_regname, out_dimension, out_location, out_ptset_type, out_npnts, out_bcname_len, out_gcname_len, ierr] = cgnslib_mex(int32(135), in_fn, in_B, in_Z, in_S);

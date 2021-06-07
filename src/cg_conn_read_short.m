@@ -37,4 +37,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(150), in_file_number, in_B, in_Z, in_Ii, io_pnts);
+ierr = cgnslib_mex(int32(158), in_file_number, in_B, in_Z, in_Ii, io_pnts);

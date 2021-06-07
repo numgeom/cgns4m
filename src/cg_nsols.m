@@ -25,4 +25,4 @@ in_B = int32(in_B);
 in_Z = int32(in_Z);
 
 % Invoke the actual MEX-function.
-[out_nsols, ierr] = cgnslib_mex(int32(110), in_fn, in_B, in_Z);
+[out_nsols, ierr] = cgnslib_mex(int32(118), in_fn, in_B, in_Z);

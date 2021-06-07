@@ -27,4 +27,4 @@ in_Z = int32(in_Z);
 in_S = int32(in_S);
 
 % Invoke the actual MEX-function.
-[out_ElementDataSize, ierr] = cgnslib_mex(int32(102), in_file_number, in_B, in_Z, in_S);
+[out_ElementDataSize, ierr] = cgnslib_mex(int32(104), in_file_number, in_B, in_Z, in_S);

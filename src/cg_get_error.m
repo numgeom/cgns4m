@@ -15,4 +15,4 @@ function msg = cg_get_error()
 %
 
 % Invoke the actual MEX-function.
-msg = cgnslib_mex(int32(272));
+msg = cgnslib_mex(int32(280));

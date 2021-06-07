@@ -28,4 +28,4 @@ in_Z = int32(in_Z);
 in_S = int32(in_S);
 
 % Invoke the actual MEX-function.
-[out_solname, out_location, ierr] = cgnslib_mex(int32(111), in_fn, in_B, in_Z, in_S);
+[out_solname, out_location, ierr] = cgnslib_mex(int32(119), in_fn, in_B, in_Z, in_S);

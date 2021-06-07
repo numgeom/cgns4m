@@ -26,4 +26,4 @@ in_Z = int32(in_Z);
 in_zitername = char(in_zitername);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(189), in_file_number, in_B, in_Z, in_zitername);
+ierr = cgnslib_mex(int32(197), in_file_number, in_B, in_Z, in_zitername);

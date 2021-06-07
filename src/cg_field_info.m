@@ -30,4 +30,4 @@ in_S = int32(in_S);
 in_F = int32(in_F);
 
 % Invoke the actual MEX-function.
-[out_type, out_fieldname, ierr] = cgnslib_mex(int32(119), in_fn, in_B, in_Z, in_S, in_F);
+[out_type, out_fieldname, ierr] = cgnslib_mex(int32(127), in_fn, in_B, in_Z, in_S, in_F);

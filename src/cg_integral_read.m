@@ -21,4 +21,4 @@ end
 in_IntegralDataIndex = int32(in_IntegralDataIndex);
 
 % Invoke the actual MEX-function.
-[out_IntegralDataName, ierr] = cgnslib_mex(int32(238), in_IntegralDataIndex);
+[out_IntegralDataName, ierr] = cgnslib_mex(int32(246), in_IntegralDataIndex);

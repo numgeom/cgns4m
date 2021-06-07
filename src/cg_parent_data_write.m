@@ -28,4 +28,4 @@ in_S = int32(in_S);
 in_parent_data = int64(in_parent_data);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(100), in_file_number, in_B, in_Z, in_S, in_parent_data);
+ierr = cgnslib_mex(int32(102), in_file_number, in_B, in_Z, in_S, in_parent_data);

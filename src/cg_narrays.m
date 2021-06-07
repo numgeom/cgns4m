@@ -16,4 +16,4 @@ function [out_narrays, ierr] = cg_narrays()
 %
 
 % Invoke the actual MEX-function.
-[out_narrays, ierr] = cgnslib_mex(int32(227));
+[out_narrays, ierr] = cgnslib_mex(int32(235));

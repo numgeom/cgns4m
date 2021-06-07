@@ -22,4 +22,4 @@ function [out_EquationDimension, out_GoverningEquationsFlag, out_GasModelFlag, o
 %
 
 % Invoke the actual MEX-function.
-[out_EquationDimension, out_GoverningEquationsFlag, out_GasModelFlag, out_ViscosityModelFlag, out_ThermalConductivityModelFlag, out_TurbulenceClosureFlag, out_TurbulenceModelFlag, ierr] = cgnslib_mex(int32(217));
+[out_EquationDimension, out_GoverningEquationsFlag, out_GasModelFlag, out_ViscosityModelFlag, out_ThermalConductivityModelFlag, out_TurbulenceClosureFlag, out_TurbulenceModelFlag, ierr] = cgnslib_mex(int32(225));

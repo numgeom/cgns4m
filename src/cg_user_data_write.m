@@ -20,4 +20,4 @@ end
 in_user_data_name = char(in_user_data_name);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(236), in_user_data_name);
+ierr = cgnslib_mex(int32(244), in_user_data_name);

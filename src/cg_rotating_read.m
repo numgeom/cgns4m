@@ -38,4 +38,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(194), io_rot_rate, io_rot_center);
+ierr = cgnslib_mex(int32(202), io_rot_rate, io_rot_center);

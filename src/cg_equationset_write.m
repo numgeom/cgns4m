@@ -20,4 +20,4 @@ end
 in_EquationDimension = int32(in_EquationDimension);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(220), in_EquationDimension);
+ierr = cgnslib_mex(int32(228), in_EquationDimension);

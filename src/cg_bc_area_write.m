@@ -32,4 +32,4 @@ in_SurfaceArea = single(in_SurfaceArea);
 in_RegionName = char(in_RegionName);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(199), in_file_number, in_B, in_Z, in_BC, in_AreaType, in_SurfaceArea, in_RegionName);
+ierr = cgnslib_mex(int32(207), in_file_number, in_B, in_Z, in_BC, in_AreaType, in_SurfaceArea, in_RegionName);

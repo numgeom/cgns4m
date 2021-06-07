@@ -30,4 +30,4 @@ in_Dset = int32(in_Dset);
 in_BCDataType = int32(in_BCDataType);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(170), in_file_number, in_B, in_Z, in_BC, in_Dset, in_BCDataType);
+ierr = cgnslib_mex(int32(178), in_file_number, in_B, in_Z, in_BC, in_Dset, in_BCDataType);

@@ -44,6 +44,10 @@ switch (datatype)
         io_donor_data = [int8(io_donor_data), int8(zeros(1,1))];
     case 6 % CG_LongInteger
         io_donor_data = int64(io_donor_data);
+    case 7 % CG_ComplexSingle
+        io_donor_data = complex64(io_donor_data);
+    case 8 % CG_ComplexDouble
+        io_donor_data = complex128(io_donor_data);
     otherwise
         error('Unknown data type %d', in_donor_datatype);
 end
@@ -63,4 +67,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(146), in_file_number, in_B, in_Z, in_Ii, in_donor_datatype, io_pnts, io_donor_data);
+ierr = cgnslib_mex(int32(154), in_file_number, in_B, in_Z, in_Ii, in_donor_datatype, io_pnts, io_donor_data);

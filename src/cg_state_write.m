@@ -20,4 +20,4 @@ end
 in_StateDescription = char(in_StateDescription);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(216), in_StateDescription);
+ierr = cgnslib_mex(int32(224), in_StateDescription);

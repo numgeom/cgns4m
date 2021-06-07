@@ -29,4 +29,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(240), io_RindData);
+ierr = cgnslib_mex(int32(248), io_RindData);

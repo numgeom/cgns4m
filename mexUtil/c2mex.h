@@ -6,6 +6,7 @@ extern "C" {
 #endif
 #include "mex.h"
 #include <inttypes.h>
+#include <complex.h>
 #ifdef __cplusplus
 }
 #endif
@@ -61,6 +62,9 @@ typedef unsigned short      uint16;
 
 typedef char                int8;
 typedef unsigned char       uint8;
+
+typedef float complex       complex64;
+typedef double complex      complex128;
 
 /* Define a macro for dealing with different types. It leaves out default case */
 #define switch_types( HELPER, TYPE) \

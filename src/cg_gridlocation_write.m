@@ -20,4 +20,4 @@ end
 in_GridLocation = int32(in_GridLocation);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(262), in_GridLocation);
+ierr = cgnslib_mex(int32(270), in_GridLocation);

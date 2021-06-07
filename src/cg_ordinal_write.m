@@ -20,4 +20,4 @@ end
 in_Ordinal = int32(in_Ordinal);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(264), in_Ordinal);
+ierr = cgnslib_mex(int32(272), in_Ordinal);

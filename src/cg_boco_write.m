@@ -35,4 +35,4 @@ in_npnts = int64(in_npnts);
 in_pnts = int64(in_pnts);
 
 % Invoke the actual MEX-function.
-[out_BC, ierr] = cgnslib_mex(int32(161), in_file_number, in_B, in_Z, in_boconame, in_bocotype, in_ptset_type, in_npnts, in_pnts);
+[out_BC, ierr] = cgnslib_mex(int32(169), in_file_number, in_B, in_Z, in_boconame, in_bocotype, in_ptset_type, in_npnts, in_pnts);

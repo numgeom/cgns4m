@@ -29,4 +29,4 @@ in_amotionname = char(in_amotionname);
 in_type = int32(in_type);
 
 % Invoke the actual MEX-function.
-[out_A, ierr] = cgnslib_mex(int32(183), in_file_number, in_B, in_Z, in_amotionname, in_type);
+[out_A, ierr] = cgnslib_mex(int32(191), in_file_number, in_B, in_Z, in_amotionname, in_type);

@@ -17,4 +17,4 @@ function [out_ThermalRelaxationFlag, out_ChemicalKineticsFlag, ierr] = cg_equati
 %
 
 % Invoke the actual MEX-function.
-[out_ThermalRelaxationFlag, out_ChemicalKineticsFlag, ierr] = cgnslib_mex(int32(218));
+[out_ThermalRelaxationFlag, out_ChemicalKineticsFlag, ierr] = cgnslib_mex(int32(226));

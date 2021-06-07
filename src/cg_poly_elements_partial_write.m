@@ -34,4 +34,4 @@ in_elements = int64(in_elements);
 in_connect_offset = int64(in_connect_offset);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(105), in_fn, in_B, in_Z, in_S, in_start, in_end, in_elements, in_connect_offset);
+ierr = cgnslib_mex(int32(108), in_fn, in_B, in_Z, in_S, in_start, in_end, in_elements, in_connect_offset);

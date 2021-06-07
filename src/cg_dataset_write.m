@@ -31,4 +31,4 @@ in_name = char(in_name);
 in_BCType = int32(in_BCType);
 
 % Invoke the actual MEX-function.
-[out_Dset, ierr] = cgnslib_mex(int32(166), in_file_number, in_B, in_Z, in_BC, in_name, in_BCType);
+[out_Dset, ierr] = cgnslib_mex(int32(174), in_file_number, in_B, in_Z, in_BC, in_name, in_BCType);

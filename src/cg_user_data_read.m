@@ -21,4 +21,4 @@ end
 in_Index = int32(in_Index);
 
 % Invoke the actual MEX-function.
-[out_user_data_name, ierr] = cgnslib_mex(int32(235), in_Index);
+[out_user_data_name, ierr] = cgnslib_mex(int32(243), in_Index);

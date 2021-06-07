@@ -22,4 +22,4 @@ in_rot_rate = single(in_rot_rate);
 in_rot_center = single(in_rot_center);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(195), in_rot_rate, in_rot_center);
+ierr = cgnslib_mex(int32(203), in_rot_rate, in_rot_center);

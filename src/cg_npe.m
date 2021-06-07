@@ -21,4 +21,4 @@ end
 in_type = int32(in_type);
 
 % Invoke the actual MEX-function.
-[out_npe, ierr] = cgnslib_mex(int32(101), in_type);
+[out_npe, ierr] = cgnslib_mex(int32(103), in_type);

@@ -14,4 +14,4 @@ function cg_error_print()
 %
 
 % Invoke the actual MEX-function.
- cgnslib_mex(int32(274));
+ cgnslib_mex(int32(282));

@@ -15,4 +15,4 @@ function [out_path_length, ierr] = cg_is_link()
 % For detail, see the documentation of the original function.
 
 % Invoke the actual MEX-function.
-[out_path_length, ierr] = cgnslib_mex(int32(268));
+[out_path_length, ierr] = cgnslib_mex(int32(276));

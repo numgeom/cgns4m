@@ -16,4 +16,4 @@ function [out_Ordinal, ierr] = cg_ordinal_read()
 %
 
 % Invoke the actual MEX-function.
-[out_Ordinal, ierr] = cgnslib_mex(int32(263));
+[out_Ordinal, ierr] = cgnslib_mex(int32(271));

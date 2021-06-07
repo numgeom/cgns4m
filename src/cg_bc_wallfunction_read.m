@@ -27,4 +27,4 @@ in_Z = int32(in_Z);
 in_BC = int32(in_BC);
 
 % Invoke the actual MEX-function.
-[out_WallFunctionType, ierr] = cgnslib_mex(int32(196), in_file_number, in_B, in_Z, in_BC);
+[out_WallFunctionType, ierr] = cgnslib_mex(int32(204), in_file_number, in_B, in_Z, in_BC);

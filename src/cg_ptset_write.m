@@ -24,4 +24,4 @@ in_npnts = int64(in_npnts);
 in_pnts = int64(in_pnts);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(266), in_ptset_type, in_npnts, in_pnts);
+ierr = cgnslib_mex(int32(274), in_ptset_type, in_npnts, in_pnts);

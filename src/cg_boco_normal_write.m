@@ -45,10 +45,14 @@ switch (datatype)
         in_NormalList = [int8(in_NormalList), int8(zeros(1,1))];
     case 6 % CG_LongInteger
         in_NormalList = int64(in_NormalList);
+    case 7 % CG_ComplexSingle
+        in_NormalList = complex64(in_NormalList);
+    case 8 % CG_ComplexDouble
+        in_NormalList = complex128(in_NormalList);
     otherwise
         error('Unknown data type %d', in_NormalDataType);
 end
 
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(162), in_file_number, in_B, in_Z, in_BC, in_NormalIndex, in_NormalListFlag, in_NormalDataType, in_NormalList);
+ierr = cgnslib_mex(int32(170), in_file_number, in_B, in_Z, in_BC, in_NormalIndex, in_NormalListFlag, in_NormalDataType, in_NormalList);

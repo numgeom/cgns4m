@@ -20,4 +20,4 @@ function [out_StateDescription, ierr] = cg_state_read()
 % calling cg_free.
 
 % Invoke the actual MEX-function.
-[out_StateDescription, ierr] = cgnslib_mex(int32(215));
+[out_StateDescription, ierr] = cgnslib_mex(int32(223));

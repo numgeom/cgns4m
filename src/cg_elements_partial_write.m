@@ -32,4 +32,4 @@ in_end = int64(in_end);
 in_elements = int64(in_elements);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(104), in_fn, in_B, in_Z, in_S, in_start, in_end, in_elements);
+ierr = cgnslib_mex(int32(106), in_fn, in_B, in_Z, in_S, in_start, in_end, in_elements);

@@ -31,4 +31,4 @@ in_start = int64(in_start);
 in_end = int64(in_end);
 
 % Invoke the actual MEX-function.
-[out_ElementDataSize, ierr] = cgnslib_mex(int32(109), in_file_number, in_B, in_Z, in_S, in_start, in_end);
+[out_ElementDataSize, ierr] = cgnslib_mex(int32(117), in_file_number, in_B, in_Z, in_S, in_start, in_end);

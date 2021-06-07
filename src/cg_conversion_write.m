@@ -33,10 +33,14 @@ switch (datatype)
         in_ConversionFactors = [int8(in_ConversionFactors), int8(zeros(1,1))];
     case 6 % CG_LongInteger
         in_ConversionFactors = int64(in_ConversionFactors);
+    case 7 % CG_ComplexSingle
+        in_ConversionFactors = complex64(in_ConversionFactors);
+    case 8 % CG_ComplexDouble
+        in_ConversionFactors = complex128(in_ConversionFactors);
     otherwise
         error('Unknown data type %d', in_DataType);
 end
 
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(258), in_DataType, in_ConversionFactors);
+ierr = cgnslib_mex(int32(266), in_DataType, in_ConversionFactors);

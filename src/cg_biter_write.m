@@ -26,4 +26,4 @@ in_bitername = char(in_bitername);
 in_nsteps = int32(in_nsteps);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(187), in_file_number, in_B, in_bitername, in_nsteps);
+ierr = cgnslib_mex(int32(195), in_file_number, in_B, in_bitername, in_nsteps);

@@ -26,4 +26,4 @@ in_ref_point = single(in_ref_point);
 in_axis = single(in_axis);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(193), in_file_number, in_B, in_ref_point, in_axis);
+ierr = cgnslib_mex(int32(201), in_file_number, in_B, in_ref_point, in_axis);

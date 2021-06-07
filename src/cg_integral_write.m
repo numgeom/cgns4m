@@ -20,4 +20,4 @@ end
 in_IntegralDataName = char(in_IntegralDataName);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(239), in_IntegralDataName);
+ierr = cgnslib_mex(int32(247), in_IntegralDataName);

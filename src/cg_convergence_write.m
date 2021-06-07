@@ -22,4 +22,4 @@ in_iterations = int32(in_iterations);
 in_NormDefinitions = char(in_NormDefinitions);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(214), in_iterations, in_NormDefinitions);
+ierr = cgnslib_mex(int32(222), in_iterations, in_NormDefinitions);

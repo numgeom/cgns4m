@@ -47,4 +47,4 @@ end
 
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(219), io_ElecFldModelFlag, io_MagnFldModelFlag, io_ConductivityModelFlag);
+ierr = cgnslib_mex(int32(227), io_ElecFldModelFlag, io_MagnFldModelFlag, io_ConductivityModelFlag);

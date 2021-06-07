@@ -35,4 +35,4 @@ in_donor_range = int64(in_donor_range);
 in_transform = int32(in_transform);
 
 % Invoke the actual MEX-function.
-[out_Ii, ierr] = cgnslib_mex(int32(154), in_fn, in_B, in_Z, in_connectname, in_donorname, in_range, in_donor_range, in_transform);
+[out_Ii, ierr] = cgnslib_mex(int32(162), in_fn, in_B, in_Z, in_connectname, in_donorname, in_range, in_donor_range, in_transform);

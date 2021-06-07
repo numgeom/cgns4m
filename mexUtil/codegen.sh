@@ -12,11 +12,11 @@
 set -e
 
 # Download CGNS source code
-CGNS_VERSION=4.1.1
+CGNS_VERSION=4.2.0
 mkdir -p cgnslib_$CGNS_VERSION
 curl -L https://github.com/CGNS/CGNS/archive/v$CGNS_VERSION.tar.gz \
 | tar zxvf - --strip-components=2 -C cgnslib_$CGNS_VERSION CGNS-$CGNS_VERSION/src/\
-{LICENSE,cg_malloc.c,cgns_header.h,cgns_io.c,cgnsKeywords.h,cgnslib.h,cgnstypes.h.in,\
+{LICENSE,cg_hashmap.c,cg_hashmap.h,cg_malloc.c,cgns_header.h,cgns_io.c,cgnsKeywords.h,cgnslib.h,cgnstypes.h.in,\
 cg_malloc.h,cgns_error.c,cgns_internals.c,cgns_io.h,cgnslib.c,fortran_macros.h} \
 CGNS-$CGNS_VERSION/src/adf/{ADF_fbind.h,ADF.h,ADF_interface.c,ADF_internals.c,ADF_internals.h} \
 CGNS-$CGNS_VERSION/src/adfh/{ADF.h,ADFH.c,ADFH.h}
@@ -37,6 +37,7 @@ fi
 
 # Set other features
 perl -i -pe 's/\@BUILDHDF5\@/1/g;' \
+       -e 's/\@HAVE_COMPLEX_C99_EXT\@/1/g;' \
        -e 's/\@BUILDLEGACY\@/0/g;' \
        -e 's/\@BUILDSCOPE\@/1/g;' \
        -e 's/\@BUILDBASESCOPE\@/0/g;' \

@@ -23,4 +23,4 @@ function [out_mass, out_length, out_time, out_temperature, out_angle, out_curren
 %
 
 % Invoke the actual MEX-function.
-[out_mass, out_length, out_time, out_temperature, out_angle, out_current, out_amount, out_intensity, ierr] = cgnslib_mex(int32(248));
+[out_mass, out_length, out_time, out_temperature, out_angle, out_current, out_amount, out_intensity, ierr] = cgnslib_mex(int32(256));

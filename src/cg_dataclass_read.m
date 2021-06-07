@@ -16,4 +16,4 @@ function [out_dataclass, ierr] = cg_dataclass_read()
 %
 
 % Invoke the actual MEX-function.
-[out_dataclass, ierr] = cgnslib_mex(int32(259));
+[out_dataclass, ierr] = cgnslib_mex(int32(267));

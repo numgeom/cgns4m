@@ -20,4 +20,4 @@ function [out_filename, out_link_path, ierr] = cg_link_read()
 % calling cg_free.
 
 % Invoke the actual MEX-function.
-[out_filename, out_link_path, ierr] = cgnslib_mex(int32(269));
+[out_filename, out_link_path, ierr] = cgnslib_mex(int32(277));

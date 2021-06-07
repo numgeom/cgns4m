@@ -16,4 +16,4 @@ function [out_EquationsType, ierr] = cg_governing_read()
 %
 
 % Invoke the actual MEX-function.
-[out_EquationsType, ierr] = cgnslib_mex(int32(221));
+[out_EquationsType, ierr] = cgnslib_mex(int32(229));

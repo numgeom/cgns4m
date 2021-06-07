@@ -38,4 +38,4 @@ end
 
 
 % Invoke the actual MEX-function.
-[out_data_dim, ierr] = cgnslib_mex(int32(174), in_fn, in_B, in_Z, in_D, io_dim_vals);
+[out_data_dim, ierr] = cgnslib_mex(int32(182), in_fn, in_B, in_Z, in_D, io_dim_vals);

@@ -28,4 +28,4 @@ in_Z = int32(in_Z);
 in_S = int32(in_S);
 
 % Invoke the actual MEX-function.
-[out_ptset_type, out_npnts, ierr] = cgnslib_mex(int32(115), in_fn, in_B, in_Z, in_S);
+[out_ptset_type, out_npnts, ierr] = cgnslib_mex(int32(123), in_fn, in_B, in_Z, in_S);

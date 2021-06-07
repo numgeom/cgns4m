@@ -34,4 +34,4 @@ in_amount = int32(in_amount);
 in_intensity = int32(in_intensity);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(249), in_mass, in_length, in_time, in_temperature, in_angle, in_current, in_amount, in_intensity);
+ierr = cgnslib_mex(int32(257), in_mass, in_length, in_time, in_temperature, in_angle, in_current, in_amount, in_intensity);

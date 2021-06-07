@@ -35,4 +35,4 @@ in_end = int64(in_end);
 in_nbndry = int32(in_nbndry);
 
 % Invoke the actual MEX-function.
-[out_S, ierr] = cgnslib_mex(int32(103), in_file_number, in_B, in_Z, in_SectionName, in_type, in_start, in_end, in_nbndry);
+[out_S, ierr] = cgnslib_mex(int32(105), in_file_number, in_B, in_Z, in_SectionName, in_type, in_start, in_end, in_nbndry);

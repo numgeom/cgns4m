@@ -16,4 +16,4 @@ function [out_n_dataset, ierr] = cg_bcdataset_info()
 %
 
 % Invoke the actual MEX-function.
-[out_n_dataset, ierr] = cgnslib_mex(int32(168));
+[out_n_dataset, ierr] = cgnslib_mex(int32(176));

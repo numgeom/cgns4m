@@ -42,4 +42,4 @@ in_m_rmax = int64(in_m_rmax);
 in_data = numeric(in_data);
 
 % Invoke the actual MEX-function.
-ierr = cgnslib_mex(int32(233), in_arrayname, in_s_type, in_s_numdim, in_s_dimvals, in_s_rmin, in_s_rmax, in_m_type, in_m_numdim, in_m_dimvals, in_m_rmin, in_m_rmax, in_data);
+ierr = cgnslib_mex(int32(241), in_arrayname, in_s_type, in_s_numdim, in_s_dimvals, in_s_rmin, in_s_rmax, in_m_type, in_m_numdim, in_m_dimvals, in_m_rmin, in_m_rmax, in_data);
