@@ -4,9 +4,9 @@
 
 **CGNS4m**, formerly known as **mexCGNS**, allows you to access virtually all the functionalities provided by the serial API of [the mid-level library](https://cgns.github.io/CGNS_docs_current/midlevel/) of [CGNS](https://cgns.github.io) (a.k.a. `cgnslib`) with the convenience of MATLAB or GNU Octave. It also provides two high-level functions `readcgns` and `writecgns` for reading and writing mesh files with node-based or cell-centered data. These high-level functions are entirely written in MATLAB, so you can adapt for your purpose, without writing a single line of C code or a makefile.
 
-| master | devel_v3.4.1 | barebone |
+| master | devel_v4.2.0 | barebone |
 |---------------|--------------|-----------------|
-| [![Build Status](https://travis-ci.org/meshkit/cgns4m.svg?branch=master)](https://travis-ci.org/meshkit/cgns4m) | [![Build Status](https://travis-ci.org/meshkit/cgns4m.svg?branch=devel_v3.4.1)](https://travis-ci.org/meshkit/cgns4m)  | [![Build Status](https://travis-ci.org/meshkit/cgns4m.svg?branch=barebone)](https://travis-ci.org/meshkit/cgns4m)    |
+| [![Build Status](https://travis-ci.org/meshkit/cgns4m.svg?branch=master)](https://travis-ci.org/meshkit/cgns4m) | [![Build Status](https://travis-ci.org/meshkit/cgns4m.svg?branch=devel_v4.2.0)](https://travis-ci.org/meshkit/cgns4m)  | [![Build Status](https://travis-ci.org/meshkit/cgns4m.svg?branch=barebone)](https://travis-ci.org/meshkit/cgns4m)    |
 
 ## Copyright and license
 
@@ -15,9 +15,9 @@ The copyright of CGNS4m belongs to Stony Brook University. CGNS is distributed f
 ## Installation
 
 ### Pre-built binary for MATLAB
-The easiest way to install CGNS4m is to download the binary distribution [cgns4m-v3.4.1-binary.tar.gz](https://github.com/meshkit/cgns4m/archive/v3.4.1-binary.tar.gz). It contains binary MEX files for 64-bit Linux, Windows, and Mac OS X, and should work for MATLAB R2016b or later. They were built with 64-bit integers enabled to support large files, and they were statically linked with HDF5 1.8.12, which is the same version as the recent releases of MATLAB.
+The easiest way to install CGNS4m is to download the binary distribution [cgns4m-v4.2.0-binary.tar.gz](https://github.com/meshkit/cgns4m/archive/v4.2.0-binary.tar.gz). It contains binary MEX files for 64-bit Linux, Windows, and Mac OS X, and should work for MATLAB R2016b or later. They were built with 64-bit integers enabled to support large files, and they were statically linked with HDF5 1.8.12, which is the same version as the recent releases of MATLAB.
 
-After downloading cgns4m, please run `run cgns4m-v3.4.1-binary/startup_cgns4m` (or the root directory of `cgns4m`) within MATLAB to add the `cgns4m` path in MATLAB.
+After downloading cgns4m, please run `run cgns4m-v4.2.0-binary/startup_cgns4m` (or the root directory of `cgns4m`) within MATLAB to add the `cgns4m` path in MATLAB.
 
 ### Compilating CGNS4m for GNU Octave
 In Octave, CGNS4m must be built using the HDF5 library bundled within Octave. Hence, a binary distribution is unavailable. You can download the [the master branch](https://github.com/meshkit/cgns4m/archive/master.tar.gz) of the CGNS4m source code. You can also reuse the binary distribution of CGNS4m for MATLAB. The build will have 64-bit integer enabled.
