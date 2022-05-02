@@ -102,7 +102,8 @@ else
 
     hdf5inc = ['-I' SRCDIR '/adfh -I' HDF_VERSION '/include -DBUILD_HDF5'];
     if ispc
-        libz = fullfile(fileparts(fileparts(cmp.LinkerName)), 'x86_64-w64-mingw32', 'lib', 'libz.a');
+        libz = fullfile(fileparts(fileparts(mex.getCompilerConfigurations('c').LinkerName)), ...
+            'x86_64-w64-mingw32', 'lib', 'libz.a');
         hdf5lib = ['"' HDF_VERSION '\lib\libhdf5.a" "' libz '"'];
     else
         hdf5lib = [HDF_VERSION '/lib/libhdf5.a -ldl -lz'];
