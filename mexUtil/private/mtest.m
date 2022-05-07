@@ -1,3 +1,4 @@
+
 % A testing tool for MATLAB based on the test function in Octave.
 %
 % -- Function File:  mtest NAME
@@ -76,7 +77,6 @@
 % - Only basic directives (test, xtest, shared, assert and fail) are supported.
 
 function [ret1__, ret2__, ret3__, ret4__] = mtest (name__, flag__, fid__)
-
 %% information from test will be introduced by 'key'
 persistent signal_fail__;
 persistent signal_empty__;
@@ -205,7 +205,7 @@ if (isempty (body__))
     return;
 else
     %% add a dummy comment block to the end for ease of indexing
-    if (body__ (length(body__)) == sprintf('\n'))
+    if (body__ (length(body__)) == newline)
         body__ = sprintf ('\n%s%%', body__);
     else
         body__ = sprintf ('\n%s\n%%', body__);
@@ -213,7 +213,7 @@ else
 end
 
 %% chop it up into blocks for evaluation
-lineidx__ = find (body__ == sprintf('\n'));
+lineidx__ = find (body__ == newline);
 blockidx__ = lineidx__(~isspace (body__(lineidx__+1)))+1;
 
 %% ready to start tests ... if in batch mode, tell us what is happening
@@ -268,7 +268,7 @@ for i__ = 1:length(blockidx__)-1
                 demo_idx__ = [1, length(demo_code__)+1];
             else
                 demo_code__ = strcat(demo_code__, code__);
-                demo_idx__ = [demo_idx__, length(demo_code__)+1];
+                demo_idx__ = [demo_idx__, length(demo_code__)+1]; %#ok<*AGROW> 
             end
 
         elseif (rundemo__ && isdemo__)
@@ -282,10 +282,10 @@ for i__ = 1:length(blockidx__)-1
                 test_run_demo;
                 input ('Press <enter> to continue: ', 's');
                 delete test_run_demo.m;
-            catch
+            catch ex
                 delete test_run_demo.m;
                 success__ = 0;
-                msg__ = sprintf ('%sdemo failed\n%s',  signal_fail__, lasterr);
+                msg__ = sprintf ('%sdemo failed\n%s',  signal_fail__, ex.message);
             end
         end
         code__ = ''; % code already processed
@@ -295,7 +295,7 @@ for i__ = 1:length(blockidx__)-1
         istest__ = 0;
 
         %% separate initialization code from variables
-        idx__ = find (code__ == sprintf('\n'));
+        idx__ = find (code__ == newline);
         if (isempty (idx__))
             vars__ = code__;
             code__ = '';
@@ -321,14 +321,14 @@ for i__ = 1:length(blockidx__)-1
                 shared__ = ' ';
                 shared_r__ = ' ';
             end
-        catch
+        catch ex
             code__ = '';  % couldn't declare, so don't initialize
             success__ = 0;
-            msg__ = sprintf ('%sshared variable initialization failed\n%s', signal_fail__, lasterr);
+            msg__ = sprintf ('%sshared variable initialization failed\n%s', signal_fail__, ex.message);
         end
 
         %% clear shared function definitions
-        eval (clear__, '');
+        eval (clear__, ''); 
         clear__ = '';
 
         %% initialization code will be evaluated below
@@ -347,9 +347,9 @@ for i__ = 1:length(blockidx__)-1
             try
                 eval(code__); %% Define the function
                 clear__ = sprintf ('%sclear %s;\n', clear__, name__);
-            catch
+            catch ex
                 success__ = 0;
-                msg__ = sprintf ('%stest failed: syntax error\n%s', signal_fail__, lasterr);
+                msg__ = sprintf ('%stest failed: syntax error\n%s', signal_fail__, ex.message);
             end
         end
         code__ = '';
@@ -398,10 +398,10 @@ for i__ = 1:length(blockidx__)-1
                 end
             end
 
-        catch
+        catch ex
             delete test_run_error.m;
 
-            err__ = trimerr (lasterr, 'error');
+            err__ = trimerr (ex.message, 'error');
             warning (warnstate__.state, 'quiet');
             if (warning__)
                 msg__ = sprintf ('%sexpected warning <%s> but got error %s\n', signal_fail__, pattern__, err__);
@@ -419,7 +419,7 @@ for i__ = 1:length(blockidx__)-1
         [e__, feat__] = regexp (code__, '^\s*([^\s]+)', 'end', 'tokens');
         if exist('__octave_config_info__', 'builtin')
           % octave_config_info is depreciated in 4.2.1
-          octave_config_info = eval('@__octave_config_info__');
+          octave_config_info = eval('@__octave_config_info__'); %#ok<*EVLCS> 
         end
 
         if (isoctave && ...
@@ -462,21 +462,18 @@ for i__ = 1:length(blockidx__)-1
             fprintf (fid_m__, 'function %stest_run_temp(%s)\n%s\nend', shared_r__,shared__, code__);
             fclose(fid_m__); rehash;
         catch err
-            % delete test_run_temp.m;
-            if (strcmp (type__, 'xtest'))
-                msg__ = sprintf ('%sknown failure\n%s', signal_fail__, lasterr);
-                xfail__ = xfail__ + 1;
-            else
-                msg__ = sprintf ('%stest failed\n%s', signal_fail__, lasterr);
-                success__ = 0;
-            end
-            if (isempty (lasterr))
+            if (isempty (err.message))
                 error ('empty error text, probably Ctrl-C --- aborting');
             else
                 rethrow( err);
             end
         end
-        eval (sprintf ('%stest_run_temp(%s);', shared_r__, shared__));
+        try
+            eval (sprintf ('%stest_run_temp(%s);', shared_r__, shared__));
+        catch e
+            msg__ = [e.message newline];
+            success__ = 0;
+        end
         delete test_run_temp.m;
     end
 
@@ -486,7 +483,7 @@ for i__ = 1:length(blockidx__)-1
         if (~ verbose__)
             fprintf (fid__, '%s%s\n', signal_block__, block__);
         end
-        fprintf (fid__, msg__);
+        fprintf (fid__+(fid__==1), msg__);
     end
     if (success__ == 0)
         all_success__ = 0;
@@ -504,16 +501,17 @@ for i__ = 1:length(blockidx__)-1
     tests__ = tests__ + istest__;
     successes__ = successes__ + success__ * istest__;
 end
-eval (clear__, '');
+eval (clear__, ''); %#ok<*EV2IN> 
 
 if (nargout == 0)
     if (xfail__)
-        fprintf ('PASSES %d out of %d tests (%d expected failures)\n', successes__, tests__, xfail__);
+        fprintf(fid__, 'PASSES %d out of %d tests (%d expected failures)\n', ...
+            successes__, tests__, xfail__); %#ok<UNRCH> 
     else
-        fprintf ('PASSES %d out of %d tests\n', successes__, tests__);
+        fprintf(fid__, 'PASSES %d out of %d tests\n', successes__, tests__);
     end
     if (xskip__)
-        fprintf ('Skipped %d tests due to missing features\n', xskip__);
+        fprintf (fid__, 'Skipped %d tests due to missing features\n', xskip__);
     end
 elseif (grabdemo__)
     ret1__ = demo_code__;
