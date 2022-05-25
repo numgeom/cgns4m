@@ -70,70 +70,70 @@ if ~exist('cgnslib_mex', 'file')
 end
 
 % confirm input arguments
-if(nargin <1)
+if (nargin < 1)
     error('Input filename is necessary');
-elseif (nargin<2)
+elseif (nargin < 2)
     node_var_list = [];
     elem_var_list = [];
-elseif (nargin<3)
+elseif (nargin < 3)
     elem_var_list = [];
 end
 
 % Open the CGNS file
-[index_file,ierr] = cg_open(filename, CG_MODE_READ); chk_error(ierr);
+[index_file, ierr] = cg_open(filename, CG_MODE_READ); chk_error(ierr);
 
 % Get dimension of element(icelldim) and vertex(iphysdim)
-index_base=1;  %assume there is only one base
-[basename,icelldim,iphysdim,ierr] = cg_base_read(index_file,index_base); chk_error(ierr);
+index_base = 1; %assume there is only one base
+[basename, icelldim, iphysdim, ierr] = cg_base_read(index_file, index_base); chk_error(ierr);
 assert(~isempty(deblank(basename)))
 
 % Get zone type */
-index_zone=1;  % assume there is only one zone
-[zonetype,ierr] = cg_zone_type(index_file,index_base,index_zone);
+index_zone = 1; % assume there is only one zone
+[zonetype, ierr] = cg_zone_type(index_file, index_base, index_zone);
 chk_error(ierr);
 
 if (zonetype == 2) % Structured
-    if iphysdim==2
+    if iphysdim == 2
         typestr = 'STRUCT2';
-    elseif iphysdim==3
+    elseif iphysdim == 3
         typestr = 'STRUCT3';
     else
         error('physical dimension must be 2 or 3')
     end
 
     % Get zone size (and name - although not needed here) */
-    index_zone=1;  % assume there is only one zone
-    [zonename,size,ierr] = cg_zone_read(index_file,index_base,index_zone); chk_error(ierr);
+    index_zone = 1; % assume there is only one zone
+    [zonename, size, ierr] = cg_zone_read(index_file, index_base, index_zone); chk_error(ierr);
     assert(~isempty(deblank(zonename)))
 
     % Define the range of vertices
-    if (iphysdim ==2)
-        rmin = [1 1];  % lower range index of vertices
-        rmax = zeros(1,2);
-        rmax(1,1:2) = size(1,1:2);  % upper range index of vertices
+    if (iphysdim == 2)
+        rmin = [1 1]; % lower range index of vertices
+        rmax = zeros(1, 2);
+        rmax(1, 1:2) = size(1, 1:2); % upper range index of vertices
     elseif (iphysdim == 3)
-        rmin = [1 1 1];  % lower range index of vertices
-        rmax = zeros(1,3);
-        rmax(1,1:3) = size(1,1:3);  % upper range index of vertices
+        rmin = [1 1 1]; % lower range index of vertices
+        rmax = zeros(1, 3);
+        rmax(1, 1:3) = size(1, 1:3); % upper range index of vertices
     else
         error('physical dimension not supported');
     end
 
     % Read grid coordinates (must use SIDS-standard names here)
     if (iphysdim == 2)
-        ps = zeros(rmax(1,1),rmax(1,2),iphysdim);
-        [ps(:,:,1),ierr] = cg_coord_read(index_file,index_base,index_zone,...
-            'CoordinateX', RealDouble,rmin,rmax, ps(:,:,1)); chk_error(ierr);
-        [ps(:,:,2),ierr] = cg_coord_read(index_file,index_base,index_zone,...
-            'CoordinateY', RealDouble,rmin,rmax, ps(:,:,2)); chk_error(ierr);
+        ps = zeros(rmax(1, 1), rmax(1, 2), iphysdim);
+        [ps(:, :, 1), ierr] = cg_coord_read(index_file, index_base, index_zone, ...
+            'CoordinateX', RealDouble, rmin, rmax, ps(:, :, 1)); chk_error(ierr);
+        [ps(:, :, 2), ierr] = cg_coord_read(index_file, index_base, index_zone, ...
+            'CoordinateY', RealDouble, rmin, rmax, ps(:, :, 2)); chk_error(ierr);
     elseif (iphysdim == 3)
-        ps = zeros(rmax(1,1),rmax(1,2),rmax(1,3),iphysdim);
-        [ps(:,:,:,1),ierr] = cg_coord_read(index_file,index_base,index_zone,...
-            'CoordinateX', RealDouble,rmin,rmax, ps(:,:,:,1)); chk_error(ierr);
-        [ps(:,:,:,2),ierr] = cg_coord_read(index_file,index_base,index_zone,...
-            'CoordinateY', RealDouble,rmin,rmax, ps(:,:,:,2)); chk_error(ierr);
-        [ps(:,:,:,3),ierr ]= cg_coord_read(index_file,index_base,index_zone,...
-            'CoordinateZ', RealDouble,rmin,rmax, ps(:,:,:,3)); chk_error(ierr);
+        ps = zeros(rmax(1, 1), rmax(1, 2), rmax(1, 3), iphysdim);
+        [ps(:, :, :, 1), ierr] = cg_coord_read(index_file, index_base, index_zone, ...
+            'CoordinateX', RealDouble, rmin, rmax, ps(:, :, :, 1)); chk_error(ierr);
+        [ps(:, :, :, 2), ierr] = cg_coord_read(index_file, index_base, index_zone, ...
+            'CoordinateY', RealDouble, rmin, rmax, ps(:, :, :, 2)); chk_error(ierr);
+        [ps(:, :, :, 3), ierr] = cg_coord_read(index_file, index_base, index_zone, ...
+            'CoordinateZ', RealDouble, rmin, rmax, ps(:, :, :, 3)); chk_error(ierr);
     else
         error('physical dimension not supported');
     end
@@ -152,7 +152,7 @@ if (zonetype == 2) % Structured
     end
 
     % Store dimensions of structured grid
-    elems = zeros(1,9);
+    elems = zeros(1, 9);
     if (iphysdim == 2)
         elems(1:2) = size(1:2);
     elseif (iphysdim == 3)
@@ -163,28 +163,28 @@ if (zonetype == 2) % Structured
 
     % Store origin of structured grid
     if (iphysdim == 2)
-        elems(4) = ps(1,1,1);
-        elems(5) = ps(1,1,2);
+        elems(4) = ps(1, 1, 1);
+        elems(5) = ps(1, 1, 2);
     elseif (iphysdim == 3)
-        elems(4) = ps(1,1,1,1);
-        elems(5) = ps(1,1,1,2);
-        elems(6) = ps(1,1,1,3);
+        elems(4) = ps(1, 1, 1, 1);
+        elems(5) = ps(1, 1, 1, 2);
+        elems(6) = ps(1, 1, 1, 3);
     else
         error('physical dimension not supported');
     end
 
     % Get variables. First read in the field names, datatypes, etc.
-    [n_sol,ierr ]= cg_nsols(index_file, index_base, index_zone); % number of solutions
+    [n_sol, ierr] = cg_nsols(index_file, index_base, index_zone); % number of solutions
     chk_error(ierr);
 
-    before_struct = struct('field_name',[],'datatype',[],'location',[],'index_sol',[]);
+    before_struct = struct('field_name', [], 'datatype', [], 'location', [], 'index_sol', []);
     index_struct = 1;
-    for index_sol =1:n_sol
-        [solname, location, ierr] = cg_sol_info(index_file, index_base,...
-            index_zone,index_sol); chk_error(ierr);
+    for index_sol = 1:n_sol
+        [solname, location, ierr] = cg_sol_info(index_file, index_base, ...
+            index_zone, index_sol); chk_error(ierr);
 
-        [n_fields,ierr] = cg_nfields(index_file, index_base, ...
-            index_zone,index_sol); chk_error(ierr);
+        [n_fields, ierr] = cg_nfields(index_file, index_base, ...
+            index_zone, index_sol); chk_error(ierr);
         assert(~isempty(deblank(solname)))
         for index_field = 1:n_fields
             [field_name, datatype, ierr] = cg_field_info(index_file, index_base, ...
@@ -205,8 +205,8 @@ if (zonetype == 2) % Structured
     var_cells = [];
     after_struct = [];
 
-    if (n_sol>0)
-        [var_nodes, var_cells,after_struct] = convert_field_name(before_struct,...
+    if (n_sol > 0)
+        [var_nodes, var_cells, after_struct] = convert_field_name(before_struct, ...
             node_var_list, elem_var_list, nargin, nargout);
     end
 
@@ -223,84 +223,82 @@ if (zonetype == 2) % Structured
         n_vf = length(fieldnames(var_cells));
     end
 
-
     % Read node-centered variables
     if (n_vn ~= 0)
-        var_nodes = read_variables_struct(index_file,index_base,index_zone,...
-            after_struct,var_nodes,elem_start,elem_end,Vertex,iphysdim);
+        var_nodes = read_variables_struct(index_file, index_base, index_zone, ...
+            after_struct, var_nodes, elem_start, elem_end, Vertex, iphysdim);
     end
 
     % Read cell-centered variables
-    if(n_vf ~= 0)
-        var_cells = read_variables_struct(index_file,index_base,index_zone,...
-            after_struct,var_cells,elem_start,elem_end, CellCenter,iphysdim);
+    if (n_vf ~= 0)
+        var_cells = read_variables_struct(index_file, index_base, index_zone, ...
+            after_struct, var_cells, elem_start, elem_end, CellCenter, iphysdim);
     end
-
 
 elseif (zonetype == 3) % Unstructured
 
     % Get zone size (and name - although not needed here) */
-    index_zone=1;  % assume there is only one zone
-    [zonename,size,ierr] = cg_zone_read(index_file,index_base,index_zone); chk_error(ierr);
+    index_zone = 1; % assume there is only one zone
+    [zonename, size, ierr] = cg_zone_read(index_file, index_base, index_zone); chk_error(ierr);
     assert(~isempty(deblank(zonename)))
 
     % Define the range of vertices
-    rmin = 1;      % lower range index of vertices
-    rmax = size(1);  % upper range index of vertices
+    rmin = 1; % lower range index of vertices
+    rmax = size(1); % upper range index of vertices
 
     % Read grid coordinates (must use SIDS-standard names here)
-    ps = zeros(rmax(1),iphysdim);
-    [ps(:,1),ierr] = cg_coord_read(index_file,index_base,index_zone,...
-        'CoordinateX', RealDouble,rmin,rmax, ps(:,1)); chk_error(ierr);
-    [ps(:,2),ierr] = cg_coord_read(index_file,index_base,index_zone,...
-        'CoordinateY', RealDouble,rmin,rmax, ps(:,2)); chk_error(ierr);
+    ps = zeros(rmax(1), iphysdim);
+    [ps(:, 1), ierr] = cg_coord_read(index_file, index_base, index_zone, ...
+        'CoordinateX', RealDouble, rmin, rmax, ps(:, 1)); chk_error(ierr);
+    [ps(:, 2), ierr] = cg_coord_read(index_file, index_base, index_zone, ...
+        'CoordinateY', RealDouble, rmin, rmax, ps(:, 2)); chk_error(ierr);
 
     if (iphysdim == 3)
-        [ps(:,3),ierr ]= cg_coord_read(index_file,index_base,index_zone,...
-            'CoordinateZ', RealDouble,rmin,rmax, ps(:,3)); chk_error(ierr);
+        [ps(:, 3), ierr] = cg_coord_read(index_file, index_base, index_zone, ...
+            'CoordinateZ', RealDouble, rmin, rmax, ps(:, 3)); chk_error(ierr);
     end
 
     % Get element connectivity and element type
-    index_sect = 1;    % assume there is only one section
+    index_sect = 1; % assume there is only one section
 
-    [sectionname,itype,istart,iend, nbndry, pflag, ierr] = cg_section_read(index_file, ...
-        index_base,index_zone,index_sect); chk_error(ierr); %#ok<*ASGLU>
+    [sectionname, itype, istart, iend, nbndry, pflag, ierr] = cg_section_read(index_file, ...
+        index_base, index_zone, index_sect); chk_error(ierr); %#ok<*ASGLU>
     assert(~isempty(deblank(sectionname)))
 
     % Define the range of elements
-    elem_start = istart;  % lower range index of elements
-    elem_end = iend;     % upper range index of elements
+    elem_start = istart; % lower range index of elements
+    elem_end = iend; % upper range index of elements
 
     [npe, typestr] = get_elemtype_string(itype, icelldim);
 
     % Get element connectivity
-    [size_ielem,ierr] = cg_ElementDataSize(index_file,index_base,index_zone, ...
+    [size_ielem, ierr] = cg_ElementDataSize(index_file, index_base, index_zone, ...
         index_sect); chk_error(ierr);
-    num_elems = size_ielem / npe;   % number of elements (except for MIXED)
-    elems = zeros(npe, num_elems);  % Element connectivity is permuted in CGNS
+    num_elems = size_ielem / npe; % number of elements (except for MIXED)
+    elems = zeros(npe, num_elems); % Element connectivity is permuted in CGNS
     parent_data = [];
 
-    if itype==CG_MIXED && exist('cg_poly_elements_read', 'file')
-      offsets = elems;
-      [elems, offsets, parent_data, ierr] = cg_poly_elements_read(index_file,index_base,index_zone,...
-          index_sect,elems, offsets, parent_data); chk_error(ierr);
-      % change leading type to number of nodes for
-      % every element in the element connectivity
-      elems = elems';                 % Permute the connectivity back
+    if itype == CG_MIXED && exist('cg_poly_elements_read', 'file')
+        offsets = elems;
+        [elems, offsets, parent_data, ierr] = cg_poly_elements_read(index_file, index_base, index_zone, ...
+            index_sect, elems, offsets, parent_data); chk_error(ierr);
+        % change leading type to number of nodes for
+        % every element in the element connectivity
+        elems = elems'; % Permute the connectivity back
     else
-      [elems, parent_data,ierr] = cg_elements_read(index_file,index_base,index_zone,...
-          index_sect,elems,parent_data);       chk_error(ierr);
-      elems = elems';                 % Permute the connectivity back
+        [elems, parent_data, ierr] = cg_elements_read(index_file, index_base, index_zone, ...
+            index_sect, elems, parent_data); chk_error(ierr);
+        elems = elems'; % Permute the connectivity back
     end
 
-    if itype==CG_MIXED
+    if itype == CG_MIXED
         element_type = elems(1);
         elems = inverse_mixed_elements(elems);
     end
 
-    nelems = number_of_elements(elems);    % number of elements (MIXED element type)
+    nelems = number_of_elements(elems); % number of elements (MIXED element type)
 
-    if (itype ~= MIXED) && (num_elems ~= nelems )
+    if (itype ~= MIXED) && (num_elems ~= nelems)
         error('Error: Incorrectly reading element connectivity.');
     end
 
@@ -308,7 +306,7 @@ elseif (zonetype == 3) % Unstructured
         % Check that mesh is indeed MIXED
         num_type = elems(1);
         for ii = 2:nelems
-            if num_type~=elems(1+(num_type+1)*(ii-1))
+            if num_type ~= elems(1 + (num_type + 1) * (ii - 1))
                 num_type = 0;
                 break;
             end
@@ -319,9 +317,9 @@ elseif (zonetype == 3) % Unstructured
         % output matrix.
 
         if num_type ~= 0
-            new_elems = zeros(nelems,num_type);
+            new_elems = zeros(nelems, num_type);
             for ii = 1:nelems
-                new_elems(ii,:) = elems((num_type+1)*(ii-1)+2:(num_type+1)*(ii-1)+(num_type+1));
+                new_elems(ii, :) = elems((num_type + 1) * (ii - 1) + 2:(num_type + 1) * (ii - 1) + (num_type + 1));
             end
             [npe, typestr] = get_elemtype_string(element_type, icelldim);
             elems = new_elems;
@@ -329,20 +327,20 @@ elseif (zonetype == 3) % Unstructured
     end
 
     % Get variables. First read in the field names, datatypes, etc.
-    [n_sol,ierr ]= cg_nsols(index_file, index_base, index_zone); % number of solutions
+    [n_sol, ierr] = cg_nsols(index_file, index_base, index_zone); % number of solutions
     chk_error(ierr);
 
-    before_struct = struct('field_name',[],'datatype',[],'location',[],'index_sol',[]);
+    before_struct = struct('field_name', [], 'datatype', [], 'location', [], 'index_sol', []);
     index_struct = 1;
-    for index_sol =1:n_sol
-        [solname, location,ierr] = cg_sol_info(index_file, index_base,...
-            index_zone,index_sol); chk_error(ierr);
+    for index_sol = 1:n_sol
+        [solname, location, ierr] = cg_sol_info(index_file, index_base, ...
+            index_zone, index_sol); chk_error(ierr);
 
-        [n_fields,ierr] = cg_nfields(index_file, index_base, ...
-            index_zone,index_sol); chk_error(ierr);
+        [n_fields, ierr] = cg_nfields(index_file, index_base, ...
+            index_zone, index_sol); chk_error(ierr);
         assert(~isempty(deblank(solname)))
         for index_field = 1:n_fields
-            [datatype,field_name,ierr] = cg_field_info(index_file, index_base, ...
+            [datatype, field_name, ierr] = cg_field_info(index_file, index_base, ...
                 index_zone, index_sol, index_field); chk_error(ierr);
             assert(~isempty(deblank(field_name)))
 
@@ -360,9 +358,9 @@ elseif (zonetype == 3) % Unstructured
     var_cells = [];
     after_struct = [];
 
-    if (n_sol>0)
-        [var_nodes, var_cells,after_struct] = convert_field_name(before_struct,...
-            node_var_list, elem_var_list,nargin,nargout);
+    if (n_sol > 0)
+        [var_nodes, var_cells, after_struct] = convert_field_name(before_struct, ...
+            node_var_list, elem_var_list, nargin, nargout);
     end
 
     % get the number of variables to read
@@ -378,17 +376,16 @@ elseif (zonetype == 3) % Unstructured
         n_vf = length(fieldnames(var_cells));
     end
 
-
     % Read node-centered variables
     if (n_vn ~= 0)
-        var_nodes = read_variables(index_file,index_base,index_zone,...
-            after_struct,var_nodes,rmin, rmax,Vertex);
+        var_nodes = read_variables(index_file, index_base, index_zone, ...
+            after_struct, var_nodes, rmin, rmax, Vertex);
     end
 
     % Read cell-centered variables
-    if(n_vf ~= 0)
-        var_cells = read_variables(index_file,index_base,index_zone,...
-            after_struct,var_cells,elem_start,elem_end, CellCenter);
+    if (n_vf ~= 0)
+        var_cells = read_variables(index_file, index_base, index_zone, ...
+            after_struct, var_cells, elem_start, elem_end, CellCenter);
     end
 
 else
@@ -403,22 +400,22 @@ end
 function nelems = number_of_elements(elems)
 % Obtain the number of elements in element connectivity
 
-if size(elems,2)>1
-    nelems = size(elems,1);
+if size(elems, 2) > 1
+    nelems = size(elems, 1);
 else
-    es = size(elems,1);
+    es = size(elems, 1);
 
-    ii=1;
+    ii = 1;
     nelems = 0;
-    while (ii<es)
+    while (ii < es)
         ii = ii + elems(ii) + 1;
         nelems = nelems + 1;
     end
 end
 end
 
-function [var_nodes,var_cells,after_struct] = convert_field_name(before_struct, ...
-    node_var_list, elem_var_list,nargin_main,nargout_main)
+function [var_nodes, var_cells, after_struct] = convert_field_name(before_struct, ...
+    node_var_list, elem_var_list, nargin_main, nargout_main)
 % (1) Merge the variables of before_struct and save them into after_struct,
 %     and eliminate '-' in variable names. Ex: merge [t-1, t-2,t-3] into t.s
 % (2) Create var_ndoes and var_cells with corresponding variable names
@@ -427,203 +424,200 @@ function [var_nodes,var_cells,after_struct] = convert_field_name(before_struct, 
 var_nodes = [];
 var_cells = [];
 
-after_struct = struct('field_name',[], 'datatype',[], 'location',[],...
-    'index_sol',[],'ncol',[]);
+after_struct = struct('field_name', [], 'datatype', [], 'location', [], ...
+    'index_sol', [], 'ncol', []);
 
-ii=1; nvar=0;
+ii = 1; nvar = 0;
 while ii <= length(before_struct)
     var = before_struct(ii).field_name; ncol = 1;
 
     if ~isempty(regexp(var, '-[0-9]+', 'match'))
         var = regexprep(var, '-[0-9]+', '');
-        nvar = nvar+1;
+        nvar = nvar + 1;
         after_struct(nvar).field_name = var;
         after_struct(nvar).datatype = before_struct(ii).datatype;
         after_struct(nvar).location = before_struct(ii).location;
-        after_struct(nvar).index_sol= before_struct(ii).index_sol;
+        after_struct(nvar).index_sol = before_struct(ii).index_sol;
 
-        ii=ii+1;
+        ii = ii + 1;
         pat = [var '-[0-9]+'];
-        while ii<=length(before_struct) && ...
+        while ii <= length(before_struct) && ...
                 ~isempty(regexp(before_struct(ii).field_name, pat, 'match'))
-            ncol = ncol+1; ii=ii+1;
+            ncol = ncol + 1; ii = ii + 1;
         end
         after_struct(nvar).ncol = ncol;
     elseif ~isempty(regexp(var, 'XX$', 'match'))
-        var(end-1:end) = [];
-        nvar = nvar+1;
+        var(end - 1:end) = [];
+        nvar = nvar + 1;
         after_struct(nvar).field_name = var;
         after_struct(nvar).datatype = before_struct(ii).datatype;
         after_struct(nvar).location = before_struct(ii).location;
-        after_struct(nvar).index_sol= before_struct(ii).index_sol;
+        after_struct(nvar).index_sol = before_struct(ii).index_sol;
 
-        ii=ii+1;
+        ii = ii + 1;
         pat = [var '[XYZ][XYZ]'];
 
-        while ii<=length(before_struct) && ...
+        while ii <= length(before_struct) && ...
                 ~isempty(regexp(before_struct(ii).field_name, pat, 'match'))
-            ncol = ncol+1; ii=ii+1;
+            ncol = ncol + 1; ii = ii + 1;
         end
         after_struct(nvar).ncol = ncol;
     elseif ~isempty(regexp(var, 'X$', 'match'))
         var(end) = [];
-        nvar = nvar+1;
+        nvar = nvar + 1;
         after_struct(nvar).field_name = var;
         after_struct(nvar).datatype = before_struct(ii).datatype;
         after_struct(nvar).location = before_struct(ii).location;
-        after_struct(nvar).index_sol= before_struct(ii).index_sol;
+        after_struct(nvar).index_sol = before_struct(ii).index_sol;
 
-
-        ii=ii+1;
+        ii = ii + 1;
         pat = [var '[YZ]'];
 
-        while ii<=length(before_struct) && ...
+        while ii <= length(before_struct) && ...
                 ~isempty(regexp(before_struct(ii).field_name, pat, 'match'))
-            ncol = ncol+1; ii=ii+1;
+            ncol = ncol + 1; ii = ii + 1;
         end
         after_struct(nvar).ncol = ncol;
     else
         judge = 0;
-        for jj=1:length(after_struct)
-            if(strcmpi(var, after_struct(jj).field_name) && ...
+        for jj = 1:length(after_struct)
+            if (strcmpi(var, after_struct(jj).field_name) && ...
                     (before_struct(ii).location == after_struct(jj).location))
-                judge = judge+1;
+                judge = judge + 1;
             end
         end
         if (judge == 0)
-            nvar = nvar+1;
+            nvar = nvar + 1;
             after_struct(nvar).field_name = var;
             after_struct(nvar).datatype = before_struct(ii).datatype;
             after_struct(nvar).location = before_struct(ii).location;
-            after_struct(nvar).index_sol= before_struct(ii).index_sol;
+            after_struct(nvar).index_sol = before_struct(ii).index_sol;
             after_struct(nvar).ncol = 1;
         end
 
-        ii = ii+1;
+        ii = ii + 1;
     end
 end
 
 % Determine which variables should be read based on user input
-for ii=1:length(after_struct)
-    if  (after_struct(ii).location == Vertex)
-        if (nargout_main>3 && (nargin_main<2 || ...
+for ii = 1:length(after_struct)
+    if (after_struct(ii).location == Vertex)
+        if (nargout_main > 3 && (nargin_main < 2 || ...
                 match_name(after_struct(ii).field_name, node_var_list)))
-            after_struct(ii).field_name = regexprep(after_struct(ii).field_name,'\.','_dOt_');
-            after_struct(ii).field_name = regexprep(after_struct(ii).field_name,' ','_bLk_');
-            after_struct(ii).field_name = regexprep(after_struct(ii).field_name,'-','_dSh_');
+            after_struct(ii).field_name = regexprep(after_struct(ii).field_name, '\.', '_dOt_');
+            after_struct(ii).field_name = regexprep(after_struct(ii).field_name, ' ', '_bLk_');
+            after_struct(ii).field_name = regexprep(after_struct(ii).field_name, '-', '_dSh_');
             var_nodes.(after_struct(ii).field_name) = [];
-            after_struct(ii).field_name = regexprep(after_struct(ii).field_name,'_dOt_','.');
-            after_struct(ii).field_name = regexprep(after_struct(ii).field_name,'_bLk_',' ');
-            after_struct(ii).field_name = regexprep(after_struct(ii).field_name,'_dSh_','-');
+            after_struct(ii).field_name = regexprep(after_struct(ii).field_name, '_dOt_', '.');
+            after_struct(ii).field_name = regexprep(after_struct(ii).field_name, '_bLk_', ' ');
+            after_struct(ii).field_name = regexprep(after_struct(ii).field_name, '_dSh_', '-');
         end
 
-
-    elseif(after_struct(ii).location == CellCenter)
-        if (nargout_main>4 && (nargin_main<3 || ...
+    elseif (after_struct(ii).location == CellCenter)
+        if (nargout_main > 4 && (nargin_main < 3 || ...
                 match_name(after_struct(ii).field_name, elem_var_list)))
-            after_struct(ii).field_name = regexprep(after_struct(ii).field_name,'\.','_dOt_');
-            after_struct(ii).field_name = regexprep(after_struct(ii).field_name,' ','_bLk_');
-            after_struct(ii).field_name = regexprep(after_struct(ii).field_name,'-','_dSh_');
+            after_struct(ii).field_name = regexprep(after_struct(ii).field_name, '\.', '_dOt_');
+            after_struct(ii).field_name = regexprep(after_struct(ii).field_name, ' ', '_bLk_');
+            after_struct(ii).field_name = regexprep(after_struct(ii).field_name, '-', '_dSh_');
             var_cells.(after_struct(ii).field_name) = [];
-            after_struct(ii).field_name = regexprep(after_struct(ii).field_name,'_dOt_','.');
-            after_struct(ii).field_name = regexprep(after_struct(ii).field_name,'_bLk_',' ');
-            after_struct(ii).field_name = regexprep(after_struct(ii).field_name,'_dSh_','-');
+            after_struct(ii).field_name = regexprep(after_struct(ii).field_name, '_dOt_', '.');
+            after_struct(ii).field_name = regexprep(after_struct(ii).field_name, '_bLk_', ' ');
+            after_struct(ii).field_name = regexprep(after_struct(ii).field_name, '_dSh_', '-');
         end
     end
 end
 
 end
 
-
-function [out_var_str]=read_variables_struct(index_file, index_base, index_zone,...
-    in_struct,in_var_str,index_min, index_max,location, iphysdim)
+function [out_var_str] = read_variables_struct(index_file, index_base, index_zone, ...
+    in_struct, in_var_str, index_min, index_max, location, iphysdim)
 % Get variable values via cg_field_read
 
 fieldlist = fieldnames(in_var_str);
 
-for ii =1:length(fieldlist)
+for ii = 1:length(fieldlist)
     var = fieldlist{ii};
-    var_orig = regexprep(var,'_dOt_','.');
-    var_orig = regexprep(var_orig,'_bLk_',' ');
-    var_orig = regexprep(var_orig,'_dSh_','-');
+    var_orig = regexprep(var, '_dOt_', '.');
+    var_orig = regexprep(var_orig, '_bLk_', ' ');
+    var_orig = regexprep(var_orig, '_dSh_', '-');
     if ~strcmp(var, var_orig)
         fprintf(1, 'Info: field variable %s is renamed to %s.\n', var_orig, var);
     end
 
     index_struct = 0;
-    for kk=1:length(in_struct)
-        if(strcmpi(var_orig, in_struct(kk).field_name) && (location == in_struct(kk).location))
+    for kk = 1:length(in_struct)
+        if (strcmpi(var_orig, in_struct(kk).field_name) && (location == in_struct(kk).location))
             index_struct = kk; break;
         end
     end
 
     if (iphysdim == 2)
-        switch (in_struct(index_struct).datatype )
+        switch (in_struct(index_struct).datatype)
             case 2
-                out_var_str.(var) = int32(zeros(index_max(1),index_max(2),in_struct(index_struct).ncol));
+                out_var_str.(var) = int32(zeros(index_max(1), index_max(2), in_struct(index_struct).ncol));
             case 3
-                out_var_str.(var) = single(zeros(index_max(1),index_max(2),in_struct(index_struct).ncol));
+                out_var_str.(var) = single(zeros(index_max(1), index_max(2), in_struct(index_struct).ncol));
             case 5
-                out_var_str.(var) = char(zeros(index_max(1),index_max(2),in_struct(index_struct).ncol));
+                out_var_str.(var) = char(zeros(index_max(1), index_max(2), in_struct(index_struct).ncol));
             otherwise
-                out_var_str.(var) = zeros(index_max(1),index_max(2),in_struct(index_struct).ncol);
+                out_var_str.(var) = zeros(index_max(1), index_max(2), in_struct(index_struct).ncol);
         end
 
         ncol = in_struct(index_struct).ncol;
-        if ncol==1
-            [out_var_str.(var)(:,:),ierr]= cg_field_read(index_file, index_base, index_zone, ...
+        if ncol == 1
+            [out_var_str.(var)(:, :), ierr] = cg_field_read(index_file, index_base, index_zone, ...
                 in_struct(index_struct).index_sol, var_orig, in_struct(index_struct).datatype, ...
-                index_min, index_max,out_var_str.(var)(:,:)); chk_error(ierr);
-        elseif ncol==2
+                index_min, index_max, out_var_str.(var)(:, :)); chk_error(ierr);
+        elseif ncol == 2
             % For naming convention, see http://www.grc.nasa.gov/WWW/cgns/sids/dataname.html
-            suffix = ['X';'Y']; % Vector
-            for dd=1:ncol
-                varname = [var_orig,suffix(dd,:)];
-                [out_var_str.(var)(:,:,dd),ierr]= cg_field_read(index_file, index_base, index_zone, ...
+            suffix = ['X'; 'Y']; % Vector
+            for dd = 1:ncol
+                varname = [var_orig, suffix(dd, :)];
+                [out_var_str.(var)(:, :, dd), ierr] = cg_field_read(index_file, index_base, index_zone, ...
                     in_struct(index_struct).index_sol, varname, in_struct(index_struct).datatype, ...
-                    index_min, index_max, out_var_str.(var)(:,:,dd)); chk_error(ierr);
+                    index_min, index_max, out_var_str.(var)(:, :, dd)); chk_error(ierr);
             end
         else
             error('physical dimension not supported');
         end
 
     elseif (iphysdim == 3)
-        switch (in_struct(index_struct).datatype )
+        switch (in_struct(index_struct).datatype)
             case 2
-                out_var_str.(var) = int32(zeros(index_max(1),index_max(2),index_max(3),in_struct(index_struct).ncol));
+                out_var_str.(var) = int32(zeros(index_max(1), index_max(2), index_max(3), in_struct(index_struct).ncol));
             case 3
-                out_var_str.(var) = single(zeros(index_max(1),index_max(2),index_max(3),in_struct(index_struct).ncol));
+                out_var_str.(var) = single(zeros(index_max(1), index_max(2), index_max(3), in_struct(index_struct).ncol));
             case 5
-                out_var_str.(var) = char(zeros(index_max(1),index_max(2),index_max(3),in_struct(index_struct).ncol));
+                out_var_str.(var) = char(zeros(index_max(1), index_max(2), index_max(3), in_struct(index_struct).ncol));
             otherwise
-                out_var_str.(var) = zeros(index_max(1),index_max(2),index_max(3),in_struct(index_struct).ncol);
+                out_var_str.(var) = zeros(index_max(1), index_max(2), index_max(3), in_struct(index_struct).ncol);
         end
 
         ncol = in_struct(index_struct).ncol;
-        if ncol==1
-            [out_var_str.(var)(:,:,:),ierr]= cg_field_read(index_file, index_base, index_zone, ...
+        if ncol == 1
+            [out_var_str.(var)(:, :, :), ierr] = cg_field_read(index_file, index_base, index_zone, ...
                 in_struct(index_struct).index_sol, var_orig, in_struct(index_struct).datatype, ...
-                index_min, index_max,out_var_str.(var)(:,:,:)); chk_error(ierr);
-        elseif ncol<=3 || ncol==6
+                index_min, index_max, out_var_str.(var)(:, :, :)); chk_error(ierr);
+        elseif ncol <= 3 || ncol == 6
             % For naming convention, see http://www.grc.nasa.gov/WWW/cgns/sids/dataname.html
-            if ncol<=3  % Vector
-                suffix = ['X';'Y';'Z'];
-            else        % Tensor
-                suffix = ['XX';'XY';'XZ';'YY';'YZ';'ZZ'];
+            if ncol <= 3 % Vector
+                suffix = ['X'; 'Y'; 'Z'];
+            else % Tensor
+                suffix = ['XX'; 'XY'; 'XZ'; 'YY'; 'YZ'; 'ZZ'];
             end
 
-            for dd=1:ncol
-                varname = [var_orig,suffix(dd,:)];
-                [out_var_str.(var)(:,:,:,dd),ierr]= cg_field_read(index_file, index_base, index_zone, ...
+            for dd = 1:ncol
+                varname = [var_orig, suffix(dd, :)];
+                [out_var_str.(var)(:, :, :, dd), ierr] = cg_field_read(index_file, index_base, index_zone, ...
                     in_struct(index_struct).index_sol, varname, in_struct(index_struct).datatype, ...
-                    index_min, index_max, out_var_str.(var)(:,:,:,dd)); chk_error(ierr);
+                    index_min, index_max, out_var_str.(var)(:, :, :, dd)); chk_error(ierr);
             end
         else
-            for dd=1:ncol
-                varname = sprintf('%s-%d',var_orig, dd);
-                [out_var_str.(var)(:,:,:,dd),ierr]= cg_field_read(index_file, index_base, ...
+            for dd = 1:ncol
+                varname = sprintf('%s-%d', var_orig, dd);
+                [out_var_str.(var)(:, :, :, dd), ierr] = cg_field_read(index_file, index_base, ...
                     index_zone, in_struct(index_struct).index_sol, varname, in_struct(index_struct).datatype, ...
-                    index_min, index_max, out_var_str.(var)(:,:,:,dd)); chk_error(ierr);
+                    index_min, index_max, out_var_str.(var)(:, :, :, dd)); chk_error(ierr);
             end
         end
     else
@@ -632,66 +626,66 @@ for ii =1:length(fieldlist)
 end
 end
 
-function [out_var_str]=read_variables(index_file, index_base, index_zone,...
-    in_struct,in_var_str,index_min, index_max,location)
+function [out_var_str] = read_variables(index_file, index_base, index_zone, ...
+    in_struct, in_var_str, index_min, index_max, location)
 % Get variable values via cg_field_read
 
 fieldlist = fieldnames(in_var_str);
 
-for ii =1:length(fieldlist)
+for ii = 1:length(fieldlist)
     var = fieldlist{ii};
-    var_orig = regexprep(var,'_dOt_','.');
-    var_orig = regexprep(var_orig,'_bLk_',' ');
-    var_orig = regexprep(var_orig,'_dSh_','-');
+    var_orig = regexprep(var, '_dOt_', '.');
+    var_orig = regexprep(var_orig, '_bLk_', ' ');
+    var_orig = regexprep(var_orig, '_dSh_', '-');
     if ~strcmp(var, var_orig)
         fprintf(1, 'Info: field variable %s is renamed to %s.\n', var_orig, var);
     end
 
     index_struct = 0;
-    for kk=1:length(in_struct)
-        if(strcmpi(var_orig, in_struct(kk).field_name) && (location == in_struct(kk).location))
+    for kk = 1:length(in_struct)
+        if (strcmpi(var_orig, in_struct(kk).field_name) && (location == in_struct(kk).location))
             index_struct = kk; break;
         end
     end
 
-    switch (in_struct(index_struct).datatype )
+    switch (in_struct(index_struct).datatype)
         case 2
-            out_var_str.(var) = int32(zeros(index_max(1),in_struct(index_struct).ncol));
+            out_var_str.(var) = int32(zeros(index_max(1), in_struct(index_struct).ncol));
         case 3
-            out_var_str.(var) = single(zeros(index_max(1),in_struct(index_struct).ncol));
+            out_var_str.(var) = single(zeros(index_max(1), in_struct(index_struct).ncol));
         case 5
-            out_var_str.(var) = char(zeros(index_max(1),in_struct(index_struct).ncol));
+            out_var_str.(var) = char(zeros(index_max(1), in_struct(index_struct).ncol));
         otherwise
-            out_var_str.(var) = zeros(index_max(1),in_struct(index_struct).ncol);
+            out_var_str.(var) = zeros(index_max(1), in_struct(index_struct).ncol);
     end
 
     ncol = in_struct(index_struct).ncol;
 
-    if ncol==1
-        [out_var_str.(var),ierr]= cg_field_read(index_file, index_base, index_zone, ...
+    if ncol == 1
+        [out_var_str.(var), ierr] = cg_field_read(index_file, index_base, index_zone, ...
             in_struct(index_struct).index_sol, var_orig, in_struct(index_struct).datatype, ...
-            index_min, index_max,out_var_str.(var)); chk_error(ierr);
+            index_min, index_max, out_var_str.(var)); chk_error(ierr);
 
-    elseif ncol<=3 || ncol==6
+    elseif ncol <= 3 || ncol == 6
         % For naming convention, see http://www.grc.nasa.gov/WWW/cgns/sids/dataname.html
-        if ncol<=3  % Vector
-            suffix = ['X';'Y';'Z'];
-        else        % Tensor
-            suffix = ['XX';'XY';'XZ';'YY';'YZ';'ZZ'];
+        if ncol <= 3 % Vector
+            suffix = ['X'; 'Y'; 'Z'];
+        else % Tensor
+            suffix = ['XX'; 'XY'; 'XZ'; 'YY'; 'YZ'; 'ZZ'];
         end
 
-        for jj=1:ncol
-            varname = [var_orig,suffix(jj,:)];
-            [out_var_str.(var)(:,jj),ierr]= cg_field_read(index_file, index_base, index_zone, ...
+        for jj = 1:ncol
+            varname = [var_orig, suffix(jj, :)];
+            [out_var_str.(var)(:, jj), ierr] = cg_field_read(index_file, index_base, index_zone, ...
                 in_struct(index_struct).index_sol, varname, in_struct(index_struct).datatype, ...
-                index_min, index_max, out_var_str.(var)(:,jj)); chk_error(ierr);
+                index_min, index_max, out_var_str.(var)(:, jj)); chk_error(ierr);
         end
     else
-        for jj=1:ncol
-            varname = sprintf('%s-%d',var_orig, jj);
-            [out_var_str.(var)(:,jj),ierr]= cg_field_read(index_file, index_base, ...
+        for jj = 1:ncol
+            varname = sprintf('%s-%d', var_orig, jj);
+            [out_var_str.(var)(:, jj), ierr] = cg_field_read(index_file, index_base, ...
                 index_zone, in_struct(index_struct).index_sol, varname, in_struct(index_struct).datatype, ...
-                index_min, index_max, out_var_str.(var)(:,jj)); chk_error(ierr);
+                index_min, index_max, out_var_str.(var)(:, jj)); chk_error(ierr);
         end
     end
 end
@@ -700,12 +694,12 @@ end
 function b = match_name(var, inplist)
 % Determine whether variable matches input
 if ischar(inplist)
-    b = ~isempty(regexp(var,inplist,'match'));
+    b = ~isempty(regexp(var, inplist, 'match'));
 else
     b = 0;
     assert(iscell(inplist));
-    for ii=1:length(inplist)
-        if strcmpi(var,inplist{ii}); b = 1; return; end
+    for ii = 1:length(inplist)
+        if strcmpi(var, inplist{ii}); b = 1; return; end
     end
 end
 end
@@ -790,10 +784,10 @@ function elems = inverse_mixed_elements(elems)
 % vertices per element.
 es = length(elems);
 
-ii=1;
+ii = 1;
 nelems = 0;
 
-while (ii<es)
+while (ii < es)
     itype = elems(ii);
     switch itype
         case TRI_3
@@ -876,7 +870,6 @@ end
 %! end
 %! delete test1_tri.cgns;
 
-
 %! writecgns('test1_tri.cgns', xs, tris, []);
 %! [xs1,tris1] = readcgns('test1_tri.cgns');
 %! if(~isequal(xs,xs1)|| ~isequal(tris, tris1))
@@ -917,7 +910,6 @@ end
 
 %! delete test1_mixed.cgns;
 
-
 %% Test to write and read nodal variables
 %!test
 %! nodal_vars.vec = xs;
@@ -935,7 +927,6 @@ end
 %! end
 %! delete test1_tri.ahf;
 %! delete test1_mixed.ahf;
-
 
 %% Test to write and read nodal variables
 %!test
@@ -974,7 +965,6 @@ end
 %! delete test1_tri.ahf;
 %! delete test1_mixed.ahf;
 
-
 %% Test to write and read elemental variables
 %!test
 %! eleml_vars.vec = tris;
@@ -993,7 +983,6 @@ end
 %! end
 %! delete test1_tri.cgns;
 %! delete test1_mixed.cgns;
-
 
 %% Test to write and read both nodal and elemental variables
 %!test

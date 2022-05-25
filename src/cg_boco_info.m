@@ -25,7 +25,7 @@ function [out_boconame, out_bocotype, out_ptset_type, out_npnts, io_NormalIndex,
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 5)
+if (nargout < 1 || nargin < 5)
     error('Incorrect number of input or output arguments.');
 end
 in_fn = int32(in_fn);
@@ -33,13 +33,12 @@ in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_BC = int32(in_BC);
 basetype = 'int32';
-if ~isa(io_NormalIndex,basetype)
+if ~isa(io_NormalIndex, basetype)
     io_NormalIndex = cast(io_NormalIndex, basetype);
 elseif ~isempty(io_NormalIndex)
     % Write to it to unshare memory with other variables
-    t=io_NormalIndex(1); io_NormalIndex(1)=t;
+    t = io_NormalIndex(1); io_NormalIndex(1) = t;
 end
-
 
 % Invoke the actual MEX-function.
 [out_boconame, out_bocotype, out_ptset_type, out_npnts, out_NormalListSize, out_NormalDataType, out_ndataset, ierr] = cgnslib_mex(int32(158), in_fn, in_B, in_Z, in_BC, io_NormalIndex);

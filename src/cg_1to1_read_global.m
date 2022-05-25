@@ -23,4 +23,4 @@ function [out_connectname, out_zonename, out_donorname, out_range, out_donor_ran
 %
 
 [out_connectname, out_zonename, out_donorname, out_range, out_donor_range, ...
- out_transform, ierr] = cgnslib_mex(MEX_CG_1TO1_READ_GLOBAL,varargin{:});
+    out_transform, ierr] = cgnslib_mex(MEX_CG_1TO1_READ_GLOBAL, varargin{:});

@@ -22,7 +22,7 @@ function [io_pnts, io_donor_data, ierr] = cg_conn_read(in_file_number, in_B, in_
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/connectivity.html">online documentation</a>.
 %
-if ( nargout < 2 || nargin < 7)
+if (nargout < 2 || nargin < 7)
     error('Incorrect number of input or output arguments.');
 end
 in_file_number = int32(in_file_number);
@@ -41,7 +41,7 @@ switch (datatype)
     case 4 % CG_RealDouble
         io_donor_data = double(io_donor_data);
     case 5 % CG_Character
-        io_donor_data = [int8(io_donor_data), int8(zeros(1,1))];
+        io_donor_data = [int8(io_donor_data), int8(zeros(1, 1))];
     case 6 % CG_LongInteger
         io_donor_data = int64(io_donor_data);
     otherwise
@@ -50,17 +50,16 @@ end
 
 if ~isempty(io_donor_data)
     % Write to it to unshare memory with other variables
-    t=io_donor_data(1); io_donor_data(1)=t;
+    t = io_donor_data(1); io_donor_data(1) = t;
 end
 
 basetype = 'int64';
-if ~isa(io_pnts,basetype)
+if ~isa(io_pnts, basetype)
     io_pnts = cast(io_pnts, basetype);
 elseif ~isempty(io_pnts)
     % Write to it to unshare memory with other variables
-    t=io_pnts(1); io_pnts(1)=t;
+    t = io_pnts(1); io_pnts(1) = t;
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(128), in_file_number, in_B, in_Z, in_Ii, in_donor_datatype, io_pnts, io_donor_data);

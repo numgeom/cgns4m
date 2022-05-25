@@ -17,18 +17,17 @@ function [io_nbases, ierr] = cg_nbases(in_fn, io_nbases)
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/structural.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 2)
+if (nargout < 1 || nargin < 2)
     error('Incorrect number of input or output arguments.');
 end
 in_fn = int32(in_fn);
 basetype = 'int32';
-if ~isa(io_nbases,basetype)
+if ~isa(io_nbases, basetype)
     io_nbases = cast(io_nbases, basetype);
 elseif ~isempty(io_nbases)
     % Write to it to unshare memory with other variables
-    t=io_nbases(1); io_nbases(1)=t;
+    t = io_nbases(1); io_nbases(1) = t;
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(41), in_fn, io_nbases);

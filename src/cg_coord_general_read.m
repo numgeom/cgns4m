@@ -27,7 +27,7 @@ function [io_coord_ptr, ierr] = cg_coord_general_read(in_fn, in_B, in_Z, in_coor
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 12)
+if (nargout < 1 || nargin < 12)
     error('Incorrect number of input or output arguments.');
 end
 in_fn = int32(in_fn);
@@ -52,7 +52,7 @@ switch (datatype)
     case 4 % CG_RealDouble
         io_coord_ptr = double(io_coord_ptr);
     case 5 % CG_Character
-        io_coord_ptr = [int8(io_coord_ptr), int8(zeros(1,1))];
+        io_coord_ptr = [int8(io_coord_ptr), int8(zeros(1, 1))];
     case 6 % CG_LongInteger
         io_coord_ptr = int64(io_coord_ptr);
     otherwise
@@ -61,9 +61,8 @@ end
 
 if ~isempty(io_coord_ptr)
     % Write to it to unshare memory with other variables
-    t=io_coord_ptr(1); io_coord_ptr(1)=t;
+    t = io_coord_ptr(1); io_coord_ptr(1) = t;
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(75), in_fn, in_B, in_Z, in_coordname, in_s_rmin, in_s_rmax, in_m_type, in_m_numdim, in_m_dimvals, in_m_rmin, in_m_rmax, io_coord_ptr);

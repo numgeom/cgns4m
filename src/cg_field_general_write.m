@@ -55,13 +55,12 @@ switch (datatype)
     case 4 % CG_RealDouble
         in_field_ptr = double(in_field_ptr);
     case 5 % CG_Character
-        in_field_ptr = [int8(in_field_ptr), int8(zeros(1,1))];
+        in_field_ptr = [int8(in_field_ptr), int8(zeros(1, 1))];
     case 6 % CG_LongInteger
         in_field_ptr = int64(in_field_ptr);
     otherwise
         error('Unknown data type %d', in_m_type);
 end
-
 
 % Invoke the actual MEX-function.
 [out_F, ierr] = cgnslib_mex(int32(107), in_fn, in_B, in_Z, in_S, in_fieldname, in_s_type, in_rmin, in_rmax, in_m_type, in_m_numdim, in_m_dims, in_m_rmin, in_m_rmax, in_field_ptr);

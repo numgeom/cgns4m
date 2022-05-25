@@ -16,7 +16,7 @@ function [io_ConversionFactors, ierr] = cg_conversion_read(io_ConversionFactors)
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 1)
+if (nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
 
@@ -30,7 +30,7 @@ switch (datatype)
     case 4 % CG_RealDouble
         io_ConversionFactors = double(io_ConversionFactors);
     case 5 % CG_Character
-        io_ConversionFactors = [int8(io_ConversionFactors), int8(zeros(1,1))];
+        io_ConversionFactors = [int8(io_ConversionFactors), int8(zeros(1, 1))];
     case 6 % CG_LongInteger
         io_ConversionFactors = int64(io_ConversionFactors);
     otherwise
@@ -39,9 +39,8 @@ end
 
 if ~isempty(io_ConversionFactors)
     % Write to it to unshare memory with other variables
-    t=io_ConversionFactors(1); io_ConversionFactors(1)=t;
+    t = io_ConversionFactors(1); io_ConversionFactors(1) = t;
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(239), io_ConversionFactors);

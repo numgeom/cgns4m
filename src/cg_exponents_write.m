@@ -30,13 +30,12 @@ switch (datatype)
     case 4 % CG_RealDouble
         in_exponents = double(in_exponents);
     case 5 % CG_Character
-        in_exponents = [int8(in_exponents), int8(zeros(1,1))];
+        in_exponents = [int8(in_exponents), int8(zeros(1, 1))];
     case 6 % CG_LongInteger
         in_exponents = int64(in_exponents);
     otherwise
         error('Unknown data type %d', in_DataType);
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(235), in_DataType, in_exponents);

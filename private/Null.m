@@ -1,3 +1,3 @@
 function val = Null
-%% Value 0 of enumeration type 
+%% Value 0 of enumeration type
 val = int32(0);

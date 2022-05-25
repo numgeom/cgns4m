@@ -1,3 +1,3 @@
 function val = NPE_TETRA_16
-%% Value 16 of enumeration type 
+%% Value 16 of enumeration type
 val = int32(16);

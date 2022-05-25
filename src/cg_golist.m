@@ -10,7 +10,7 @@ function ierr = cg_golist(varargin)
 %           label: character string
 %             num: 32-bit integer (int32), len=depth
 %
-% Output argument (optional): 
+% Output argument (optional):
 %            ierr: 32-bit integer (int32), scalar
 %
 % The original C function is:
@@ -19,4 +19,4 @@ function ierr = cg_golist(varargin)
 % For detail, see <a href="http://cgns.github.io/CGNS_docs_current/midlevel/navigating.html">online documentation</a>.
 %
 
-ierr = cgnslib_mex(MEX_CG_GOLIST,varargin{:});
+ierr = cgnslib_mex(MEX_CG_GOLIST, varargin{:});

@@ -16,17 +16,16 @@ function [io_numexp, ierr] = cg_nexponents(io_numexp)
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 1)
+if (nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
 basetype = 'int32';
-if ~isa(io_numexp,basetype)
+if ~isa(io_numexp, basetype)
     io_numexp = cast(io_numexp, basetype);
 elseif ~isempty(io_numexp)
     % Write to it to unshare memory with other variables
-    t=io_numexp(1); io_numexp(1)=t;
+    t = io_numexp(1); io_numexp(1) = t;
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(233), io_numexp);

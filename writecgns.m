@@ -1,3 +1,5 @@
+There are more end-statements than blocks!
+There are more end - statements than blocks !
 function writecgns(file_name, ps, elems, typestr, var_nodes, var_cells)
 % Write out a structured or unstructured mesh with node/cell-centered values to CGNS file.
 %
@@ -11,7 +13,7 @@ function writecgns(file_name, ps, elems, typestr, var_nodes, var_cells)
 %   XS is nxd array containing nodal coordinates, where d is the dimension
 %       of the space (in general d is 2 or 3).
 %
-%   ELEMS (unstructured mesh) is mxd. For a regular unstructured mesh, m 
+%   ELEMS (unstructured mesh) is mxd. For a regular unstructured mesh, m
 %       is the number of elements, and d is the number of vertices per element.
 %       For a mesh with mixed types of elements, where each element is
 %       given by first listing the number of vertices per element and then
@@ -78,43 +80,43 @@ if ~exist('cgnslib_mex', 'file')
     build_cgns4m;
 end
 
-if (nargin<3)
+if (nargin < 3)
     error('Requires at least three input arguments: filename, coordinates, elements.');
-elseif (nargin>6)
+elseif (nargin > 6)
     error('Too many input arguments.');
 end
 
-if nargin<4; typestr = []; end
-if nargin<5; var_nodes = []; end
-if nargin<6; var_cells = []; end
+if nargin < 4; typestr = []; end
+if nargin < 5; var_nodes = []; end
+if nargin < 6; var_cells = []; end
 
-if strcmp(typestr,'struct2') || strcmp(typestr,'Struct2')
+if strcmp(typestr, 'struct2') || strcmp(typestr, 'Struct2')
     typestr = 'STRUCT2';
-elseif strcmp(typestr,'struct3') || strcmp(typestr,'Struct3')
+elseif strcmp(typestr, 'struct3') || strcmp(typestr, 'Struct3')
     typestr = 'STRUCT3';
 end
 
-if strcmp(typestr,'STRUCT2') || strcmp(typestr,'STRUCT3') % Structured
+if strcmp(typestr, 'STRUCT2') || strcmp(typestr, 'STRUCT3') % Structured
 
     % Determine physical dimension
-    if elems(3)==0
+    if elems(3) == 0
         iphysdim = 2;
     else
         iphysdim = 3;
     end
 
-    ni=elems(1);
-    nj=elems(2);
-    if iphysdim==3
-        nk=elems(3);
-    elseif iphysdim==2
-        nk=0;
+    ni = elems(1);
+    nj = elems(2);
+    if iphysdim == 3
+        nk = elems(3);
+    elseif iphysdim == 2
+        nk = 0;
     else
         error('physical dimension must be 2 or 3')
     end
 
     % Set file type to HDF5 or ADF
-    if strcmp(file_name(end-3:end),'.adf')
+    if strcmp(file_name(end - 3:end), '.adf')
         ierr = cg_set_file_type(CG_FILE_ADF); chk_error(ierr);
     else
         ierr = cg_set_file_type(CG_FILE_HDF5); chk_error(ierr);
@@ -122,50 +124,50 @@ if strcmp(typestr,'STRUCT2') || strcmp(typestr,'STRUCT3') % Structured
 
     % WRITE X, Y, Z GRID POINTS TO CGNS FILE
     % Open the CGNS file.
-    [index_file,ierr] = cg_open(file_name,CG_MODE_WRITE); chk_error(ierr);
+    [index_file, ierr] = cg_open(file_name, CG_MODE_WRITE); chk_error(ierr);
 
     % Set cell dimension
-    if iphysdim==3
-        icelldim=3;
-    elseif iphysdim==2
-        icelldim=2;
+    if iphysdim == 3
+        icelldim = 3;
+    elseif iphysdim == 2
+        icelldim = 2;
     else
         error('physical dimension must be 2 or 3')
     end
 
     % Create base
-    [index_base,ierr] = cg_base_write(index_file,'Base',icelldim,iphysdim); chk_error(ierr);
+    [index_base, ierr] = cg_base_write(index_file, 'Base', icelldim, iphysdim); chk_error(ierr);
 
     % Create isize
-    isize = [ni, nj, nk, ni-1, nj-1, nk-1, 0, 0, 0];
+    isize = [ni, nj, nk, ni - 1, nj - 1, nk - 1, 0, 0, 0];
 
     % Create zone
-    [index_zone,ierr] = cg_zone_write(index_file,index_base,'Zone 1',isize,Structured); chk_error(ierr);
+    [index_zone, ierr] = cg_zone_write(index_file, index_base, 'Zone 1', isize, Structured); chk_error(ierr);
 
     %write grid coordinates (user must use SIDS-standard names here)
-    if iphysdim==3
-        xs = ps(:,:,:,1);
-        ys = ps(:,:,:,2);
-        zs = ps(:,:,:,3);
-    elseif iphysdim==2
-        xs = ps(:,:,1);
-        ys = ps(:,:,2);
+    if iphysdim == 3
+        xs = ps(:, :, :, 1);
+        ys = ps(:, :, :, 2);
+        zs = ps(:, :, :, 3);
+    elseif iphysdim == 2
+        xs = ps(:, :, 1);
+        ys = ps(:, :, 2);
     else
         error('physical dimension must be 2 or 3')
     end
 
-    if iphysdim==3
-        [index_coor, ierr] = cg_coord_write(index_file,index_base,index_zone,...
-            RealDouble,'CoordinateX',xs(:,:,:)); chk_error(ierr);
-        [index_coor, ierr] = cg_coord_write(index_file,index_base,index_zone,...
-            RealDouble,'CoordinateY',ys(:,:,:)); chk_error(ierr);
-        [index_coor, ierr] = cg_coord_write(index_file,index_base,index_zone,...
-            RealDouble,'CoordinateZ',zs(:,:,:)); chk_error(ierr);
-    elseif iphysdim==2
-        [index_coor, ierr] = cg_coord_write(index_file,index_base,index_zone,...
-            RealDouble,'CoordinateX',xs(:,:)); chk_error(ierr);
-        [index_coor, ierr] = cg_coord_write(index_file,index_base,index_zone,...
-            RealDouble,'CoordinateY',ys(:,:)); chk_error(ierr);
+    if iphysdim == 3
+        [index_coor, ierr] = cg_coord_write(index_file, index_base, index_zone, ...
+            RealDouble, 'CoordinateX', xs(:, :, :)); chk_error(ierr);
+        [index_coor, ierr] = cg_coord_write(index_file, index_base, index_zone, ...
+            RealDouble, 'CoordinateY', ys(:, :, :)); chk_error(ierr);
+        [index_coor, ierr] = cg_coord_write(index_file, index_base, index_zone, ...
+            RealDouble, 'CoordinateZ', zs(:, :, :)); chk_error(ierr);
+    elseif iphysdim == 2
+        [index_coor, ierr] = cg_coord_write(index_file, index_base, index_zone, ...
+            RealDouble, 'CoordinateX', xs(:, :)); chk_error(ierr);
+        [index_coor, ierr] = cg_coord_write(index_file, index_base, index_zone, ...
+            RealDouble, 'CoordinateY', ys(:, :)); chk_error(ierr);
     else
         error('physical dimension must be 2 or 3')
     end
@@ -186,16 +188,16 @@ if strcmp(typestr,'STRUCT2') || strcmp(typestr,'STRUCT3') % Structured
     % Write node-centered variables
     if (n_vn ~= 0)
         solname = 'NodeCenteredSolutions';
-        [index_sol,ierr] = cg_sol_write(index_file, index_base, index_zone, ...
+        [index_sol, ierr] = cg_sol_write(index_file, index_base, index_zone, ...
             solname, Vertex); chk_error(ierr);
 
         write_variables_struct(index_file, index_base, index_zone, index_sol, var_nodes, iphysdim);
     end
 
     % Write cell-centered variables
-    if(n_vf ~= 0)
+    if (n_vf ~= 0)
         solname = 'CellCenteredSolutions';
-        [index_sol,ierr] = cg_sol_write(index_file, index_base, index_zone, ...
+        [index_sol, ierr] = cg_sol_write(index_file, index_base, index_zone, ...
             solname, CellCenter); chk_error(ierr);
 
         write_variables_struct(index_file, index_base, index_zone, index_sol, var_cells, iphysdim);
@@ -203,7 +205,7 @@ if strcmp(typestr,'STRUCT2') || strcmp(typestr,'STRUCT3') % Structured
 
 else % Unstructured
 
-    nelems = size(elems,1);
+    nelems = size(elems, 1);
 
     % elems is nxd, where d is 3 for triangle etc.
     if isempty(elems)
@@ -211,56 +213,56 @@ else % Unstructured
         icelldim = 1;
     else
         % get elems_type from elems
-        [type, icelldim] = get_elemtype(size(elems,2), typestr, elems);
+        [type, icelldim] = get_elemtype(size(elems, 2), typestr, elems);
         if type == MIXED
-            [elems,nelems,offsets] = convert_mixed_elements(elems, icelldim);
+            [elems, nelems, offsets] = convert_mixed_elements(elems, icelldim);
         end
     end
 
     % Set file type to HDF5 or ADF
-    if strcmp(file_name(end-3:end),'.adf')
+    if strcmp(file_name(end - 3:end), '.adf')
         ierr = cg_set_file_type(CG_FILE_ADF); chk_error(ierr);
     else
         ierr = cg_set_file_type(CG_FILE_HDF5); chk_error(ierr);
     end
 
     % Open the CGNS file.
-    [index_file,ierr] = cg_open(file_name,CG_MODE_WRITE); chk_error(ierr);
+    [index_file, ierr] = cg_open(file_name, CG_MODE_WRITE); chk_error(ierr);
 
     % Create base.
-    iphysdim = size(ps,2);
+    iphysdim = size(ps, 2);
 
-    [index_base,ierr] = cg_base_write(index_file,'Base',icelldim,iphysdim); chk_error(ierr);
+    [index_base, ierr] = cg_base_write(index_file, 'Base', icelldim, iphysdim); chk_error(ierr);
 
     % Number of vertices and elements
-    isize = [size(ps,1), nelems, zeros(1,7)];
+    isize = [size(ps, 1), nelems, zeros(1, 7)];
     % Create zone
-    [index_zone,ierr] = cg_zone_write(index_file,index_base,'Zone1',isize,...
+    [index_zone, ierr] = cg_zone_write(index_file, index_base, 'Zone1', isize, ...
         Unstructured); chk_error(ierr);
 
     % Write grid coordinates (must use SIDS-standard names here)
-    [index_coor, ierr] = cg_coord_write(index_file,index_base,index_zone,...
-        RealDouble,'CoordinateX',ps(:,1)); chk_error(ierr); %#ok<*ASGLU>
-    [index_coor, ierr] = cg_coord_write(index_file,index_base,index_zone,...
-        RealDouble,'CoordinateY',ps(:,2)); chk_error(ierr);
+    [index_coor, ierr] = cg_coord_write(index_file, index_base, index_zone, ...
+        RealDouble, 'CoordinateX', ps(:, 1)); chk_error(ierr); %#ok<*ASGLU>
+    [index_coor, ierr] = cg_coord_write(index_file, index_base, index_zone, ...
+        RealDouble, 'CoordinateY', ps(:, 2)); chk_error(ierr);
 
-    if iphysdim==3
-        [index_coor, ierr] = cg_coord_write(index_file,index_base,index_zone,...
-            RealDouble,'CoordinateZ',ps(:,3)); chk_error(ierr);
+    if iphysdim == 3
+        [index_coor, ierr] = cg_coord_write(index_file, index_base, index_zone, ...
+            RealDouble, 'CoordinateZ', ps(:, 3)); chk_error(ierr);
     end
 
     if type == MIXED && exist('cg_poly_section_write', 'file')
-      % Write element connectivity. We must permute elems, but we don't need to
-      % cast the data type to integer explicitly (MEX function does it for us).
-      [index_sec, ierr] = cg_poly_section_write(index_file,index_base,index_zone,'Elements', ...
-          type, 1, nelems, 0, elems', offsets); chk_error(ierr);
+        % Write element connectivity. We must permute elems, but we don't need to
+        % cast the data type to integer explicitly (MEX function does it for us).
+        [index_sec, ierr] = cg_poly_section_write(index_file, index_base, index_zone, 'Elements', ...
+            type, 1, nelems, 0, elems', offsets); chk_error(ierr);
     else
-      % Write element connectivity. We must permute elems, but we don't need to
-      % cast the data type to integer explicitly (MEX function does it for us).
-      [index_sec, ierr] = cg_section_write(index_file,index_base,index_zone,'Elements', ...
-          type, 1, nelems, 0, elems'); chk_error(ierr);
+        % Write element connectivity. We must permute elems, but we don't need to
+        % cast the data type to integer explicitly (MEX function does it for us).
+        [index_sec, ierr] = cg_section_write(index_file, index_base, index_zone, 'Elements', ...
+            type, 1, nelems, 0, elems'); chk_error(ierr);
     end
-  
+
     % get number of variables
     if isempty(var_nodes)
         n_vn = 0;
@@ -277,16 +279,16 @@ else % Unstructured
     % Write node-centered variables
     if (n_vn ~= 0)
         solname = 'NodeCenteredSolutions';
-        [index_sol,ierr] = cg_sol_write(index_file, index_base, index_zone, ...
+        [index_sol, ierr] = cg_sol_write(index_file, index_base, index_zone, ...
             solname, Vertex); chk_error(ierr);
 
         write_variables(index_file, index_base, index_zone, index_sol, var_nodes);
     end
 
     % Write cell-centered variables
-    if(n_vf ~= 0)
+    if (n_vf ~= 0)
         solname = 'CellCenteredSolutions';
-        [index_sol,ierr] = cg_sol_write(index_file, index_base, index_zone, ...
+        [index_sol, ierr] = cg_sol_write(index_file, index_base, index_zone, ...
             solname, CellCenter); chk_error(ierr);
 
         write_variables(index_file, index_base, index_zone, index_sol, var_cells);
@@ -313,61 +315,61 @@ end
 function write_variables_struct(index_file, index_base, index_zone, index_sol, struct, iphysdim)
 % Subfunction for writing out variable names.
 fldlist2 = fieldnames(struct);
-fldlist = regexprep(fldlist2,'_dOt_','.');
-fldlist = regexprep(fldlist,'_dSh_','-');
-fldlist = regexprep(fldlist,'_bLk_',' ');
+fldlist = regexprep(fldlist2, '_dOt_', '.');
+fldlist = regexprep(fldlist, '_dSh_', '-');
+fldlist = regexprep(fldlist, '_bLk_', ' ');
 
-for ii=1:length(fldlist)
+for ii = 1:length(fldlist)
     if ~strcmp(fldlist{ii}, fldlist2{ii})
         fprintf(2, 'Info: field variable %s is renamed to %s.\n', fldlist2{ii}, fldlist{ii});
     end
 
-    ncol = size(struct.(fldlist2{ii}),iphysdim+1);
+    ncol = size(struct.(fldlist2{ii}), iphysdim + 1);
     arr = struct.(fldlist2{ii});
     % type = get_cgns_datatype(arr);
     type = RealDouble;
 
-    if iphysdim==2
-        if ncol==1
+    if iphysdim == 2
+        if ncol == 1
             varname = fldlist{ii};
-            [index_field,ierr] = cg_field_write(index_file, index_base, ...
+            [index_field, ierr] = cg_field_write(index_file, index_base, ...
                 index_zone, index_sol, type, varname, arr); chk_error(ierr);
-        elseif ncol==2
+        elseif ncol == 2
             % For naming convention, see https://cgns.github.io/CGNS_docs_current/sids/dataname.html
-            suffix = ['X';'Y']; % Vector
+            suffix = ['X'; 'Y']; % Vector
 
-            for jj=1:ncol
-                [index_field,ierr] = cg_field_write(index_file, index_base, index_zone, ...
-                    index_sol, type, [fldlist{ii},suffix(jj,:)], arr(:,:,jj)); chk_error(ierr);
+            for jj = 1:ncol
+                [index_field, ierr] = cg_field_write(index_file, index_base, index_zone, ...
+                    index_sol, type, [fldlist{ii}, suffix(jj, :)], arr(:, :, jj)); chk_error(ierr);
             end
         else
             error('Physical dimension not supported.');
         end
 
-    elseif iphysdim==3
-        if ncol==1
+    elseif iphysdim == 3
+        if ncol == 1
             varname = fldlist{ii};
-            [index_field,ierr] = cg_field_write(index_file, index_base, ...
+            [index_field, ierr] = cg_field_write(index_file, index_base, ...
                 index_zone, index_sol, type, varname, arr); chk_error(ierr);
-        elseif ncol<=3 || ncol==6
+        elseif ncol <= 3 || ncol == 6
             % For naming convention, see https://cgns.github.io/CGNS_docs_current/sids/dataname.html
-            if ncol<=3  % Vector
-                suffix = ['X';'Y';'Z'];
-            else        % Tensor
-                suffix = ['XX';'XY';'XZ';'YY';'YZ';'ZZ'];
+            if ncol <= 3 % Vector
+                suffix = ['X'; 'Y'; 'Z'];
+            else % Tensor
+                suffix = ['XX'; 'XY'; 'XZ'; 'YY'; 'YZ'; 'ZZ'];
             end
 
-            for jj=1:ncol
-                [index_field,ierr] = cg_field_write(index_file, index_base, index_zone, ...
-                    index_sol, type, [fldlist{ii},suffix(jj,:)], arr(:,:,:,jj)); chk_error(ierr);
+            for jj = 1:ncol
+                [index_field, ierr] = cg_field_write(index_file, index_base, index_zone, ...
+                    index_sol, type, [fldlist{ii}, suffix(jj, :)], arr(:, :, :, jj)); chk_error(ierr);
             end
         else
-            for jj=1:ncol
+            for jj = 1:ncol
                 % Store variable as var-<jj>
                 varname = sprintf('%s_%d', fldlist{ii}, jj);
 
-                [index_field,ierr] = cg_field_write(index_file, index_base, ...
-                    index_zone, index_sol, type, varname, arr(:,:,:,jj)); chk_error(ierr);
+                [index_field, ierr] = cg_field_write(index_file, index_base, ...
+                    index_zone, index_sol, type, varname, arr(:, :, :, jj)); chk_error(ierr);
             end
         end
     else
@@ -379,42 +381,42 @@ end
 function write_variables(index_file, index_base, index_zone, index_sol, struct)
 % Subfunction for writing out variable names.
 fldlist2 = fieldnames(struct);
-fldlist = regexprep(fldlist2,'_dOt_','.');
-fldlist = regexprep(fldlist,'_dSh_','-');
-fldlist = regexprep(fldlist,'_bLk_',' ');
+fldlist = regexprep(fldlist2, '_dOt_', '.');
+fldlist = regexprep(fldlist, '_dSh_', '-');
+fldlist = regexprep(fldlist, '_bLk_', ' ');
 
-for ii=1:length(fldlist)
+for ii = 1:length(fldlist)
     if ~strcmp(fldlist{ii}, fldlist2{ii})
         fprintf(2, 'Info: field variable %s is renamed to %s.\n', fldlist2{ii}, fldlist{ii});
     end
 
-    ncol = size(struct.(fldlist2{ii}),2);
+    ncol = size(struct.(fldlist2{ii}), 2);
     arr = struct.(fldlist2{ii});
     type = get_cgns_datatype(arr);
 
-    if ncol==1
+    if ncol == 1
         varname = fldlist{ii};
-        [index_field,ierr] = cg_field_write(index_file, index_base, ...
+        [index_field, ierr] = cg_field_write(index_file, index_base, ...
             index_zone, index_sol, type, varname, arr); chk_error(ierr);
-    elseif ncol<=3 || ncol==6
+    elseif ncol <= 3 || ncol == 6
         % For naming convention, see https://cgns.github.io/CGNS_docs_current/sids/dataname.html
-        if ncol<=3  % Vector
-            suffix = ['X';'Y';'Z'];
-        else        % Tensor
-            suffix = ['XX';'XY';'XZ';'YY';'YZ';'ZZ'];
+        if ncol <= 3 % Vector
+            suffix = ['X'; 'Y'; 'Z'];
+        else % Tensor
+            suffix = ['XX'; 'XY'; 'XZ'; 'YY'; 'YZ'; 'ZZ'];
         end
 
-        for jj=1:ncol
-            [index_field,ierr] = cg_field_write(index_file, index_base, index_zone, ...
-                index_sol, type, [fldlist{ii},suffix(jj,:)], arr(:,jj)); chk_error(ierr);
+        for jj = 1:ncol
+            [index_field, ierr] = cg_field_write(index_file, index_base, index_zone, ...
+                index_sol, type, [fldlist{ii}, suffix(jj, :)], arr(:, jj)); chk_error(ierr);
         end
     else
-        for jj=1:ncol
+        for jj = 1:ncol
             % Store variable as var-<jj>
             varname = sprintf('%s_%d', fldlist{ii}, jj);
 
-            [index_field,ierr] = cg_field_write(index_file, index_base, ...
-                index_zone, index_sol, type, varname, arr(:,jj)); chk_error(ierr);
+            [index_field, ierr] = cg_field_write(index_file, index_base, ...
+                index_zone, index_sol, type, varname, arr(:, jj)); chk_error(ierr);
         end
     end
 end
@@ -426,9 +428,9 @@ switch (npe)
     case 1
         type = MIXED;
 
-        if strcmpi(typestr,'MIXED2')
+        if strcmpi(typestr, 'MIXED2')
             icelldim = 2;
-        elseif strcmpi(typestr,'MIXED3')
+        elseif strcmpi(typestr, 'MIXED3')
             icelldim = 3;
         else
             try
@@ -442,7 +444,7 @@ switch (npe)
         type = BAR_2;
         icelldim = 1;
     case 3
-        if ~isempty(typestr) && upper(typestr(1))=='B'
+        if ~isempty(typestr) && upper(typestr(1)) == 'B'
             type = BAR_3;
             icelldim = 1;
         else
@@ -450,7 +452,7 @@ switch (npe)
             icelldim = 2;
         end
     case 4
-        if ~isempty(typestr) && upper(typestr(1))=='Q'
+        if ~isempty(typestr) && upper(typestr(1)) == 'Q'
             type = QUAD_4;
             icelldim = 2;
         else
@@ -461,7 +463,7 @@ switch (npe)
         type = PYRA_5;
         icelldim = 3;
     case 6
-        if (~isempty(typestr) && upper(typestr(1))=='P')
+        if (~isempty(typestr) && upper(typestr(1)) == 'P')
             type = PENTA_6;
             icelldim = 3;
         else
@@ -469,7 +471,7 @@ switch (npe)
             icelldim = 2;
         end
     case 8
-        if ~isempty(typestr) && upper(typestr(1))=='Q'
+        if ~isempty(typestr) && upper(typestr(1)) == 'Q'
             type = QUAD_8;
             icelldim = 2;
         else
@@ -505,17 +507,17 @@ switch (npe)
 end
 end
 
-function [elems,nelems,offsets] = convert_mixed_elements(elems, dim)
+function [elems, nelems, offsets] = convert_mixed_elements(elems, dim)
 % Convert from the number of vertices per element into
 % element_type in the connecitvity table.
-es = size(elems,1);
-offsets = zeros(es+1,1);
+es = size(elems, 1);
+offsets = zeros(es + 1, 1);
 
-ii=1;
+ii = 1;
 nelems = 0;
-if dim==2
+if dim == 2
     % Convert 2-D elements
-    while (ii<es)
+    while (ii < es)
         nvpe = elems(ii);
         switch nvpe
             case 3
@@ -534,12 +536,12 @@ if dim==2
 
         ii = ii + nvpe + 1;
         nelems = nelems + 1;
-        offsets(nelems+1) = ii - 1;
+        offsets(nelems + 1) = ii - 1;
     end
 else
     % Convert 3-D elements
-    assert(dim==3);
-    while (ii<es)
+    assert(dim == 3);
+    while (ii < es)
         nvpe = elems(ii);
         switch nvpe
             case 4
@@ -569,11 +571,11 @@ else
         end
         ii = ii + nvpe + 1;
         nelems = nelems + 1;
-        offsets(nelems+1) = ii - 1;
+        offsets(nelems + 1) = ii - 1;
     end
 end
 
-offsets = offsets(1:nelems+1);
+offsets = offsets(1:nelems + 1);
 end
 
 function chk_error(ierr)

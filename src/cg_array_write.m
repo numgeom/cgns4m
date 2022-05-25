@@ -36,13 +36,12 @@ switch (datatype)
     case 4 % CG_RealDouble
         in_Data = double(in_Data);
     case 5 % CG_Character
-        in_Data = [int8(in_Data), int8(zeros(1,1))];
+        in_Data = [int8(in_Data), int8(zeros(1, 1))];
     case 6 % CG_LongInteger
         in_Data = int64(in_Data);
     otherwise
         error('Unknown data type %d', in_DataType);
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(214), in_ArrayName, in_DataType, in_DataDimension, in_DimensionVector, in_Data);

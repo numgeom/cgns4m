@@ -21,7 +21,7 @@ function [io_dim_vals, out_data_dim, ierr] = cg_discrete_size(in_fn, in_B, in_Z,
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 5)
+if (nargout < 1 || nargin < 5)
     error('Incorrect number of input or output arguments.');
 end
 in_fn = int32(in_fn);
@@ -29,13 +29,12 @@ in_B = int32(in_B);
 in_Z = int32(in_Z);
 in_D = int32(in_D);
 basetype = 'int64';
-if ~isa(io_dim_vals,basetype)
+if ~isa(io_dim_vals, basetype)
     io_dim_vals = cast(io_dim_vals, basetype);
 elseif ~isempty(io_dim_vals)
     % Write to it to unshare memory with other variables
-    t=io_dim_vals(1); io_dim_vals(1)=t;
+    t = io_dim_vals(1); io_dim_vals(1) = t;
 end
-
 
 % Invoke the actual MEX-function.
 [out_data_dim, ierr] = cgnslib_mex(int32(156), in_fn, in_B, in_Z, in_D, io_dim_vals);

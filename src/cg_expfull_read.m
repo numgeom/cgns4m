@@ -16,7 +16,7 @@ function [io_exponents, ierr] = cg_expfull_read(io_exponents)
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/physical.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 1)
+if (nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
 
@@ -30,7 +30,7 @@ switch (datatype)
     case 4 % CG_RealDouble
         io_exponents = double(io_exponents);
     case 5 % CG_Character
-        io_exponents = [int8(io_exponents), int8(zeros(1,1))];
+        io_exponents = [int8(io_exponents), int8(zeros(1, 1))];
     case 6 % CG_LongInteger
         io_exponents = int64(io_exponents);
     otherwise
@@ -39,9 +39,8 @@ end
 
 if ~isempty(io_exponents)
     % Write to it to unshare memory with other variables
-    t=io_exponents(1); io_exponents(1)=t;
+    t = io_exponents(1); io_exponents(1) = t;
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(236), io_exponents);

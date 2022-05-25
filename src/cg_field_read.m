@@ -24,7 +24,7 @@ function [io_field_ptr, ierr] = cg_field_read(in_fn, in_B, in_Z, in_S, in_fieldn
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/solution.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 9)
+if (nargout < 1 || nargin < 9)
     error('Incorrect number of input or output arguments.');
 end
 in_fn = int32(in_fn);
@@ -46,7 +46,7 @@ switch (datatype)
     case 4 % CG_RealDouble
         io_field_ptr = double(io_field_ptr);
     case 5 % CG_Character
-        io_field_ptr = [int8(io_field_ptr), int8(zeros(1,1))];
+        io_field_ptr = [int8(io_field_ptr), int8(zeros(1, 1))];
     case 6 % CG_LongInteger
         io_field_ptr = int64(io_field_ptr);
     otherwise
@@ -55,9 +55,8 @@ end
 
 if ~isempty(io_field_ptr)
     % Write to it to unshare memory with other variables
-    t=io_field_ptr(1); io_field_ptr(1)=t;
+    t = io_field_ptr(1); io_field_ptr(1) = t;
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(102), in_fn, in_B, in_Z, in_S, in_fieldname, in_type, in_rmin, in_rmax, io_field_ptr);

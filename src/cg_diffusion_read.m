@@ -16,17 +16,16 @@ function [io_diffusion_model, ierr] = cg_diffusion_read(io_diffusion_model)
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/equation.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 1)
+if (nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
 basetype = 'int32';
-if ~isa(io_diffusion_model,basetype)
+if ~isa(io_diffusion_model, basetype)
     io_diffusion_model = cast(io_diffusion_model, basetype);
 elseif ~isempty(io_diffusion_model)
     % Write to it to unshare memory with other variables
-    t=io_diffusion_model(1); io_diffusion_model(1)=t;
+    t = io_diffusion_model(1); io_diffusion_model(1) = t;
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(205), io_diffusion_model);

@@ -17,18 +17,17 @@ function [io_file_type, ierr] = cg_get_file_type(in_fn, io_file_type)
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/fileops.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 2)
+if (nargout < 1 || nargin < 2)
     error('Incorrect number of input or output arguments.');
 end
 in_fn = int32(in_fn);
 basetype = 'int32';
-if ~isa(io_file_type,basetype)
+if ~isa(io_file_type, basetype)
     io_file_type = cast(io_file_type, basetype);
 elseif ~isempty(io_file_type)
     % Write to it to unshare memory with other variables
-    t=io_file_type(1); io_file_type(1)=t;
+    t = io_file_type(1); io_file_type(1) = t;
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(8), in_fn, io_file_type);

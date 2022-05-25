@@ -57,13 +57,12 @@ switch (datatype)
     case 4 % CG_RealDouble
         in_donor_data = double(in_donor_data);
     case 5 % CG_Character
-        in_donor_data = [int8(in_donor_data), int8(zeros(1,1))];
+        in_donor_data = [int8(in_donor_data), int8(zeros(1, 1))];
     case 6 % CG_LongInteger
         in_donor_data = int64(in_donor_data);
     otherwise
         error('Unknown data type %d', in_donor_datatype);
 end
-
 
 % Invoke the actual MEX-function.
 [out_Ii, ierr] = cgnslib_mex(int32(130), in_file_number, in_B, in_Z, in_connectname, in_location, in_type, in_ptset_type, in_npnts, in_pnts, in_donorname, in_donor_zonetype, in_donor_ptset_type, in_donor_datatype, in_ndata_donor, in_donor_data);

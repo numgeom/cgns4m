@@ -39,13 +39,12 @@ switch (datatype)
     case 4 % CG_RealDouble
         in_coord_ptr = double(in_coord_ptr);
     case 5 % CG_Character
-        in_coord_ptr = [int8(in_coord_ptr), int8(zeros(1,1))];
+        in_coord_ptr = [int8(in_coord_ptr), int8(zeros(1, 1))];
     case 6 % CG_LongInteger
         in_coord_ptr = int64(in_coord_ptr);
     otherwise
         error('Unknown data type %d', in_type);
 end
-
 
 % Invoke the actual MEX-function.
 [out_C, ierr] = cgnslib_mex(int32(77), in_fn, in_B, in_Z, in_type, in_coordname, in_coord_ptr);

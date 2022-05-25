@@ -21,7 +21,7 @@ function [io_pnts, io_NormalList, ierr] = cg_boco_read(in_fn, in_B, in_Z, in_BC,
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/bc.html">online documentation</a>.
 %
-if ( nargout < 2 || nargin < 6)
+if (nargout < 2 || nargin < 6)
     error('Incorrect number of input or output arguments.');
 end
 in_fn = int32(in_fn);
@@ -39,7 +39,7 @@ switch (datatype)
     case 4 % CG_RealDouble
         io_NormalList = double(io_NormalList);
     case 5 % CG_Character
-        io_NormalList = [int8(io_NormalList), int8(zeros(1,1))];
+        io_NormalList = [int8(io_NormalList), int8(zeros(1, 1))];
     case 6 % CG_LongInteger
         io_NormalList = int64(io_NormalList);
     otherwise
@@ -48,17 +48,16 @@ end
 
 if ~isempty(io_NormalList)
     % Write to it to unshare memory with other variables
-    t=io_NormalList(1); io_NormalList(1)=t;
+    t = io_NormalList(1); io_NormalList(1) = t;
 end
 
 basetype = 'int64';
-if ~isa(io_pnts,basetype)
+if ~isa(io_pnts, basetype)
     io_pnts = cast(io_pnts, basetype);
 elseif ~isempty(io_pnts)
     % Write to it to unshare memory with other variables
-    t=io_pnts(1); io_pnts(1)=t;
+    t = io_pnts(1); io_pnts(1) = t;
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(141), in_fn, in_B, in_Z, in_BC, io_pnts, io_NormalList);

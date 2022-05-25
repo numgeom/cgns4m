@@ -30,13 +30,12 @@ switch (datatype)
     case 4 % CG_RealDouble
         in_ConversionFactors = double(in_ConversionFactors);
     case 5 % CG_Character
-        in_ConversionFactors = [int8(in_ConversionFactors), int8(zeros(1,1))];
+        in_ConversionFactors = [int8(in_ConversionFactors), int8(zeros(1, 1))];
     case 6 % CG_LongInteger
         in_ConversionFactors = int64(in_ConversionFactors);
     otherwise
         error('Unknown data type %d', in_DataType);
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(240), in_DataType, in_ConversionFactors);

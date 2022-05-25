@@ -8,7 +8,7 @@ SRCDIR = ['cgnslib_' CGNS_VERSION];
 oldpwd = pwd;
 cgns4m_root = fileparts(which('startup_cgns4m.m'));
 
-if nargin==0
+if nargin == 0
     force = false;
 else
     force = ~isempty(force) && ~isequal(force, 0);
@@ -28,7 +28,7 @@ else
 end
 
 % Compile the file if the C code is newer than the MEX file.
-if ~force && ~isnewer( 'src/cgnslib_mex.c', mexfile) && ...
+if ~force && ~isnewer('src/cgnslib_mex.c', mexfile) && ...
         ~isnewer('src/cgnslib_mex_ext.c', mexfile) && ...
         ~isnewer([SRCDIR '/cgnslib.c'], mexfile)
     cd(oldpwd);
@@ -36,7 +36,7 @@ if ~force && ~isnewer( 'src/cgnslib_mex.c', mexfile) && ...
 end
 
 % Compile all the C-files into MEX functions
-cgnsfiles = ['cgnslib.c cgns_internals.c cgns_io.c cgns_error.c '...
+cgnsfiles = ['cgnslib.c cgns_internals.c cgns_io.c cgns_error.c ' ...
     'adf/ADF_interface.c adf/ADF_internals.c'];
 cgnsfiles = [cgnsfiles ' adfh/ADFH.c'];
 HDF_VERSION = 'hdf5-1.10.8';
@@ -119,14 +119,14 @@ if isoctave
 
     disp(command); fflush(1);
     try
-        [status,output]=system(command);
-        if exist('cgnslib.o', 'file'); delete *.o; end
+        [status, output] = system(command);
+        if exist('cgnslib.o', 'file'); delete * .o; end
         if status
             cd(oldpwd);
             error('Output is %s\n. Return status is %d\n', output, status);
         end
     catch %#ok<*CTCH>
-        if exist('cgnslib.o', 'file'); delete *.o; end
+        if exist('cgnslib.o', 'file'); delete * .o; end
         cd(oldpwd);
         error('Error during compilation: %s.', lasterr); %#ok<*LERR>
     end
@@ -144,7 +144,7 @@ end
 
 % Perform testing
 disp('Running tests.');
-success=mtest('readcgns');
+success = mtest('readcgns');
 if ~success
     disp('CGNS4m was built but some tests have failed.');
 else

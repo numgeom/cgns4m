@@ -42,13 +42,12 @@ switch (datatype)
     case 4 % CG_RealDouble
         in_NormalList = double(in_NormalList);
     case 5 % CG_Character
-        in_NormalList = [int8(in_NormalList), int8(zeros(1,1))];
+        in_NormalList = [int8(in_NormalList), int8(zeros(1, 1))];
     case 6 % CG_LongInteger
         in_NormalList = int64(in_NormalList);
     otherwise
         error('Unknown data type %d', in_NormalDataType);
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(144), in_file_number, in_B, in_Z, in_BC, in_NormalIndex, in_NormalListFlag, in_NormalDataType, in_NormalList);

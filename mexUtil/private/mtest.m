@@ -1,4 +1,3 @@
-
 % A testing tool for MATLAB based on the test function in Octave.
 %
 % -- Function File:  mtest NAME
@@ -84,10 +83,10 @@ persistent signal_block__;
 persistent signal_file__;
 persistent signal_skip__;
 
-if isempty(signal_fail__); signal_fail__ =  '%%%%! '; end
+if isempty(signal_fail__); signal_fail__ = '%%%%! '; end
 if isempty(signal_empty__); signal_empty__ = '????? '; end
 if isempty(signal_block__); signal_block__ = '  ***** '; end
-if isempty(signal_file__); signal_file__ =  '>>>>> '; end
+if isempty(signal_file__); signal_file__ = '>>>>> '; end
 if isempty(signal_skip__); signal_skip__ = '----- '; end
 
 xfail__ = 0;
@@ -102,10 +101,10 @@ end
 if (nargin < 1 || nargin > 3 || (~ischar (name__) && ~isempty (name__)) || ~ischar(flag__))
     error('Incorrect input arguments');
 end
-if (isempty (name__) && (nargin ~= 3 || ~ strcmp (flag__, 'explain')))
+if (isempty (name__) && (nargin ~= 3 || ~strcmp (flag__, 'explain')))
     error('Incorrect input arguments');
 end
-batch__ = (~ isempty (fid__));
+batch__ = (~isempty (fid__));
 
 %% decide if error messages should be collected
 close_fid__ = 0;
@@ -159,7 +158,7 @@ else
 end
 
 %% locate the file to test
-if ~strcmp(name__(end-1:end), '.m')
+if ~strcmp(name__(end - 1:end), '.m')
     name__ = [name__ '.m'];
 end
 if exist('./test', 'dir')
@@ -214,11 +213,11 @@ end
 
 %% chop it up into blocks for evaluation
 lineidx__ = find (body__ == newline);
-blockidx__ = lineidx__(~isspace (body__(lineidx__+1)))+1;
+blockidx__ = lineidx__(~isspace (body__(lineidx__ + 1))) + 1;
 
 %% ready to start tests ... if in batch mode, tell us what is happening
 if (verbose__)
-    disp (strcat ( signal_file__, file__));
+    disp (strcat (signal_file__, file__));
 end
 
 %% assume all tests will pass
@@ -229,10 +228,10 @@ tests__ = 0; successes__ = 0;
 shared__ = ' ';
 shared_r__ = ' ';
 clear__ = '';
-for i__ = 1:length(blockidx__)-1
+for i__ = 1:length(blockidx__) - 1
 
     %% extract the block
-    block__ = body__(blockidx__(i__):blockidx__(i__+1)-2);
+    block__ = body__(blockidx__(i__):blockidx__(i__ + 1) - 2);
 
     %% let the user/logfile know what is happening
     if (verbose__)
@@ -240,12 +239,12 @@ for i__ = 1:length(blockidx__)-1
     end
 
     %% split block into type and code
-    idx__ = find (~ isletter (block__));
+    idx__ = find (~isletter (block__));
     if (isempty (idx__))
         type__ = block__;
         code__ = '';
     else
-        type__ = block__(1:idx__(1)-1);
+        type__ = block__(1:idx__(1) - 1);
         code__ = block__(idx__(1):length(block__));
     end
 
@@ -265,10 +264,10 @@ for i__ = 1:length(blockidx__)-1
         if (grabdemo__ && isdemo__)
             if (isempty(demo_code__))
                 demo_code__ = code__;
-                demo_idx__ = [1, length(demo_code__)+1];
+                demo_idx__ = [1, length(demo_code__) + 1];
             else
                 demo_code__ = strcat(demo_code__, code__);
-                demo_idx__ = [demo_idx__, length(demo_code__)+1]; %#ok<*AGROW> 
+                demo_idx__ = [demo_idx__, length(demo_code__) + 1]; %#ok<*AGROW>
             end
 
         elseif (rundemo__ && isdemo__)
@@ -276,7 +275,7 @@ for i__ = 1:length(blockidx__)-1
                 % In MATLAB, one cannot create a function using eval, so we
                 % have to create a function for the test.
                 clear test_run_demo;
-                fid_m__ = fopen('test_run_demo.m','w');
+                fid_m__ = fopen('test_run_demo.m', 'w');
                 fprintf (fid_m__, 'function test_run_demo()\n%s\nend', code__);
                 fclose(fid_m__); rehash;
                 test_run_demo;
@@ -285,7 +284,7 @@ for i__ = 1:length(blockidx__)-1
             catch ex
                 delete test_run_demo.m;
                 success__ = 0;
-                msg__ = sprintf ('%sdemo failed\n%s',  signal_fail__, ex.message);
+                msg__ = sprintf ('%sdemo failed\n%s', signal_fail__, ex.message);
             end
         end
         code__ = ''; % code already processed
@@ -300,20 +299,20 @@ for i__ = 1:length(blockidx__)-1
             vars__ = code__;
             code__ = '';
         else
-            vars__ = code__ (1:idx__(1)-1);
+            vars__ = code__ (1:idx__(1) - 1);
             code__ = code__ (idx__(1):length(code__));
         end
 
         %% strip comments off the variables
         idx__ = find (vars__ == '%' | vars__ == '%');
-        if (~ isempty (idx__))
-            vars__ = vars__(1:idx__(1)-1);
+        if (~isempty (idx__))
+            vars__ = vars__(1:idx__(1) - 1);
         end
 
         %% assign default values to variables
         try
             vars__ = deblank (vars__);
-            if (~ isempty (vars__))
+            if (~isempty (vars__))
                 eval (strcat (strrep (vars__, ',', '=[];'), '=[];'));
                 shared__ = vars__;
                 shared_r__ = strcat ('[ ', vars__, '] = ');
@@ -322,13 +321,13 @@ for i__ = 1:length(blockidx__)-1
                 shared_r__ = ' ';
             end
         catch ex
-            code__ = '';  % couldn't declare, so don't initialize
+            code__ = ''; % couldn't declare, so don't initialize
             success__ = 0;
             msg__ = sprintf ('%sshared variable initialization failed\n%s', signal_fail__, ex.message);
         end
 
         %% clear shared function definitions
-        eval (clear__, ''); 
+        eval (clear__, '');
         clear__ = '';
 
         %% initialization code will be evaluated below
@@ -345,7 +344,7 @@ for i__ = 1:length(blockidx__)-1
             name__ = block__(name_position__(1):name_position__(2));
             code__ = block__;
             try
-                eval(code__); %% Define the function
+                eval(code__); % % Define the function
                 clear__ = sprintf ('%sclear %s;\n', clear__, name__);
             catch ex
                 success__ = 0;
@@ -363,7 +362,7 @@ for i__ = 1:length(blockidx__)-1
         %% FAIL
     elseif (strcmp (type__, 'fail'))
         istest__ = 1;
-        code__ = '';  % Ignore the fail command
+        code__ = ''; % Ignore the fail command
 
         %% ERROR/WARNING
     elseif (strcmp (type__, 'error') || strcmp(type__, 'warning'))
@@ -378,13 +377,13 @@ for i__ = 1:length(blockidx__)-1
             % In MATLAB, one cannot create a function using eval, so we
             % have to create a function for the test.
             clear test_run_error;
-            fid_m__ = fopen('test_run_error.m','w');
+            fid_m__ = fopen('test_run_error.m', 'w');
             fprintf (fid_m__, 'function test_run_error(%s)\n%s\nend', shared__, code__);
             fclose(fid_m__); rehash;
             eval (sprintf ('test_run_error(%s);', shared__));
             delete test_run_error.m;
 
-            if (~ warning__)
+            if (~warning__)
                 msg__ = sprintf ('%sexpected <%s> but got no error\n', signal_fail__, pattern__);
             else
                 err__ = trimerr (lastwarn, 'warning');
@@ -418,8 +417,8 @@ for i__ = 1:length(blockidx__)-1
     elseif (strcmp (type__, 'testif'))
         [e__, feat__] = regexp (code__, '^\s*([^\s]+)', 'end', 'tokens');
         if exist('__octave_config_info__', 'builtin')
-          % octave_config_info is depreciated in 4.2.1
-          octave_config_info = eval('@__octave_config_info__'); %#ok<*EVLCS> 
+            % octave_config_info is depreciated in 4.2.1
+            octave_config_info = eval('@__octave_config_info__'); %#ok<*EVLCS>
         end
 
         if (isoctave && ...
@@ -431,7 +430,7 @@ for i__ = 1:length(blockidx__)-1
             msg__ = sprintf ('%sskipped test\n', signal_skip__);
         else
             istest__ = 1;
-            code__ = code__(e__ + 1 : end);
+            code__ = code__(e__ + 1:end);
         end
 
         %% TEST
@@ -453,19 +452,19 @@ for i__ = 1:length(blockidx__)-1
     end
 
     %% evaluate code for test, shared, and assert.
-    if (~ isempty(code__))
+    if (~isempty(code__))
         try
             % In MATLAB, one cannot create a function using eval, so we
             % have to create a function for the test.
             clear test_run_temp;
-            fid_m__ = fopen('test_run_temp.m','w');
-            fprintf (fid_m__, 'function %stest_run_temp(%s)\n%s\nend', shared_r__,shared__, code__);
+            fid_m__ = fopen('test_run_temp.m', 'w');
+            fprintf (fid_m__, 'function %stest_run_temp(%s)\n%s\nend', shared_r__, shared__, code__);
             fclose(fid_m__); rehash;
         catch err
             if (isempty (err.message))
                 error ('empty error text, probably Ctrl-C --- aborting');
             else
-                rethrow( err);
+                rethrow(err);
             end
         end
         try
@@ -478,19 +477,19 @@ for i__ = 1:length(blockidx__)-1
     end
 
     %% All done.  Remember if we were successful and print any messages
-    if (~ isempty (msg__))
+    if (~isempty (msg__))
         %% make sure the user knows what caused the error
-        if (~ verbose__)
+        if (~verbose__)
             fprintf (fid__, '%s%s\n', signal_block__, block__);
         end
-        fprintf (fid__+(fid__==1), msg__);
+        fprintf (fid__ + (fid__ == 1), msg__);
     end
     if (success__ == 0)
         all_success__ = 0;
         %% stop after one error if not in batch mode
-        if (~ batch__)
+        if (~batch__)
             if (nargout > 0)
-                ret1__ = 0 ; ret2__ = 0;
+                ret1__ = 0; ret2__ = 0;
             end
             if (close_fid__)
                 fclose(fid__);
@@ -501,12 +500,12 @@ for i__ = 1:length(blockidx__)-1
     tests__ = tests__ + istest__;
     successes__ = successes__ + success__ * istest__;
 end
-eval (clear__, ''); %#ok<*EV2IN> 
+eval (clear__, ''); %#ok<*EV2IN>
 
 if (nargout == 0)
     if (xfail__)
         fprintf(fid__, 'PASSES %d out of %d tests (%d expected failures)\n', ...
-            successes__, tests__, xfail__); %#ok<UNRCH> 
+            successes__, tests__, xfail__); %#ok<UNRCH>
     else
         fprintf(fid__, 'PASSES %d out of %d tests\n', successes__, tests__);
     end
@@ -535,11 +534,11 @@ right = find (def == '(', 1);
 if (isempty (right))
     return;
 end
-right = find (def(1:right-1) ~= ' ', 1, 'last');
+right = find (def(1:right - 1) ~= ' ', 1, 'last');
 
 %% Find the beginning of the name
-left = max ([find(def(1:right)==' ', 1, 'last'), ...
-    find(def(1:right)=='=', 1, 'last')]);
+left = max ([find(def(1:right) == ' ', 1, 'last'), ...
+    find(def(1:right) == '=', 1, 'last')]);
 if (isempty (left))
     return;
 end
@@ -554,11 +553,11 @@ function [pattern, rest] = getpattern (str)
 pattern = '.';
 rest = str;
 str = trimleft (str);
-if (~ isempty (str) && str(1) == '<')
+if (~isempty (str) && str(1) == '<')
     close = strfind (str, '>');
     if ~isempty(close)
-        pattern = str(2:close(1)-1);
-        rest = str(close(1)+1:end);
+        pattern = str(2:close(1) - 1);
+        rest = str(close(1) + 1:end);
     end
 end
 end
@@ -567,7 +566,7 @@ end
 function msg = trimerr (msg, prefix)
 idx = strfind (msg, strcat (prefix, ':'));
 if ~isempty(idx)
-    msg(1:idx(1)+length(prefix)) = [];
+    msg(1:idx(1) + length(prefix)) = [];
 end
 msg = trimleft (deblank (msg));
 end
@@ -576,8 +575,8 @@ end
 function str = trimleft (str)
 idx = find (isspace (str));
 leading = find (idx == 1:length(idx));
-if (~ isempty (leading))
-    str = str(leading(end)+1:end);
+if (~isempty (leading))
+    str = str(leading(end) + 1:end);
 end
 end
 
@@ -585,8 +584,8 @@ function body = extract_test_code (nm)
 fid = fopen (nm, 'rt');
 body = [];
 if (fid >= 0)
-    while (~ feof (fid))
-        ln = strtrim( fgetl (fid));
+    while (~feof (fid))
+        ln = strtrim(fgetl (fid));
         if (length (ln) >= 2 && strcmp (ln(1:2), '%!'))
             body = sprintf('%s\n%s', char(body), ln(3:end));
         end
@@ -635,7 +634,6 @@ end
 %! S = min(S, 10^(-3/10));    % clip above -3 dB.
 %! imagesc(flipud(20*log10(S)), 1);
 %! % you should now see a spectrogram in the image window
-
 
 %%% now test test itself
 

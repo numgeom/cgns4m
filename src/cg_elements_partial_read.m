@@ -23,7 +23,7 @@ function [io_elements, io_parent_data, ierr] = cg_elements_partial_read(in_file_
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/grid.html">online documentation</a>.
 %
-if ( nargout < 2 || nargin < 8)
+if (nargout < 2 || nargin < 8)
     error('Incorrect number of input or output arguments.');
 end
 in_file_number = int32(in_file_number);
@@ -33,21 +33,20 @@ in_S = int32(in_S);
 in_start = int64(in_start);
 in_end = int64(in_end);
 basetype = 'int64';
-if ~isa(io_elements,basetype)
+if ~isa(io_elements, basetype)
     io_elements = cast(io_elements, basetype);
 elseif ~isempty(io_elements)
     % Write to it to unshare memory with other variables
-    t=io_elements(1); io_elements(1)=t;
+    t = io_elements(1); io_elements(1) = t;
 end
 
 basetype = 'int64';
-if ~isa(io_parent_data,basetype)
+if ~isa(io_parent_data, basetype)
     io_parent_data = cast(io_parent_data, basetype);
 elseif ~isempty(io_parent_data)
     % Write to it to unshare memory with other variables
-    t=io_parent_data(1); io_parent_data(1)=t;
+    t = io_parent_data(1); io_parent_data(1) = t;
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(90), in_file_number, in_B, in_Z, in_S, in_start, in_end, io_elements, io_parent_data);

@@ -1,7 +1,7 @@
 function startup_cgns4m
-% The startup script of CGNS4m. 
+% The startup script of CGNS4m.
 
-% It builds CGNS4m automatically if the directory 
+% It builds CGNS4m automatically if the directory
 % [cgnslib_mex '.' mexext] does not exist.
 %
 % If you need to rebuild CGNS4m, issue the `build_cgns4m -f` command.
@@ -24,14 +24,14 @@ end
 
 % Add cgns4mroot and its components into the path.
 addpath(cgns4mroot);
-addpath( [cgns4mroot '/src']);
+addpath([cgns4mroot '/src']);
 
 % Build CGNS4m MEX-files if they do not exist
 if isoctave
     more off;
     mexdir = [cgns4mroot '/' computer];
 
-    if ~exist(mexdir,'dir'); mkdir(mexdir); end
+    if ~exist(mexdir, 'dir'); mkdir(mexdir); end
     addpath(mexdir);
     addpath([cgns4mroot '/private']);
 

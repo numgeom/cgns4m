@@ -16,17 +16,16 @@ function [io_pnts, ierr] = cg_ptset_read(io_pnts)
 %
 % For detail, see <a href="https://cgns.github.io/CGNS_docs_current/midlevel/location.html">online documentation</a>.
 %
-if ( nargout < 1 || nargin < 1)
+if (nargout < 1 || nargin < 1)
     error('Incorrect number of input or output arguments.');
 end
 basetype = 'int64';
-if ~isa(io_pnts,basetype)
+if ~isa(io_pnts, basetype)
     io_pnts = cast(io_pnts, basetype);
 elseif ~isempty(io_pnts)
     % Write to it to unshare memory with other variables
-    t=io_pnts(1); io_pnts(1)=t;
+    t = io_pnts(1); io_pnts(1) = t;
 end
-
 
 % Invoke the actual MEX-function.
 ierr = cgnslib_mex(int32(249), io_pnts);
