@@ -1,5 +1,3 @@
-There are more end-statements than blocks!
-There are more end - statements than blocks !
 function writecgns(file_name, ps, elems, typestr, var_nodes, var_cells)
 % Write out a structured or unstructured mesh with node/cell-centered values to CGNS file.
 %
